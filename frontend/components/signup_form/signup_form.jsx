@@ -41,7 +41,7 @@ class SignupForm extends React.Component {
       <>
         <form onSubmit={this.handleSubmit} className="sign-up-container">
           <div className="sign-up-form">
-            
+
             <h2>{this.props.formType}</h2>
             <label>First Name</label>
             <input
@@ -77,6 +77,8 @@ class SignupForm extends React.Component {
 
             {this.renderErrors()}
             <input type="submit" value="Submit" />
+
+            <Link to="/login">Log In</Link>
           </div>
         </form>
       </>

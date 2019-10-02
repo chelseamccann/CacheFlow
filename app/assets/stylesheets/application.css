@@ -14,9 +14,23 @@
  *= require_self
  */
 
+body {
+    font-family: "DIN Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
  .errors {
     list-style: none;
+ }
+
+ .nav-bar {
+    display: flex;
+    width: 100%;
+
+ }
+
+ .navbar > .splash {
+    right: 10px;
+    float: right;
  }
 
 .sign-up-container {
@@ -30,9 +44,8 @@
     margin-top: 10%;
     top: 50%;
     left: 50%;
-    font-weight: 100;
  }
-
+ 
 .sign-up-form {
     padding: 10px;
     border: solid 1px black;
@@ -44,13 +57,29 @@
     width: 100%;
 }
 
+
 .login-form {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: relative;
+    justify-content: space-around;
     align-items: center;
-    overflow: visible;
+    margin-top: 150px;
     height: 100%;
     width: 50%;
+}
+
+.login-container input[type="text"], 
+.login-container input[type="password"] {
+    background-color: #fafafa;
+    border-color: #fafafa;
+    width: 70%;
+    border-radius: 4px;
+}
+
+.login-container input[type="submit"] {
+    width: 100px;
+    box-sizing: content-box;
 }
 
 .login-form-img {
@@ -58,4 +87,46 @@
     overflow: hidden;
     height: 100%;
     width: 50%;
+}
+
+.splash {
+    position: absolute;
+    width: 100%;
+}
+
+.splash-nav div {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+
+.nav-links ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+
+.login-signup-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 200px;
+    margin-right: 10%;
+}
+
+.invest-intro {
+    display: flex;
+}
+
+.invest-intro-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* padding-right: 70px;
+    padding-top: 400px; */
+}
+
+.signup-button {
+    
 }

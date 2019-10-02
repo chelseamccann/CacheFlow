@@ -40,14 +40,14 @@ class LoginForm extends React.Component {
         <form onSubmit={this.handleSubmit} className="login-container">
           <div className="login-form-img"><img src="https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png"/></div>
           <div className="login-form">
-            <h2>{this.props.formType}</h2>
+            <h2>Welcome to Robinhood</h2>
 
-            <label>Email</label>
+            <label>Email or Username</label>
             <input
               type="text"
               value={this.state.email}
               onChange={this.update("email")}
-              placeholder={" Email"}
+              // placeholder={" Email"}
               />
             <br/>
             <label>Password</label>
@@ -55,9 +55,9 @@ class LoginForm extends React.Component {
               type="password"
               value={this.state.password}
               onChange={this.update("password")}
-              placeholder={" Password"}
+              // placeholder={" Password"}
               />
-
+            <a href="">Forgot your username/password?</a>
             {this.renderErrors()}
             <input type="submit" value="Submit" />
           </div>
