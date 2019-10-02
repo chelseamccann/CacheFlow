@@ -38,7 +38,9 @@ class LoginForm extends React.Component {
     return (
       <>
         <form onSubmit={this.handleSubmit} className="login-container">
-          <div className="login-form-img"><img src="https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png"/></div>
+          <div className="login-form-img">
+            <img src="https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png"/>
+          </div>
           <div className="login-form">
             <h2>Welcome to Robinhood</h2>
 
@@ -57,9 +59,9 @@ class LoginForm extends React.Component {
               onChange={this.update("password")}
               // placeholder={" Password"}
               />
-            <a href="">Forgot your username/password?</a>
+            <a href="" className="forgot">Forgot your username/password?</a>
             {this.renderErrors()}
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Sign In" />
           </div>
         </form>
       </>

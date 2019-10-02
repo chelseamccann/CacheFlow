@@ -42,29 +42,30 @@ class SignupForm extends React.Component {
         <form onSubmit={this.handleSubmit} className="sign-up-container">
           <div className="sign-up-form">
 
-            <h2>{this.props.formType}</h2>
-            <label>First Name</label>
+            <h2>Make Your Money Move</h2>
+            <p>CacheFlow lets you invest in companies you love, commission-free.</p>
+
             <input
               type="text"
               value={this.state.firstName}
               onChange={this.update("firstName")}
-              placeholder={" Last Name"}
+              placeholder={" First Name"}
               />
             <br />
-            <label>Last Name</label>
+
             <input
               type="text"
               value={this.state.lastName}
               onChange={this.update("lastName")}
-              placeholder={" First Name"}
+              placeholder={" Last Name"}
               />
             <br />
-            <label>Email</label>
+
             <input
               type="text"
               value={this.state.email}
               onChange={this.update("email")}
-              placeholder={" Email"}
+              placeholder={" Email address"}
               />
             <br />
             <label>Password</label>
@@ -72,13 +73,14 @@ class SignupForm extends React.Component {
               type="password"
               value={this.state.password}
               onChange={this.update("password")}
-              placeholder={" Password"}
+              placeholder={" Password (min. 10 characters)"}
               />
 
             {this.renderErrors()}
-            <input type="submit" value="Submit" />
+            
 
-            <Link to="/login">Log In</Link>
+            <Link to="/login"><input type="submit" value="Continue" /></Link>
+            <p>Already started? <a href="">Log in to complete your application.</a></p>
           </div>
         </form>
       </>
