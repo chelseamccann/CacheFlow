@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 function mapStateToProps(state) {
   let errors = Object.values(state.errors);
-  let formType = 'login';
+  let formType = 'Log In';
 
   return { errors, formType }
 }

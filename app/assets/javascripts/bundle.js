@@ -226,7 +226,7 @@ __webpack_require__.r(__webpack_exports__);
 // greeting container does not need protected route since conditional checks for loggedin/loggedout and renders based on that
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Cache Flow"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
     path: "/login",
     component: _login_form_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
@@ -260,10 +260,10 @@ var Greeting = function Greeting(_ref) {
 
   var welcome_page = function welcome_page() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "welcome-page"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome ", currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: logout
-    }, "Log Out"));
+      className: "dashboard"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "/dashboard"
+    }));
   };
 
   var splash_page = function splash_page() {
@@ -276,7 +276,11 @@ var Greeting = function Greeting(_ref) {
     }, "Log In"));
   };
 
-  return currentUser ? welcome_page() : splash_page();
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+    className: "nav-bar"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    className: "logo"
+  }, "Cache Flow"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, currentUser ? welcome_page() : splash_page()));
 };
 
 /***/ }),
@@ -411,11 +415,13 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, this.props.formType), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.email,
-        onChange: this.update("email")
+        onChange: this.update("email"),
+        placeholder: " Email"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         value: this.state.password,
-        onChange: this.update("password")
+        onChange: this.update("password"),
+        placeholder: " Password"
       }), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Submit"
@@ -451,7 +457,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function mapStateToProps(state) {
   var errors = Object.values(state.errors);
-  var formType = 'login';
+  var formType = 'Log In';
   return {
     errors: errors,
     formType: formType
@@ -594,19 +600,23 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, this.props.formType), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "First Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.firstName,
-        onChange: this.update("firstName")
+        onChange: this.update("firstName"),
+        placeholder: " Last Name"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Last Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.lastName,
-        onChange: this.update("lastName")
+        onChange: this.update("lastName"),
+        placeholder: " First Name"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.email,
-        onChange: this.update("email")
+        onChange: this.update("email"),
+        placeholder: " Email"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         value: this.state.password,
-        onChange: this.update("password")
+        onChange: this.update("password"),
+        placeholder: " Password"
       }), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Submit"
@@ -642,7 +652,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function mapStateToProps(state) {
   var errors = Object.values(state.errors);
-  var formType = 'signup';
+  var formType = 'Sign Up';
   return {
     errors: errors,
     formType: formType

@@ -45,6 +45,7 @@ class LoginForm extends React.Component {
             type="text"
             value={this.state.email}
             onChange={this.update("email")}
+            placeholder={" Email"}
             />
           <br/>
           <label>Password</label>
@@ -52,6 +53,7 @@ class LoginForm extends React.Component {
             type="password"
             value={this.state.password}
             onChange={this.update("password")}
+            placeholder={" Password"}
             />
 
           {this.renderErrors()}

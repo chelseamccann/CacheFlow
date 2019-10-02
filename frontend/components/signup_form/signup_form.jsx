@@ -46,6 +46,7 @@ class SignupForm extends React.Component {
             type="text"
             value={this.state.firstName}
             onChange={this.update("firstName")}
+            placeholder={" Last Name"}
             />
           <br />
           <label>Last Name</label>
@@ -53,6 +54,7 @@ class SignupForm extends React.Component {
             type="text"
             value={this.state.lastName}
             onChange={this.update("lastName")}
+            placeholder={" First Name"}
             />
           <br />
           <label>Email</label>
@@ -60,6 +62,7 @@ class SignupForm extends React.Component {
             type="text"
             value={this.state.email}
             onChange={this.update("email")}
+            placeholder={" Email"}
             />
           <br />
           <label>Password</label>
@@ -67,6 +70,7 @@ class SignupForm extends React.Component {
             type="password"
             value={this.state.password}
             onChange={this.update("password")}
+            placeholder={" Password"}
             />
 
           {this.renderErrors()}

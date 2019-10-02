@@ -5,9 +5,10 @@ export const Greeting = ({ currentUser, logout }) => {
 
   const welcome_page = () => {
     return (
-      <div className="welcome-page">
-        <h1>Welcome {currentUser.username}</h1>
-        <button onClick={logout}>Log Out</button>
+      <div className="dashboard">
+        {/* <h1>Welcome {currentUser.username}</h1>
+        <button onClick={logout}>Log Out</button> */}
+        <Link to="/dashboard"></Link>
       </div>
     )
   }
@@ -20,5 +21,12 @@ export const Greeting = ({ currentUser, logout }) => {
     )
   }
 
-  return currentUser ? welcome_page() : splash_page();
+  return (
+    <header className="nav-bar">
+      <h1 className="logo">Cache Flow</h1>
+      <div> 
+        {currentUser ? welcome_page() : splash_page()}
+      </div>
+    </header>
+  )
 }

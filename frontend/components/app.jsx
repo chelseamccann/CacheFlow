@@ -12,7 +12,6 @@ import { AuthRoute, ProtectedRoute } from '../util/route_utils';
 const App = () => (
   <div>
     <header>
-      <h1>Cache Flow</h1> 
       <GreetingContainer />
     </header>
     <Switch>
