@@ -7,7 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 const App = () => (
   <div>
     <header>
-      <h1>Cache FLOOOOOOOW</h1>
+      <h1>Cache FLOOOOOOOW</h1> 
       <GreetingContainer />
     </header>
     <Switch>
