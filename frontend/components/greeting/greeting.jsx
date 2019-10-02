@@ -5,7 +5,7 @@ export const Greeting = ({ currentUser, logout }) => {
 
   const welcome_page = () => {
     return (
-      <div>
+      <div className="welcome-page">
         <h1>Welcome {currentUser.username}</h1>
         <button onClick={logout}>Log Out</button>
       </div>
@@ -13,7 +13,7 @@ export const Greeting = ({ currentUser, logout }) => {
   }
   const splash_page = () => {
     return (
-      <div>
+      <div className="splash-page">
         <Link to="/signup">Sign Up</Link>
         <Link to="/login">Log In</Link>
       </div>
