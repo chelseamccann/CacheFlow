@@ -39,42 +39,45 @@ class SignupForm extends React.Component {
   render() {
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
-          <h2>{this.props.formType}</h2>
-          <label>First Name</label>
-          <input
-            type="text"
-            value={this.state.firstName}
-            onChange={this.update("firstName")}
-            placeholder={" Last Name"}
-            />
-          <br />
-          <label>Last Name</label>
-          <input
-            type="text"
-            value={this.state.lastName}
-            onChange={this.update("lastName")}
-            placeholder={" First Name"}
-            />
-          <br />
-          <label>Email</label>
-          <input
-            type="text"
-            value={this.state.email}
-            onChange={this.update("email")}
-            placeholder={" Email"}
-            />
-          <br />
-          <label>Password</label>
-          <input
-            type="password"
-            value={this.state.password}
-            onChange={this.update("password")}
-            placeholder={" Password"}
-            />
+        <form onSubmit={this.handleSubmit} className="sign-up-container">
+          <div className="sign-up-form">
+            
+            <h2>{this.props.formType}</h2>
+            <label>First Name</label>
+            <input
+              type="text"
+              value={this.state.firstName}
+              onChange={this.update("firstName")}
+              placeholder={" Last Name"}
+              />
+            <br />
+            <label>Last Name</label>
+            <input
+              type="text"
+              value={this.state.lastName}
+              onChange={this.update("lastName")}
+              placeholder={" First Name"}
+              />
+            <br />
+            <label>Email</label>
+            <input
+              type="text"
+              value={this.state.email}
+              onChange={this.update("email")}
+              placeholder={" Email"}
+              />
+            <br />
+            <label>Password</label>
+            <input
+              type="password"
+              value={this.state.password}
+              onChange={this.update("password")}
+              placeholder={" Password"}
+              />
 
-          {this.renderErrors()}
-          <input type="submit" value="Submit" />
+            {this.renderErrors()}
+            <input type="submit" value="Submit" />
+          </div>
         </form>
       </>
     )

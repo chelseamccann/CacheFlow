@@ -37,27 +37,30 @@ class LoginForm extends React.Component {
   render() {
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
-          <h2>{this.props.formType}</h2>
+        <form onSubmit={this.handleSubmit} className="login-container">
+          <div className="login-form-img"><img src="https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png"/></div>
+          <div className="login-form">
+            <h2>{this.props.formType}</h2>
 
-          <label>Email</label>
-          <input
-            type="text"
-            value={this.state.email}
-            onChange={this.update("email")}
-            placeholder={" Email"}
-            />
-          <br/>
-          <label>Password</label>
-          <input
-            type="password"
-            value={this.state.password}
-            onChange={this.update("password")}
-            placeholder={" Password"}
-            />
+            <label>Email</label>
+            <input
+              type="text"
+              value={this.state.email}
+              onChange={this.update("email")}
+              placeholder={" Email"}
+              />
+            <br/>
+            <label>Password</label>
+            <input
+              type="password"
+              value={this.state.password}
+              onChange={this.update("password")}
+              placeholder={" Password"}
+              />
 
-          {this.renderErrors()}
-          <input type="submit" value="Submit" />
+            {this.renderErrors()}
+            <input type="submit" value="Submit" />
+          </div>
         </form>
       </>
     )

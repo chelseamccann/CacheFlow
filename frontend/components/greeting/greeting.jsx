@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Dashboard from '../dashboard/dashboard'
 
 export const Greeting = ({ currentUser, logout }) => {
 
-  const welcome_page = () => {
+  const dashboard = () => {
     return (
-      <div className="dashboard">
+      <>
         {/* <h1>Welcome {currentUser.username}</h1>
         <button onClick={logout}>Log Out</button> */}
-        <Link to="/dashboard"></Link>
-      </div>
+        <Dashboard currentUser={currentUser} logout={logout} />
+      </>
     )
   }
   const splash_page = () => {
     return (
-      <div className="splash-page">
+      <div className="splash">
         <Link to="/signup">Sign Up</Link>
         <Link to="/login">Log In</Link>
       </div>
@@ -25,7 +26,7 @@ export const Greeting = ({ currentUser, logout }) => {
     <header className="nav-bar">
       <h1 className="logo">Cache Flow</h1>
       <div> 
-        {currentUser ? welcome_page() : splash_page()}
+        {currentUser ? dashboard() : splash_page()}
       </div>
     </header>
   )

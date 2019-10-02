@@ -14,10 +14,48 @@
  *= require_self
  */
 
-html {
-  background-image: url(https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png);
- }
 
  .errors {
     list-style: none;
  }
+
+.sign-up-container {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    line-height: 40px;
+    letter-spacing: .25px;
+    font-family: "Hiragino Sans GB";
+    box-sizing: border-box;
+    margin-top: 10%;
+    top: 50%;
+    left: 50%;
+    font-weight: 100;
+ }
+
+.sign-up-form {
+    padding: 10px;
+    border: solid 1px black;
+ }
+
+.login-container {
+    display: flex;
+    position: absolute;
+    width: 100%;
+}
+
+.login-form {
+    display: block;
+    position: relative;
+    align-items: center;
+    overflow: visible;
+    height: 100%;
+    width: 50%;
+}
+
+.login-form-img {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    width: 50%;
+}
