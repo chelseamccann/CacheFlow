@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-class SessionForm extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,10 +11,15 @@ class SessionForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  update(field) {
+    return e => {
+      this.setState({ [field]: e.target.value })
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
-    const user = Object.assign({}, this.state);
-    this.props.processForm(user);
+    this.props.processForm(this.state).then(() => this.props.history.push('/'))
   }
 
   render() {
@@ -22,17 +28,20 @@ class SessionForm extends React.Component {
         {this.props.errors}
         <form onSubmit={this.handleSubmit}>
           <h2>{this.props.formType}</h2>
+
+          <label>Email</label>
           <input
             type="text"
             value={this.state.email}
+            onChange={this.update("email")}
           />
-
+          <br/>
+          <label>Password</label>
           <input
-            type="text"
+            type="password"
             value={this.state.password}
+            onChange={this.update("password")}
           />
-
-          <Link to={`/${this.props.formType}`}>{this.props.formType}</Link>
 
           <input type="submit" value="Submit" />
         </form>
@@ -40,4 +49,4 @@ class SessionForm extends React.Component {
     )
   }
 }
-export default SessionForm;
+export default LoginForm;

@@ -2,6 +2,7 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.buying_power ||= 0.00
     if @user.save 
       login!(@user)
       render :show

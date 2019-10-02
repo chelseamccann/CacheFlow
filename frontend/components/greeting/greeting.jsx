@@ -1,24 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export const Greeting = ({ currentUser, logout }) => {
 
-  const logged_in = () => {
+  const welcome_page = () => {
     return (
-      <>
+      <div>
         <h1>Welcome {currentUser.username}</h1>
         <button onClick={logout}>Log Out</button>
-      </>
+      </div>
     )
   }
-  const logged_out = () => {
+  const splash_page = () => {
     return (
-      <>
+      <div>
         <Link to="/signup">Sign Up</Link>
         <Link to="/login">Log In</Link>
-      </>
+      </div>
     )
   }
 
-  return currentUser ? logged_in() : logged_out();
+  return currentUser ? welcome_page() : splash_page();
 }
