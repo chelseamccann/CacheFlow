@@ -6,7 +6,7 @@ import SignupForm from './signup_form';
 function mapStateToProps(state) {
   let errors = Object.values(state.errors);
   let formType = 'signup';
-
+  
   return { errors, formType }
 }
 

@@ -5,9 +5,9 @@ class Api::UsersController < ApplicationController
     @user.buying_power ||= 0.00
     if @user.save 
       login!(@user)
-      render :show
+      render "api/users/show"
     else
-      render @user.errors.full_messages, status: 422
+      render json: @user.errors.full_messages, status: 422
     end
   end
 
