@@ -17,3 +17,7 @@
  html{
   background-image: url(https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png);
  }
+
+ .errors {
+     list-style: none;
+ }
