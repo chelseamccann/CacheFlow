@@ -1,12 +1,21 @@
 
 /* SPLASH PAGE START */
 
+/* @media only screen and (min-width: 760px) { */
+
 .splash {
-    width: 100%;
-    height: 100vh;
-    width: 100vw;
-    margin-right: auto;
-    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: stretch;
+}
+
+.splash-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .splash-header {
@@ -23,12 +32,6 @@
     display: flex;
     width: 225px;
     justify-content: space-between;
-}
-
-.splash-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .nav-links {
@@ -109,10 +112,17 @@
 
 .phone-image{
     display: block;
-    max-height: 100vh;
-    width: 100%;
+    /* max-height: 70vh;
+    max-width: 50vw; */
     opacity: 1;
     animation: fade 5s ease;
+    margin-bottom: 80px;
+}
+
+.cash-management-image {
+
+    margin: 0 auto;
+    width: 100%;
 }
 
 /* allows for gradual transition from first to second */
@@ -126,5 +136,30 @@
 }
 
 
+.investment-types {
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+}
+
+.investment-types div {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.investment-types h3 {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.investment-types p {
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: .5px;
+}
+
+/* } */
 /* filter: brightness(90%) */
 /* SPLASH PAGE END */

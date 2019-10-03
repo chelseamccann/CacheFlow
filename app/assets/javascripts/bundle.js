@@ -903,7 +903,32 @@ function (_React$Component) {
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.splash,
         className: "phone-image"
-      })));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.cash_management,
+        className: "cash-management-image"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "investment-types"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stocks"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.stocks,
+        className: "stocks-image"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Stocks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invest in companies you love and build out your perfect portfolio.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "etfs"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.etfs,
+        className: "etfs-image"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "ETFs"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Diversify your holdings by buying into a bundle of stocks in a single investment.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "options"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.options,
+        className: "options-image"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Options"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose to go long on stocks you believe in and short the ones you don\u2019t.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "crypto"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.cryptos,
+        className: "cryptos-image"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Crypto"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Tap into the cryptocurrency market to trade Bitcoin, Ethereum, and more, 24/7.")))));
     }
   }]);
 
