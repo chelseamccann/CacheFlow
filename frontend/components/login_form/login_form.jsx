@@ -72,7 +72,7 @@ class LoginForm extends React.Component {
 
 
 
-          <div className="test">
+          <div className="lb">
             <input type="submit" value="Sign In" className="login-buttons" />
             <button onClick={this.handleDemo} className="login-buttons">Demo User</button>
           </div>

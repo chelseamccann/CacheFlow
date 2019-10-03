@@ -548,7 +548,7 @@ function (_React$Component) {
         href: "",
         className: "forgot"
       }, "Forgot your username/password?"), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "test"
+        className: "lb"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Sign In",
@@ -731,20 +731,25 @@ function (_React$Component) {
         className: "sign-up-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sign-up-form"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Make Your Money Move"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "CacheFlow lets you invest in companies you love, commission-free."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "money-move"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.rh,
+        className: "rh-logo"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Make Your Money Move")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "CacheFlow lets you invest in companies you love, commission-free."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "names"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.firstName,
         onChange: this.update("firstName"),
         placeholder: " First Name",
-        className: "inputs"
+        className: "inputs fname"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.lastName,
         onChange: this.update("lastName"),
         placeholder: " Last Name",
-        className: "inputs"
+        className: "inputs lname"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.email,

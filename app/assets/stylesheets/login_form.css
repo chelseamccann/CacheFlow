@@ -33,7 +33,7 @@
 }
 
 .login-form label {
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 15px;
 }
 
@@ -57,9 +57,11 @@
     /* transition: border 0.5s ease-in-out;
     transition: background-color 1000ms ease-in-out; */
     background-color: white;
-    transition: border 200ms ease-in-out;
+    /* transition: border 200ms ease-in-out; */
     border: 1px solid #cbcbcd;
-    transition-duration: 300ms;
+    /* border-color: #cbcbcd; */
+    /* transition-duration: 300ms; */
+    transition: background-color 0.5s ease-in-out, border 200ms ease-in-out;
     /* transition: .2s ease-in-out; */
 }
 
@@ -69,7 +71,7 @@
     transition: .25s;
 }
 
-.test {
+.lb {
     display: flex;
     justify-content: space-between;
 }

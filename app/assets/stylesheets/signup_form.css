@@ -25,6 +25,22 @@
     flex-direction: column;
  }
 
+ .money-move{
+     display: flex;
+     justify-content: space-between;
+     width: 400px;
+     font-size: 36px;
+     font-weight: 100;
+     margin: 0 0 12px;
+ }
+
+ .sign-up-form p {
+    font-size: 18px;
+    font-weight: 100;
+    margin: 0; 
+    margin-bottom: 20px;
+ }
+
 .sign-up-form > .names {
     display: flex;
     flex-direction: row;
@@ -34,9 +50,27 @@
 
 .inputs {
     width: 100%;
-    padding-top: 10px; 
-    padding-bottom: 10px; 
+    padding-top: 15px; 
+    padding-bottom: 15px;
+    margin-bottom: 15px;
     box-sizing: border-box;
+    border-radius: 4px;
+    border: solid .5px #cbcbcd;
+}
+
+.inputs::placeholder{
+    font-family: "DIN Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 17px;
+    font-weight: 200;
+    color: #cbcbcd;
+}
+
+.fname {
+    margin-right: 10px;
+}
+
+.lname {
+    margin-left: 10px;
 }
 
  .errors {
@@ -52,12 +86,24 @@
     color: white;
     font-weight: 500;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 18px;
+}
+
+.signup-continue-button:hover{
+    background-color: #1aa278;
+    border-color: #199972;
 }
 
 .login, a:link{
     text-decoration: none;
     color: #21ce99;
+}
+
+
+.sign-up-container input[type="text"]:focus, 
+.sign-up-container input[type="password"]:focus {
+    border: 1px solid #21ce99;
+    transition: .25s;
 }
 
 /* SIGNUP PAGE END */

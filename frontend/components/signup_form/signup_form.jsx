@@ -41,8 +41,10 @@ class SignupForm extends React.Component {
       <>
         <form onSubmit={this.handleSubmit} className="sign-up-container">
           <div className="sign-up-form">
-
-            <h2>Make Your Money Move</h2>
+            <div className="money-move">
+              <img src={window.rh} className="rh-logo" />
+              <h2>Make Your Money Move</h2>
+            </div>
             <p>CacheFlow lets you invest in companies you love, commission-free.</p>
             
             <div className="names">
@@ -51,7 +53,7 @@ class SignupForm extends React.Component {
                 value={this.state.firstName}
                 onChange={this.update("firstName")}
                 placeholder={" First Name"}
-                className="inputs"
+                className="inputs fname"
                 />
 
               {/* <br /> */}
@@ -61,7 +63,7 @@ class SignupForm extends React.Component {
                 value={this.state.lastName}
                 onChange={this.update("lastName")}
                 placeholder={" Last Name"}
-                className="inputs"
+                className="inputs lname"
                 />
             </div>
             {/* <br /> */}
