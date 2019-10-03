@@ -10,6 +10,11 @@
     align-items: stretch;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
 .splash-nav {
     display: flex;
     justify-content: space-between;
@@ -33,6 +38,7 @@
     cursor: pointer;
     display: flex;
     width: 225px;
+    align-content: center;
     justify-content: space-between;
 }
 
@@ -124,9 +130,8 @@
 }
 
 .cash-management-image {
-
+    display: flex;
     margin: 0 auto;
-    width: 100%;
 }
 
 /* allows for gradual transition from first to second */

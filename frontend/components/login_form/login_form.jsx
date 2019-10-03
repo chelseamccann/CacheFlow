@@ -65,6 +65,8 @@ class LoginForm extends React.Component {
               value={this.state.password}
               onChange={this.update("password")}
               />
+
+              
             <a href="" className="forgot">Forgot your username/password?</a>
             {this.renderErrors()}
 

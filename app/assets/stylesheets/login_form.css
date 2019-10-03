@@ -27,8 +27,19 @@
     width: 50%;
 }
 
+.login-form h2 {
+    font-size: 26px;
+    margin-bottom: 30px;
+}
+
+.login-form label {
+    font-size: 10px;
+    margin-bottom: 15px;
+}
+
 .login-container input[type="text"], 
 .login-container input[type="password"] {
+    border: 1px solid #fafafa;
     background-color: #fafafa;
     border-color: #fafafa;
     border: none;
@@ -38,19 +49,29 @@
     padding-bottom: 10px;
     height: 30px;
     font-size: 13px;
+    box-shadow: none;
 }
 
 .login-container input[type="text"]:hover,
 .login-container input[type="password"]:hover {
-    border: 1px solid grey;
+    /* transition: border 0.5s ease-in-out;
+    transition: background-color 1000ms ease-in-out; */
     background-color: white;
-    transition: .25s;
+    transition: border 200ms ease-in-out;
+    border: 1px solid #cbcbcd;
+    transition-duration: 300ms;
+    /* transition: .2s ease-in-out; */
 }
 
 .login-container input[type="text"]:focus, 
 .login-container input[type="password"]:focus {
     border: 1px solid #21ce99;
     transition: .25s;
+}
+
+.test {
+    display: flex;
+    justify-content: space-between;
 }
 
 .login-buttons {
@@ -60,21 +81,29 @@
     border-color: #21ce99;
     color: white;
     font-weight: 500;
-    padding: 15px;
     border-radius: 4px;
     font-size: 13px;
     cursor: pointer;
+    align-items: center;
+    border: 1px solid transparent;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    min-width: 120px;
+    padding: 0 15px;
+    margin-top: 50px;
 }
 
-.test {
-    display: flex;
-}
 
 .login-container input[type="submit"]:hover {
     cursor: pointer;
 }
 
 .forgot, a {
+    margin: 0;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    letter-spacing: .2px;
     font-weight: 400;
     font-size: 13px;
 }
