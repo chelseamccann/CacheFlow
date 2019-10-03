@@ -106,7 +106,6 @@
     padding: 15px;
     border-radius: 25px;
     font-size: 15px;
-    /* margin: 10px; */
 }
 
 
@@ -139,6 +138,7 @@
 .investment-types {
     width: 100%;
     margin-top: 50px;
+    margin-bottom: 50px;
     display: flex;
 }
 
@@ -154,10 +154,130 @@
     font-weight: 900;
 }
 
-.investment-types p {
+.investment-types p,
+.no-manual-text p,
+.market p,
+.phones p,
+.sipc-text p,
+.get-started p{
     font-size: 16px;
     line-height: 26px;
     letter-spacing: .5px;
+}
+
+.no-manual {
+    display: flex;
+}
+
+.no-manual-text h3,
+.market h3,
+.phones h3,
+.sipc-text h3,
+.get-started h3{
+    font-size: 46px;
+    font-weight: 700;
+    /* white-space: nowrap; */
+    margin-bottom: 36px;
+}
+
+.no-manual-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 90px;
+    width: 500px;
+}
+
+.phones {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    color: white;
+    background-color: #040d14;
+    overflow: hidden;
+    height: 500px;
+}
+
+.phones-image {
+    position: absolute;
+    top: 20%;
+    left: -20%;
+    transform: translateY(-40%);
+}
+
+.phones-text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    margin-right: 300px;
+    margin-left: 1000px;
+    margin-top: 150px;
+    z-index: 1;
+}
+
+.market-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 400px;
+}
+
+.market {
+    display: flex;
+    margin-right: 200px;
+}
+
+.sipc {
+    position: relative;
+    display:flex;
+    justify-content: center;
+    background-color: #040d14;
+    color: white;
+    height: 800px; 
+    align-items: center;
+}
+
+.sipc-text {
+    width: 650px;
+    position: absolute;
+    margin-top: 150px;
+    text-align: center;
+}
+
+.sipc-image{ 
+    position: absolute;
+    margin-top: -150px;
+}
+
+.get-started {
+    position: relative;
+    background-color: #21ce99;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}  
+
+.get-started-text {
+    display: flex;  
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 50px;
+    width: 700px;
+}
+
+.signup-button-bottom {
+    width: 75px;
+    box-sizing: content-box;
+    background-color: white;
+    border-color: white;
+    color: #21ce99;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 25px;
+    font-size: 15px;
 }
 
 /* } */

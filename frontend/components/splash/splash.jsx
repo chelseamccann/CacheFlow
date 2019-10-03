@@ -69,7 +69,50 @@ class Splash extends React.Component {
                             <p>Tap into the cryptocurrency market to trade Bitcoin, Ethereum, and more, 24/7.</p>
                         </div>
                     </div>
-                    
+
+                </section>
+
+
+                <section className="no-manual">
+                    <img src={window.manual} className="no-manual-image" />
+                    <div className="no-manual-text">
+                        <h3>No Manual Needed</h3>
+                        <p>Intuitively designed for newcomers and experts alike, Robinhood gives you a clear picture of your portfolio’s performance over time, so you can adjust your positions and learn by doing.</p>
+                    </div>
+                </section>
+
+
+                <section className="phones">
+                    <img src={window.phones} className="phones-image" />
+                    <div className="phones-text">
+                        <h3>Next Level Investing</h3>
+                        <p>Access professional research reports, trade on margin, and make bigger instant deposits with Robinhood Gold—all starting at $5 a month.</p>
+                    </div>
+                </section>
+
+                <section className="market">
+                    <div className="market-text">
+                        <h3>Keep Tabs on the Market</h3>
+                        <p>Access tools and features such as price movement notifications and customized investment news so you can find the right moment to invest.</p>
+                    </div>
+                    <img src={window.market} className="market-image" />
+                </section>
+
+
+                <section className="sipc">
+                    <img src={window.sipc} className="sipc-image" />
+                    <div className="sipc-text">
+                        <h3>Trusted by Millions in the USA</h3>
+                        <p>Robinhood is a member of SIPC, which protects securities customers of its members up to $500,000 (including $250,000 for claims for cash). Explanatory brochure available upon request or at www.sipc.org.</p>
+                    </div>
+                </section>
+
+                <section className="get-started">
+                    <div className="get-started-text">
+                        <h3>Get Started</h3>
+                        <p>It only takes a few minutes to take control of your financial future. Sign up now to start investing with Robinhood.</p>
+                    </div>
+                    <Link to="/signup"><button className="signup-button-bottom">Sign Up</button></Link>
                 </section>
             </div>
         )

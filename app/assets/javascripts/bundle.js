@@ -928,7 +928,43 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.cryptos,
         className: "cryptos-image"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Crypto"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Tap into the cryptocurrency market to trade Bitcoin, Ethereum, and more, 24/7.")))));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Crypto"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Tap into the cryptocurrency market to trade Bitcoin, Ethereum, and more, 24/7.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "no-manual"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.manual,
+        className: "no-manual-image"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "no-manual-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "No Manual Needed"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Intuitively designed for newcomers and experts alike, Robinhood gives you a clear picture of your portfolio\u2019s performance over time, so you can adjust your positions and learn by doing."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "phones"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.phones,
+        className: "phones-image"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "phones-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Next Level Investing"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Access professional research reports, trade on margin, and make bigger instant deposits with Robinhood Gold\u2014all starting at $5 a month."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "market"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "market-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Keep Tabs on the Market"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Access tools and features such as price movement notifications and customized investment news so you can find the right moment to invest.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.market,
+        className: "market-image"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "sipc"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.sipc,
+        className: "sipc-image"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "sipc-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Trusted by Millions in the USA"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Robinhood is a member of SIPC, which protects securities customers of its members up to $500,000 (including $250,000 for claims for cash). Explanatory brochure available upon request or at www.sipc.org."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "get-started"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "get-started-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Get Started"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It only takes a few minutes to take control of your financial future. Sign up now to start investing with Robinhood.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/signup"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "signup-button-bottom"
+      }, "Sign Up"))));
     }
   }]);
 
