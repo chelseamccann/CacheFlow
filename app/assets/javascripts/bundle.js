@@ -761,9 +761,9 @@ function (_React$Component) {
         type: "submit",
         value: "Continue",
         className: "inputs signup-continue-button"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Already started? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "login",
-        href: ""
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Already started? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/login",
+        className: "login"
       }, "Log in to complete your application.")))));
     }
   }]);
@@ -896,11 +896,9 @@ function (_React$Component) {
         className: "invest-intro-text"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Invest Commission-Free"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invest in stocks, ETFs, options, and cryptocurrencies, all commission-free, right from your phone or desktop"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/signup"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        className: "signup-button",
-        value: "Sign Up"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "signup-button"
+      }, "Sign Up")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.splash,
         className: "phone-image"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -962,9 +960,9 @@ function (_React$Component) {
         className: "get-started-text"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Get Started"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It only takes a few minutes to take control of your financial future. Sign up now to start investing with Robinhood.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/signup"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "signup-button-bottom"
-      }, "Sign Up"))));
+      }, "Sign Up")));
     }
   }]);
 

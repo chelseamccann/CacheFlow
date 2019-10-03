@@ -29,6 +29,7 @@
 }
 
 .personal-buttons {
+    cursor: pointer;
     display: flex;
     width: 225px;
     justify-content: space-between;
@@ -85,6 +86,7 @@
     text-decoration: none;
     color: black;
     font-weight: 700;
+    cursor: pointer;
 }
 
 .nav-left {
@@ -106,6 +108,7 @@
     padding: 15px;
     border-radius: 25px;
     font-size: 15px;
+    cursor: pointer;
 }
 
 
@@ -269,6 +272,7 @@
 }
 
 .signup-button-bottom {
+    cursor: pointer;
     width: 75px;
     box-sizing: content-box;
     background-color: white;

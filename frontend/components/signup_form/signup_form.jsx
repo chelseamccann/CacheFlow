@@ -86,8 +86,8 @@ class SignupForm extends React.Component {
             {this.renderErrors()}
             <input type="submit" value="Continue" className="inputs signup-continue-button"/>
             {/* <Link to="/login"><input type="submit" value="Continue" className="signup-continue-button"/></Link> */}
-            <p>Already started? <a className="login" href="">Log in to complete your application.</a></p>
-          
+            <p>Already started? <Link to="/login" className="login">Log in to complete your application.</Link></p>
+            
           </div>
         </form>
       </>
