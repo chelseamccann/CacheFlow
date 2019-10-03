@@ -22,7 +22,7 @@ class Splash extends React.Component {
                     <div className="nav-links">
                         <ul>
                             <li><Link to="/login" className="login-button">Log In</Link></li>
-                            <li><Link to="/signup"><button className="signup-button">Sign Up</button></Link></li>
+                            <li><Link to="/signup" className="signup-button">Sign Up</Link></li>
                         </ul>
 
                     </div>
@@ -33,7 +33,7 @@ class Splash extends React.Component {
                     <div className="invest-intro-text">
                         <h1>Invest Commission-Free</h1>
                         <p>Invest in stocks, ETFs, options, and cryptocurrencies, all commission-free, right from your phone or desktop</p>
-                        <Link to="/signup"/><button className="signup-button">Sign Up</button>
+                        <Link to="/signup" className="signup-button">Sign Up</Link>
                         {/* <p>Commissions Disclosure</p> */}
                     </div>
                     <img src={window.splash} className="phone-image" />
@@ -110,7 +110,7 @@ class Splash extends React.Component {
                         <h3>Get Started</h3>
                         <p>It only takes a few minutes to take control of your financial future. Sign up now to start investing with Robinhood.</p>
                     </div>
-                    <Link to="/signup"/><button className="signup-button-bottom">Sign Up</button>
+                    <Link to="/signup" className="signup-button-bottom">Sign Up</Link>
                 </section>
             </div>
         )

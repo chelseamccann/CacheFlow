@@ -887,16 +887,14 @@ function (_React$Component) {
         to: "/login",
         className: "login-button"
       }, "Log In")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/signup"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        to: "/signup",
         className: "signup-button"
-      }, "Sign Up")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, "Sign Up"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "invest-intro"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "invest-intro-text"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Invest Commission-Free"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invest in stocks, ETFs, options, and cryptocurrencies, all commission-free, right from your phone or desktop"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/signup"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        to: "/signup",
         className: "signup-button"
       }, "Sign Up")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.splash,
@@ -959,8 +957,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "get-started-text"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Get Started"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It only takes a few minutes to take control of your financial future. Sign up now to start investing with Robinhood.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/signup"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        to: "/signup",
         className: "signup-button-bottom"
       }, "Sign Up")));
     }
