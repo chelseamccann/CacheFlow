@@ -45,42 +45,48 @@ class SignupForm extends React.Component {
             <h2>Make Your Money Move</h2>
             <p>CacheFlow lets you invest in companies you love, commission-free.</p>
 
-            <input
-              type="text"
-              value={this.state.firstName}
-              onChange={this.update("firstName")}
-              placeholder={" First Name"}
-              />
-            <br />
+            <div className="names">
+              <input
+                type="text"
+                value={this.state.firstName}
+                onChange={this.update("firstName")}
+                placeholder={" First Name"}
+                className="inputs"
+                />
 
-            <input
-              type="text"
-              value={this.state.lastName}
-              onChange={this.update("lastName")}
-              placeholder={" Last Name"}
-              />
-            <br />
+              {/* <br /> */}
+
+              <input
+                type="text"
+                value={this.state.lastName}
+                onChange={this.update("lastName")}
+                placeholder={" Last Name"}
+                className="inputs"
+                />
+            </div>
+            {/* <br /> */}
 
             <input
               type="text"
               value={this.state.email}
               onChange={this.update("email")}
               placeholder={" Email address"}
+              className="inputs"
               />
-            <br />
-            <label>Password</label>
+            {/* <br /> */}
+
             <input
               type="password"
               value={this.state.password}
               onChange={this.update("password")}
               placeholder={" Password (min. 10 characters)"}
+              className="inputs"
               />
 
             {this.renderErrors()}
-            
-
-            <Link to="/login"><input type="submit" value="Continue" /></Link>
-            <p>Already started? <a href="">Log in to complete your application.</a></p>
+            <input type="submit" value="Continue" className="signup-continue-button"/>
+            {/* <Link to="/login"><input type="submit" value="Continue" className="signup-continue-button"/></Link> */}
+            <p>Already started? <a className="login" href="">Log in to complete your application.</a></p>
           </div>
         </form>
       </>

@@ -535,8 +535,12 @@ function (_React$Component) {
         className: "forgot"
       }, "Forgot your username/password?"), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
-        value: "Sign In"
-      }))));
+        value: "Sign In",
+        className: "login-buttons"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: handleDemo,
+        className: "login-buttons"
+      }, "Demo User"))));
     }
   }]);
 
@@ -544,6 +548,15 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (LoginForm);
+
+var handleDemo = function handleDemo(e) {
+  var demoUser = {
+    email: "jb",
+    password: "password"
+  };
+  e.preventDefault();
+  dispatch(loginUser(demoUser));
+};
 
 /***/ }),
 
@@ -711,32 +724,38 @@ function (_React$Component) {
         className: "sign-up-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sign-up-form"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Make Your Money Move"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "CacheFlow lets you invest in companies you love, commission-free."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Make Your Money Move"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "CacheFlow lets you invest in companies you love, commission-free."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "names"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.firstName,
         onChange: this.update("firstName"),
-        placeholder: " First Name"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: " First Name",
+        className: "inputs"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.lastName,
         onChange: this.update("lastName"),
-        placeholder: " Last Name"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: " Last Name",
+        className: "inputs"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.email,
         onChange: this.update("email"),
-        placeholder: " Email address"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: " Email address",
+        className: "inputs"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         value: this.state.password,
         onChange: this.update("password"),
-        placeholder: " Password (min. 10 characters)"
-      }), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/login"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: " Password (min. 10 characters)",
+        className: "inputs"
+      }), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
-        value: "Continue"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Already started? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        value: "Continue",
+        className: "signup-continue-button"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Already started? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "login",
         href: ""
       }, "Log in to complete your application.")))));
     }
@@ -855,20 +874,24 @@ function (_React$Component) {
       }, "LinkedIn")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-signup-buttons"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/login"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: ""
+      }, "Log In"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/signup"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "signup-button"
-      }, "Sign Up"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/login"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "login-button"
-      }, "Log In"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, "Sign Up"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "invest-intro"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "invest-intro-text"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Invest Commission-Free"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Invest in stocks, ETFs, options, and cryptocurrencies, all commission-free, right from your phone or desktop"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: ""
-      }, "Sign Up"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Commissions Disclosure")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        to: "/signup"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        className: "signup-button",
+        value: "Sign Up"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "https://cdn.robinhood.com/assets-about/a4a80e964c803ddb7a9fc7459e0eac01.png",
         className: "phone-image",
         alt: ""

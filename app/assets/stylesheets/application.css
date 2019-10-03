@@ -14,29 +14,15 @@
  *= require_self
  */
 
-body {
+* {
     font-family: "DIN Pro", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
- .errors {
-    list-style: none;
- }
-
- .nav-bar {
-    display: flex;
-    width: 100%;
-
- }
-
- .navbar > .splash {
-    right: 10px;
-    float: right;
- }
+ /* SIGNUP PAGE START */
 
 .sign-up-container {
     display: flex;
     justify-content: center;
-    font-family: "Hiragino Sans GB";
     font-size: 30px;
     line-height: 40px;
     letter-spacing: .25px;
@@ -47,9 +33,53 @@ body {
  }
  
 .sign-up-form {
-    padding: 10px;
-    border: solid 1px black;
+    margin: 50px;
+    display: flex;
+    align-items:center;
+    flex-direction: column;
  }
+
+.names {
+    display: flex;
+    justify-content: space-between;
+    /* width: 102.5%; */
+    width: 100%;
+    /* margin: 0 auto; */
+}
+
+.inputs {
+    margin: 0 auto;
+    width: 100%;
+    padding: 10px; 
+    
+}
+
+ .errors {
+    list-style: none;
+ }
+
+.signup-continue-button {
+    width: 100%;
+    box-sizing: content-box;
+    background-color: #21ce99;
+    border-color: #21ce99;
+    color: white;
+    font-weight: 500;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.login, a:link{
+    text-decoration: none;
+    color: #21ce99;
+}
+
+/* SIGNUP PAGE END */
+
+/********************/
+
+/* LOGIN PAGE START */
 
 .login-container {
     display: flex;
@@ -60,8 +90,6 @@ body {
 }
 
 .login-form-img img {
-    /* background-image: url(https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png); */
-    /* background-position: center; */
     background-size: cover;
     position: relative;
     overflow: hidden;
@@ -74,11 +102,9 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    /* justify-content: space-around; */
     align-items: left;
     margin: 150px;
     margin-top: 300px;
-    /* height: 100%; */
     width: 50%;
 }
 
@@ -101,7 +127,13 @@ body {
     transition: .25s;
 }
 
-.login-container input[type="submit"] {
+.login-container input[type="text"]:focus, 
+.login-container input[type="password"]:focus {
+    border: 1px solid #21ce99;
+    transition: .25s;
+}
+
+.login-buttons {
     width: 100px;
     box-sizing: content-box;
     background-color: #21ce99;
@@ -126,7 +158,11 @@ body {
     text-decoration: none;
     color: #21ce99;
 }
+/* LOGIN PAGE END */
 
+/********************/
+
+/* SPLASH PAGE START */
 .splash {
     position: absolute;
     width: 100%;
@@ -161,10 +197,33 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* padding-right: 70px;
-    padding-top: 400px; */
+    padding-left: 70px;
+    /* padding-top: 400px; */
 }
 
-/* .signup-button {
+.invest-intro-text h1 {
+    font-size: 32px;
+    white-space: nowrap;
+}
 
-} */
+.login-signup-buttons a{
+    font-size: 16px;
+    font-weight: 700;
+    
+}
+
+.signup-button {
+    width: 75px;
+    box-sizing: content-box;
+    background-color: #21ce99;
+    border-color: #21ce99;
+    color: white;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 25px;
+    font-size: 16px;
+}
+
+/* SPLASH PAGE END */
+
+/********************/

@@ -61,7 +61,9 @@ class LoginForm extends React.Component {
               />
             <a href="" className="forgot">Forgot your username/password?</a>
             {this.renderErrors()}
-            <input type="submit" value="Sign In" />
+
+            <input type="submit" value="Sign In" className="login-buttons" />
+            <button onClick={handleDemo} className="login-buttons">Demo User</button>
           </div>
         </form>
       </>
@@ -69,3 +71,10 @@ class LoginForm extends React.Component {
   }
 }
 export default LoginForm;
+
+
+const handleDemo = e => {
+  const demoUser = {email: "jb", password: "password"}
+  e.preventDefault();
+  dispatch(loginUser(demoUser))
+}
