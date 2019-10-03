@@ -44,7 +44,7 @@ class SignupForm extends React.Component {
 
             <h2>Make Your Money Move</h2>
             <p>CacheFlow lets you invest in companies you love, commission-free.</p>
-
+            
             <div className="names">
               <input
                 type="text"

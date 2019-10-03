@@ -27,7 +27,7 @@ class LoginForm extends React.Component {
   handleDemo(e) {
     e.preventDefault();
     const demoUser = {email: "jb", password: "password"}
-    this.props.demo(demoUser)
+    this.props.processForm(demoUser)
   }
 
   renderErrors(){
@@ -57,7 +57,6 @@ class LoginForm extends React.Component {
               type="text"
               value={this.state.email}
               onChange={this.update("email")}
-              // placeholder={" Email"}
               />
             <br/>
             <label>Password</label>
@@ -65,13 +64,19 @@ class LoginForm extends React.Component {
               type="password"
               value={this.state.password}
               onChange={this.update("password")}
-              // placeholder={" Password"}
               />
             <a href="" className="forgot">Forgot your username/password?</a>
             {this.renderErrors()}
 
+
+
+          <div className="test">
             <input type="submit" value="Sign In" className="login-buttons" />
             <button onClick={this.handleDemo} className="login-buttons">Demo User</button>
+          </div>
+
+
+          
           </div>
         </form>
       </>
@@ -79,10 +84,3 @@ class LoginForm extends React.Component {
   }
 }
 export default LoginForm;
-
-
-// const handleDemo = e => {
-//   const demoUser = {email: "jb", password: "password"}
-//   e.preventDefault();
-//   this.props.demo(demoUser)
-// }

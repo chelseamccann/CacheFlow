@@ -511,7 +511,7 @@ function (_React$Component) {
         email: "jb",
         password: "password"
       };
-      this.props.demo(demoUser);
+      this.props.processForm(demoUser);
     }
   }, {
     key: "renderErrors",
@@ -539,35 +539,31 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Welcome to Robinhood"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Email or Username"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.email,
-        onChange: this.update("email") // placeholder={" Email"}
-
+        onChange: this.update("email")
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         value: this.state.password,
-        onChange: this.update("password") // placeholder={" Password"}
-
+        onChange: this.update("password")
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "",
         className: "forgot"
-      }, "Forgot your username/password?"), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Forgot your username/password?"), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "test"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Sign In",
         className: "login-buttons"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleDemo,
         className: "login-buttons"
-      }, "Demo User"))));
+      }, "Demo User")))));
     }
   }]);
 
   return LoginForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (LoginForm); // const handleDemo = e => {
-//   const demoUser = {email: "jb", password: "password"}
-//   e.preventDefault();
-//   this.props.demo(demoUser)
-// }
+/* harmony default export */ __webpack_exports__["default"] = (LoginForm);
 
 /***/ }),
 
@@ -603,9 +599,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["loginUser"])(user));
-    },
-    demo: function demo(demoUser) {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["loginUser"])(demoUser));
     }
   };
 };
@@ -875,25 +868,29 @@ function (_React$Component) {
         className: "splash-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "splash-header"
-      }, "CacheFlow"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "nav-links"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "logo"
+      }, "cacheflow"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "personal-buttons"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: ""
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "",
+        className: "nav-left"
       }, "Personal")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: ""
+        href: "",
+        className: "nav-left"
       }, "Github")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: ""
+        href: "",
+        className: "nav-left"
       }, "LinkedIn")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "login-signup-buttons"
+        className: "nav-links"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/login"
+        to: "/login",
+        className: "login-button"
       }, "Log In")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/signup"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "signup-button"
-      }, "Sign Up"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, "Sign Up")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "invest-intro"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "invest-intro-text"
@@ -904,9 +901,8 @@ function (_React$Component) {
         className: "signup-button",
         value: "Sign Up"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "https://cdn.robinhood.com/assets-about/a4a80e964c803ddb7a9fc7459e0eac01.png",
-        className: "phone-image",
-        alt: ""
+        src: window.splash,
+        className: "phone-image"
       })));
     }
   }]);
