@@ -170,30 +170,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  window.loginUser = _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["loginUser"];
-  window.signupUser = _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["signupUser"];
-  window.logoutUser = _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["logoutUser"]; //bootstrapping user
-
-  var preloadedState = undefined;
+  //bootstrapping user
+  var store;
 
   if (window.currentUser) {
-    preloadedState = {
+    var preloadedState = {
       session: {
-        currentUser: window.currentUser
+        id: window.currentUser.id
+      },
+      entities: {
+        users: _defineProperty({}, window.currentUser.id, window.currentUser)
       }
     };
+    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"])(preloadedState);
+    delete window.currentUser;
+  } else {
+    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"])();
   }
 
-  var store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"])();
   var root = document.getElementById("root");
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);
@@ -436,6 +439,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -459,6 +463,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var LoginForm =
 /*#__PURE__*/
 function (_React$Component) {
@@ -475,6 +480,7 @@ function (_React$Component) {
       password: ""
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleDemo = _this.handleDemo.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -496,6 +502,16 @@ function (_React$Component) {
       this.props.processForm(this.state).then(function () {
         return _this3.props.history.push('/');
       });
+    }
+  }, {
+    key: "handleDemo",
+    value: function handleDemo(e) {
+      e.preventDefault();
+      var demoUser = {
+        email: "jb",
+        password: "password"
+      };
+      this.props.demo(demoUser);
     }
   }, {
     key: "renderErrors",
@@ -538,7 +554,7 @@ function (_React$Component) {
         value: "Sign In",
         className: "login-buttons"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: handleDemo,
+        onClick: this.handleDemo,
         className: "login-buttons"
       }, "Demo User"))));
     }
@@ -547,16 +563,11 @@ function (_React$Component) {
   return LoginForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (LoginForm);
-
-var handleDemo = function handleDemo(e) {
-  var demoUser = {
-    email: "jb",
-    password: "password"
-  };
-  e.preventDefault();
-  dispatch(loginUser(demoUser));
-};
+/* harmony default export */ __webpack_exports__["default"] = (LoginForm); // const handleDemo = e => {
+//   const demoUser = {email: "jb", password: "password"}
+//   e.preventDefault();
+//   this.props.demo(demoUser)
+// }
 
 /***/ }),
 
@@ -592,6 +603,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["loginUser"])(user));
+    },
+    demo: function demo(demoUser) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["loginUser"])(demoUser));
     }
   };
 };
@@ -753,7 +767,7 @@ function (_React$Component) {
       }), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Continue",
-        className: "signup-continue-button"
+        className: "inputs signup-continue-button"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Already started? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "login",
         href: ""
@@ -875,9 +889,7 @@ function (_React$Component) {
         className: "login-signup-buttons"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/login"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: ""
-      }, "Log In"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }, "Log In")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/signup"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "signup-button"

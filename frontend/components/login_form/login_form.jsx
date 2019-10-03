@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { loginUser } from '../../actions/session_actions'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class LoginForm extends React.Component {
       password: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemo = this.handleDemo.bind(this);
   }
 
   update(field) {
@@ -20,6 +22,12 @@ class LoginForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.processForm(this.state).then(() => this.props.history.push('/'))
+  }
+
+  handleDemo(e) {
+    e.preventDefault();
+    const demoUser = {email: "jb", password: "password"}
+    this.props.demo(demoUser)
   }
 
   renderErrors(){
@@ -63,7 +71,7 @@ class LoginForm extends React.Component {
             {this.renderErrors()}
 
             <input type="submit" value="Sign In" className="login-buttons" />
-            <button onClick={handleDemo} className="login-buttons">Demo User</button>
+            <button onClick={this.handleDemo} className="login-buttons">Demo User</button>
           </div>
         </form>
       </>
@@ -73,8 +81,8 @@ class LoginForm extends React.Component {
 export default LoginForm;
 
 
-const handleDemo = e => {
-  const demoUser = {email: "jb", password: "password"}
-  e.preventDefault();
-  dispatch(loginUser(demoUser))
-}
+// const handleDemo = e => {
+//   const demoUser = {email: "jb", password: "password"}
+//   e.preventDefault();
+//   this.props.demo(demoUser)
+// }

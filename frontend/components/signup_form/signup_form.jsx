@@ -66,7 +66,7 @@ class SignupForm extends React.Component {
             </div>
             {/* <br /> */}
 
-            <input
+              <input
               type="text"
               value={this.state.email}
               onChange={this.update("email")}
@@ -84,9 +84,10 @@ class SignupForm extends React.Component {
               />
 
             {this.renderErrors()}
-            <input type="submit" value="Continue" className="signup-continue-button"/>
+            <input type="submit" value="Continue" className="inputs signup-continue-button"/>
             {/* <Link to="/login"><input type="submit" value="Continue" className="signup-continue-button"/></Link> */}
             <p>Already started? <a className="login" href="">Log in to complete your application.</a></p>
+          
           </div>
         </form>
       </>
