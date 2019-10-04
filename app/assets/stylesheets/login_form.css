@@ -41,8 +41,6 @@
 .login-container input[type="password"] {
     border: 1px solid #fafafa;
     background-color: #fafafa;
-    border-color: #fafafa;
-    border: none;
     width: 100%;
     border-radius: 4px;
     padding-top: 10px;
@@ -54,15 +52,9 @@
 
 .login-container input[type="text"]:hover,
 .login-container input[type="password"]:hover {
-    /* transition: border 0.5s ease-in-out;
-    transition: background-color 1000ms ease-in-out; */
     background-color: white;
-    /* transition: border 200ms ease-in-out; */
-    border: 1px solid #cbcbcd;
-    /* border-color: #cbcbcd; */
-    /* transition-duration: 300ms; */
-    transition: background-color 0.5s ease-in-out, border 200ms ease-in-out;
-    /* transition: .2s ease-in-out; */
+    border-color: #cbcbcd;
+    transition: background-color 1000ms ease-in-out, border-color 200ms ease-in-out;
 }
 
 .login-container input[type="text"]:focus, 
@@ -101,17 +93,25 @@
     cursor: pointer;
 }
 
-.forgot, a {
+.forgot{
     margin: 0;
     padding-top: 14px;
     padding-bottom: 14px;
     letter-spacing: .2px;
     font-weight: 400;
     font-size: 13px;
+    color: #21ce99;
+    font-weight: 500;
 }
 
-.forgot, a:link{
+.forgot:link{
     text-decoration: none;
-    color: #21ce99;
+}
+
+.login-errors {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.25px;
+    line-height: 20px;
 }
 /* LOGIN PAGE END */

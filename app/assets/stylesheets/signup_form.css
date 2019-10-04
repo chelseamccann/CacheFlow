@@ -94,15 +94,20 @@
     border-color: #199972;
 }
 
-.login, a:link{
-    text-decoration: none;
+.login{
+    /* text-decoration: underline; */
     color: #21ce99;
+}
+
+.login:hover{
+    /* text-decoration: none; */
+    color: #1ae9aa;
 }
 
 
 .sign-up-container input[type="text"]:focus, 
 .sign-up-container input[type="password"]:focus {
-    border: 1px solid #21ce99;
+    border: .5px solid #21ce99;
     transition: .25s;
 }
 

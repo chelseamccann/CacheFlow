@@ -50,13 +50,14 @@ class LoginForm extends React.Component {
             <img src="https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png"/>
           </div>
           <div className="login-form">
-            <h2>Welcome to Robinhood</h2>
-
+            <h2>Welcome to CacheFlow</h2>
+      
             <label>Email or Username</label>
             <input
               type="text"
               value={this.state.email}
               onChange={this.update("email")}
+              autoFocus
               />
             <br/>
             <label>Password</label>
@@ -67,8 +68,8 @@ class LoginForm extends React.Component {
               />
 
               
-            <a href="" className="forgot">Forgot your username/password?</a>
-            {this.renderErrors()}
+            <Link to="/" className="forgot">Forgot your username/password?</Link>
+            <div className="login-errors">{this.renderErrors()}</div>
 
 
 

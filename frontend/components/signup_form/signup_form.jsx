@@ -24,6 +24,12 @@ class SignupForm extends React.Component {
     this.props.processForm(this.state).then(() => this.props.history.push('/'))
   }
 
+  checkErrors(error){
+    if (this.props.errors.includes(error)){
+      return error
+    }
+  }
+
   renderErrors(){
     return (
       <ul className="errors"> 
@@ -37,6 +43,10 @@ class SignupForm extends React.Component {
   }
 
   render() {
+
+    const emailError = "Please enter a valid email address.";
+    const pwError = "Your password must be at least 10 characters."
+
     return (
       <>
         <form onSubmit={this.handleSubmit} className="sign-up-container">
@@ -56,7 +66,7 @@ class SignupForm extends React.Component {
                 className="inputs fname"
                 />
 
-              {/* <br /> */}
+
 
               <input
                 type="text"
@@ -66,18 +76,19 @@ class SignupForm extends React.Component {
                 className="inputs lname"
                 />
             </div>
-            {/* <br /> */}
 
+            <p></p>
               <input
               type="text"
               value={this.state.email}
               onChange={this.update("email")}
               placeholder={" Email address"}
               className="inputs"
+              onClick={this.checkErrors(emailError)}
               />
-            {/* <br /> */}
 
-            <input
+            <p>{this.checkErrors(pwError)}</p>
+              <input
               type="password"
               value={this.state.password}
               onChange={this.update("password")}
@@ -85,10 +96,9 @@ class SignupForm extends React.Component {
               className="inputs"
               />
 
-            {this.renderErrors()}
+            <div className="login-errors">{this.renderErrors()}</div>
             <input type="submit" value="Continue" className="inputs signup-continue-button"/>
-            {/* <Link to="/login"><input type="submit" value="Continue" className="signup-continue-button"/></Link> */}
-            <p>Already started? <Link to="/login" className="login">Log in to complete your application.</Link></p>
+            <p className="started">Already started? <Link className="login" to="/login">Log in to complete your application.</Link></p>
             
           </div>
         </form>
