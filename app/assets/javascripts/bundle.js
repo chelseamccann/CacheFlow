@@ -90,7 +90,7 @@
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_ERRORS, receiveCurrentUser, logoutCurrentUser, receiveErrors, loginUser, signupUser, logoutUser */
+/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_ERRORS, CLEAR_ERRORS, receiveCurrentUser, logoutCurrentUser, receiveErrors, clearErrors, loginUser, signupUser, logoutUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,9 +98,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_CURRENT_USER", function() { return RECEIVE_CURRENT_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGOUT_CURRENT_USER", function() { return LOGOUT_CURRENT_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ERRORS", function() { return RECEIVE_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_ERRORS", function() { return CLEAR_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveCurrentUser", function() { return receiveCurrentUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutCurrentUser", function() { return logoutCurrentUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveErrors", function() { return receiveErrors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearErrors", function() { return clearErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginUser", function() { return loginUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signupUser", function() { return signupUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutUser", function() { return logoutUser; });
@@ -109,6 +111,7 @@ __webpack_require__.r(__webpack_exports__);
 var RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 var LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
 var RECEIVE_ERRORS = "RECEIVE_ERRORS";
+var CLEAR_ERRORS = "CLEAR_ERRORS";
 var receiveCurrentUser = function receiveCurrentUser(currentUser) {
   return {
     type: RECEIVE_CURRENT_USER,
@@ -124,6 +127,11 @@ var receiveErrors = function receiveErrors(errors) {
   return {
     type: RECEIVE_ERRORS,
     errors: errors
+  };
+};
+var clearErrors = function clearErrors() {
+  return {
+    type: CLEAR_ERRORS
   };
 };
 var loginUser = function loginUser(userParam) {
@@ -485,6 +493,11 @@ function (_React$Component) {
   }
 
   _createClass(LoginForm, [{
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.props.clearErrors();
+    }
+  }, {
     key: "update",
     value: function update(field) {
       var _this2 = this;
@@ -516,13 +529,14 @@ function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "errors"
-      }, this.props.errors.map(function (error, idx) {
+      var err = this.props.errors.map(function (error, idx) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: idx
         }, error[idx]);
-      }));
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "errors"
+      }, err.length > 0 ? err : null);
     }
   }, {
     key: "render",
@@ -540,11 +554,14 @@ function (_React$Component) {
         type: "text",
         value: this.state.email,
         onChange: this.update("email"),
-        autoFocus: true
+        required: true,
+        autoFocus: true //email field?
+
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         value: this.state.password,
-        onChange: this.update("password")
+        onChange: this.update("password"),
+        required: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/",
         className: "forgot"
@@ -602,6 +619,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["loginUser"])(user));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["clearErrors"])());
     }
   };
 };
@@ -697,6 +717,11 @@ function (_React$Component) {
   }
 
   _createClass(SignupForm, [{
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.props.clearErrors();
+    }
+  }, {
     key: "update",
     value: function update(field) {
       var _this2 = this;
@@ -714,14 +739,12 @@ function (_React$Component) {
       this.props.processForm(this.state).then(function () {
         return _this3.props.history.push('/');
       });
-    }
-  }, {
-    key: "checkErrors",
-    value: function checkErrors(error) {
-      if (this.props.errors.includes(error)) {
-        return error;
-      }
-    }
+    } // checkErrors(error){
+    //   if (this.props.errors.includes(error)){
+    //     return error
+    //   }
+    // }
+
   }, {
     key: "renderErrors",
     value: function renderErrors() {
@@ -736,8 +759,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var emailError = "Please enter a valid email address.";
-      var pwError = "Your password must be at least 10 characters.";
+      // const emailError = "Please enter a valid email address.";
+      // const pwError = "Your password must be at least 10 characters."
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "sign-up-container"
@@ -755,26 +778,29 @@ function (_React$Component) {
         value: this.state.firstName,
         onChange: this.update("firstName"),
         placeholder: " First Name",
-        className: "inputs fname"
+        className: "inputs fname",
+        required: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.lastName,
         onChange: this.update("lastName"),
         placeholder: " Last Name",
-        className: "inputs lname"
+        className: "inputs lname",
+        required: true
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.email,
         onChange: this.update("email"),
         placeholder: " Email address",
         className: "inputs",
-        onClick: this.checkErrors(emailError)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.checkErrors(pwError)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        required: true
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         value: this.state.password,
         onChange: this.update("password"),
         placeholder: " Password (min. 10 characters)",
-        className: "inputs"
+        className: "inputs",
+        required: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-errors"
       }, this.renderErrors()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -829,6 +855,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["signupUser"])(user));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["clearErrors"])());
     }
   };
 };
@@ -890,11 +919,15 @@ function (_React$Component) {
         className: "splash-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "splash-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "logo"
-      }, "cacheflow"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "personal-buttons"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.rh,
+        className: "nav-left logo"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/",
+        className: "nav-left"
+      }, "cacheflow")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "",
         className: "nav-left"
       }, "Personal")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -1080,6 +1113,9 @@ var _nullErrors = [];
       return Object.assign({}, action.errors);
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
+      return _nullErrors;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["CLEAR_ERRORS"]:
       return _nullErrors;
 
     default:
@@ -33853,7 +33889,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

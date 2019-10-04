@@ -39,6 +39,7 @@
 
 .login-container input[type="text"], 
 .login-container input[type="password"] {
+    padding: 5px 20px 5px 20px;
     border: 1px solid #fafafa;
     background-color: #fafafa;
     width: 100%;
@@ -88,6 +89,10 @@
     margin-top: 50px;
 }
 
+.login-buttons:hover {
+    background-color: #1ae9aa;
+    border-color: #1ae9aa;
+}
 
 .login-container input[type="submit"]:hover {
     cursor: pointer;

@@ -43,6 +43,7 @@
     "npm": "6.4.1"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "webpack-cli": "^3.3.9"
   }
 }

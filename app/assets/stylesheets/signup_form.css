@@ -50,12 +50,11 @@
 
 .inputs {
     width: 100%;
-    padding-top: 15px; 
-    padding-bottom: 15px;
     margin-bottom: 15px;
     box-sizing: border-box;
     border-radius: 4px;
     border: solid .5px #cbcbcd;
+    padding: 15px 20px 15px 20px;
 }
 
 .inputs::placeholder{

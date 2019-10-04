@@ -13,6 +13,10 @@ class SignupForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillUnmount(){
+    this.props.clearErrors()
+  }
+
   update(field) {
     return e => {
       this.setState({ [field]: e.target.value })
@@ -24,11 +28,11 @@ class SignupForm extends React.Component {
     this.props.processForm(this.state).then(() => this.props.history.push('/'))
   }
 
-  checkErrors(error){
-    if (this.props.errors.includes(error)){
-      return error
-    }
-  }
+  // checkErrors(error){
+  //   if (this.props.errors.includes(error)){
+  //     return error
+  //   }
+  // }
 
   renderErrors(){
     return (
@@ -44,8 +48,8 @@ class SignupForm extends React.Component {
 
   render() {
 
-    const emailError = "Please enter a valid email address.";
-    const pwError = "Your password must be at least 10 characters."
+    // const emailError = "Please enter a valid email address.";
+    // const pwError = "Your password must be at least 10 characters."
 
     return (
       <>
@@ -64,6 +68,7 @@ class SignupForm extends React.Component {
                 onChange={this.update("firstName")}
                 placeholder={" First Name"}
                 className="inputs fname"
+                required
                 />
 
 
@@ -74,6 +79,7 @@ class SignupForm extends React.Component {
                 onChange={this.update("lastName")}
                 placeholder={" Last Name"}
                 className="inputs lname"
+                required
                 />
             </div>
 
@@ -84,16 +90,17 @@ class SignupForm extends React.Component {
               onChange={this.update("email")}
               placeholder={" Email address"}
               className="inputs"
-              onClick={this.checkErrors(emailError)}
+              required
               />
 
-            <p>{this.checkErrors(pwError)}</p>
+            {/* <p>{this.checkErrors(pwError)}</p> */}
               <input
               type="password"
               value={this.state.password}
               onChange={this.update("password")}
               placeholder={" Password (min. 10 characters)"}
               className="inputs"
+              required
               />
 
             <div className="login-errors">{this.renderErrors()}</div>

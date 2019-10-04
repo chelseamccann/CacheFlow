@@ -19,6 +19,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    align-content: center;
     margin-top: 30px;
     margin-left: 50px;
     margin-right: 50px;
@@ -30,21 +31,34 @@
     justify-content: space-evenly;
 }
 
-.splash-header li {
-    width: 60px;
-}
-
 .personal-buttons {
     cursor: pointer;
     display: flex;
-    width: 225px;
-    align-content: center;
+    width: 1000px;
+    align-items: center;
     justify-content: space-between;
+}
+
+.logo{
+    margin: 0;
 }
 
 .nav-links {
     display: flex;
     justify-content: space-between;
+    align-content: center;
+}
+
+.nav-left:hover,
+.login-button:hover{
+    text-decoration: underline;
+    color: #21ce99;
+}
+
+.signup-button:hover {
+    text-decoration: underline;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.16);
+    transition: box-shadow 300ms;
 }
 
 .nav-links ul {

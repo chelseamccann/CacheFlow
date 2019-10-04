@@ -11,8 +11,13 @@ class Splash extends React.Component {
                 <div className="splash-nav">
 
                     <div className="splash-header">
-                        <div className="logo">cacheflow</div>
+                        {/* <div className="logo">cacheflow</div> */}
                         <ul className="personal-buttons">
+                            <li><img src={window.rh} className="nav-left logo" /></li>
+                            <li> 
+                                
+                                <Link to="/" className="nav-left">cacheflow</Link>
+                            </li>
                             <li><a href="" className="nav-left">Personal</a></li>
                             <li><a href="" className="nav-left">Github</a></li>
                             <li><a href="" className="nav-left">LinkedIn</a></li>

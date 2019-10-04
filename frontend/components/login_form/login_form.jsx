@@ -13,6 +13,10 @@ class LoginForm extends React.Component {
     this.handleDemo = this.handleDemo.bind(this);
   }
 
+  componentWillUnmount(){
+    this.props.clearErrors()
+  }
+
   update(field) {
     return e => {
       this.setState({ [field]: e.target.value })
@@ -31,13 +35,20 @@ class LoginForm extends React.Component {
   }
 
   renderErrors(){
+    const err = this.props.errors.map((error, idx) => (
+      <li key={idx}>
+        {error[idx]}
+      </li>
+    ))
+
     return (
       <ul className="errors"> 
-      {this.props.errors.map((error, idx) => (
+      { (err.length>0) ? err : null }
+      {/* {this.props.errors.map((error, idx) => (
         <li key={idx}>
           {error[idx]}
         </li>
-      ))}
+      ))} */}
       </ul>
     )
   }
@@ -57,7 +68,9 @@ class LoginForm extends React.Component {
               type="text"
               value={this.state.email}
               onChange={this.update("email")}
+              required
               autoFocus
+              //email field?
               />
             <br/>
             <label>Password</label>
@@ -65,6 +78,7 @@ class LoginForm extends React.Component {
               type="password"
               value={this.state.password}
               onChange={this.update("password")}
+              required
               />
 
               
