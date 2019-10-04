@@ -162,6 +162,54 @@ var logoutUser = function logoutUser() {
 
 /***/ }),
 
+/***/ "./frontend/actions/ticker_actions.js":
+/*!********************************************!*\
+  !*** ./frontend/actions/ticker_actions.js ***!
+  \********************************************/
+/*! exports provided: RECEIVE_TICKERS, RECEIVE_TICKER, receiveTickers, receiveTicker, fetchTickers, fetchTicker */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TICKERS", function() { return RECEIVE_TICKERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TICKER", function() { return RECEIVE_TICKER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTickers", function() { return receiveTickers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTicker", function() { return receiveTicker; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickers", function() { return fetchTickers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTicker", function() { return fetchTicker; });
+/* harmony import */ var _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/ticker_api_util */ "./frontend/util/ticker_api_util.js");
+
+var RECEIVE_TICKERS = "RECEIVE_TICKERS";
+var RECEIVE_TICKER = "RECEIVE_TICKER";
+var receiveTickers = function receiveTickers(tickers) {
+  return {
+    type: RECEIVE_TICKERS,
+    tickers: tickers
+  };
+};
+var receiveTicker = function receiveTicker(ticker) {
+  return {
+    type: RECEIVE_TICKER,
+    ticker: ticker
+  };
+};
+var fetchTickers = function fetchTickers(tickers) {
+  return function (dispatch) {
+    return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTickers"](tickers).then(function (tickers) {
+      return dispatch(receiveTickers(tickers));
+    });
+  };
+};
+var fetchTicker = function fetchTicker(tickerId) {
+  return function (dispatch) {
+    return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTicker"](tickerId).then(function (ticker) {
+      return dispatch(receiveTicker(ticker));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/cache_flow.jsx":
 /*!*********************************!*\
   !*** ./frontend/cache_flow.jsx ***!
@@ -301,7 +349,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome ", this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
-      }, "Log Out"));
+      }, "Log Out"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Ticker, null));
     }
   }]);
 
@@ -1036,10 +1084,13 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
+/* harmony import */ var _tickers_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tickers_reducer */ "./frontend/reducers/tickers_reducer.js");
+
 
 
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  tickers: _tickers_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 
@@ -1157,6 +1208,41 @@ var _nullSession = {
       return state;
   }
 });
+
+/***/ }),
+
+/***/ "./frontend/reducers/tickers_reducer.js":
+/*!**********************************************!*\
+  !*** ./frontend/reducers/tickers_reducer.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/ticker_actions */ "./frontend/actions/ticker_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var tickerReducer = function tickerReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKERS"]:
+      return action.tickers;
+
+    case _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKER"]:
+      return Object.assign({}, state, _defineProperty({}, action.ticker.id, action.ticker));
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (tickerReducer);
 
 /***/ }),
 
@@ -1310,6 +1396,33 @@ var logout = function logout() {
   return $.ajax({
     method: "DELETE",
     url: "/api/session"
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/ticker_api_util.js":
+/*!******************************************!*\
+  !*** ./frontend/util/ticker_api_util.js ***!
+  \******************************************/
+/*! exports provided: fetchTickers, fetchTicker */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickers", function() { return fetchTickers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTicker", function() { return fetchTicker; });
+var fetchTickers = function fetchTickers(data) {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/tickers',
+    data: data
+  });
+};
+var fetchTicker = function fetchTicker(id) {
+  return $.ajax({
+    method: 'GET',
+    url: "api/tickers/".concat(id)
   });
 };
 
@@ -33889,7 +34002,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
