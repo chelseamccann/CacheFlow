@@ -6,25 +6,20 @@ class TickerShow extends React.Component{
         this.state = {}
     }
 
-    componentDidMount(){
-        debugger
-        this.props.fetchTicker(this.props.match.params.tickerId); // front end routes **
-    }
-
-    componentDidUpdate(prevProps){
-        if (prevProps.ticker.id != this.props.match.params.tickerId){
-            this.props.fetchTicker(this.props.match.params.tickerId);
-        }
-    }
+    // this will be used for the api pull 
+    // componentDidMount(){
+    // }
 
     render(){
-        if (!this.props.ticker){
-            return (
-                <div>
-                    Loading..
-                </div>
+        return (
+            <>
+                <br/>
+                <br/>
+                <h1>{this.props.ticker}</h1>
+                <br/>
+                <br/>
+            </>
             )
-        }
     }
 }
 

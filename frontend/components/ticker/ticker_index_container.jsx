@@ -7,8 +7,8 @@ const mapStateToProps = state => ({
   tickers: Object.values(state.entities.tickers) // selector would refactor this
 })
 
-const mapDispatchToProps = dispatch => ({
-  fetchTickers: () => dispatch(fetchTickers())
-})
+const mapDispatchToProps = dispatch => {
+  return {fetchTickers: () => dispatch(fetchTickers())}
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(TickerIndex);

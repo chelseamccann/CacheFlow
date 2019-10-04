@@ -3,6 +3,7 @@ import DashboardContainer from './dashboard/dashboard_container';
 import GreetingContainer from './greeting/greeting_container';
 import LoginFormContainer from './login_form/login_form_container';
 import SignupFormContainer from './signup_form/signup_form_container';
+import TickerShowContainer from './ticker/ticker_show_container';
 import { Route, Switch } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_utils';
 import Splash from './splash/splash';
@@ -16,8 +17,9 @@ const App = () => (
       <GreetingContainer />
     </header>
     <Switch>
-      <ProtectedRoute exact path="/" component={DashboardContainer}/>
+      {/* <ProtectedRoute exact path="/" component={DashboardContainer}/> */}
       {/* <AuthRoute exact path="/" component={Splash}/> */}
+      {/* <ProtectedRoute exact path='/:tickerSymbol' component={TickerShowContainer}/> */}
       <AuthRoute path="/login" component={LoginFormContainer} />
       <AuthRoute path="/signup" component={SignupFormContainer} />
     </Switch>

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { fetchTicker } from '../../actions/ticker_actions'
 import TickerShow from './ticker_show'
 
-const mapStateToProps = (state, ownProps) => ({
-    ticker: state.tickers[ownProps.match.params.tickerId]
-})
+const mapStateToProps = (state, ownProps) => {
+    return {ticker: ownProps.match.params.tickerSymbol}
+}
 
 const mapDispatchToProps = dispatch => ({
   fetchTicker: tickerId => dispatch(fetchTicker(tickerId)),

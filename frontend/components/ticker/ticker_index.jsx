@@ -1,4 +1,7 @@
 import React from 'react';
+import { Route, Link } from 'react-router-dom';
+import TickerShowContainer from './ticker_show_container';
+import { ProtectedRoute } from '../../util/route_utils';
 
 class TickerIndex extends React.Component{
     constructor(props){
@@ -7,28 +10,30 @@ class TickerIndex extends React.Component{
     }
 
     componentDidMount(){
-        debugger
         this.props.fetchTickers();
     }
 
     render(){
-
-        if (!this.props.tickers){
+        
+        
+        const tickers = this.props.tickers.map((ticker, idx) => {
+            
             return (
-                <div>
-                    Loading..
-                </div>
-            )
-        }
-        // const tickers = this.props.tickers.map(ticker => {
-        //     return <li>{ticker}</li>
-        // })
 
-        // return(
-        //     <ul>
-        //         {tickers}
-        //     </ul>
-        // )
+                <li key={`${ticker}-${idx}`}>
+                    <Link to={`/${ticker.symbol}`} id={ticker.id}>
+                        {ticker.symbol} 
+                    </Link>
+                </li>
+            )
+        })
+        
+        return(
+            <ul>
+                
+                {tickers}
+            </ul>
+        )
     }
 }
 

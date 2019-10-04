@@ -1,6 +1,9 @@
 import React from 'react';
-import TickerIndex from '../ticker/ticker_index';
+import TickerIndexContainer from '../ticker/ticker_index_container';
 import TickerShow from '../ticker/ticker_show';
+import { Link, Route } from 'react-router-dom'
+import {ProtectedRoute} from '../../util/route_utils'
+import TickerShowContainer from '../ticker/ticker_show_container'
 
 class Dashboard extends React.Component {
 
@@ -8,8 +11,10 @@ class Dashboard extends React.Component {
         return (
             <div>
                 <h1>Welcome {this.props.currentUser.username}</h1>
-                <button onClick={this.props.logout}>Log Out</button>
-                <TickerShow/>
+                <Link to="/"><button onClick={this.props.logout}>Log Out</button></Link>
+                <ProtectedRoute exact path='/:tickerSymbol' component={TickerShowContainer}/>
+                {/* <ProtectedRoute exact path="/" component={TickerIndexContainer}/> */}
+                <ProtectedRoute path="/" component={TickerIndexContainer}/>
             </div>
         )
     }
