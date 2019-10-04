@@ -13,7 +13,7 @@ export const receiveTicker = ticker => ({
     ticker
 })
 
-export const fetchTickers = tickers => dispatch => TickerApiUtil.fetchTickers(tickers)
+export const fetchTickers = () => dispatch => TickerApiUtil.fetchTickers()
     .then(tickers => (dispatch(receiveTickers(tickers))))
 
 

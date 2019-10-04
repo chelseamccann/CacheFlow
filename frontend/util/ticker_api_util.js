@@ -1,8 +1,7 @@
-export const fetchTickers = data => (
+export const fetchTickers = () => (
     $.ajax({
         method: 'GET',
-        url: 'api/tickers',
-        data
+        url: 'api/tickers'
     })
 )
 

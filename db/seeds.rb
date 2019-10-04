@@ -7,4 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-user1 = User.create(email: "jb", password: "password")
+user1 = User.create!(email: "JordanBelfort@w.com", password: "password123", buying_power: 20.02)
+
+ticker1 = Ticker.create!(symbol: "AAPL")
+ticker2 = Ticker.create!(symbol: "GOOGL")
+ticker3 = Ticker.create!(symbol: "GOOG")
+ticker4 = Ticker.create!(symbol: "NKE")
+ticker5 = Ticker.create!(symbol: "RCL")
+ticker6 = Ticker.create!(symbol: "CROX")
+ticker7 = Ticker.create!(symbol: "MSFT")
+ticker8 = Ticker.create!(symbol: "CRM")
+ticker9 = Ticker.create!(symbol: "LYFT")
+ticker10 = Ticker.create!(symbol: "OSTK")
