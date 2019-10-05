@@ -210,6 +210,38 @@ var fetchTicker = function fetchTicker(tickerId) {
 
 /***/ }),
 
+/***/ "./frontend/actions/ticker_data_actions.js":
+/*!*************************************************!*\
+  !*** ./frontend/actions/ticker_data_actions.js ***!
+  \*************************************************/
+/*! exports provided: RECEIVE_TICKER_DATA, receiveTickerData, fetchTickerData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TICKER_DATA", function() { return RECEIVE_TICKER_DATA; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTickerData", function() { return receiveTickerData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerData", function() { return fetchTickerData; });
+/* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
+
+var RECEIVE_TICKER_DATA = 'RECEIVE_TICKER_DATA';
+var receiveTickerData = function receiveTickerData(symbol, data) {
+  return {
+    type: RECEIVE_TICKER_DATA,
+    symbol: symbol,
+    data: data
+  };
+};
+var fetchTickerData = function fetchTickerData(symbol) {
+  return function (dispatch) {
+    return _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTickerData"](symbol).then(function (data) {
+      return dispatch(receiveTickerData(symbol, data));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/cache_flow.jsx":
 /*!*********************************!*\
   !*** ./frontend/cache_flow.jsx ***!
@@ -1253,17 +1285,48 @@ function (_React$Component) {
     _classCallCheck(this, TickerShow);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerShow).call(this, props));
-    _this.state = {};
+    _this.state = {
+      stocks: []
+    };
     return _this;
-  } // this will be used for the api pull 
-  // componentDidMount(){
-  // }
-
+  }
 
   _createClass(TickerShow, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      debugger;
+      this.props.fetchTickerData(this.props.match.params.tickerSymbol).then(function (response) {
+        return response.json();
+      }).then(function (stocks) {
+        return _this2.setState({
+          stocks: stocks
+        });
+      }); // .then(data => this.setState({stocks: data}) )
+    } // renderData(){
+    //     if(this.state.stocks){
+    //         console.log(this.state.stocks)
+    //     }
+    // }
+
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.ticker), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+      var stocks = this.state.stocks;
+      debugger;
+
+      if (stocks) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stocks);
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      } // debugger
+      // return (
+      //     <div>
+      //         {this.renderData()}
+      //     </div>
+      //     )
+
     }
   }]);
 
@@ -1287,7 +1350,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/ticker_actions */ "./frontend/actions/ticker_actions.js");
-/* harmony import */ var _ticker_show__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ticker_show */ "./frontend/components/ticker/ticker_show.jsx");
+/* harmony import */ var _actions_ticker_data_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/ticker_data_actions */ "./frontend/actions/ticker_data_actions.js");
+/* harmony import */ var _ticker_show__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ticker_show */ "./frontend/components/ticker/ticker_show.jsx");
+
 
 
 
@@ -1295,7 +1360,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    ticker: ownProps.match.params.tickerSymbol
+    tickerSymbol: ownProps.match.params.tickerSymbol
   };
 };
 
@@ -1303,11 +1368,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchTicker: function fetchTicker(tickerId) {
       return dispatch(Object(_actions_ticker_actions__WEBPACK_IMPORTED_MODULE_2__["fetchTicker"])(tickerId));
+    },
+    fetchTickerData: function fetchTickerData(symbol) {
+      return dispatch(Object(_actions_ticker_data_actions__WEBPACK_IMPORTED_MODULE_3__["fetchTickerData"])(symbol));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_ticker_show__WEBPACK_IMPORTED_MODULE_3__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_ticker_show__WEBPACK_IMPORTED_MODULE_4__["default"]));
 
 /***/ }),
 
@@ -1323,12 +1391,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _tickers_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tickers_reducer */ "./frontend/reducers/tickers_reducer.js");
+/* harmony import */ var _ticker_data_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ticker_data_reducer */ "./frontend/reducers/ticker_data_reducer.js");
+
 
 
 
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
-  tickers: _tickers_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
+  tickers: _tickers_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  tickerData: _ticker_data_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 
@@ -1446,6 +1517,40 @@ var _nullSession = {
       return state;
   }
 });
+
+/***/ }),
+
+/***/ "./frontend/reducers/ticker_data_reducer.js":
+/*!**************************************************!*\
+  !*** ./frontend/reducers/ticker_data_reducer.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_ticker_data_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/ticker_data_actions */ "./frontend/actions/ticker_data_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var tickerDataReducer = function tickerDataReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    // case RECEIVE_TICKERS:
+    //     return action.tickers
+    case _actions_ticker_data_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKER_DATA"]:
+      return Object.assign({}, state, _defineProperty({}, action.symbol, action.data));
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (tickerDataReducer);
 
 /***/ }),
 
@@ -1660,6 +1765,26 @@ var fetchTicker = function fetchTicker(id) {
   return $.ajax({
     method: 'GET',
     url: "api/tickers/".concat(id)
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/ticker_data_api_util.js":
+/*!***********************************************!*\
+  !*** ./frontend/util/ticker_data_api_util.js ***!
+  \***********************************************/
+/*! exports provided: fetchTickerData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerData", function() { return fetchTickerData; });
+var fetchTickerData = function fetchTickerData(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://api-v2.intrinio.com/companies?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi" // url: `https://api-v2.intrinio.com/stock_exchanges/NYSE/prices/realtime/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+
   });
 };
 
