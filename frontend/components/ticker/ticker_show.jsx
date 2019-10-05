@@ -28,6 +28,7 @@ class TickerShow extends React.Component{
         return (
             <div>
                 {this.renderData()}
+                {this.state.stocks ? this.state.stocks.symbol : ""}
             </div>
             )
     }
