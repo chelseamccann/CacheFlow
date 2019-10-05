@@ -6,5 +6,18 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Ticker.delete_all
+User.delete_all
 
-user1 = User.create(email: "jb", password: "password")
+User.create!(email: "JordanBelfort@w.com", password: "password123", buying_power: 20.02)
+
+Ticker.create!(symbol: "AAPL")
+Ticker.create!(symbol: "GOOGL")
+Ticker.create!(symbol: "GOOG")
+Ticker.create!(symbol: "NKE")
+Ticker.create!(symbol: "RCL")
+Ticker.create!(symbol: "CROX")
+Ticker.create!(symbol: "MSFT")
+Ticker.create!(symbol: "CRM")
+Ticker.create!(symbol: "LYFT")
+Ticker.create!(symbol: "OSTK")
