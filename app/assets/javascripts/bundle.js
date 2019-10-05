@@ -1306,14 +1306,12 @@ function (_React$Component) {
   }, {
     key: "renderData",
     value: function renderData() {
-      var _this3 = this;
-
       if (this.state.stocks) {
-        // console.log(this.state.stocks.data)
-        return Object.values(this.state.stocks.data.companies).map(function (stock) {
-          if (_this3.props.tickerSymbol === stock.ticker) {
-            _this3.stockName = stock.name;
-          }
+        var stockPrices = this.state.stocks.data.intraday_prices;
+        debugger;
+        return stockPrices.map(function (price, idx) {
+          debugger;
+          return price.last_price;
         });
       }
     }
@@ -1321,7 +1319,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       debugger;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.renderData(), this.state.stocks ? this.state.stocks.symbol : "");
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.renderData());
     }
   }]);
 
@@ -1778,8 +1776,7 @@ __webpack_require__.r(__webpack_exports__);
 var fetchTickerData = function fetchTickerData(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://api-v2.intrinio.com/companies?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi" // url: `https://api-v2.intrinio.com/stock_exchanges/NYSE/prices/realtime/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
-
+    url: "https://api-v2.intrinio.com/securities/".concat(symbol, "/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi")
   });
 };
 
