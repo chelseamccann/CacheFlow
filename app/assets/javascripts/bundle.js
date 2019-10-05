@@ -1286,7 +1286,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerShow).call(this, props));
     _this.state = {
-      stocks: []
+      stockName: ""
     };
     return _this;
   }
@@ -1297,36 +1297,31 @@ function (_React$Component) {
       var _this2 = this;
 
       debugger;
-      this.props.fetchTickerData(this.props.match.params.tickerSymbol).then(function (response) {
-        return response.json();
-      }).then(function (stocks) {
+      this.props.fetchTickerData(this.props.match.params.tickerSymbol).then(function (data) {
         return _this2.setState({
-          stocks: stocks
+          stocks: data
         });
-      }); // .then(data => this.setState({stocks: data}) )
-    } // renderData(){
-    //     if(this.state.stocks){
-    //         console.log(this.state.stocks)
-    //     }
-    // }
+      });
+    }
+  }, {
+    key: "renderData",
+    value: function renderData() {
+      var _this3 = this;
 
+      if (this.state.stocks) {
+        // console.log(this.state.stocks.data)
+        return Object.values(this.state.stocks.data.companies).map(function (stock) {
+          if (_this3.props.tickerSymbol === stock.ticker) {
+            _this3.stockName = stock.name;
+          }
+        });
+      }
+    }
   }, {
     key: "render",
     value: function render() {
-      var stocks = this.state.stocks;
       debugger;
-
-      if (stocks) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stocks);
-      } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-      } // debugger
-      // return (
-      //     <div>
-      //         {this.renderData()}
-      //     </div>
-      //     )
-
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.renderData());
     }
   }]);
 
