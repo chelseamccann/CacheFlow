@@ -10,12 +10,22 @@ class Chart extends React.Component {
          }
     }
 
+
     render(){
         debugger
+        const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, ...];
+
+        
         return (
             <>
             <div>
-				<LineChart
+        <LineChart width={600} height={300} data={data}>
+            <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+            <CartesianGrid stroke="#ccc" />
+            <XAxis dataKey="name" />
+            <YAxis />
+        </LineChart>
+				{/* <LineChart
                     isAnimationActive={false} 
                     width={730}
                     height={250}
@@ -27,7 +37,7 @@ class Chart extends React.Component {
 					<Legend />
                     <Line type="monotone" dataKey="time" stroke="#ff7300" yAxisId={0} />
                     <Line type="monotone" dataKey="price" stroke="#387908" yAxisId={1} />
-				</LineChart>
+				</LineChart> */}
             </div>
 
             </>
