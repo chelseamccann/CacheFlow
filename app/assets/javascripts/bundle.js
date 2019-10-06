@@ -1173,37 +1173,19 @@ function (_React$Component) {
 
   _createClass(TickerChart, [{
     key: "render",
-    // constructor(props){
-    //     super(props)
-    //     this.state = { 
-    //         // data: this.props.tickerData,
-    //         list: [
-    //             { x: 10, y: 30 },
-    //             { x: 30, y: 200 },
-    //             { x: 45, y: 100 },
-    //             { x: 50, y: 400 },
-    //             { x: 70, y: 150 },
-    //             { x: 100, y: 250 }
-    //           ]
-    //      }
-    // }
     value: function render() {
-      debugger; // const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, 
-      //                 {name: 'Page B', uv: 400, pv: 2400, amt: 1000},
-      //                 {name: 'Page C', uv: 400, pv: 2400, amt: 800}];
-
       var data = this.props.tickerData || [];
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
         width: 677,
         height: 250,
         data: data,
         margin: {
           top: 5,
-          right: 3,
-          left: 0,
+          right: 10,
+          left: 10,
           bottom: 5
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["CartesianGrid"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
         dataKey: "label",
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
@@ -1215,7 +1197,7 @@ function (_React$Component) {
         dot: false,
         stroke: "#21ce99",
         strokeWidth: 2
-      }))));
+      })));
     }
   }]);
 
@@ -1357,14 +1339,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ticker_chart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ticker_chart */ "./frontend/components/ticker/ticker_chart.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1396,7 +1370,6 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerShow).call(this, props));
     _this.state = {
-      // price: [], time: [] 
       tickerData: []
     };
     return _this;
@@ -1405,39 +1378,37 @@ function (_React$Component) {
   _createClass(TickerShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
-
-      this.props.fetchTickerData(this.props.tickerSymbol).then(function (data) {
-        return _this2.renderData(data);
-      });
+      debugger;
+      this.props.fetchTickerData(this.props.tickerSymbol).then(function (response) {
+        return console.log(response);
+      }); // .then(response => this.renderData(response))
     }
   }, {
     key: "renderData",
-    value: function renderData(data) {
-      var _this3 = this;
+    value: function renderData(response) {
+      debugger; // intrinio
 
-      // intrinio
-      // data.data.map((price, idx) => {
-      //     this.setState({price: [...this.state.price, price.last_price], time: [...this.state.time, price.time]})
-      //     this.setState({tickerData: [...this.state.tickerData, {price: price.last_price, time: price.time}]})
+      response.data.map(function (price, idx) {
+        debugger;
+        console.log(price.intraday_prices); // this.setState({price: [...this.state.price, price.last_price], time: [...this.state.time, price.time]})
+        // this.setState({tickerData: [...this.state.tickerData, {price: price.last_price, time: price.time}]})
+        // this.setState(
+        //     {tickerData: [...this.state.tickerData, 
+        //     {time: parseInt(price.time.slice(11, 13)+price.time.slice(14, 16)+price.time.slice(17, 19)), price: price.last_price}]}
+        //     )
+      }); // data.data.map((price, idx) => {
+      //     this.setState(
+      //         {tickerData: [...this.state.tickerData, 
+      //         {time: parseInt(price.minute.slice(0,2)+price.minute.slice(3)), price: price.close}]}
+      //         )
+      // this.setState({price: [...this.state.price, price.close], time: [...this.state.time, price.minute]})
       // })
-      data.data.map(function (price, idx) {
-        _this3.setState({
-          tickerData: [].concat(_toConsumableArray(_this3.state.tickerData), [{
-            time: parseInt(price.minute.slice(0, 2) + price.minute.slice(3)),
-            price: price.close
-          }])
-        }); // this.setState({price: [...this.state.price, price.close], time: [...this.state.time, price.minute]})
-
-      });
     }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        tickerSymbol: this.props.tickerSymbol,
-        tickerData: this.state.tickerData
-      }));
+      debugger;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
     }
   }]);
 
@@ -1891,35 +1862,49 @@ var fetchTicker = function fetchTicker(id) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerData", function() { return fetchTickerData; });
+//INTRINIO
 // export const fetchTickerData = (symbol) => (
 //     $.ajax({
 //         method: "GET",
 //         url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 //     })
 // )
-// export const fetchTickerData = (symbol, next_page) => {
-//     let next;
-//     if (next_page) {
-//         next = `&next_page=${next_page}`
-//     } else {
-//         next = ''
-//     }
-//     // debugger
-//     return $.ajax({
-//         method: "GET",
-//         url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi${next}`
-//     }).then(response => { 
-//         while (response.next_page !== null) { 
-//             return fetchTickerData(symbol, response.next_page)
-//         }
-//     })
-// }
-var fetchTickerData = function fetchTickerData(symbol) {
+var fetchTickerData = function fetchTickerData(symbol, next_page) {
+  var arr = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  var next = next_page ? "&next_page=".concat(next_page) : '';
+  debugger; // let key = 'OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi'
+  // let date = new Date()
+  // date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f")
-  });
-};
+    url: "https://api-v2.intrinio.com/securities/".concat(symbol, "/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi").concat(next),
+    // url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday?source=iex&start_date=${date}&start_time=13&api_key=${key}${next}`,
+    success: function success(response) {
+      arr.push(response);
+      debugger;
+
+      if (response.next_page !== null) {
+        fetchTickerData(symbol, response.next_page, arr);
+      } else {
+        return arr;
+      }
+    }
+  }); // }).then(response => { 
+  //     // debugger
+  //     arr.push(response)
+  //     // debugger
+  //     if (response.next_page !== null) { 
+  //         fetchTickerData(symbol, response.next_page, arr)
+  //     } 
+  // })
+}; //IEX
+// export const fetchTickerData = symbol => (
+//     $.ajax({
+//         method: "GET",
+//         url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+//     })
+// )
 
 /***/ }),
 
