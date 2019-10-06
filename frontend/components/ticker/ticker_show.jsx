@@ -1,41 +1,38 @@
 import React from 'react';
+import Charting from '../chart/chart';
 
 class TickerShow extends React.Component{
     constructor(props){
         super(props)
-        this.state = { stockName: "" }
+        this.state = { price: [], time: [] }
     }
 
     componentDidMount(){
-        debugger
-        this.props.fetchTickerData(this.props.match.params.tickerSymbol)
-        .then(data => this.setState({stocks: data}) )
+        this.props.fetchTickerData(this.props.tickerSymbol)
+        .then(data => this.renderData(data))
     }
 
-    renderData(){
-        if (this.state.stocks) {
-            const stockPrices = this.state.stocks.data.intraday_prices
-            debugger
-            return stockPrices.map((price, idx) => {
-                debugger
-                return price.last_price
-            })
-        }
+    renderData(data){
+        data.data.intraday_prices.map((price, idx) => {
+            this.setState({price: [...this.state.price, price.last_price], time: [...this.state.time, price.time]})
+        })
     }
 
     render(){
-
-
         debugger
-        
         return (
             <div>
-                {this.renderData()}
-                {/* {this.state.stocks ? this.state.stocks.data.companies[0].name : ""} */}
-                {/* {this.state.stocks ? this.state.stocks : ""} */}
+                {/* {this.renderData()} */}
+                <Charting 
+                tickerSymbol={this.props.tickerSymbol} 
+                fetchTickerData={this.props.fetchTickerData}
+                price={this.state.price}
+                time={this.state.time}
+                />
             </div>
             )
     }
 }
 
 export default TickerShow;
+

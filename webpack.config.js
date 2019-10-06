@@ -23,5 +23,8 @@ module.exports = {
   devtool: "source-map",
   resolve: {
     extensions: [".js", ".jsx", "*"]
-  }
+  },
+  // externals: {
+  //   moment: 'moment' 
+  // }
 };
