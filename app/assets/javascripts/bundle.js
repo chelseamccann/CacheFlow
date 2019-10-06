@@ -382,7 +382,6 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Chart).call(this, props));
     _this.state = {};
-    debugger;
     return _this;
   }
 
@@ -427,7 +426,7 @@ function (_React$Component) {
         dataKey: "pv",
         stroke: "#387908",
         yAxisId: 1
-      })));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.time));
     }
   }]);
 
@@ -1418,17 +1417,20 @@ function (_React$Component) {
     value: function renderData(data) {
       var _this3 = this;
 
-      data.data.intraday_prices.map(function (price, idx) {
+      // intrinio
+      // data.data.map((price, idx) => {
+      //     this.setState({price: [...this.state.price, price.last_price], time: [...this.state.time, price.time]})
+      // })
+      data.data.map(function (price, idx) {
         _this3.setState({
-          price: [].concat(_toConsumableArray(_this3.state.price), [price.last_price]),
-          time: [].concat(_toConsumableArray(_this3.state.time), [price.time])
+          price: [].concat(_toConsumableArray(_this3.state.price), [price.close]),
+          time: [].concat(_toConsumableArray(_this3.state.time), [price.minute])
         });
       });
     }
   }, {
     key: "render",
     value: function render() {
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_chart_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
         tickerSymbol: this.props.tickerSymbol,
         fetchTickerData: this.props.fetchTickerData,
@@ -1888,10 +1890,33 @@ var fetchTicker = function fetchTicker(id) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerData", function() { return fetchTickerData; });
+// export const fetchTickerData = (symbol) => (
+//     $.ajax({
+//         method: "GET",
+//         url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+//     })
+// )
+// export const fetchTickerData = (symbol, next_page) => {
+//     let next;
+//     if (next_page) {
+//         next = `&next_page=${next_page}`
+//     } else {
+//         next = ''
+//     }
+//     // debugger
+//     return $.ajax({
+//         method: "GET",
+//         url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi${next}`
+//     }).then(response => { 
+//         while (response.next_page !== null) { 
+//             return fetchTickerData(symbol, response.next_page)
+//         }
+//     })
+// }
 var fetchTickerData = function fetchTickerData(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://api-v2.intrinio.com/securities/".concat(symbol, "/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f")
   });
 };
 

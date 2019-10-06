@@ -24,7 +24,4 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx", "*"]
   },
-  // externals: {
-  //   moment: 'moment' 
-  // }
 };

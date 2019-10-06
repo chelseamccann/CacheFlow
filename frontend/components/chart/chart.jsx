@@ -7,7 +7,6 @@ class Chart extends React.Component {
         super(props)
         this.state = { 
          }
-        debugger
     }
 
     render(){
@@ -35,7 +34,8 @@ class Chart extends React.Component {
             </LineChart>
 
             {/* <Line data={data} /> */}
-            {/* {this.renderData()} */}
+            <p>{this.props.price}</p>
+            <p>{this.props.time}</p>
             </>
             )
 

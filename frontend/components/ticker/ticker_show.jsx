@@ -11,15 +11,19 @@ class TickerShow extends React.Component{
         this.props.fetchTickerData(this.props.tickerSymbol)
         .then(data => this.renderData(data))
     }
-
+    
     renderData(data){
-        data.data.intraday_prices.map((price, idx) => {
-            this.setState({price: [...this.state.price, price.last_price], time: [...this.state.time, price.time]})
+        // intrinio
+        // data.data.map((price, idx) => {
+        //     this.setState({price: [...this.state.price, price.last_price], time: [...this.state.time, price.time]})
+        // })
+
+        data.data.map((price, idx) => {
+            this.setState({price: [...this.state.price, price.close], time: [...this.state.time, price.minute]})
         })
     }
 
     render(){
-        debugger
         return (
             <div>
                 {/* {this.renderData()} */}
@@ -35,4 +39,3 @@ class TickerShow extends React.Component{
 }
 
 export default TickerShow;
-
