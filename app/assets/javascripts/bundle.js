@@ -381,7 +381,9 @@ function (_React$Component) {
     _classCallCheck(this, Chart);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Chart).call(this, props));
-    _this.state = {};
+    _this.state = {
+      data: _this.props.tickerData
+    };
     return _this;
   }
 
@@ -389,44 +391,26 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       debugger;
-      var data03 = [{
-        date: 'Jan 04 2016',
-        price: 105.35
-      }, {
-        date: 'Jan 05 2016',
-        price: 102.71
-      }, {
-        date: 'Jan 06 2016',
-        price: 100.7
-      }, {
-        date: 'Jan 07 2016',
-        price: 96.45
-      }];
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
-        width: 400,
-        height: 400,
-        data: data03,
-        margin: {
-          top: 5,
-          right: 20,
-          left: 10,
-          bottom: 5
-        }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+        isAnimationActive: false,
+        width: 730,
+        height: 250,
+        data: this.state.data
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["CartesianGrid"], {
+        strokeDasharray: "3 3"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
         dataKey: "name"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["CartesianGrid"], {
-        stroke: "#f5f5f5"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Legend"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
         type: "monotone",
-        dataKey: "uv",
+        dataKey: "time",
         stroke: "#ff7300",
         yAxisId: 0
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
         type: "monotone",
-        dataKey: "pv",
+        dataKey: "price",
         stroke: "#387908",
         yAxisId: 1
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.time));
+      }))));
     }
   }]);
 
@@ -1397,8 +1381,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerShow).call(this, props));
     _this.state = {
-      price: [],
-      time: []
+      // price: [], time: [] 
+      tickerData: []
     };
     return _this;
   }
@@ -1420,12 +1404,16 @@ function (_React$Component) {
       // intrinio
       // data.data.map((price, idx) => {
       //     this.setState({price: [...this.state.price, price.last_price], time: [...this.state.time, price.time]})
+      //     this.setState({tickerData: [...this.state.tickerData, {price: price.last_price, time: price.time}]})
       // })
       data.data.map(function (price, idx) {
         _this3.setState({
-          price: [].concat(_toConsumableArray(_this3.state.price), [price.close]),
-          time: [].concat(_toConsumableArray(_this3.state.time), [price.minute])
-        });
+          tickerData: [].concat(_toConsumableArray(_this3.state.tickerData), [{
+            time: parseInt(price.minute.slice(0, 2) + price.minute.slice(3)),
+            price: price.close
+          }])
+        }); // this.setState({price: [...this.state.price, price.close], time: [...this.state.time, price.minute]})
+
       });
     }
   }, {
@@ -1433,9 +1421,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_chart_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
         tickerSymbol: this.props.tickerSymbol,
-        fetchTickerData: this.props.fetchTickerData,
-        price: this.state.price,
-        time: this.state.time
+        tickerData: this.state.tickerData
       }));
     }
   }]);
