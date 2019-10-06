@@ -1,5 +1,5 @@
 import React from 'react';
-import Charting from '../chart/chart';
+import TickerChart from './ticker_chart';
 
 class TickerShow extends React.Component{
     constructor(props){
@@ -36,7 +36,7 @@ class TickerShow extends React.Component{
         return (
             <div>
                 {/* {this.renderData()} */}
-                <Charting 
+                <TickerChart 
                 tickerSymbol={this.props.tickerSymbol} 
                 tickerData={this.state.tickerData}
                 />
