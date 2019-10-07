@@ -214,7 +214,7 @@ var fetchTicker = function fetchTicker(tickerId) {
 /*!*************************************************!*\
   !*** ./frontend/actions/ticker_data_actions.js ***!
   \*************************************************/
-/*! exports provided: RECEIVE_TICKER_DATA, receiveTickerData, fetchTickerData */
+/*! exports provided: RECEIVE_TICKER_DATA, receiveTickerData, fetchTickerData, fetchTickerInfo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -222,6 +222,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TICKER_DATA", function() { return RECEIVE_TICKER_DATA; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTickerData", function() { return receiveTickerData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerData", function() { return fetchTickerData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerInfo", function() { return fetchTickerInfo; });
 /* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 
 var RECEIVE_TICKER_DATA = 'RECEIVE_TICKER_DATA';
@@ -235,6 +236,13 @@ var receiveTickerData = function receiveTickerData(symbol, data) {
 var fetchTickerData = function fetchTickerData(symbol) {
   return function (dispatch) {
     return _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTickerData"](symbol).then(function (data) {
+      return dispatch(receiveTickerData(symbol, data));
+    });
+  };
+};
+var fetchTickerInfo = function fetchTickerInfo(symbol) {
+  return function (dispatch) {
+    return _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTickerInfo"](symbol).then(function (data) {
       return dispatch(receiveTickerData(symbol, data));
     });
   };
@@ -391,7 +399,9 @@ function (_React$Component) {
   _createClass(Dashboard, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome ", this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome ", this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
         to: "/"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
@@ -1175,9 +1185,11 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var data = this.props.tickerData || [];
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
-        width: 677,
-        height: 250,
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ticker-chart block-paddings"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.tickerSymbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+        width: 676,
+        height: 196,
         data: data,
         margin: {
           top: 5,
@@ -1185,7 +1197,7 @@ function (_React$Component) {
           left: 10,
           bottom: 5
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["CartesianGrid"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
         dataKey: "label",
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
@@ -1270,13 +1282,16 @@ function (_React$Component) {
     value: function render() {
       var tickers = this.props.tickers.map(function (ticker, idx) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: "".concat(ticker, "-").concat(idx)
+          key: "".concat(ticker, "-").concat(idx),
+          className: "each-ticker"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           to: "/".concat(ticker.symbol),
           id: ticker.id
         }, ticker.symbol));
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, tickers);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "ticker-index block-paddings"
+      }, tickers);
     }
   }]);
 
@@ -1339,6 +1354,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ticker_chart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ticker_chart */ "./frontend/components/ticker/ticker_chart.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1378,37 +1401,45 @@ function (_React$Component) {
   _createClass(TickerShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
+      var _this2 = this;
+
       this.props.fetchTickerData(this.props.tickerSymbol).then(function (response) {
-        return console.log(response);
-      }); // .then(response => this.renderData(response))
+        return _this2.renderData(response);
+      });
     }
   }, {
     key: "renderData",
     value: function renderData(response) {
-      debugger; // intrinio
+      var _this3 = this;
 
-      response.data.map(function (price, idx) {
-        debugger;
-        console.log(price.intraday_prices); // this.setState({price: [...this.state.price, price.last_price], time: [...this.state.time, price.time]})
-        // this.setState({tickerData: [...this.state.tickerData, {price: price.last_price, time: price.time}]})
-        // this.setState(
+      // INTRINIO
+      response.data.intraday_prices.map(function (price, idx) {
+        _this3.setState({
+          tickerData: [].concat(_toConsumableArray(_this3.state.tickerData), [{
+            price: price.last_price,
+            time: price.time
+          }])
+        }); // this.setState(
         //     {tickerData: [...this.state.tickerData, 
         //     {time: parseInt(price.time.slice(11, 13)+price.time.slice(14, 16)+price.time.slice(17, 19)), price: price.last_price}]}
         //     )
-      }); // data.data.map((price, idx) => {
+
+      }); // IEX
+      // response.data.map((price, idx) => {
       //     this.setState(
       //         {tickerData: [...this.state.tickerData, 
       //         {time: parseInt(price.minute.slice(0,2)+price.minute.slice(3)), price: price.close}]}
       //         )
-      // this.setState({price: [...this.state.price, price.close], time: [...this.state.time, price.minute]})
+      //     // this.setState({price: [...this.state.price, price.close], time: [...this.state.time, price.minute]})
       // })
     }
   }, {
     key: "render",
     value: function render() {
-      debugger;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log(this.state.tickerData), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        tickerSymbol: this.props.tickerSymbol,
+        tickerData: this.state.tickerData
+      }));
     }
   }]);
 
@@ -1453,7 +1484,20 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchTickerData: function fetchTickerData(symbol) {
       return dispatch(Object(_actions_ticker_data_actions__WEBPACK_IMPORTED_MODULE_3__["fetchTickerData"])(symbol));
-    }
+    },
+    fetchTickerInfo: function (_fetchTickerInfo) {
+      function fetchTickerInfo(_x) {
+        return _fetchTickerInfo.apply(this, arguments);
+      }
+
+      fetchTickerInfo.toString = function () {
+        return _fetchTickerInfo.toString();
+      };
+
+      return fetchTickerInfo;
+    }(function (symbol) {
+      return dispatch(fetchTickerInfo(symbol));
+    })
   };
 };
 
@@ -1856,55 +1900,61 @@ var fetchTicker = function fetchTicker(id) {
 /*!***********************************************!*\
   !*** ./frontend/util/ticker_data_api_util.js ***!
   \***********************************************/
-/*! exports provided: fetchTickerData */
+/*! exports provided: fetchTickerData, fetchTickerInfo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerData", function() { return fetchTickerData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerInfo", function() { return fetchTickerInfo; });
 //INTRINIO
-// export const fetchTickerData = (symbol) => (
-//     $.ajax({
-//         method: "GET",
-//         url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
-//     })
-// )
-var fetchTickerData = function fetchTickerData(symbol, next_page) {
-  var arr = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  var next = next_page ? "&next_page=".concat(next_page) : '';
-  debugger; // let key = 'OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi'
-  // let date = new Date()
-  // date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-
+var fetchTickerData = function fetchTickerData(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://api-v2.intrinio.com/securities/".concat(symbol, "/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi").concat(next),
-    // url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday?source=iex&start_date=${date}&start_time=13&api_key=${key}${next}`,
-    success: function success(response) {
-      arr.push(response);
-      debugger;
-
-      if (response.next_page !== null) {
-        fetchTickerData(symbol, response.next_page, arr);
-      } else {
-        return arr;
-      }
-    }
-  }); // }).then(response => { 
-  //     // debugger
-  //     arr.push(response)
-  //     // debugger
-  //     if (response.next_page !== null) { 
-  //         fetchTickerData(symbol, response.next_page, arr)
-  //     } 
-  // })
-}; //IEX
+    url: "https://api-v2.intrinio.com/securities/".concat(symbol, "/prices/intraday?source=iex&start_date=2019-10-04&start_time=13&api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi")
+  });
+}; // export const fetchTickerData = (symbol, next_page, arr = []) => {
+//     let next = next_page ? `&next_page=${next_page}` : '';
+//     // let key = 'OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi'
+//     // let date = new Date()
+//     // date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+//     return $.ajax({
+//         method: "GET",
+//         url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi${next}`,
+//         // url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday?source=iex&start_date=${date}&start_time=13&api_key=${key}${next}`,
+//         success: response => { 
+//             return arr.push(response)
+//             if (response.next_page !== null) { 
+//                 return fetchTickerData(symbol, response.next_page, arr)
+//             } 
+//             // else {
+//             //     return arr
+//             // }
+//         }
+//     })
+// }).then(response => { 
+//     // debugger
+//     arr.push(response)
+//     // debugger
+//     if (response.next_page !== null) { 
+//         fetchTickerData(symbol, response.next_page, arr)
+//     } 
+// })
+// }
+//IEX
 // export const fetchTickerData = symbol => (
 //     $.ajax({
 //         method: "GET",
 //         url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
 //     })
 // )
+
+var fetchTickerInfo = function fetchTickerInfo(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://api-v2.intrinio.com/companies/".concat(symbol, "?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi")
+  });
+};
 
 /***/ }),
 

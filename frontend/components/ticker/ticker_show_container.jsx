@@ -10,7 +10,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchTicker: tickerId => dispatch(fetchTicker(tickerId)),
-  fetchTickerData: symbol => dispatch(fetchTickerData(symbol))
+  fetchTickerData: symbol => dispatch(fetchTickerData(symbol)),
+  fetchTickerInfo: symbol => dispatch(fetchTickerInfo(symbol))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TickerShow);

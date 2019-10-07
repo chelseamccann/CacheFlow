@@ -9,7 +9,7 @@ class Dashboard extends React.Component {
 
     render(){
         return (
-            <div>
+            <div className="dashboard">
                 <h1>Welcome {this.props.currentUser.username}</h1>
                 <Link to="/"><button onClick={this.props.logout}>Log Out</button></Link>
                 <ProtectedRoute exact path='/:tickerSymbol' component={TickerShowContainer}/>

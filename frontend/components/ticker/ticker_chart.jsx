@@ -8,14 +8,14 @@ class TickerChart extends React.Component {
         let data = this.props.tickerData || [];
 
         return (
-            <div>
+            <div className="ticker-chart block-paddings">
+                <h1>{this.props.tickerSymbol}</h1>
                  <LineChart 
-                    width={677} 
-                    height={250} 
+                    width={676} 
+                    height={196} 
                     data={data} 
                     margin={{top: 5, right: 10, left: 10, bottom: 5}}
                  >
-                     <CartesianGrid />
                     <XAxis dataKey="label" hide={true} />
                     <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
                     <Tooltip />

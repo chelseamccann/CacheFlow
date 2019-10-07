@@ -1,0 +1,41 @@
+
+.dashboard {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    height: 100vh;
+    background-color: #1b1b1d;
+    color: white;
+}
+
+.ticker-index {
+    position: relative;
+    height: 30%;
+    flex: 0 0 12%;
+    border: 2px solid #1b1b1d;
+    box-shadow: -3px 3px 3px 3px #0e0d0d;
+    left: 0;
+    margin-right: 5em;
+}
+
+.each-ticker a{
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 13px;
+    letter-spacing: .25px;
+    line-height: 19px;
+    box-sizing: border-box;
+}
+
+.ticker-chart {
+    margin-bottom: 44px;
+}
+
+.block-paddings {
+    display: block;
+    padding-left: 6px;
+    padding-right: 6px;
+}
