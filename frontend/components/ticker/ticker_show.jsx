@@ -1,5 +1,6 @@
 import React from 'react';
 import TickerChart from './ticker_chart';
+import {fetchTickerData} from '../../util/ticker_data_api_util'
 
 class TickerShow extends React.Component{
     constructor(props){
@@ -10,19 +11,46 @@ class TickerShow extends React.Component{
     }
 
     componentDidMount(){
-        this.props.fetchTickerData(this.props.tickerSymbol)
-        .then(response => this.renderData(response))
+        debugger
+        // let arr = [];
+        // let that = this;
+        fetchTickerData({symbol: this.props.tickerSymbol, callback: this.renderData})
+        // .then(response => { this.renderData(response)
+
+        // let next_page = true;
+        // fetchTickerData(this.props.tickerSymbol, next_page)
+        // .then(response => { 
+        //     debugger
+        //     arr.push(response)
+
+        //     while(response.next_page !== null){
+        //         return fetchTickerData(that.props.tickerSymbol, response.next_page)
+
+        //     }
+        //     that.renderData(arr)
+
+            // if (response.data.next_page === null) {  
+            //     debugger
+            //     that.renderData(arr)
+            // } else {
+            //     debugger
+            //     return that.props.fetchTickerData(that.props.tickerSymbol, response.data.next_page)
+            // }
+        // })
+        // debugger
     }
 
     renderData(response){
+        debugger
         // INTRINIO
-        response.data.intraday_prices.map((price, idx) => {
-            this.setState({tickerData: [...this.state.tickerData, {price: price.last_price, time: price.time}]})
+        const tickerData = response.map((price, idx) => {
+            return {price: price.last_price, time: price.time}
             // this.setState(
                 //     {tickerData: [...this.state.tickerData, 
                 //     {time: parseInt(price.time.slice(11, 13)+price.time.slice(14, 16)+price.time.slice(17, 19)), price: price.last_price}]}
                 //     )
-        })
+            })
+            this.setState({tickerData: tickerData})
 
         // IEX
         // response.data.map((price, idx) => {
@@ -35,6 +63,7 @@ class TickerShow extends React.Component{
     }
 
     render(){
+        debugger
         return (
             <div>
                 {console.log(this.state.tickerData)}

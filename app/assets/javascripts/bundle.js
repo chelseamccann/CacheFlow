@@ -1352,15 +1352,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ticker_chart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ticker_chart */ "./frontend/components/ticker/ticker_chart.jsx");
+/* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1377,6 +1370,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1401,29 +1395,48 @@ function (_React$Component) {
   _createClass(TickerShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
+      debugger; // let arr = [];
+      // let that = this;
 
-      this.props.fetchTickerData(this.props.tickerSymbol).then(function (response) {
-        return _this2.renderData(response);
-      });
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_2__["fetchTickerData"])({
+        symbol: this.props.tickerSymbol,
+        callback: this.renderData
+      }); // .then(response => { this.renderData(response)
+      // let next_page = true;
+      // fetchTickerData(this.props.tickerSymbol, next_page)
+      // .then(response => { 
+      //     debugger
+      //     arr.push(response)
+      //     while(response.next_page !== null){
+      //         return fetchTickerData(that.props.tickerSymbol, response.next_page)
+      //     }
+      //     that.renderData(arr)
+      // if (response.data.next_page === null) {  
+      //     debugger
+      //     that.renderData(arr)
+      // } else {
+      //     debugger
+      //     return that.props.fetchTickerData(that.props.tickerSymbol, response.data.next_page)
+      // }
+      // })
+      // debugger
     }
   }, {
     key: "renderData",
     value: function renderData(response) {
-      var _this3 = this;
+      debugger; // INTRINIO
 
-      // INTRINIO
-      response.data.intraday_prices.map(function (price, idx) {
-        _this3.setState({
-          tickerData: [].concat(_toConsumableArray(_this3.state.tickerData), [{
-            price: price.last_price,
-            time: price.time
-          }])
-        }); // this.setState(
+      var tickerData = response.map(function (price, idx) {
+        return {
+          price: price.last_price,
+          time: price.time
+        }; // this.setState(
         //     {tickerData: [...this.state.tickerData, 
         //     {time: parseInt(price.time.slice(11, 13)+price.time.slice(14, 16)+price.time.slice(17, 19)), price: price.last_price}]}
         //     )
-
+      });
+      this.setState({
+        tickerData: tickerData
       }); // IEX
       // response.data.map((price, idx) => {
       //     this.setState(
@@ -1436,6 +1449,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log(this.state.tickerData), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
         tickerSymbol: this.props.tickerSymbol,
         tickerData: this.state.tickerData
@@ -1907,41 +1921,67 @@ var fetchTicker = function fetchTicker(id) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerData", function() { return fetchTickerData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerInfo", function() { return fetchTickerInfo; });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 //INTRINIO
-var fetchTickerData = function fetchTickerData(symbol) {
+// export const fetchTickerData = (symbol) => (
+//     $.ajax({
+//         method: "GET",
+//         url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday?source=iex&start_date=2019-10-04&start_time=13&api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+//     })
+// )
+var fetchTickerData = function fetchTickerData(props) {
+  var intradayPrices = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var symbol = props.symbol,
+      next_page = props.next_page,
+      callback = props.callback;
+  console.log(symbol);
+  console.log(next_page);
+  console.log(callback); // debugger
+
+  var next = next_page ? "&next_page=".concat(next_page) : '';
+  var key = 'OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi';
+  var date = new Date();
+  date = "".concat(date.getFullYear(), "-").concat(date.getMonth() + 1, "-").concat(date.getDate()); // debugger
+
   return $.ajax({
     method: "GET",
-    url: "https://api-v2.intrinio.com/securities/".concat(symbol, "/prices/intraday?source=iex&start_date=2019-10-04&start_time=13&api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi")
-  });
-}; // export const fetchTickerData = (symbol, next_page, arr = []) => {
-//     let next = next_page ? `&next_page=${next_page}` : '';
-//     // let key = 'OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi'
-//     // let date = new Date()
-//     // date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-//     return $.ajax({
-//         method: "GET",
-//         url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi${next}`,
-//         // url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday?source=iex&start_date=${date}&start_time=13&api_key=${key}${next}`,
-//         success: response => { 
-//             return arr.push(response)
-//             if (response.next_page !== null) { 
-//                 return fetchTickerData(symbol, response.next_page, arr)
-//             } 
-//             // else {
-//             //     return arr
-//             // }
-//         }
-//     })
-// }).then(response => { 
-//     // debugger
-//     arr.push(response)
-//     // debugger
-//     if (response.next_page !== null) { 
-//         fetchTickerData(symbol, response.next_page, arr)
-//     } 
-// })
-// }
-//IEX
+    // url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi${next}`,
+    url: "https://api-v2.intrinio.com/securities/".concat(symbol, "/prices/intraday?source=iex&start_date=").concat(date, "&start_time=13&api_key=").concat(key).concat(next),
+    success: function success(response) {
+      // debugger
+      intradayPrices.push.apply(intradayPrices, _toConsumableArray(response.intraday_prices));
+
+      if (response.next_page !== null) {
+        return fetchTickerData({
+          symbol: symbol,
+          next_page: response.next_page,
+          callback: callback
+        }, intradayPrices);
+      } else {
+        debugger;
+        callback(intradayPrices);
+      }
+    }
+  }); // }).then(response => { 
+  //     // debugger
+  //     arr.push(response)
+  //     // debugger
+  //     if (response.next_page !== null) { 
+  //         // debugger
+  //         return fetchTickerData(symbol, response.next_page, arr)
+  //     } else {
+  //         debugger
+  //         return arr
+  //     }
+  // })
+}; //IEX
 // export const fetchTickerData = symbol => (
 //     $.ajax({
 //         method: "GET",
