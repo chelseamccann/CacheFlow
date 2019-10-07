@@ -5,11 +5,10 @@ import { LineChart, Line, XAxis, YAxis, Legend, Tooltip, CartesianGrid } from 'r
 class TickerChart extends React.Component {
 
     render(){
-        let data = this.props.tickerData || [];
+        let data = this.props.tickerDaily || [];
 
         return (
             <div className="ticker-chart block-paddings">
-                <h1>{this.props.tickerSymbol}</h1>
                  <LineChart 
                     width={676} 
                     height={196} 

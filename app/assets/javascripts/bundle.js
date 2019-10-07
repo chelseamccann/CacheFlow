@@ -1184,10 +1184,10 @@ function (_React$Component) {
   _createClass(TickerChart, [{
     key: "render",
     value: function render() {
-      var data = this.props.tickerData || [];
+      var data = this.props.tickerDaily || [];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.tickerSymbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
         width: 676,
         height: 196,
         data: data,
@@ -1340,9 +1340,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/ticker/ticker_show.jsx":
+/***/ "./frontend/components/ticker/ticker_info.jsx":
 /*!****************************************************!*\
-  !*** ./frontend/components/ticker/ticker_show.jsx ***!
+  !*** ./frontend/components/ticker/ticker_info.jsx ***!
   \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1351,8 +1351,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _ticker_chart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ticker_chart */ "./frontend/components/ticker/ticker_chart.jsx");
-/* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
+/* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1374,6 +1373,105 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+var TickerInfo =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(TickerInfo, _React$Component);
+
+  function TickerInfo(props) {
+    var _this;
+
+    _classCallCheck(this, TickerInfo);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerInfo).call(this, props));
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(TickerInfo, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchTickerInfo"])(this.props.tickerSymbol).then(function (response) {
+        _this2.setState({
+          name: response.companyName,
+          desc: response.description,
+          ceo: response.CEO,
+          sector: response.sector,
+          ticker: response.symbol,
+          tags: response.tags,
+          employees: response.employees,
+          city: response.city,
+          state: response.state
+        });
+      });
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchTickerStats"])(this.props.tickerSymbol).then(function (res) {
+        _this2.setState({
+          marketcap: res.marketcap,
+          peRatio: res.peRatio,
+          dividendYield: res.dividendYield,
+          avg30Volume: res.avg30Volume
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      debugger;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ticker-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ticker-about"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.desc)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ticker-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "CEO"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.ceo)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Employees"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Headquarters"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.city, ", ", this.state.state)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Founded"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "????")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Market Cap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.marketcap)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Price-Earnings Ratio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.peRatio)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Dividend Yield"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.dividendYield)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Average Volume"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.avg30Volume)))));
+    }
+  }]);
+
+  return TickerInfo;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (TickerInfo);
+
+/***/ }),
+
+/***/ "./frontend/components/ticker/ticker_show.jsx":
+/*!****************************************************!*\
+  !*** ./frontend/components/ticker/ticker_show.jsx ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ticker_chart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ticker_chart */ "./frontend/components/ticker/ticker_chart.jsx");
+/* harmony import */ var _ticker_info__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ticker_info */ "./frontend/components/ticker/ticker_info.jsx");
+/* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+ //INTRINIO
 
 var TickerShow =
 /*#__PURE__*/
@@ -1387,7 +1485,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerShow).call(this, props));
     _this.state = {
-      tickerData: []
+      tickerDaily: [],
+      tickerWeekly: []
     };
     return _this;
   }
@@ -1395,64 +1494,59 @@ function (_React$Component) {
   _createClass(TickerShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger; // let arr = [];
-      // let that = this;
+      var _this2 = this;
 
-      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_2__["fetchTickerData"])({
-        symbol: this.props.tickerSymbol,
-        callback: this.renderData
-      }); // .then(response => { this.renderData(response)
-      // let next_page = true;
-      // fetchTickerData(this.props.tickerSymbol, next_page)
-      // .then(response => { 
-      //     debugger
-      //     arr.push(response)
-      //     while(response.next_page !== null){
-      //         return fetchTickerData(that.props.tickerSymbol, response.next_page)
-      //     }
-      //     that.renderData(arr)
-      // if (response.data.next_page === null) {  
-      //     debugger
-      //     that.renderData(arr)
-      // } else {
-      //     debugger
-      //     return that.props.fetchTickerData(that.props.tickerSymbol, response.data.next_page)
-      // }
-      // })
-      // debugger
+      // fetchTickerData({symbol: this.props.tickerSymbol, callback: this.renderData})  //INTRINIO
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchTickerDaily"])(this.props.tickerSymbol).then(function (response) {
+        return _this2.renderDaily(response);
+      }); //IEX
+
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchWeekly"])(this.props.tickerSymbol).then(function (response) {
+        return _this2.renderWeekly(response);
+      });
     }
   }, {
-    key: "renderData",
-    value: function renderData(response) {
-      debugger; // INTRINIO
-
-      var tickerData = response.map(function (price, idx) {
+    key: "renderDaily",
+    value: function renderDaily(response) {
+      // IEX
+      var daily = response.map(function (price) {
         return {
-          price: price.last_price,
-          time: price.time
-        }; // this.setState(
-        //     {tickerData: [...this.state.tickerData, 
-        //     {time: parseInt(price.time.slice(11, 13)+price.time.slice(14, 16)+price.time.slice(17, 19)), price: price.last_price}]}
-        //     )
+          time: parseInt(price.minute.slice(0, 2) + price.minute.slice(3)),
+          price: price.close
+        };
       });
       this.setState({
-        tickerData: tickerData
-      }); // IEX
-      // response.data.map((price, idx) => {
-      //     this.setState(
-      //         {tickerData: [...this.state.tickerData, 
-      //         {time: parseInt(price.minute.slice(0,2)+price.minute.slice(3)), price: price.close}]}
-      //         )
-      //     // this.setState({price: [...this.state.price, price.close], time: [...this.state.time, price.minute]})
-      // })
+        tickerDaily: daily
+      }); // INTRINIO
+      // const tickerData = response.map(price => {
+      //     return {price: price.last_price, time: parseInt(price.time.slice(11, 13)+price.time.slice(14, 16)+price.time.slice(17, 19))}
+      //     })
+      //     this.updateTickerData(tickerData)
+    }
+  }, {
+    key: "renderWeekly",
+    value: function renderWeekly(response) {
+      var weekly = response.map(function (price) {
+        debugger;
+        return {
+          time: parseInt(price.minute.slice(0, 2) + price.minute.slice(3)),
+          price: price.close
+        };
+      });
+      this.setState({
+        tickerWeekly: weekly
+      });
     }
   }, {
     key: "render",
     value: function render() {
       debugger;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log(this.state.tickerData), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
         tickerSymbol: this.props.tickerSymbol,
-        tickerData: this.state.tickerData
+        tickerData: this.state.tickerDaily,
+        tickerWeekly: this.state.tickerWeekly
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_info__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        tickerSymbol: this.props.tickerSymbol
       }));
     }
   }]);
@@ -1914,13 +2008,16 @@ var fetchTicker = function fetchTicker(id) {
 /*!***********************************************!*\
   !*** ./frontend/util/ticker_data_api_util.js ***!
   \***********************************************/
-/*! exports provided: fetchTickerData, fetchTickerInfo */
+/*! exports provided: fetchTickerDaily, fetchWeekly, fetchTickerData, fetchTickerInfo, fetchTickerStats */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerDaily", function() { return fetchTickerDaily; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWeekly", function() { return fetchWeekly; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerData", function() { return fetchTickerData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerInfo", function() { return fetchTickerInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerStats", function() { return fetchTickerStats; });
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -1929,33 +2026,39 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-//INTRINIO
+// IEX
+var fetchTickerDaily = function fetchTickerDaily(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f")
+  });
+};
+var fetchWeekly = function fetchWeekly(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://cloud.iexapis.com/stable/stock/twtr/chart/5dm?token=pk_b6f890a95fb24dbfb1a85f362fe5687f"
+  });
+}; //INTRINIO
 // export const fetchTickerData = (symbol) => (
 //     $.ajax({
 //         method: "GET",
 //         url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday?source=iex&start_date=2019-10-04&start_time=13&api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 //     })
 // )
+
 var fetchTickerData = function fetchTickerData(props) {
   var intradayPrices = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   var symbol = props.symbol,
       next_page = props.next_page,
       callback = props.callback;
-  console.log(symbol);
-  console.log(next_page);
-  console.log(callback); // debugger
-
   var next = next_page ? "&next_page=".concat(next_page) : '';
   var key = 'OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi';
   var date = new Date();
-  date = "".concat(date.getFullYear(), "-").concat(date.getMonth() + 1, "-").concat(date.getDate()); // debugger
-
+  date = "".concat(date.getFullYear(), "-").concat(date.getMonth() + 1, "-").concat(date.getDate());
   return $.ajax({
     method: "GET",
-    // url: `https://api-v2.intrinio.com/securities/${symbol}/prices/intraday/?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi${next}`,
     url: "https://api-v2.intrinio.com/securities/".concat(symbol, "/prices/intraday?source=iex&start_date=").concat(date, "&start_time=13&api_key=").concat(key).concat(next),
     success: function success(response) {
-      // debugger
       intradayPrices.push.apply(intradayPrices, _toConsumableArray(response.intraday_prices));
 
       if (response.next_page !== null) {
@@ -1965,34 +2068,24 @@ var fetchTickerData = function fetchTickerData(props) {
           callback: callback
         }, intradayPrices);
       } else {
-        debugger;
         callback(intradayPrices);
       }
     }
-  }); // }).then(response => { 
-  //     // debugger
-  //     arr.push(response)
-  //     // debugger
-  //     if (response.next_page !== null) { 
-  //         // debugger
-  //         return fetchTickerData(symbol, response.next_page, arr)
-  //     } else {
-  //         debugger
-  //         return arr
-  //     }
-  // })
-}; //IEX
-// export const fetchTickerData = symbol => (
-//     $.ajax({
-//         method: "GET",
-//         url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-//     })
-// )
-
+  });
+};
 var fetchTickerInfo = function fetchTickerInfo(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://api-v2.intrinio.com/companies/".concat(symbol, "?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+
+  });
+};
+var fetchTickerStats = function fetchTickerStats(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") //{stat?}`
+    // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+
   });
 };
 

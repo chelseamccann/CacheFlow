@@ -5,23 +5,22 @@
     justify-content: space-between;
     width: 100vw;
     height: 100vh;
-    background-color: #1b1b1d;
-    color: white;
+    /* background-color: #1b1b1d; */
+    /* color: white; */
 }
 
 .ticker-index {
     position: relative;
     height: 30%;
     flex: 0 0 12%;
-    border: 2px solid #1b1b1d;
-    box-shadow: -3px 3px 3px 3px #0e0d0d;
+    /* border: 2px solid #1b1b1d;
+    box-shadow: -3px 3px 3px 3px #0e0d0d; */
     left: 0;
     margin-right: 5em;
 }
 
 .each-ticker a{
     text-decoration: none;
-    color: white;
     font-weight: 500;
     cursor: pointer;
     font-size: 13px;
@@ -39,3 +38,47 @@
     padding-left: 6px;
     padding-right: 6px;
 }
+
+.ticker-info  {
+    font-weight: 200;
+    letter-spacing: 0;
+    line-height: 22px;
+    font-size: 15px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.ticker-about {
+    width: 100%;
+    margin: 0 0 24px;
+    max-width: 570px;
+}
+
+.ticker-text {
+    display: flex;
+    flex-wrap: wrap;
+    width: 676px;
+    padding-top: 18px;
+}
+
+.ticker-text div {
+    width: 25%;
+    box-sizing: border-box;
+}
+
+.ticker-text p {
+    margin-left: 0;
+    margin-bottom: 12px;
+}
+
+
+
+/* .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.sticky .links {
+    padding-top: 60;
+} */
