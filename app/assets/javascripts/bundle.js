@@ -789,8 +789,6 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dash"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "dash-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "dash-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -800,11 +798,13 @@ function (_React$Component) {
         src: window.rh,
         className: "nav-left logo"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "dash-left"
+        className: "dash-right"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "",
-        className: "nav-left"
-      }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Messages"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-left right-right"
+      }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "right-right"
+      }, " Messages"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop-down"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.drop,
@@ -824,7 +824,7 @@ function (_React$Component) {
         to: "/"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.props.logout
-      }, "Log Out")))))))));
+      }, "Log Out"))))))));
     }
   }]);
 
@@ -1252,26 +1252,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
- // import { LineChart, Line } from 'react-chartjs-2';
 
  // const CustomTooltip = ({ active, payload}) => {
 //     // let { open, change, percentChange } = this.props
-//     if (!active){
-//         // <div>{Number(open).toLocaleString()}</div>
-//         // <div>{Number(percentChange).toLocaleString()}</div>
-//         return <div>hi</div>
-//     } else {
-//         // <div>{Number(open).toLocaleString()}</div>
-//         return <div>hello</div>
-//     }
+//     debugger
+//     // if (active && payload){
+//     //     debugger
+//     //     return (
+//     //         <>
+//     //             {/* <div>{Number(open).toLocaleString()}</div> */}
+//     //             {/* <div>{Number(percentChange).toLocaleString()}</div> */}
+//     //         </>
+//     //     )
+//     // } else {
+//     //     // <div>{Number(open).toLocaleString()}</div>
+//     //     return <div>hello</div>
+//     // }
 // }
 
 var TickerChart =
@@ -1279,20 +1283,84 @@ var TickerChart =
 function (_React$Component) {
   _inherits(TickerChart, _React$Component);
 
-  function TickerChart() {
+  function TickerChart(props) {
+    var _this;
+
     _classCallCheck(this, TickerChart);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(TickerChart).apply(this, arguments));
-  }
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerChart).call(this, props));
+    _this.state = {
+      closePrice: null,
+      change: null,
+      percentChange: null,
+      chartX: null,
+      chartY: null
+    };
+    _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
+    return _this;
+  } // componentDidMount(){
+  //     dailyChange();
+  // }
+
 
   _createClass(TickerChart, [{
+    key: "handleMouseOver",
+    value: function handleMouseOver(e) {
+      var hoverPrice = e.activePayload[0].payload.price;
+      var openPrice = this.props.open;
+      var change = hoverPrice - openPrice;
+      var dailyPercentChange = change / hoverPrice * 100;
+      debugger;
+
+      if (e) {
+        this.setState({
+          closePrice: e.activePayload[0].payload.price
+        });
+        this.setState({
+          chartX: e.chartX
+        });
+        this.setState({
+          chartY: e.chartY
+        });
+
+        if (this.props.timeFrame === "1D" || this.props.timeFrame === "5dm" || this.props.timeFrame === "1mm") {
+          this.setState({
+            change: change
+          });
+          this.setState({
+            percentChange: dailyPercentChange
+          });
+        } else {
+          debugger;
+          this.setState({
+            change: e.activePayload[0].payload.change
+          });
+          this.setState({
+            percentChange: e.activePayload[0].payload.changePercent
+          });
+        }
+      }
+    } // handleMouseOut(e){
+    //     dailyChange();
+    // }
+    // dailyChange(){
+    //     let currentChange = this.props.change || (this.props.open - this.props.close)
+    //     let currentPercentChange = (currentChange/this.props.open)/100
+    //     this.setState({
+    //         currentPrice = this.props.close, 
+    //         change = currentChange, 
+    //         percentChange = currentPercentChange
+    //     })
+    // }
+
+  }, {
     key: "render",
     value: function render() {
       debugger;
       var data = this.props.ticker || [];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, this.state.closePrice), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.change, " ", this.state.percentChange), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
         width: 676,
         height: 196,
         data: data,
@@ -1301,7 +1369,9 @@ function (_React$Component) {
           right: 10,
           left: 10,
           bottom: 5
-        }
+        },
+        onMouseOver: this.handleMouseOver // onMouseOut={this.handleMouseOut}
+
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
         dataKey: "time",
         hide: true
@@ -1309,6 +1379,7 @@ function (_React$Component) {
         hide: true,
         domain: ['dataMin', 'dataMax']
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
+        connectNulls: true,
         type: "linear",
         dataKey: "price",
         dot: false,
@@ -1319,7 +1390,7 @@ function (_React$Component) {
   }]);
 
   return TickerChart;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); //content={<CustomTooltip />}
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); //
 
 
 /* harmony default export */ __webpack_exports__["default"] = (TickerChart);
@@ -1577,7 +1648,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- //INTRINIO
+
 
 var TickerShow =
 /*#__PURE__*/
@@ -1598,7 +1669,10 @@ function (_React$Component) {
       "1Y": [],
       "5Y": [],
       timeFrame: "",
-      tickerSymbol: ""
+      tickerSymbol: "",
+      open: 0 // change: 0,
+      // changePercent: 0
+
     };
     _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
     return _this;
@@ -1615,28 +1689,27 @@ function (_React$Component) {
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
+    value: function componentDidUpdate(prevProps) {// debugger
       // if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol){ // diff symbol and switching timeframe
       //     this.setState({"1D": [], "5dm": [], "1mm": [], "3M": [], "1Y": [], "5Y": []})
       // }
-      debugger; // this.setState({timeFrame: timeFramePassed})
+      // debugger
     }
   }, {
     key: "renderDaily",
     value: function renderDaily(response) {
+      debugger;
       var daily = response.map(function (price) {
         return {
           label: parseInt(price.label.slice(0, 2) + price.label.slice(3, 5)),
-          price: price.close,
-          open: price.open,
-          change: price.change,
-          changePercent: price.changePercent
+          price: price.close
         };
       });
       this.setState({
         "1D": daily,
         timeFrame: "1D",
-        tickerSymbol: this.props.tickerSymbol
+        tickerSymbol: this.props.tickerSymbol,
+        open: response[0].open
       });
     }
   }, {
@@ -1644,6 +1717,7 @@ function (_React$Component) {
     value: function renderPrices(response, timeFramePassed) {
       var _this$setState;
 
+      debugger;
       var data = response.map(function (price) {
         return {
           price: price.close,
@@ -1662,11 +1736,10 @@ function (_React$Component) {
 
       if (this.state.timeFrame !== timeFrame) {
         return function (e) {
-          debugger;
           Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchPrices"])(_this3.props.tickerSymbol, timeFrame).then(function (response) {
             return _this3.renderPrices(response, timeFrame);
           });
-        }; //higher order fnc that returns fnc that does the above 
+        };
       }
     }
   }, {
@@ -1674,19 +1747,22 @@ function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      debugger;
       var tF = Object.keys(this.state).map(function (key) {
-        if (key !== "timeFrame" && key !== "tickerSymbol") {
-          debugger;
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             key: "".concat(key, "-id"),
             onClick: _this4.updatePrices(key)
-          }, key));
+          }, key);
         }
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
         tickerSymbol: this.props.tickerSymbol,
-        ticker: this.state[this.state.timeFrame]
+        ticker: this.state[this.state.timeFrame],
+        timeFrame: this.state.timeFrame,
+        open: this.state.open,
+        change: this.state.change,
+        changePercent: this.state.changePercent,
+        tF: tF
       }), tF, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_info__WEBPACK_IMPORTED_MODULE_2__["default"], {
         tickerSymbol: this.props.tickerSymbol
       }));

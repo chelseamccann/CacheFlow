@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.6.2",
-
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
@@ -11,6 +10,7 @@
     "react": "^16.10.1",
     "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.10.1",
+    "react-odometerjs": "^2.1.1",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "recharts": "^1.7.1",

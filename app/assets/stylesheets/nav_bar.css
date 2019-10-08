@@ -8,7 +8,7 @@
 }
 
 .drop-down{
-    position: relative;
+    position: fixed;
     display: inline-block;
     overflow: hidden;
 }
@@ -35,7 +35,7 @@
 }
 
 .dash {
-    width: 80%;
+    width: 100%;
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -43,14 +43,16 @@
 }
 
 .dash-nav{
+    margin: 0 auto;
     position: absolute;
     display: flex;
     justify-content: space-between;
     align-content: center;
+    width: 80%;
 }
 
-.dash-left {
-
+.dash-right {
+    /* position: absolute; */
     display: flex;
 }
 
