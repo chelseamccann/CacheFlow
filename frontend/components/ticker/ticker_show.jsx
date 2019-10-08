@@ -15,9 +15,10 @@ class TickerShow extends React.Component{
             "5Y": [],
             timeFrame: "",
             tickerSymbol: "",
-            open: 0,
-            // change: 0,
-            // changePercent: 0
+            open: null,
+            close: null,
+            change: 0,
+            changePercent: 0
         }
 
         this.updatePrices = this.updatePrices.bind(this);
@@ -28,23 +29,28 @@ class TickerShow extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        // debugger
-        // if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol){ // diff symbol and switching timeframe
-        //     this.setState({"1D": [], "5dm": [], "1mm": [], "3M": [], "1Y": [], "5Y": []})
-        // }
-        // debugger
+        if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol){ 
+            this.setState({"1D": [], "5dm": [], "1mm": [], "3M": [], "1Y": [], "5Y": []})
+            fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
+        }
     }
 
     renderDaily(response){
-        debugger
         const daily = response.map(price => {
             return {label: parseInt(price.label.slice(0,2)+price.label.slice(3,5)), price: price.close}
         })
-        this.setState({"1D": daily, timeFrame: "1D", tickerSymbol: this.props.tickerSymbol, open: response[0].open})
+        debugger
+        this.setState({
+            "1D": daily, timeFrame: "1D", 
+            tickerSymbol: this.props.tickerSymbol, 
+            open: response[0].open, 
+            close: response[response.length-1].close,
+            change: parseFloat(response[response.length-1].close - response[0].open).toFixed(2),
+            changePercent: parseFloat(((response[response.length-1].close - response[0].open)/response[response.length-1].close)*100).toFixed(2)
+    })
     }
 
     renderPrices(response, timeFramePassed){
-        debugger
         const data = response.map(price => {
             return {price: price.close, date: price.date, open: price.open, change: price.change, changePercent: price.changePercent}
         })
@@ -66,26 +72,30 @@ class TickerShow extends React.Component{
             }
         })
 
-        return (
-            <div>
+        if(this.state.timeFrame !== ""){
+            return (
+                <div>
+                    <TickerChart 
+                    tickerSymbol={this.props.tickerSymbol}
+                    ticker={this.state[this.state.timeFrame]}
+                    timeFrame={this.state.timeFrame}
+                    open={this.state.open}
+                    close={this.state.close}
+                    change={this.state.change}
+                    changePercent={this.state.changePercent}
+                    tF={tF}
+                    />
 
-                <TickerChart 
-                tickerSymbol={this.props.tickerSymbol}
-                ticker={this.state[this.state.timeFrame]}
-                timeFrame={this.state.timeFrame}
-                open={this.state.open}
-                change={this.state.change}
-                changePercent={this.state.changePercent}
-                tF={tF}
-                />
-
-                {tF}
-                <TickerInfo 
-                tickerSymbol={this.props.tickerSymbol} 
-                />
-            </div>
-            )
-    }
+                    <div className="time-frame-buttons">{tF}</div>
+                    <TickerInfo 
+                    tickerSymbol={this.props.tickerSymbol} 
+                    />
+                </div>
+                )
+            } else {
+                return <div></div>
+            }
+        }
 }
 
 export default TickerShow;

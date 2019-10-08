@@ -1261,22 +1261,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
- // const CustomTooltip = ({ active, payload}) => {
-//     // let { open, change, percentChange } = this.props
-//     debugger
-//     // if (active && payload){
-//     //     debugger
-//     //     return (
-//     //         <>
-//     //             {/* <div>{Number(open).toLocaleString()}</div> */}
-//     //             {/* <div>{Number(percentChange).toLocaleString()}</div> */}
-//     //         </>
-//     //     )
-//     // } else {
-//     //     // <div>{Number(open).toLocaleString()}</div>
-//     //     return <div>hello</div>
-//     // }
-// }
+ // import Odometer from 'react-odometerjs';
 
 var TickerChart =
 /*#__PURE__*/
@@ -1290,31 +1275,33 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerChart).call(this, props));
     _this.state = {
-      closePrice: null,
-      change: null,
-      percentChange: null,
+      closePrice: _this.props.close,
+      change: _this.props.change,
+      percentChange: _this.props.changePercent,
       chartX: null,
       chartY: null
     };
+    debugger;
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
+    _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
-  } // componentDidMount(){
-  //     dailyChange();
-  // }
-
+  }
 
   _createClass(TickerChart, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      debugger;
+    }
+  }, {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
-      var hoverPrice = e.activePayload[0].payload.price;
-      var openPrice = this.props.open;
-      var change = hoverPrice - openPrice;
-      var dailyPercentChange = change / hoverPrice * 100;
-      debugger;
-
-      if (e) {
+      if (e && e.activePayload !== undefined) {
+        var hoverPrice = e.activePayload[0].payload.price;
+        var openPrice = this.props.open;
+        var change = hoverPrice - openPrice;
+        var dailyPercentChange = change / hoverPrice * 100;
         this.setState({
-          closePrice: e.activePayload[0].payload.price
+          closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2)
         });
         this.setState({
           chartX: e.chartX
@@ -1322,37 +1309,33 @@ function (_React$Component) {
         this.setState({
           chartY: e.chartY
         });
-
-        if (this.props.timeFrame === "1D" || this.props.timeFrame === "5dm" || this.props.timeFrame === "1mm") {
-          this.setState({
-            change: change
-          });
-          this.setState({
-            percentChange: dailyPercentChange
-          });
-        } else {
-          debugger;
-          this.setState({
-            change: e.activePayload[0].payload.change
-          });
-          this.setState({
-            percentChange: e.activePayload[0].payload.changePercent
-          });
-        }
+        this.setState({
+          change: parseFloat(change.toFixed(2))
+        });
+        this.setState({
+          percentChange: parseFloat(dailyPercentChange).toFixed(2)
+        }); // if(this.props.timeFrame === "1D" || this.props.timeFrame === "5dm" || this.props.timeFrame === "1mm"){
+        //     this.setState({change: parseFloat(change.toFixed(2))})
+        //     this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+        // } else {
+        //     debugger
+        //     this.setState({change: parseFloat(e.activePayload[0].payload.change).toFixed(2)})
+        //     this.setState({percentChange: parseFloat(e.activePayload[0].payload.changePercent).toFixed(2)})
+        // }
       }
-    } // handleMouseOut(e){
-    //     dailyChange();
-    // }
-    // dailyChange(){
-    //     let currentChange = this.props.change || (this.props.open - this.props.close)
-    //     let currentPercentChange = (currentChange/this.props.open)/100
-    //     this.setState({
-    //         currentPrice = this.props.close, 
-    //         change = currentChange, 
-    //         percentChange = currentPercentChange
-    //     })
-    // }
-
+    }
+  }, {
+    key: "handleMouseOut",
+    value: function handleMouseOut(e) {
+      var currentChange = this.props.change || this.props.open - this.props.close;
+      var currentPercentChange = currentChange / this.props.open / 100;
+      debugger;
+      this.setState({
+        closePrice: this.props.close,
+        change: parseFloat(currentChange).toFixed(2),
+        percentChange: parseFloat(currentPercentChange).toFixed(2)
+      });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -1360,7 +1343,7 @@ function (_React$Component) {
       var data = this.props.ticker || [];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, this.state.closePrice), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.change, " ", this.state.percentChange), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$".concat(this.state.closePrice)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
         width: 676,
         height: 196,
         data: data,
@@ -1370,30 +1353,31 @@ function (_React$Component) {
           left: 10,
           bottom: 5
         },
-        onMouseOver: this.handleMouseOver // onMouseOut={this.handleMouseOut}
-
+        onMouseOver: this.handleMouseOver,
+        onMouseLeave: this.handleMouseOut
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
         dataKey: "time",
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
         hide: true,
         domain: ['dataMin', 'dataMax']
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
+        dataKey: "time"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
         connectNulls: true,
         type: "linear",
         dataKey: "price",
         dot: false,
         stroke: "#21ce99",
         strokeWidth: 1
-      }))); //make callback for the fetch somehow for button?
+      })));
     }
   }]);
 
   return TickerChart;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); //
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-
-/* harmony default export */ __webpack_exports__["default"] = (TickerChart);
+/* harmony default export */ __webpack_exports__["default"] = (TickerChart); // <link rel="stylesheet" href="odometer-theme-default.css" />
 
 /***/ }),
 
@@ -1577,17 +1561,17 @@ function (_React$Component) {
           ceo: response.ceo,
           sector: response.sector,
           ticker: response.ticker,
-          employees: response.employees,
+          employees: response.employees.toLocaleString(),
           city: response.hq_address_city,
           state: response.hq_state
         });
       });
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchTickerStats"])(this.props.tickerSymbol).then(function (res) {
         _this2.setState({
-          marketcap: res.marketcap,
-          peRatio: res.peRatio,
-          dividendYield: res.dividendYield,
-          avg30Volume: res.avg30Volume
+          marketcap: res.marketcap.toLocaleString(),
+          peRatio: parseFloat(res.peRatio).toFixed(2),
+          dividendYield: parseFloat(res.dividendYield).toFixed(2),
+          avg30Volume: res.avg30Volume.toLocaleString()
         });
       });
     }
@@ -1670,9 +1654,10 @@ function (_React$Component) {
       "5Y": [],
       timeFrame: "",
       tickerSymbol: "",
-      open: 0 // change: 0,
-      // changePercent: 0
-
+      open: null,
+      close: null,
+      change: 0,
+      changePercent: 0
     };
     _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
     return _this;
@@ -1689,27 +1674,41 @@ function (_React$Component) {
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {// debugger
-      // if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol){ // diff symbol and switching timeframe
-      //     this.setState({"1D": [], "5dm": [], "1mm": [], "3M": [], "1Y": [], "5Y": []})
-      // }
-      // debugger
+    value: function componentDidUpdate(prevProps) {
+      var _this3 = this;
+
+      if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol) {
+        this.setState({
+          "1D": [],
+          "5dm": [],
+          "1mm": [],
+          "3M": [],
+          "1Y": [],
+          "5Y": []
+        });
+        Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
+          return _this3.renderDaily(response);
+        });
+      }
     }
   }, {
     key: "renderDaily",
     value: function renderDaily(response) {
-      debugger;
       var daily = response.map(function (price) {
         return {
           label: parseInt(price.label.slice(0, 2) + price.label.slice(3, 5)),
           price: price.close
         };
       });
+      debugger;
       this.setState({
         "1D": daily,
         timeFrame: "1D",
         tickerSymbol: this.props.tickerSymbol,
-        open: response[0].open
+        open: response[0].open,
+        close: response[response.length - 1].close,
+        change: parseFloat(response[response.length - 1].close - response[0].open).toFixed(2),
+        changePercent: parseFloat((response[response.length - 1].close - response[0].open) / response[response.length - 1].close * 100).toFixed(2)
       });
     }
   }, {
@@ -1717,7 +1716,6 @@ function (_React$Component) {
     value: function renderPrices(response, timeFramePassed) {
       var _this$setState;
 
-      debugger;
       var data = response.map(function (price) {
         return {
           price: price.close,
@@ -1732,12 +1730,12 @@ function (_React$Component) {
   }, {
     key: "updatePrices",
     value: function updatePrices(timeFrame) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.state.timeFrame !== timeFrame) {
         return function (e) {
-          Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchPrices"])(_this3.props.tickerSymbol, timeFrame).then(function (response) {
-            return _this3.renderPrices(response, timeFrame);
+          Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchPrices"])(_this4.props.tickerSymbol, timeFrame).then(function (response) {
+            return _this4.renderPrices(response, timeFrame);
           });
         };
       }
@@ -1745,27 +1743,35 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             key: "".concat(key, "-id"),
-            onClick: _this4.updatePrices(key)
+            onClick: _this5.updatePrices(key)
           }, key);
         }
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        tickerSymbol: this.props.tickerSymbol,
-        ticker: this.state[this.state.timeFrame],
-        timeFrame: this.state.timeFrame,
-        open: this.state.open,
-        change: this.state.change,
-        changePercent: this.state.changePercent,
-        tF: tF
-      }), tF, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_info__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        tickerSymbol: this.props.tickerSymbol
-      }));
+
+      if (this.state.timeFrame !== "") {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          tickerSymbol: this.props.tickerSymbol,
+          ticker: this.state[this.state.timeFrame],
+          timeFrame: this.state.timeFrame,
+          open: this.state.open,
+          close: this.state.close,
+          change: this.state.change,
+          changePercent: this.state.changePercent,
+          tF: tF
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "time-frame-buttons"
+        }, tF), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_info__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          tickerSymbol: this.props.tickerSymbol
+        }));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      }
     }
   }]);
 

@@ -17,7 +17,7 @@ class TickerInfo extends React.Component {
                 ceo: response.ceo, 
                 sector: response.sector, 
                 ticker: response.ticker, 
-                employees: response.employees,
+                employees: response.employees.toLocaleString(),
                 city: response.hq_address_city,
                 state: response.hq_state
             })
@@ -25,10 +25,10 @@ class TickerInfo extends React.Component {
         
         fetchTickerStats(this.props.tickerSymbol).then(res => {
             this.setState({
-                marketcap: res.marketcap,
-                peRatio: res.peRatio,
-                dividendYield: res.dividendYield,
-                avg30Volume: res.avg30Volume
+                marketcap: res.marketcap.toLocaleString(),
+                peRatio: parseFloat(res.peRatio).toFixed(2),
+                dividendYield: parseFloat(res.dividendYield).toFixed(2),
+                avg30Volume: res.avg30Volume.toLocaleString()
             })
         })
 
