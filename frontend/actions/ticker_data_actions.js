@@ -8,8 +8,8 @@ export const receiveTickerData = (symbol, data) => ({
     data: data
 })
 
-export const fetchTickerData = symbol => dispatch => API.fetchTickerData(symbol)
-    .then(data => dispatch(receiveTickerData(symbol, data)))
+// export const fetchTickerData = symbol => dispatch => API.fetchTickerData(symbol)
+//     .then(data => dispatch(receiveTickerData(symbol, data)))
 
-export const fetchTickerInfo = symbol => dispatch => API.fetchTickerInfo(symbol)
-.then(data => dispatch(receiveTickerData(symbol, data)))
+// export const fetchTickerInfo = symbol => dispatch => API.fetchTickerInfo(symbol)
+// .then(data => dispatch(receiveTickerData(symbol, data)))
