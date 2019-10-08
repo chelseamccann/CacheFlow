@@ -29,6 +29,7 @@ class TickerShow extends React.Component{
     }
 
     componentDidUpdate(prevProps){
+        debugger
         if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol){ 
             this.setState({"1D": [], "5dm": [], "1mm": [], "3M": [], "1Y": [], "5Y": []})
             fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
@@ -37,11 +38,11 @@ class TickerShow extends React.Component{
 
     renderDaily(response){
         const daily = response.map(price => {
-            return {label: parseInt(price.label.slice(0,2)+price.label.slice(3,5)), price: price.close}
+            return {label: price.label, price: price.close}
         })
-        debugger
         this.setState({
-            "1D": daily, timeFrame: "1D", 
+            "1D": daily, 
+            timeFrame: "1D", 
             tickerSymbol: this.props.tickerSymbol, 
             open: response[0].open, 
             close: response[response.length-1].close,
@@ -68,7 +69,7 @@ class TickerShow extends React.Component{
     render(){
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
-                return <button key={`${key}-id`} onClick={this.updatePrices(key)}>{key}</button>
+                return <button key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
             }
         })
 

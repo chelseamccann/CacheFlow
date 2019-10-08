@@ -2,7 +2,6 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 // import Odometer from 'react-odometerjs';
 
-
 class TickerChart extends React.Component {
     constructor(props){
         super(props);
@@ -11,15 +10,11 @@ class TickerChart extends React.Component {
             change: this.props.change, 
             percentChange: this.props.changePercent,
             chartX: null,
-            chartY: null
+            chartY: null,
         }
-        debugger
+
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
-    }
-
-    componentDidMount(){
-        debugger
     }
 
     handleMouseOver(e){
@@ -34,14 +29,6 @@ class TickerChart extends React.Component {
             this.setState({chartY: e.chartY}) 
             this.setState({change: parseFloat(change.toFixed(2))})
             this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
-            // if(this.props.timeFrame === "1D" || this.props.timeFrame === "5dm" || this.props.timeFrame === "1mm"){
-            //     this.setState({change: parseFloat(change.toFixed(2))})
-            //     this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
-            // } else {
-            //     debugger
-            //     this.setState({change: parseFloat(e.activePayload[0].payload.change).toFixed(2)})
-            //     this.setState({percentChange: parseFloat(e.activePayload[0].payload.changePercent).toFixed(2)})
-            // }
         }
     }
 
@@ -58,12 +45,12 @@ class TickerChart extends React.Component {
     }
 
     render(){
+        const { odometerValue } = this.state;
         debugger
         let data = this.props.ticker || [];
-
+        const label = this.props.timeFrame === "1D" ? "label" : "date";
         return (
             <div className="ticker-chart block-paddings">
-                {/* <Odometer value={this.state.closePrice} format="(.ddd),dd" /> */}
 
                 <h3>{`$${this.state.closePrice}`}</h3>
                 <p>{`$${this.state.change}`} {`(${this.state.percentChange}%)`}</p>
@@ -71,14 +58,18 @@ class TickerChart extends React.Component {
                  <LineChart 
                     width={676} 
                     height={196} 
-                    data={data} 
+                    data={data}
                     margin={{top: 5, right: 10, left: 10, bottom: 5}}
                     onMouseOver={this.handleMouseOver}
                     onMouseLeave={this.handleMouseOut}
                  >
-                    <XAxis dataKey="time" hide={true} />
+                    <XAxis dataKey={label} hide={true} />
                     <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
-                    <Tooltip dataKey="time"/> 
+                    <Tooltip className='tooltip'
+                                    contentStyle={{ border: '0', backgroundColor: 'transparent', color: 'grey'}}
+                                    formatter={(value, name, props) => { return [""] }}
+                                    // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
+                                    isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
                     <Line connectNulls type="linear" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1}/>
                 </LineChart>
             </div>

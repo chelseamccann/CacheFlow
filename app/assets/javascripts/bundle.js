@@ -1281,18 +1281,12 @@ function (_React$Component) {
       chartX: null,
       chartY: null
     };
-    debugger;
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(TickerChart, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      debugger;
-    }
-  }, {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
@@ -1314,14 +1308,7 @@ function (_React$Component) {
         });
         this.setState({
           percentChange: parseFloat(dailyPercentChange).toFixed(2)
-        }); // if(this.props.timeFrame === "1D" || this.props.timeFrame === "5dm" || this.props.timeFrame === "1mm"){
-        //     this.setState({change: parseFloat(change.toFixed(2))})
-        //     this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
-        // } else {
-        //     debugger
-        //     this.setState({change: parseFloat(e.activePayload[0].payload.change).toFixed(2)})
-        //     this.setState({percentChange: parseFloat(e.activePayload[0].payload.changePercent).toFixed(2)})
-        // }
+        });
       }
     }
   }, {
@@ -1339,8 +1326,10 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var odometerValue = this.state.odometerValue;
       debugger;
       var data = this.props.ticker || [];
+      var label = this.props.timeFrame === "1D" ? "label" : "date";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$".concat(this.state.closePrice)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
@@ -1356,13 +1345,27 @@ function (_React$Component) {
         onMouseOver: this.handleMouseOver,
         onMouseLeave: this.handleMouseOut
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
-        dataKey: "time",
+        dataKey: label,
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
         hide: true,
         domain: ['dataMin', 'dataMax']
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
-        dataKey: "time"
+        className: "tooltip",
+        contentStyle: {
+          border: '0',
+          backgroundColor: 'transparent',
+          color: 'grey'
+        },
+        formatter: function formatter(value, name, props) {
+          return [""];
+        } // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
+        ,
+        isAnimationActive: false,
+        cursor: {
+          stroke: "Gainsboro",
+          strokeWidth: 1.5
+        }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
         connectNulls: true,
         type: "linear",
@@ -1677,6 +1680,8 @@ function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
+      debugger;
+
       if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol) {
         this.setState({
           "1D": [],
@@ -1696,11 +1701,10 @@ function (_React$Component) {
     value: function renderDaily(response) {
       var daily = response.map(function (price) {
         return {
-          label: parseInt(price.label.slice(0, 2) + price.label.slice(3, 5)),
+          label: price.label,
           price: price.close
         };
       });
-      debugger;
       this.setState({
         "1D": daily,
         timeFrame: "1D",
@@ -1750,7 +1754,7 @@ function (_React$Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             key: "".concat(key, "-id"),
             onClick: _this5.updatePrices(key)
-          }, key);
+          }, key.slice(0, 2).toUpperCase());
         }
       });
 
@@ -2241,8 +2245,8 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
@@ -2254,9 +2258,9 @@ var fetchPrices = function fetchPrices(symbol, timeFrame) {
 var fetchTickerInfo = function fetchTickerInfo(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    url: "https://api-v2.intrinio.com/companies/".concat(symbol, "?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi")
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+
   });
 };
 var fetchTickerStats = function fetchTickerStats(symbol) {
