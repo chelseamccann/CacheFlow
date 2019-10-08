@@ -12,7 +12,7 @@ User.delete_all
 User.create!(email: "JordanBelfort@w.com", password: "password123", buying_power: 20.02)
 
 Ticker.create!(symbol: "AAPL")
-Ticker.create!(symbol: "GOOGL")
+Ticker.create!(symbol: "FB")
 Ticker.create!(symbol: "GOOG")
 Ticker.create!(symbol: "NKE")
 Ticker.create!(symbol: "RCL")

@@ -1,12 +1,12 @@
 import React from 'react';
 // import { LineChart, Line } from 'react-chartjs-2';
-import { LineChart, Line, XAxis, YAxis, Legend, Tooltip, CartesianGrid } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 
 class TickerChart extends React.Component {
 
     render(){
+        debugger
         let data = this.props.tickerDaily || [];
-
         return (
             <div className="ticker-chart block-paddings">
                  <LineChart 
@@ -15,10 +15,10 @@ class TickerChart extends React.Component {
                     data={data} 
                     margin={{top: 5, right: 10, left: 10, bottom: 5}}
                  >
-                    <XAxis dataKey="label" hide={true} />
+                    <XAxis dataKey="time" hide={true} />
                     <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
                     <Tooltip />
-                    <Line type="linear" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={2}/>
+                    <Line type="linear" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1}/>
                 </LineChart>
             </div>
             )

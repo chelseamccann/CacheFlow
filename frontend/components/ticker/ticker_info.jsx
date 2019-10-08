@@ -12,15 +12,14 @@ class TickerInfo extends React.Component {
 
         fetchTickerInfo(this.props.tickerSymbol).then(response => {
             this.setState(
-            {name: response.companyName, 
-                desc: response.description, 
-                ceo: response.CEO, 
+            {name: response.name, 
+                desc: response.short_description, 
+                ceo: response.ceo, 
                 sector: response.sector, 
-                ticker: response.symbol, 
-                tags: response.tags,
+                ticker: response.ticker, 
                 employees: response.employees,
-                city: response.city,
-                state: response.state
+                city: response.hq_address_city,
+                state: response.hq_state
             })
         })
         
@@ -37,9 +36,7 @@ class TickerInfo extends React.Component {
 
 
     render(){
-        debugger
         return (
-
         <>
         <h1>{this.state.name}</h1>
         <div className="ticker-info">

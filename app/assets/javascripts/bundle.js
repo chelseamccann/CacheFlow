@@ -360,6 +360,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
 /* harmony import */ var _ticker_ticker_show_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ticker/ticker_show_container */ "./frontend/components/ticker/ticker_show_container.jsx");
+/* harmony import */ var _nav_bar_nav_bar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../nav_bar/nav_bar */ "./frontend/components/nav_bar/nav_bar.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -385,6 +386,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Dashboard =
 /*#__PURE__*/
 function (_React$Component) {
@@ -401,18 +403,18 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome ", this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-        to: "/"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.props.logout
-      }, "Log Out")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        logout: this.props.logout
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-middle"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
         exact: true,
         path: "/:tickerSymbol",
         component: _ticker_ticker_show_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
         path: "/",
         component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
-      }));
+      })));
     }
   }]);
 
@@ -420,6 +422,9 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Dashboard);
+{
+  /* <ProtectedRoute exact path="/" component={TickerIndexContainer}/> */
+}
 
 /***/ }),
 
@@ -738,6 +743,108 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(_login_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/nav_bar/nav_bar.jsx":
+/*!*************************************************!*\
+  !*** ./frontend/components/nav_bar/nav_bar.jsx ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var NavBar =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NavBar, _React$Component);
+
+  function NavBar() {
+    _classCallCheck(this, NavBar);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(NavBar).apply(this, arguments));
+  }
+
+  _createClass(NavBar, [{
+    key: "drop",
+    value: function drop(e) {
+      e.preventDefault();
+      document.getElementById("drop-down-id").classList.toggle("show");
+      document.getElementById("drop-down-id").classList.toggle("drop-down-content");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dash"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dash-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "dash-nav"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "",
+        className: "nav-left"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.rh,
+        className: "nav-left logo"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dash-left"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "",
+        className: "nav-left"
+      }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Messages"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.drop,
+        className: "drop-down-button"
+      }, "Account"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down-content",
+        id: "drop-down-id"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop"
+      }, "Portfolio Value"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop"
+      }, "Buying Power"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop"
+      }, "History"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.props.logout
+      }, "Log Out")))))))));
+    }
+  }]);
+
+  return NavBar;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (NavBar);
 
 /***/ }),
 
@@ -1184,6 +1291,7 @@ function (_React$Component) {
   _createClass(TickerChart, [{
     key: "render",
     value: function render() {
+      debugger;
       var data = this.props.tickerDaily || [];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
@@ -1198,7 +1306,7 @@ function (_React$Component) {
           bottom: 5
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
-        dataKey: "label",
+        dataKey: "time",
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
         hide: true,
@@ -1208,7 +1316,7 @@ function (_React$Component) {
         dataKey: "price",
         dot: false,
         stroke: "#21ce99",
-        strokeWidth: 2
+        strokeWidth: 1
       })));
     }
   }]);
@@ -1395,15 +1503,14 @@ function (_React$Component) {
 
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchTickerInfo"])(this.props.tickerSymbol).then(function (response) {
         _this2.setState({
-          name: response.companyName,
-          desc: response.description,
-          ceo: response.CEO,
+          name: response.name,
+          desc: response.short_description,
+          ceo: response.ceo,
           sector: response.sector,
-          ticker: response.symbol,
-          tags: response.tags,
+          ticker: response.ticker,
           employees: response.employees,
-          city: response.city,
-          state: response.state
+          city: response.hq_address_city,
+          state: response.hq_state
         });
       });
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchTickerStats"])(this.props.tickerSymbol).then(function (res) {
@@ -1418,7 +1525,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1486,7 +1592,11 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerShow).call(this, props));
     _this.state = {
       tickerDaily: [],
-      tickerWeekly: []
+      tickerWeekly: [],
+      tickerOneMonth: [],
+      tickerThreeMonth: [],
+      tickerOneYear: [],
+      tickerFiveYear: []
     };
     return _this;
   }
@@ -1496,13 +1606,25 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      // fetchTickerData({symbol: this.props.tickerSymbol, callback: this.renderData})  //INTRINIO
+      // fetchTickerDaily({symbol: this.props.tickerSymbol, callback: this.renderDaily})  //INTRINIO
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchTickerDaily"])(this.props.tickerSymbol).then(function (response) {
         return _this2.renderDaily(response);
       }); //IEX
 
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchWeekly"])(this.props.tickerSymbol).then(function (response) {
         return _this2.renderWeekly(response);
+      });
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchOneMonth"])(this.props.tickerSymbol).then(function (response) {
+        return _this2.renderOneMonth(response);
+      });
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchThreeMonth"])(this.props.tickerSymbol).then(function (response) {
+        return _this2.renderThreeMonth(response);
+      });
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchOneYear"])(this.props.tickerSymbol).then(function (response) {
+        return _this2.renderOneYear(response);
+      });
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchFiveYear"])(this.props.tickerSymbol).then(function (response) {
+        return _this2.renderFiveYear(response);
       });
     }
   }, {
@@ -1511,7 +1633,7 @@ function (_React$Component) {
       // IEX
       var daily = response.map(function (price) {
         return {
-          time: parseInt(price.minute.slice(0, 2) + price.minute.slice(3)),
+          label: parseInt(price.label.slice(0, 2) + price.label.slice(3, 5)),
           price: price.close
         };
       });
@@ -1527,10 +1649,9 @@ function (_React$Component) {
     key: "renderWeekly",
     value: function renderWeekly(response) {
       var weekly = response.map(function (price) {
-        debugger;
         return {
-          time: parseInt(price.minute.slice(0, 2) + price.minute.slice(3)),
-          price: price.close
+          price: price.close,
+          date: price.date
         };
       });
       this.setState({
@@ -1538,13 +1659,67 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "renderOneMonth",
+    value: function renderOneMonth(response) {
+      var oneMonth = response.map(function (price) {
+        return {
+          price: price.close,
+          date: price.date
+        };
+      });
+      this.setState({
+        tickerOneMonth: oneMonth
+      });
+    }
+  }, {
+    key: "renderThreeMonth",
+    value: function renderThreeMonth(response) {
+      var threeMonth = response.map(function (price) {
+        return {
+          price: price.close,
+          date: price.date
+        };
+      });
+      this.setState({
+        tickerThreeMonth: threeMonth
+      });
+    }
+  }, {
+    key: "renderOneYear",
+    value: function renderOneYear(response) {
+      var oneYear = response.map(function (price) {
+        return {
+          price: price.close,
+          date: price.date
+        };
+      });
+      this.setState({
+        tickerOneYear: oneYear
+      });
+    }
+  }, {
+    key: "renderFiveYear",
+    value: function renderFiveYear(response) {
+      var fiveYear = response.map(function (price) {
+        return {
+          price: price.close,
+          date: price.date
+        };
+      });
+      this.setState({
+        tickerFiveYear: fiveYear
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
         tickerSymbol: this.props.tickerSymbol,
-        tickerData: this.state.tickerDaily,
-        tickerWeekly: this.state.tickerWeekly
+        tickerDaily: this.state.tickerDaily,
+        tickerWeekly: this.state.tickerWeekly,
+        tickerOneMonth: this.state.tickerOneMonth,
+        tickerOneYear: this.state.tickerOneYear,
+        tickerFiveYear: this.state.tickerFiveYear
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_info__WEBPACK_IMPORTED_MODULE_2__["default"], {
         tickerSymbol: this.props.tickerSymbol
       }));
@@ -1571,9 +1746,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/ticker_actions */ "./frontend/actions/ticker_actions.js");
-/* harmony import */ var _actions_ticker_data_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/ticker_data_actions */ "./frontend/actions/ticker_data_actions.js");
-/* harmony import */ var _ticker_show__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ticker_show */ "./frontend/components/ticker/ticker_show.jsx");
-
+/* harmony import */ var _ticker_show__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ticker_show */ "./frontend/components/ticker/ticker_show.jsx");
 
 
 
@@ -1589,9 +1762,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchTicker: function fetchTicker(tickerId) {
       return dispatch(Object(_actions_ticker_actions__WEBPACK_IMPORTED_MODULE_2__["fetchTicker"])(tickerId));
-    },
-    fetchTickerData: function fetchTickerData(symbol) {
-      return dispatch(Object(_actions_ticker_data_actions__WEBPACK_IMPORTED_MODULE_3__["fetchTickerData"])(symbol));
     },
     fetchTickerInfo: function (_fetchTickerInfo) {
       function fetchTickerInfo(_x) {
@@ -1609,7 +1779,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_ticker_show__WEBPACK_IMPORTED_MODULE_4__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_ticker_show__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -1777,6 +1947,7 @@ var tickerDataReducer = function tickerDataReducer() {
     // case RECEIVE_TICKERS:
     //     return action.tickers
     case _actions_ticker_data_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKER_DATA"]:
+      debugger;
       return Object.assign({}, state, _defineProperty({}, action.symbol, action.data));
 
     default:
@@ -2008,13 +2179,17 @@ var fetchTicker = function fetchTicker(id) {
 /*!***********************************************!*\
   !*** ./frontend/util/ticker_data_api_util.js ***!
   \***********************************************/
-/*! exports provided: fetchTickerDaily, fetchWeekly, fetchTickerData, fetchTickerInfo, fetchTickerStats */
+/*! exports provided: fetchTickerDaily, fetchWeekly, fetchOneMonth, fetchThreeMonth, fetchOneYear, fetchFiveYear, fetchTickerData, fetchTickerInfo, fetchTickerStats */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerDaily", function() { return fetchTickerDaily; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWeekly", function() { return fetchWeekly; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchOneMonth", function() { return fetchOneMonth; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchThreeMonth", function() { return fetchThreeMonth; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchOneYear", function() { return fetchOneYear; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchFiveYear", function() { return fetchFiveYear; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerData", function() { return fetchTickerData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerInfo", function() { return fetchTickerInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickerStats", function() { return fetchTickerStats; });
@@ -2030,13 +2205,38 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var fetchTickerDaily = function fetchTickerDaily(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f")
+    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchWeekly = function fetchWeekly(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/twtr/chart/5dm?token=pk_b6f890a95fb24dbfb1a85f362fe5687f"
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/5dm?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+  });
+};
+var fetchOneMonth = function fetchOneMonth(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/1mm?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+  });
+};
+var fetchThreeMonth = function fetchThreeMonth(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/3m?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+  });
+};
+var fetchOneYear = function fetchOneYear(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/1y?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+  });
+};
+var fetchFiveYear = function fetchFiveYear(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/5y?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 }; //INTRINIO
 // export const fetchTickerData = (symbol) => (
@@ -2076,14 +2276,15 @@ var fetchTickerData = function fetchTickerData(props) {
 var fetchTickerInfo = function fetchTickerInfo(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
-
+    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    url: "https://api-v2.intrinio.com/companies/".concat(symbol, "?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi")
   });
 };
 var fetchTickerStats = function fetchTickerStats(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") //{stat?}`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/stats?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f` //{stat?}`
     // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 
   });
