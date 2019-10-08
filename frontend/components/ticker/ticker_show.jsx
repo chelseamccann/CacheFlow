@@ -13,47 +13,73 @@ class TickerShow extends React.Component{
             "3M": [],
             "1Y": [],
             "5Y": [],
-            timeFrame: ""
+            timeFrame: "",
+            tickerSymbol: "",
         }
+
+        this.updatePrices = this.updatePrices.bind(this);
     }
 
     componentDidMount(){
-        fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response)) 
-        fetchPrices(this.props.tickerSymbol, "5dm").then(response => this.renderPrices(response, "5dm"))
-        fetchPrices(this.props.tickerSymbol, "1mm").then(response => this.renderPrices(response, "1mm"))
-        fetchPrices(this.props.tickerSymbol, "3M").then(response => this.renderPrices(response, "3M"))
-        fetchPrices(this.props.tickerSymbol, "1y").then(response => this.renderPrices(response, "1y"))
-        fetchPrices(this.props.tickerSymbol, "5y").then(response => this.renderPrices(response, "5y"))
+        fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response))
     }
 
+    componentDidUpdate(prevProps){
+        // if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol){ // diff symbol and switching timeframe
+        //     this.setState({"1D": [], "5dm": [], "1mm": [], "3M": [], "1Y": [], "5Y": []})
+        // }
+        debugger
+        // this.setState({timeFrame: timeFramePassed})
+    }
 
     renderDaily(response){
         const daily = response.map(price => {
             return {label: parseInt(price.label.slice(0,2)+price.label.slice(3,5)), price: price.close, open: price.open, change: price.change, changePercent: price.changePercent}
         })
-        this.setState({"1D": daily, timeFrame: "1d"})
+        this.setState({"1D": daily, timeFrame: "1D", tickerSymbol: this.props.tickerSymbol})
     }
 
-    renderPrices(response, timeFrame){
+    renderPrices(response, timeFramePassed){
         const data = response.map(price => {
             return {price: price.close, date: price.date, open: price.open, change: price.change, changePercent: price.changePercent}
         })
-        this.setState({[timeFrame]: data, timeFrame: timeFrame})
+        this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol})
+    }
+
+    updatePrices(timeFrame){
+        if (this.state.timeFrame !== timeFrame){
+            return e => {
+                debugger
+                fetchPrices(this.props.tickerSymbol, timeFrame).then(response => this.renderPrices(response, timeFrame))
+            }
+
+            //higher order fnc that returns fnc that does the above 
+        }
     }
 
     render(){
         debugger
+
+        const tF = Object.keys(this.state).map(key => {
+            if (key !== "timeFrame" && key !== "tickerSymbol"){
+                debugger
+                return (
+                    <>
+
+                        <button key={`${key}-id`} onClick={this.updatePrices(key)}>{key}</button>
+                    </>
+                )
+            }
+        })
+
         return (
             <div>
                 <TickerChart 
-                tickerSymbol={this.props.tickerSymbol} 
-                tickerDaily={this.state["1D"]}
-                tickerWeekly={this.state["5dm"]}
-                tickerOneMonth={this.state["1M"]}
-                tickerThreeMonth={this.state["3M"]}
-                tickerOneYear={this.state["1Y"]}
-                tickerFiveYear={this.state["5Y"]}
+                tickerSymbol={this.props.tickerSymbol}
+                ticker={this.state[this.state.timeFrame]}
                 />
+
+                {tF}
                 <TickerInfo 
                 tickerSymbol={this.props.tickerSymbol} 
                 />
