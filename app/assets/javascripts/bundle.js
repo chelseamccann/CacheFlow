@@ -1458,7 +1458,11 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "ticker-index block-paddings"
-      }, tickers);
+      }, tickers, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
+        exact: true,
+        path: "/:tickerSymbol",
+        component: _ticker_show_container__WEBPACK_IMPORTED_MODULE_2__["default"]
+      }));
     }
   }]);
 
@@ -1683,15 +1687,7 @@ function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
-      if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol) {
-        this.setState({
-          "1D": [],
-          "5dm": [],
-          "1mm": [],
-          "3M": [],
-          "1Y": [],
-          "5Y": []
-        });
+      if (this.state.tickerSymbol !== prevProps.match.params.tickerSymbol) {
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
           return _this3.renderDaily(response);
         });
@@ -2256,7 +2252,8 @@ var fetchDailyPrices = function fetchDailyPrices(symbol) {
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f")
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchTickerInfo = function fetchTickerInfo(symbol) {

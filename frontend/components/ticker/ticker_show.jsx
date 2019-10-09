@@ -29,8 +29,7 @@ class TickerShow extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol){ 
-            this.setState({"1D": [], "5dm": [], "1mm": [], "3M": [], "1Y": [], "5Y": []})
+        if (this.state.tickerSymbol !== prevProps.match.params.tickerSymbol){ 
             fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
         }
     }
