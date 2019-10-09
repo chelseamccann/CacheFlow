@@ -1458,11 +1458,7 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "ticker-index block-paddings"
-      }, tickers, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
-        exact: true,
-        path: "/:tickerSymbol",
-        component: _ticker_show_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-      }));
+      }, tickers);
     }
   }]);
 

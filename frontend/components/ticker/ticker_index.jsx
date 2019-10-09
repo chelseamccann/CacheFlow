@@ -29,7 +29,7 @@ class TickerIndex extends React.Component{
             <ul className="ticker-index block-paddings">
                 
                 {tickers}
-                <ProtectedRoute exact path='/:tickerSymbol' component={TickerShowContainer}/>
+                
             </ul>
         )
     }
