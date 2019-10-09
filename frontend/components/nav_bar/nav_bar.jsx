@@ -14,15 +14,12 @@ class NavBar extends React.Component {
         return (
         <div className="dash">
 
-            {/* <div className="dash-header"> */}
-                {/* <div className="logo">cacheflow</div> */}
                 <ul className="dash-nav">
                     <div className="dash-left">
                         <li><img src={window.rh} /></li>
                         <li id="search" >Search</li>
                     </div>
                     <div className="dash-right">
-                        {/* <li className="right-right"> Messages</li> */}
                         <div className="drop-down" >
                             <a href="" className="right-right">Home</a>
                             <button  className="drop-down-button">Messages</button>

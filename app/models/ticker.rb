@@ -12,5 +12,6 @@ class Ticker < ApplicationRecord
 
     validates :symbol, presence: true
 
+    has_many :transactions
 
 end

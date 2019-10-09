@@ -1,6 +1,7 @@
 import React from 'react';
 import TickerChart from './ticker_chart';
 import TickerInfo from './ticker_info';
+import TransactionForm from '../transactions/transaction_form';
 import {fetchPrices, fetchDailyPrices } from '../../util/ticker_data_api_util'; 
 
 class TickerShow extends React.Component{
@@ -29,7 +30,7 @@ class TickerShow extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        if (this.state.tickerSymbol !== prevProps.match.params.tickerSymbol){ 
+        if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){ 
             fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
         }
     }
@@ -73,7 +74,8 @@ class TickerShow extends React.Component{
 
         if(this.state.timeFrame !== ""){
             return (
-                <div>
+                <div className="show-wrap">
+                    <div>
                     <div className="chart-wrap"> 
                         <TickerChart 
                         tickerSymbol={this.props.tickerSymbol}
@@ -89,8 +91,18 @@ class TickerShow extends React.Component{
                         <div className="time-frame-buttons">{tF}</div>
 
                     </div>
+
+                    <div className="info-and-transaction-form">
                     <TickerInfo 
                     tickerSymbol={this.props.tickerSymbol} 
+                    />
+                    </div>
+
+                    </div>
+
+                    <TransactionForm 
+                    tickerSymbol={this.props.tickerSymbol} 
+                    close={this.state.close}
                     />
                 </div>
                 )

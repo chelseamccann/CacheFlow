@@ -1,0 +1,46 @@
+.info-and-transaction-form{
+    display: flex;
+    width: 100%;
+    justify-content: space-between
+}
+
+.transaction-form{
+    /* margin-top: 50px;
+    margin-left: 40px; */
+    display: inline-block;
+    width: 225px;
+    align-content: center;
+    max-height: 100px;
+    background: white;
+    box-sizing: border-box;
+    z-index: 1;
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0.01), 0 3px 24px rgba(48,51,51,0.09);
+    box-sizing: content-box;
+}
+
+.show-wrap{
+    display: flex;
+}
+
+.t-form{
+    font-size: 13px;
+}
+
+.t-form > div{
+    display: flex;
+}
+
+.review-button{
+    padding: 10px;
+    color: white;
+    background-color: #21ce99;
+    border-color: #21ce99;
+}
+
+.buy-sell-buttons{
+    text-decoration: none;
+}
+
+.buy-sell-buttons:hover{
+    color: #21ce99;
+}

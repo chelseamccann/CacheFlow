@@ -394,14 +394,15 @@ function (_React$Component) {
         logout: this.props.logout
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard-middle"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
         exact: true,
         path: "/:tickerSymbol",
         component: _ticker_ticker_show_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+        exact: true,
         path: "/",
         component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
-      })));
+      }))));
     }
   }]);
 
@@ -1614,7 +1615,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ticker_chart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ticker_chart */ "./frontend/components/ticker/ticker_chart.jsx");
 /* harmony import */ var _ticker_info__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ticker_info */ "./frontend/components/ticker/ticker_info.jsx");
-/* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
+/* harmony import */ var _transactions_transaction_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../transactions/transaction_form */ "./frontend/components/transactions/transaction_form.jsx");
+/* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1634,6 +1636,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1674,7 +1677,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
         return _this2.renderDaily(response);
       });
     }
@@ -1683,8 +1686,8 @@ function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
-      if (this.state.tickerSymbol !== prevProps.match.params.tickerSymbol) {
-        Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
+      if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol) {
+        Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
           return _this3.renderDaily(response);
         });
       }
@@ -1731,7 +1734,7 @@ function (_React$Component) {
 
       if (this.state.timeFrame !== timeFrame) {
         return function (e) {
-          Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchPrices"])(_this4.props.tickerSymbol, timeFrame).then(function (response) {
+          Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(_this4.props.tickerSymbol, timeFrame).then(function (response) {
             return _this4.renderPrices(response, timeFrame);
           });
         };
@@ -1753,7 +1756,9 @@ function (_React$Component) {
       });
 
       if (this.state.timeFrame !== "") {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show-wrap"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
           tickerSymbol: this.props.tickerSymbol,
@@ -1766,8 +1771,13 @@ function (_React$Component) {
           tF: tF
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
-        }, tF)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_info__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        }, tF)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "info-and-transaction-form"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_info__WEBPACK_IMPORTED_MODULE_2__["default"], {
           tickerSymbol: this.props.tickerSymbol
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transactions_transaction_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          tickerSymbol: this.props.tickerSymbol,
+          close: this.state.close
         }));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
@@ -1829,6 +1839,109 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_ticker_show__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/transactions/transaction_form.jsx":
+/*!***************************************************************!*\
+  !*** ./frontend/components/transactions/transaction_form.jsx ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var TransactionForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(TransactionForm, _React$Component);
+
+  function TransactionForm(props) {
+    var _this;
+
+    _classCallCheck(this, TransactionForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TransactionForm).call(this, props));
+    _this.state = {
+      cost: _this.props.close
+    };
+    return _this;
+  }
+
+  _createClass(TransactionForm, [{
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+    }
+  }, {
+    key: "updateShares",
+    value: function updateShares() {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState({
+          shares: parseInt(e.target.value) ? parseInt(e.target.value) : "",
+          cost: e.target.value * _this2.props.close
+        });
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      //buy symbol if buy is clicked, else sell symbol
+      //if buy - subtract from buying power and total val, if sell add to
+      //show buying power on bottom of form?
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "transaction-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "drop-down-button nav-bar-logout buy-sell-buttons"
+      }, "Buy ", this.props.tickerSymbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "drop-down-button nav-bar-logout buy-sell-buttons"
+      }, "Sell ", this.props.tickerSymbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "t-form",
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        id: "shares"
+      }, "Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "shares",
+        type: "text",
+        value: this.state.shares,
+        onChange: this.updateShares('shares'),
+        placeholder: "0"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(parseFloat(this.props.close).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(parseFloat(this.state.cost).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "Execute Order",
+        className: " nav-bar-logout review-button"
+      })));
+    }
+  }]);
+
+  return TransactionForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (TransactionForm);
 
 /***/ }),
 
