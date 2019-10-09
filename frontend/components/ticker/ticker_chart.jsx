@@ -1,6 +1,6 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Legend, Tooltip } from 'recharts';
-// import Odometer from 'react-odometerjs';
+import Odometer from 'react-odometerjs';
 
 class TickerChart extends React.Component {
     constructor(props){
@@ -36,23 +36,20 @@ class TickerChart extends React.Component {
     handleMouseOut(e){
         let currentChange = this.props.change || (this.props.open - this.props.close)
         let currentPercentChange = (currentChange/this.props.open)/100
-        debugger
         this.setState({
             closePrice: this.props.close, 
             change: parseFloat(currentChange).toFixed(2), 
             percentChange: parseFloat(currentPercentChange).toFixed(2)
         })
     }
-
     render(){
-        const { odometerValue } = this.state;
-        debugger
+
         let data = this.props.ticker || [];
         const label = this.props.timeFrame === "1D" ? "label" : "date";
         return (
             <div className="ticker-chart block-paddings">
-
-                <h3>{`$${this.state.closePrice}`}</h3>
+                
+                <h3>$<Odometer value={this.state.closePrice}/></h3>
                 <p>{`$${this.state.change}`} {`(${this.state.percentChange}%)`}</p>
 
                  <LineChart 

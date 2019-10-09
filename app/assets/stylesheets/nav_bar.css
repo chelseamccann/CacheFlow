@@ -1,10 +1,18 @@
 .show{
     display: block;
-    /* width: 200px;
-    overflow: hidden; */
-    /* animation: fade 2s linear forwards; */
-    width: 200px;
-    height: 200px;
+    animation: fade .2s linear forwards;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #f4f4f5;
+    box-shadow: 0 3px 24px rgba(48,51,51,0.09);
+    padding: 5px;
+    margin-left: 140px;
+    /* border: .5px black solid; */
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    line-height: 19px;
+    cursor: pointer;
+    transition: visibility 200ms, opacity 200ms;
 }
 
 .drop-down{
@@ -22,12 +30,37 @@
     z-index: 1;
 }
 
-/* .drop-down-content .drop{
-    height: auto;
-    display: block;
-    padding: 12px 16px;
+
+.drop-down-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    right: 10px;
+}
+
+.drop-down > button{
+    text-decoration: none;
     color: black;
-} */
+    font-weight: 650;
+    font-size: 13px;
+    letter-spacing: .25px;
+    line-height: 19px;
+}
+
+.nav-bar-logout{
+    padding: 0;
+}
+
+
+.drop-down > button:hover{
+    color: #21ce99;
+}
+
+.drop-down > button:focus{
+    outline: none;
+}
 
 .dashboard{
     display: flex;
@@ -35,11 +68,26 @@
 }
 
 .dash {
+    height: 50px;
     width: 100%;
     position: fixed;
     display: flex;
     flex-direction: column;
     padding: 10px;
+}
+
+.right-right{
+    margin-right: 10px;
+    text-decoration: none;
+    color: black;
+    font-weight: 650;
+    font-size: 13px;
+    letter-spacing: .25px;
+    line-height: 19px;
+}
+
+.right-right:hover{
+    color: #21ce99;
 }
 
 .dash-nav{
@@ -49,15 +97,108 @@
     justify-content: space-between;
     align-content: center;
     width: 80%;
+    position: sticky;
+}
+
+.dash-left{
+    display: flex;
 }
 
 .dash-right {
-    /* position: absolute; */
     display: flex;
+    width: 300px;
+    margin-top: 9px;
 }
 
 .dashboard-middle {
     margin: 50px;
     display: flex;
     justify-content: center;
+}
+
+#search{
+    color: #a2a2a8e1;
+    height: 36px;
+    padding: 8px 140px 15px 8px;
+    font-size: 13px;
+    font-weight: 250;
+    width: 400px;
+    box-sizing: border-box;
+    letter-spacing: .25px;
+    border: #a2a2a8e1 1px solid;
+    border-radius: 4px;
+    line-height: 1em;
+    outline: 0;
+}
+
+.dash-left > li {
+    margin-right: 30px;
+}
+
+#search:hover{
+    box-shadow: 2px 2px 9px 3px #a2a2a8e1;
+    transition: color 150ms ease-out;
+}
+
+.ticker-chart h3{
+    margin-top: 50px;
+    width: 100%;
+    font-size: 36px;
+    font-weight: 500;
+    letter-spacing: -0.30px;
+    line-height: 42px;
+}
+
+.ticker-chart p {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    line-height: 19px;
+}
+
+.ticker-index {
+    margin-top: 50px;
+    margin-left: 40px;
+    display: inline-block;
+    align-items: center;
+    width: 225px;
+    max-height: 600px;
+    overflow-y: scroll;
+    background: white;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0.01), 0 3px 24px rgba(48,51,51,0.09);
+}
+
+.each-ticker > a{
+    text-decoration: none;
+    color: black;
+}
+
+
+.time-frame-buttons{
+    width: 220px;
+    display: flex;
+    justify-content: space-between;
+    display: inline-block;
+    border: none;
+    margin: 0;
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+.btns {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.btns:hover{
+    color:  #21ce99;
+}
+
+.chart-wrap{
+    border-bottom: .3px solid #a2a2a8e1;
 }

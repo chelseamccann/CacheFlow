@@ -17,19 +17,22 @@ class NavBar extends React.Component {
             {/* <div className="dash-header"> */}
                 {/* <div className="logo">cacheflow</div> */}
                 <ul className="dash-nav">
-                    <li><a href="" className="nav-left"><img src={window.rh} className="nav-left logo" /></a></li>
-
+                    <div className="dash-left">
+                        <li><img src={window.rh} /></li>
+                        <li id="search" >Search</li>
+                    </div>
                     <div className="dash-right">
-                        <li><a href="" className="nav-left right-right">Home</a></li>
-                        <li className="right-right"> Messages</li>
+                        {/* <li className="right-right"> Messages</li> */}
                         <div className="drop-down" >
+                            <a href="" className="right-right">Home</a>
+                            <button  className="drop-down-button">Messages</button>
                             <button onClick={this.drop} className="drop-down-button">Account</button>
                             <div className="drop-down-content" id="drop-down-id">
                                 <div className="drop">Portfolio Value</div>
                                 <div className="drop">Buying Power</div>
                                 <div className="drop">History</div>
                                 <div className="drop">
-                                    <Link to="/"><button onClick={this.props.logout}>Log Out</button></Link>
+                                    <Link to="/"><button className="drop-down-button nav-bar-logout" onClick={this.props.logout}>Log Out</button></Link>
                                 </div>
                             </div>
                         </div>

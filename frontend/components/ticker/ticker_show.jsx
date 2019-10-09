@@ -29,7 +29,6 @@ class TickerShow extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        debugger
         if (prevProps.match.params.tickerSymbol !== this.state.tickerSymbol){ 
             this.setState({"1D": [], "5dm": [], "1mm": [], "3M": [], "1Y": [], "5Y": []})
             fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
@@ -69,25 +68,28 @@ class TickerShow extends React.Component{
     render(){
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
-                return <button key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
+                return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
             }
         })
 
         if(this.state.timeFrame !== ""){
             return (
                 <div>
-                    <TickerChart 
-                    tickerSymbol={this.props.tickerSymbol}
-                    ticker={this.state[this.state.timeFrame]}
-                    timeFrame={this.state.timeFrame}
-                    open={this.state.open}
-                    close={this.state.close}
-                    change={this.state.change}
-                    changePercent={this.state.changePercent}
-                    tF={tF}
-                    />
+                    <div className="chart-wrap"> 
+                        <TickerChart 
+                        tickerSymbol={this.props.tickerSymbol}
+                        ticker={this.state[this.state.timeFrame]}
+                        timeFrame={this.state.timeFrame}
+                        open={this.state.open}
+                        close={this.state.close}
+                        change={this.state.change}
+                        changePercent={this.state.changePercent}
+                        tF={tF}
+                        />
+                        
+                        <div className="time-frame-buttons">{tF}</div>
 
-                    <div className="time-frame-buttons">{tF}</div>
+                    </div>
                     <TickerInfo 
                     tickerSymbol={this.props.tickerSymbol} 
                     />
