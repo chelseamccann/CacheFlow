@@ -6,18 +6,19 @@ class PortfolioChart extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            closeValue: this.props.portfolioValue[0].closeValue,
+            closeValue: this.props.closeValue,
             change: this.props.change, 
             percentChange: this.props.changePercent,
+            pVal: this.props.portfolioValue
         }
-        debugger
+        // debugger
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
     }
 
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){
-            debugger
+            // debugger
             let hoverValue = e.activePayload[0].payload.value;
             let openValue = this.props.openValue;
             let change = hoverValue - openValue;
@@ -42,7 +43,14 @@ class PortfolioChart extends React.Component {
     }
 
     render(){
-        let data = Object.values(this.props.portfolioValue) || [];
+        
+        let data = this.props.portfolioValue.slice().sort((a, b) => {
+            return Date.parse(a.date) - Date.parse(b.date)
+        }).filter(el => {
+            return el !== undefined
+        })
+        debugger
+        console.log(data)
         // const label = this.props.timeFrame === "1D" ? "label" : "date";
 
         // let odometer = this.state.hoverValue || this.state.open_value
@@ -61,13 +69,13 @@ class PortfolioChart extends React.Component {
                     // onMouseLeave={this.handleMouseOut}
                  >
                     <XAxis dataKey={"date"} hide={true} />
-                    <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
+                    <YAxis hide={true} domain={[0, 0]}/>
                     <Tooltip className='tooltip'
                                     contentStyle={{ border: '0', backgroundColor: 'transparent', color: 'grey'}}
                                     formatter={(value, name, props) => { return [""] }}
                                     // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
                                     isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
-                    <Line connectNulls type="linear" dataKey="value" dot={false} stroke="#21ce99" strokeWidth={1}/>
+                    <Line connectNulls type="linear" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1}/>
                 </LineChart>
             </div>
             ) 

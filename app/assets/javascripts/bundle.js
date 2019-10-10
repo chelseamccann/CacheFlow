@@ -960,11 +960,10 @@ function (_React$Component) {
       changePercent: 0,
       portfolioValue: null
     };
-    debugger;
+    _this.dailyPrices = {};
     _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
     return _this;
-  } // add an API call to fetch daily prices 
-
+  }
 
   _createClass(Portfolio, [{
     key: "componentDidMount",
@@ -978,88 +977,100 @@ function (_React$Component) {
   }, {
     key: "calcVal",
     value: function calcVal(response) {
-      var _this3 = this;
+      var that = this;
+      var data = response.transactions.forEach(function (asset, idx) {
+        // if(this.state["1D"][asset.ticker_symbol] === undefined){
+        Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (price) {
+          var num_shares = asset.purchase_shares;
+          price.forEach(function (close_price) {
+            var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))).toLocaleString('en-US');
 
-      var data = response.transactions.map(function (asset) {
-        if (_this3.state["1D"][asset.ticker_symbol] === undefined) {
-          Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (price) {
-            var num_shares = asset.purchase_shares;
-            var values = price.map(function (close_price) {
-              //close_price.minute.slice(0,2)+close_price.minute.slice(3)
-              if (close_price.close > 0) {
-                return {
-                  date: new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.label))).toLocaleString('en-US'),
-                  value: close_price.close * num_shares,
-                  close_value: close_price.close * num_shares,
-                  open_value: close_price.open * num_shares
-                };
+            if (close_price.close !== null) {
+              if (that.dailyPrices[date] === 0 || that.dailyPrices[date] > 0) {
+                that.dailyPrices[date] += close_price.close * num_shares;
+              } else {
+                that.dailyPrices[date] = close_price.close * num_shares;
               }
-            });
-            console.log(values);
-            Object.freeze(_this3.state);
-            var newState = Object.assign({}, _this3.state["1D"], values); //[asset.ticker_symbol]:
+            }
+          });
 
-            _this3.setState({
-              "1D": newState,
+          if (idx === response.transactions.length - 1) {
+            var newArr = Object.keys(that.dailyPrices).map(function (key) {
+              return {
+                "date": key,
+                "price": that.dailyPrices[key]
+              };
+            }); // .sort((a, b) => (
+            //     Date.parse(a.date) - Date.parse(b.date)
+            //     ))
+            // console.log(that.dailyPrices)
+
+            that.setState({
               fetched: true,
-              timeFrame: "1D"
+              "1D": newArr
             });
-          }); // let date = asset.created_at
-          // let value = asset.purchase_price * asset.purchase_shares
-          // let pVal = this.state.portfolioValue || 0
-          // pVal += value
-          // debugger
-          // return {pVal, date}
-        }
+          } // const values = price.map(close_price => { 
+          //     if (close_price.close > 0 && close_price !== undefined){
+          //         return {
+          //             date: new Date(Date.parse(`${close_price.date} ${close_price.minute}`)).toLocaleString('en-US'), 
+          //             value: close_price.close * num_shares, 
+          //             open_value: close_price.open * num_shares
+          //         }
+          //     }
+          // })
+          // console.log(asset.ticker_symbol, num_shares, values)
+          // Object.freeze(this.state)
+          // const newState = this.state["1D"].slice().concat(values) 
+          // this.setState({
+          //     "1D": newState, 
+          //     timeFrame: "1D", 
+
+
+          console.log(that.dailyPrices); // debugger
+        });
       });
     }
   }, {
     key: "updatePrices",
     value: function updatePrices(timeFrame) {
-      var _this4 = this;
+      var _this3 = this;
 
       if (this.state.timeFrame !== timeFrame) {
         return function (e) {
-          fetchPrices(_this4.props.tickerSymbol, timeFrame).then(function (response) {
-            return _this4.renderPrices(response, timeFrame);
+          fetchPrices(_this3.props.tickerSymbol, timeFrame).then(function (response) {
+            return _this3.renderPrices(response, timeFrame);
           });
         };
       }
-    }
-  }, {
-    key: "renderDaily",
-    value: function renderDaily(response) {
-      var daily = response.map(function (price) {
-        return {
-          label: price.label,
-          price: price.close
-        };
-      });
-      this.setState({
-        "1D": daily,
-        timeFrame: "1D",
-        tickerSymbol: this.props.tickerSymbol,
-        open: response[0].open,
-        close: response[response.length - 1].close,
-        change: parseFloat(response[response.length - 1].close - response[0].open).toFixed(2),
-        changePercent: parseFloat((response[response.length - 1].close - response[0].open) / response[response.length - 1].close * 100).toFixed(2)
-      });
-    }
+    } // renderDaily(response){
+    //     const daily = response.map(price => {
+    //         return {label: price.label, price: price.close}
+    //     })
+    //     this.setState({
+    //         "1D": daily, 
+    //         timeFrame: "1D", 
+    //         tickerSymbol: this.props.tickerSymbol, 
+    //         open: response[0].open, 
+    //         close: response[response.length-1].close,
+    //         change: parseFloat(response[response.length-1].close - response[0].open).toFixed(2),
+    //         changePercent: parseFloat(((response[response.length-1].close - response[0].open)/response[response.length-1].close)*100).toFixed(2)
+    // })
+    // }
+
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this4 = this;
 
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "btns",
             key: "".concat(key, "-id"),
-            onClick: _this5.updatePrices(key)
+            onClick: _this4.updatePrices(key)
           }, key.slice(0, 2).toUpperCase());
         }
-      });
-      debugger;
+      }); // debugger
 
       if (this.state.fetched) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
@@ -1072,8 +1083,8 @@ function (_React$Component) {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
           portfolioValue: this.state["1D"],
-          timeFrame: this.state.timeFrame // openValue={this.state["1D"][0].open_value}
-          // closeValue={this.state.closeValue}
+          timeFrame: this.state.timeFrame,
+          openValue: Math.max(this.state["1D"].open_value) // closeValue={this.state.closeValue}
           ,
           change: this.state.change,
           changePercent: this.state.changePercent,
@@ -1142,11 +1153,12 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PortfolioChart).call(this, props));
     _this.state = {
-      closeValue: _this.props.portfolioValue[0].closeValue,
+      closeValue: _this.props.closeValue,
       change: _this.props.change,
-      percentChange: _this.props.changePercent
-    };
-    debugger;
+      percentChange: _this.props.changePercent,
+      pVal: _this.props.portfolioValue
+    }; // debugger
+
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
@@ -1156,7 +1168,7 @@ function (_React$Component) {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
-        debugger;
+        // debugger
         var hoverValue = e.activePayload[0].payload.value;
         var openValue = this.props.openValue;
         var change = hoverValue - openValue;
@@ -1192,7 +1204,13 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var data = Object.values(this.props.portfolioValue) || []; // const label = this.props.timeFrame === "1D" ? "label" : "date";
+      var data = this.props.portfolioValue.slice().sort(function (a, b) {
+        return Date.parse(a.date) - Date.parse(b.date);
+      }).filter(function (el) {
+        return el !== undefined;
+      });
+      debugger;
+      console.log(data); // const label = this.props.timeFrame === "1D" ? "label" : "date";
       // let odometer = this.state.hoverValue || this.state.open_value
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1216,7 +1234,7 @@ function (_React$Component) {
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
         hide: true,
-        domain: ['dataMin', 'dataMax']
+        domain: [0, 0]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
         className: "tooltip",
         contentStyle: {
@@ -1236,7 +1254,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
         connectNulls: true,
         type: "linear",
-        dataKey: "value",
+        dataKey: "price",
         dot: false,
         stroke: "#21ce99",
         strokeWidth: 1
@@ -1786,6 +1804,7 @@ function (_React$Component) {
     value: function render() {
       debugger;
       var data = this.props.ticker || [];
+      console.log(data);
       var label = this.props.timeFrame === "1D" ? "label" : "date";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"

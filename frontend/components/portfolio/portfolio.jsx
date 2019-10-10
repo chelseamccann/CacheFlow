@@ -23,43 +23,67 @@ class Portfolio extends React.Component{
             changePercent: 0,
             portfolioValue: null
         }
-        debugger
+        
+        this.dailyPrices = {}
         this.updatePrices = this.updatePrices.bind(this);
     }
 
-    // add an API call to fetch daily prices 
     componentDidMount(){
         this.props.fetchTransactions().then(response => this.calcVal(response))
     }
 
     calcVal(response){
-        const data = response.transactions.map(asset => {
-            if(this.state["1D"][asset.ticker_symbol] === undefined){
+        let that = this;
+        const data = response.transactions.forEach((asset, idx) => {
+            // if(this.state["1D"][asset.ticker_symbol] === undefined){
             fetchDailyPrices(asset.ticker_symbol).then(price => {
+
                 let num_shares = asset.purchase_shares
-                const values = price.map(close_price => {
-                    //close_price.minute.slice(0,2)+close_price.minute.slice(3)
-                    if (close_price.close > 0){
-                        return {date: new Date(Date.parse(`${close_price.date} ${close_price.label}`)).toLocaleString('en-US'), value: close_price.close * num_shares, close_value: close_price.close * num_shares, open_value: close_price.open * num_shares}
+                price.forEach(close_price => {
+                    const date = new Date(Date.parse(`${close_price.date} ${close_price.minute}`)).toLocaleString('en-US')
+                    if(close_price.close !== null)
+                    {
+                        if (that.dailyPrices[date] === 0 || that.dailyPrices[date] > 0){
+                            that.dailyPrices[date] += close_price.close * num_shares
+                        } else {
+                            that.dailyPrices[date] = close_price.close * num_shares
+                        }
                     }
                 })
-                console.log(values)
-                Object.freeze(this.state)
-                const newState = Object.assign({}, this.state["1D"], values)  //[asset.ticker_symbol]:
-                this.setState({
-                    "1D": newState, 
-                    fetched: true,
-                    timeFrame: "1D", 
-            })
+
+                if(idx === response.transactions.length - 1){
+                    const newArr = Object.keys(that.dailyPrices).map(key => {
+                        return {"date": key, "price": that.dailyPrices[key]}
+                    })
+                    // .sort((a, b) => (
+                    //     Date.parse(a.date) - Date.parse(b.date)
+                    //     ))
+                        // console.log(that.dailyPrices)
+                        that.setState({fetched: true, "1D": newArr})
+          
+                }
+                // const values = price.map(close_price => { 
+                //     if (close_price.close > 0 && close_price !== undefined){
+                //         return {
+                //             date: new Date(Date.parse(`${close_price.date} ${close_price.minute}`)).toLocaleString('en-US'), 
+                //             value: close_price.close * num_shares, 
+                //             open_value: close_price.open * num_shares
+                //         }
+                //     }
+                // })
+                // console.log(asset.ticker_symbol, num_shares, values)
+                // Object.freeze(this.state)
+                // const newState = this.state["1D"].slice().concat(values) 
+
+                // this.setState({
+                //     "1D": newState, 
+                //     timeFrame: "1D", 
+                console.log(that.dailyPrices)
+                // debugger
+
             })
             
-            // let date = asset.created_at
-            // let value = asset.purchase_price * asset.purchase_shares
-            // let pVal = this.state.portfolioValue || 0
-            // pVal += value
-            // debugger
-            // return {pVal, date}
-        }})
+        })
     }
 
     updatePrices(timeFrame){
@@ -70,20 +94,20 @@ class Portfolio extends React.Component{
         }
     }
 
-    renderDaily(response){
-        const daily = response.map(price => {
-            return {label: price.label, price: price.close}
-        })
-        this.setState({
-            "1D": daily, 
-            timeFrame: "1D", 
-            tickerSymbol: this.props.tickerSymbol, 
-            open: response[0].open, 
-            close: response[response.length-1].close,
-            change: parseFloat(response[response.length-1].close - response[0].open).toFixed(2),
-            changePercent: parseFloat(((response[response.length-1].close - response[0].open)/response[response.length-1].close)*100).toFixed(2)
-    })
-    }
+    // renderDaily(response){
+    //     const daily = response.map(price => {
+    //         return {label: price.label, price: price.close}
+    //     })
+    //     this.setState({
+    //         "1D": daily, 
+    //         timeFrame: "1D", 
+    //         tickerSymbol: this.props.tickerSymbol, 
+    //         open: response[0].open, 
+    //         close: response[response.length-1].close,
+    //         change: parseFloat(response[response.length-1].close - response[0].open).toFixed(2),
+    //         changePercent: parseFloat(((response[response.length-1].close - response[0].open)/response[response.length-1].close)*100).toFixed(2)
+    // })
+    // }
 
 
     render(){
@@ -92,7 +116,7 @@ class Portfolio extends React.Component{
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
             }
         })
-        debugger
+        // debugger
         if(this.state.fetched){
             return (
                 <>
@@ -103,7 +127,7 @@ class Portfolio extends React.Component{
                         <PortfolioChart 
                         portfolioValue={this.state["1D"]}
                         timeFrame={this.state.timeFrame}
-                        // openValue={this.state["1D"][0].open_value}
+                        openValue={Math.max(this.state["1D"].open_value)}
                         // closeValue={this.state.closeValue}
                         change={this.state.change}
                         changePercent={this.state.changePercent}
