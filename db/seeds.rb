@@ -9,7 +9,7 @@
 Ticker.destroy_all
 User.destroy_all
 
-User.create!(email: "JordanBelfort@w.com", password: "password123", buying_power: 0.00, total_portfolio_value: 0.00)
+User.create!(email: "JordanBelfort@w.com", password: "password123")
 
 Ticker.create!(symbol: "AAPL")
 Ticker.create!(symbol: "FB")

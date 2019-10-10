@@ -12,6 +12,14 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def update
+    if current_user.update_attributes(user_params)
+      render "api/users/show"
+    else
+      render json: @user.errors.full_messages, 422
+    end
+  end
+
   private
   def user_params
     params.require(:user).permit(:email, :password, :buying_power, :total_portfolio_value)

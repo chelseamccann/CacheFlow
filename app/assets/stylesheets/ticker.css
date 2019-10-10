@@ -7,16 +7,22 @@
     height: 100vh;
     /* background-color: #1b1b1d; */
     /* color: white; */
+    position: relative;
+
 }
 
 .ticker-index {
-    position: relative;
-    height: 30%;
-    flex: 0 0 12%;
-    /* border: 2px solid #1b1b1d;
-    box-shadow: -3px 3px 3px 3px #0e0d0d; */
-    left: 0;
-    margin-right: 5em;
+    box-shadow: 0 3px 24px rgba(48,51,51,0.09);
+    border-color: #f4f4f5;
+    border-radius: 5px;
+    /* position: absolute; */
+    /* left: 750px; */
+    height: auto;
+    overflow-y: scroll;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    right: 300px;
 }
 
 .each-ticker a{

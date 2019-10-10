@@ -379,6 +379,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
 /* harmony import */ var _ticker_ticker_show_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ticker/ticker_show_container */ "./frontend/components/ticker/ticker_show_container.jsx");
 /* harmony import */ var _nav_bar_nav_bar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../nav_bar/nav_bar */ "./frontend/components/nav_bar/nav_bar.jsx");
+/* harmony import */ var _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../portfolio/portfolio_container */ "./frontend/components/portfolio/portfolio_container.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -405,6 +406,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Dashboard =
 /*#__PURE__*/
 function (_React$Component) {
@@ -419,7 +421,6 @@ function (_React$Component) {
   _createClass(Dashboard, [{
     key: "render",
     value: function render() {
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -433,7 +434,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
         exact: true,
         path: "/",
-        component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
+        component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__["default"]
       }))));
     }
   }]);
@@ -658,8 +659,11 @@ function (_React$Component) {
       e.preventDefault();
       var demoUser = {
         email: "JordanBelfort@w.com",
-        password: "password123"
+        password: "password123",
+        buying_power: 0.00,
+        total_portfolio_value: 0.00
       };
+      debugger;
       this.props.processForm(demoUser);
     }
   }, {
@@ -880,6 +884,8 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ticker/ticker_index_container */ "./frontend/components/ticker/ticker_index_container.jsx");
+/* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -900,6 +906,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
 var Portfolio =
 /*#__PURE__*/
 function (_React$Component) {
@@ -915,7 +923,11 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       debugger;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+        exact: true,
+        path: "/",
+        component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
+      });
     }
   }]);
 
@@ -1554,7 +1566,6 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerIndex).call(this, props));
     _this.state = {};
-    debugger;
     return _this;
   }
 
@@ -1577,7 +1588,7 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "ticker-index block-paddings"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_4__["default"], null), tickers);
+      }, tickers);
     }
   }]);
 
@@ -2016,6 +2027,7 @@ function (_React$Component) {
       purchase_price: _this.props.close,
       ticker_symbol: _this.props.tickerSymbol
     };
+    debugger;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -2372,6 +2384,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
+      debugger;
       return Object.assign({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
 
     default:

@@ -9,7 +9,7 @@ class TransactionForm extends React.Component{
             purchase_price: this.props.close,
             ticker_symbol: this.props.tickerSymbol
         };
-
+        debugger
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 

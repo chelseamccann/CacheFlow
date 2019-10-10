@@ -8,7 +8,6 @@ class TickerIndex extends React.Component{
     constructor(props){
         super(props)
         this.state = {}
-        debugger
     }
 
     componentDidMount(){
@@ -29,7 +28,7 @@ class TickerIndex extends React.Component{
         
         return(
             <ul className="ticker-index block-paddings">
-                <PortfolioContainer />
+                
                 {tickers}
                 
             </ul>
