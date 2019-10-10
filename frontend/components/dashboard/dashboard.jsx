@@ -16,7 +16,7 @@ class Dashboard extends React.Component {
                     <Switch>
                         <ProtectedRoute exact path='/:tickerSymbol' component={TickerShowContainer}/>
                         <ProtectedRoute exact path="/" component={PortfolioContainer}/>
-                        {/* <ProtectedRoute exact path="/" component={TickerIndexContainer}/> */}
+                        <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
                     </Switch>
                 </div>
             </div>

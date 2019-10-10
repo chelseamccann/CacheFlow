@@ -70,7 +70,7 @@ class TickerShow extends React.Component{
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
             }
         })
-
+        debugger
         if(this.state.timeFrame !== ""){
             return (
                 <div className="show-wrap">

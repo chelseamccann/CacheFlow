@@ -452,6 +452,10 @@ function (_React$Component) {
         exact: true,
         path: "/",
         component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+        exact: true,
+        path: "/",
+        component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
       }))));
     }
   }]);
@@ -904,7 +908,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ticker/ticker_index_container */ "./frontend/components/ticker/ticker_index_container.jsx");
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
 /* harmony import */ var _portfolio_chart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./portfolio_chart */ "./frontend/components/portfolio/portfolio_chart.jsx");
+/* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -914,13 +921,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -939,7 +947,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Portfolio).call(this, props));
     _this.state = {
-      "1D": [],
+      "1D": {},
       "5dm": [],
       "1mm": [],
       "3M": [],
@@ -953,8 +961,10 @@ function (_React$Component) {
       changePercent: 0,
       portfolioValue: null
     };
+    _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // add an API call to fetch daily prices 
+
 
   _createClass(Portfolio, [{
     key: "componentDidMount",
@@ -962,28 +972,49 @@ function (_React$Component) {
       var _this2 = this;
 
       // fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
-      this.props.fetchTransactions().then(function (results) {
-        return _this2.calcVal(results);
-      }); // this.props.fetchTickers().then(results => calcVal(results))
+      debugger;
+      this.props.fetchTransactions().then(function (response) {
+        return _this2.calcVal(response);
+      }); // .then(results => {
+      //     debugger
+      //     this.calcVal(results)})
+      // .then(secondResults => {
+      //     debugger
+      //     secondResults.map(price => {}
+      //     return fetchDailyPrices(secondResults)})
+      // .then(thirdResults => this.renderDaily(thirdResults))
     }
   }, {
     key: "calcVal",
     value: function calcVal(response) {
       var _this3 = this;
 
+      debugger;
       var data = response.transactions.map(function (asset) {
-        var date = asset.created_at;
-        var value = asset.purchase_price * asset.purchase_shares;
-        var pVal = _this3.state.portfolioValue || 0;
-        pVal += value;
-        return {
-          pVal: pVal,
-          date: date
-        };
-      });
-      this.setState({
-        portfolioValue: data
-      });
+        debugger;
+
+        if (_this3.state["1D"][asset.ticker_symbol] === undefined) {
+          Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (price) {
+            var num_shares = asset.purchase_shares; // price.map(close_price => {
+            // })
+
+            Object.freeze(_this3.state);
+            var newState = Object.assign({}, _this3.state["1D"], _defineProperty({}, asset.ticker_symbol, price));
+            debugger;
+
+            _this3.setState({
+              "1D": newState
+            });
+          });
+        } // let date = asset.created_at
+        // let value = asset.purchase_price * asset.purchase_shares
+        // let pVal = this.state.portfolioValue || 0
+        // pVal += value
+        // debugger
+        // return {pVal, date}
+
+      }); // debugger
+      // this.setState({portfolioValue: data})
     }
   }, {
     key: "updatePrices",
@@ -999,10 +1030,30 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "renderDaily",
+    value: function renderDaily(response) {
+      var daily = response.map(function (price) {
+        return {
+          label: price.label,
+          price: price.close
+        };
+      });
+      this.setState({
+        "1D": daily,
+        timeFrame: "1D",
+        tickerSymbol: this.props.tickerSymbol,
+        open: response[0].open,
+        close: response[response.length - 1].close,
+        change: parseFloat(response[response.length - 1].close - response[0].open).toFixed(2),
+        changePercent: parseFloat((response[response.length - 1].close - response[0].open) / response[response.length - 1].close * 100).toFixed(2)
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this5 = this;
 
+      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -1722,6 +1773,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      debugger;
       var data = this.props.ticker || [];
       var label = this.props.timeFrame === "1D" ? "label" : "date";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2150,6 +2202,7 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
+      debugger;
 
       if (this.state.timeFrame !== "") {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
