@@ -11,14 +11,14 @@ class PortfolioChart extends React.Component {
             percentChange: this.props.changePercent,
             pVal: this.props.portfolioValue
         }
-        // debugger
+
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
     }
 
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){
-            // debugger
+
             let hoverValue = e.activePayload[0].payload.value;
             let openValue = this.props.openValue;
             let change = hoverValue - openValue;
@@ -49,8 +49,7 @@ class PortfolioChart extends React.Component {
         }).filter(el => {
             return el !== undefined
         })
-        debugger
-        console.log(data)
+
         // const label = this.props.timeFrame === "1D" ? "label" : "date";
 
         // let odometer = this.state.hoverValue || this.state.open_value

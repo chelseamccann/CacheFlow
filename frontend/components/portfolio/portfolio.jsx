@@ -55,31 +55,10 @@ class Portfolio extends React.Component{
                     const newArr = Object.keys(that.dailyPrices).map(key => {
                         return {"date": key, "price": that.dailyPrices[key]}
                     })
-                    // .sort((a, b) => (
-                    //     Date.parse(a.date) - Date.parse(b.date)
-                    //     ))
-                        // console.log(that.dailyPrices)
+
                         that.setState({fetched: true, "1D": newArr})
           
                 }
-                // const values = price.map(close_price => { 
-                //     if (close_price.close > 0 && close_price !== undefined){
-                //         return {
-                //             date: new Date(Date.parse(`${close_price.date} ${close_price.minute}`)).toLocaleString('en-US'), 
-                //             value: close_price.close * num_shares, 
-                //             open_value: close_price.open * num_shares
-                //         }
-                //     }
-                // })
-                // console.log(asset.ticker_symbol, num_shares, values)
-                // Object.freeze(this.state)
-                // const newState = this.state["1D"].slice().concat(values) 
-
-                // this.setState({
-                //     "1D": newState, 
-                //     timeFrame: "1D", 
-                console.log(that.dailyPrices)
-                // debugger
 
             })
             
@@ -116,7 +95,7 @@ class Portfolio extends React.Component{
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
             }
         })
-        // debugger
+
         if(this.state.fetched){
             return (
                 <>
