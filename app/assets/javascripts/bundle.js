@@ -1000,33 +1000,12 @@ function (_React$Component) {
                 "date": key,
                 "price": that.dailyPrices[key]
               };
-            }); // .sort((a, b) => (
-            //     Date.parse(a.date) - Date.parse(b.date)
-            //     ))
-            // console.log(that.dailyPrices)
-
+            });
             that.setState({
               fetched: true,
               "1D": newArr
             });
-          } // const values = price.map(close_price => { 
-          //     if (close_price.close > 0 && close_price !== undefined){
-          //         return {
-          //             date: new Date(Date.parse(`${close_price.date} ${close_price.minute}`)).toLocaleString('en-US'), 
-          //             value: close_price.close * num_shares, 
-          //             open_value: close_price.open * num_shares
-          //         }
-          //     }
-          // })
-          // console.log(asset.ticker_symbol, num_shares, values)
-          // Object.freeze(this.state)
-          // const newState = this.state["1D"].slice().concat(values) 
-          // this.setState({
-          //     "1D": newState, 
-          //     timeFrame: "1D", 
-
-
-          console.log(that.dailyPrices); // debugger
+          }
         });
       });
     }
@@ -1070,7 +1049,7 @@ function (_React$Component) {
             onClick: _this4.updatePrices(key)
           }, key.slice(0, 2).toUpperCase());
         }
-      }); // debugger
+      });
 
       if (this.state.fetched) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
@@ -1157,8 +1136,7 @@ function (_React$Component) {
       change: _this.props.change,
       percentChange: _this.props.changePercent,
       pVal: _this.props.portfolioValue
-    }; // debugger
-
+    };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
@@ -1168,7 +1146,6 @@ function (_React$Component) {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
-        // debugger
         var hoverValue = e.activePayload[0].payload.value;
         var openValue = this.props.openValue;
         var change = hoverValue - openValue;
@@ -1208,9 +1185,7 @@ function (_React$Component) {
         return Date.parse(a.date) - Date.parse(b.date);
       }).filter(function (el) {
         return el !== undefined;
-      });
-      debugger;
-      console.log(data); // const label = this.props.timeFrame === "1D" ? "label" : "date";
+      }); // const label = this.props.timeFrame === "1D" ? "label" : "date";
       // let odometer = this.state.hoverValue || this.state.open_value
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -62206,7 +62181,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

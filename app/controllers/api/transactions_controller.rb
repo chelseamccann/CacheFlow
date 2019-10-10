@@ -7,7 +7,7 @@ class Api::TransactionsController < ApplicationController
        ticker = Ticker.find_by(symbol: params[:transaction][:ticker_symbol])
         @transaction.ticker_id = ticker.id
        if @transaction.save!
-        render "api/users/show" # create jbuilder
+        render json: "api/transactions/show" # create jbuilder
        else
         render json:["Not enough buying power."]
        end
