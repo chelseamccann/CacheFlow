@@ -6,9 +6,9 @@ class PortfolioChart extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            closeValue: this.props.closeValue,
-            change: this.props.change, 
-            percentChange: this.props.changePercent,
+            closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value).toFixed(2),
+            change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-2].value - this.props.portfolioValue[this.props.portfolioValue.length-1].value).toFixed(2),
+            percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-2].value - this.props.portfolioValue[this.props.portfolioValue.length-1].value/this.props.portfolioValue[0].value)/1000).toFixed(2),
             pVal: this.props.portfolioValue
         }
 
@@ -18,11 +18,12 @@ class PortfolioChart extends React.Component {
 
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){
-
+            debugger
             let hoverValue = e.activePayload[0].payload.value;
-            let openValue = this.props.openValue;
+            let openValue = this.props.portfolioValue[0].value;
             let change = hoverValue - openValue;
             let dailyPercentChange = (change/hoverValue)*100
+            debugger
             this.setState({closeValue: hoverValue})
             this.setState({chartX: e.chartX})
             this.setState({chartY: e.chartY}) 
@@ -33,10 +34,10 @@ class PortfolioChart extends React.Component {
 
 
     handleMouseOut(e){
-        let currentChange = this.props.change || (this.props.open - this.props.close)
-        let currentPercentChange = (currentChange/this.props.open)/100
+        let currentChange = this.props.portfolioValue[0].value - this.props.portfolioValue[this.props.portfolioValue.length-1].value
+        let currentPercentChange = (currentChange/this.props.portfolioValue[0].value)/100
         this.setState({
-            closeValue: this.props.closeValue, 
+            closeValue: this.props.portfolioValue[this.props.portfolioValue.length-1].value, 
             change: parseFloat(currentChange).toFixed(2), 
             percentChange: parseFloat(currentPercentChange).toFixed(2)
         })
@@ -74,7 +75,7 @@ class PortfolioChart extends React.Component {
                                     formatter={(value, name, props) => { return [""] }}
                                     // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
                                     isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
-                    <Line connectNulls type="linear" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1}/>
+                    <Line connectNulls type="linear" dataKey="value" dot={false} stroke="#21ce99" strokeWidth={1}/>
                 </LineChart>
             </div>
             ) 

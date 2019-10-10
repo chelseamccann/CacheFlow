@@ -7,7 +7,7 @@ class TransactionForm extends React.Component{
         super(props);
         this.state = {
             purchase_price: this.props.close,
-            ticker_symbol: this.props.tickerSymbol
+            ticker_symbol: this.props.tickerSymbol,
         };
         debugger
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,6 +30,7 @@ class TransactionForm extends React.Component{
     }
 
     render(){
+        debugger
         //buy symbol if buy is clicked, else sell symbol
         //if buy - subtract from buying power and total val, if sell add to
         //show buying power on bottom of form?

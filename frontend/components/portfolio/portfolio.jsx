@@ -2,7 +2,7 @@ import React from 'react';
 import TickerIndexContainer from '../ticker/ticker_index_container';
 import {ProtectedRoute} from '../../util/route_utils';
 import PortfolioChart from './portfolio_chart'
-import { fetchDailyPrices } from '../../util/ticker_data_api_util';
+import { fetchDailyPrices, fetchPrices } from '../../util/ticker_data_api_util';
 
 class Portfolio extends React.Component{
     constructor(props){
@@ -26,6 +26,7 @@ class Portfolio extends React.Component{
         
         this.dailyPrices = {}
         this.updatePrices = this.updatePrices.bind(this);
+        this.calcVal = this.calcVal.bind(this);
     }
 
     componentDidMount(){
@@ -53,10 +54,10 @@ class Portfolio extends React.Component{
 
                 if(idx === response.transactions.length - 1){
                     const newArr = Object.keys(that.dailyPrices).map(key => {
-                        return {"date": key, "price": that.dailyPrices[key]}
+                        return {"date": key, "value": that.dailyPrices[key]}
                     })
 
-                        that.setState({fetched: true, "1D": newArr})
+                    that.setState({fetched: true, "1D": newArr})
           
                 }
 
@@ -65,28 +66,48 @@ class Portfolio extends React.Component{
         })
     }
 
+    renderPrices(response, timeFramePassed){
+        this.calcVal(reponse)
+        this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol})
+    }
+
     updatePrices(timeFrame){
         if (this.state.timeFrame !== timeFrame){
             return e => {
-                fetchPrices(this.props.tickerSymbol, timeFrame).then(response => this.renderPrices(response, timeFrame))
-            }
+
+                let that = this;
+                that.props.fetchTransactions().then(response => response.transactions.forEach((asset, idx) => {
+                
+                fetchPrices(asset.ticker_symbol, timeFrame).then(price => {
+
+                    let num_shares = asset.purchase_shares
+                    price.forEach(close_price => {
+                        const date = new Date(Date.parse(`${close_price.date} ${close_price.minute}`)).toLocaleString('en-US')
+                        if(close_price.close !== null)
+                        {
+                            if (that.dailyPrices[date] === 0 || that.dailyPrices[date] > 0){
+                                that.dailyPrices[date] += close_price.close * num_shares
+                            } else {
+                                that.dailyPrices[date] = close_price.close * num_shares
+                            }
+                        }
+                    })
+    
+                    if(idx === response.transactions.length - 1){
+                        const newArr = Object.keys(that.dailyPrices).map(key => {
+                            return {"date": key, "value": that.dailyPrices[key]}
+                        })
+    
+                        that.setState({fetched: true, "1D": newArr})
+              
+                    }
+    
+                })
+            }))
+        }
+            
         }
     }
-
-    // renderDaily(response){
-    //     const daily = response.map(price => {
-    //         return {label: price.label, price: price.close}
-    //     })
-    //     this.setState({
-    //         "1D": daily, 
-    //         timeFrame: "1D", 
-    //         tickerSymbol: this.props.tickerSymbol, 
-    //         open: response[0].open, 
-    //         close: response[response.length-1].close,
-    //         change: parseFloat(response[response.length-1].close - response[0].open).toFixed(2),
-    //         changePercent: parseFloat(((response[response.length-1].close - response[0].open)/response[response.length-1].close)*100).toFixed(2)
-    // })
-    // }
 
 
     render(){

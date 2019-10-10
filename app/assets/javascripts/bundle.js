@@ -911,6 +911,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -962,6 +964,7 @@ function (_React$Component) {
     };
     _this.dailyPrices = {};
     _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
+    _this.calcVal = _this.calcVal.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -998,7 +1001,7 @@ function (_React$Component) {
             var newArr = Object.keys(that.dailyPrices).map(function (key) {
               return {
                 "date": key,
-                "price": that.dailyPrices[key]
+                "value": that.dailyPrices[key]
               };
             });
             that.setState({
@@ -1010,32 +1013,55 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "renderPrices",
+    value: function renderPrices(response, timeFramePassed) {
+      var _this$setState;
+
+      this.calcVal(reponse);
+      this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _this$setState));
+    }
+  }, {
     key: "updatePrices",
     value: function updatePrices(timeFrame) {
       var _this3 = this;
 
       if (this.state.timeFrame !== timeFrame) {
         return function (e) {
-          fetchPrices(_this3.props.tickerSymbol, timeFrame).then(function (response) {
-            return _this3.renderPrices(response, timeFrame);
+          var that = _this3;
+          that.props.fetchTransactions().then(function (response) {
+            return response.transactions.forEach(function (asset, idx) {
+              Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (price) {
+                var num_shares = asset.purchase_shares;
+                price.forEach(function (close_price) {
+                  var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))).toLocaleString('en-US');
+
+                  if (close_price.close !== null) {
+                    if (that.dailyPrices[date] === 0 || that.dailyPrices[date] > 0) {
+                      that.dailyPrices[date] += close_price.close * num_shares;
+                    } else {
+                      that.dailyPrices[date] = close_price.close * num_shares;
+                    }
+                  }
+                });
+
+                if (idx === response.transactions.length - 1) {
+                  var newArr = Object.keys(that.dailyPrices).map(function (key) {
+                    return {
+                      "date": key,
+                      "value": that.dailyPrices[key]
+                    };
+                  });
+                  that.setState({
+                    fetched: true,
+                    "1D": newArr
+                  });
+                }
+              });
+            });
           });
         };
       }
-    } // renderDaily(response){
-    //     const daily = response.map(price => {
-    //         return {label: price.label, price: price.close}
-    //     })
-    //     this.setState({
-    //         "1D": daily, 
-    //         timeFrame: "1D", 
-    //         tickerSymbol: this.props.tickerSymbol, 
-    //         open: response[0].open, 
-    //         close: response[response.length-1].close,
-    //         change: parseFloat(response[response.length-1].close - response[0].open).toFixed(2),
-    //         changePercent: parseFloat(((response[response.length-1].close - response[0].open)/response[response.length-1].close)*100).toFixed(2)
-    // })
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -1132,9 +1158,9 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PortfolioChart).call(this, props));
     _this.state = {
-      closeValue: _this.props.closeValue,
-      change: _this.props.change,
-      percentChange: _this.props.changePercent,
+      closeValue: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
+      change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
+      percentChange: (parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value / _this.props.portfolioValue[0].value) / 1000).toFixed(2),
       pVal: _this.props.portfolioValue
     };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
@@ -1146,10 +1172,12 @@ function (_React$Component) {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
+        debugger;
         var hoverValue = e.activePayload[0].payload.value;
-        var openValue = this.props.openValue;
+        var openValue = this.props.portfolioValue[0].value;
         var change = hoverValue - openValue;
         var dailyPercentChange = change / hoverValue * 100;
+        debugger;
         this.setState({
           closeValue: hoverValue
         });
@@ -1170,10 +1198,10 @@ function (_React$Component) {
   }, {
     key: "handleMouseOut",
     value: function handleMouseOut(e) {
-      var currentChange = this.props.change || this.props.open - this.props.close;
-      var currentPercentChange = currentChange / this.props.open / 100;
+      var currentChange = this.props.portfolioValue[0].value - this.props.portfolioValue[this.props.portfolioValue.length - 1].value;
+      var currentPercentChange = currentChange / this.props.portfolioValue[0].value / 100;
       this.setState({
-        closeValue: this.props.closeValue,
+        closeValue: this.props.portfolioValue[this.props.portfolioValue.length - 1].value,
         change: parseFloat(currentChange).toFixed(2),
         percentChange: parseFloat(currentPercentChange).toFixed(2)
       });
@@ -1229,7 +1257,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
         connectNulls: true,
         type: "linear",
-        dataKey: "price",
+        dataKey: "value",
         dot: false,
         stroke: "#21ce99",
         strokeWidth: 1
@@ -2170,10 +2198,10 @@ function (_React$Component) {
       var _this$setState;
 
       var data = response.map(function (price) {
-        //new Date(Date.parse(`${close_price.date} ${close_price.label}`)).toLocaleString('en-US')
         return {
           price: price.close,
-          date: price.date,
+          // date: price.date, 
+          date: new Date(Date.parse("".concat(price.date, " ").concat(price.label))).toLocaleString('en-US'),
           open: price.open,
           change: price.change,
           changePercent: price.changePercent
@@ -2383,9 +2411,10 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      //buy symbol if buy is clicked, else sell symbol
+      debugger; //buy symbol if buy is clicked, else sell symbol
       //if buy - subtract from buying power and total val, if sell add to
       //show buying power on bottom of form?
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -62181,7 +62210,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
