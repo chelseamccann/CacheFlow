@@ -3,7 +3,6 @@ class Api::TransactionsController < ApplicationController
     def create
        @transaction = Transaction.new(transaction_params)
        @transaction.user_id = current_user.id
-       debugger
        ticker = Ticker.find_by(symbol: params[:transaction][:ticker_symbol])
         @transaction.ticker_id = ticker.id
        if @transaction.save!

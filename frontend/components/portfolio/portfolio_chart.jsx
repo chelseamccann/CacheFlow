@@ -18,12 +18,11 @@ class PortfolioChart extends React.Component {
 
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){
-            debugger
             let hoverValue = e.activePayload[0].payload.value;
             let openValue = this.props.portfolioValue[0].value;
             let change = hoverValue - openValue;
             let dailyPercentChange = (change/hoverValue)*100
-            debugger
+
             this.setState({closeValue: hoverValue})
             this.setState({chartX: e.chartX})
             this.setState({chartY: e.chartY}) 

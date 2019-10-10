@@ -1172,12 +1172,10 @@ function (_React$Component) {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
-        debugger;
         var hoverValue = e.activePayload[0].payload.value;
         var openValue = this.props.portfolioValue[0].value;
         var change = hoverValue - openValue;
         var dailyPercentChange = change / hoverValue * 100;
-        debugger;
         this.setState({
           closeValue: hoverValue
         });
@@ -1807,7 +1805,6 @@ function (_React$Component) {
     value: function render() {
       debugger;
       var data = this.props.ticker || [];
-      console.log(data);
       var label = this.props.timeFrame === "1D" ? "label" : "date";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
@@ -2236,7 +2233,6 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
-      debugger;
 
       if (this.state.timeFrame !== "") {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2377,9 +2373,9 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TransactionForm).call(this, props));
     _this.state = {
       purchase_price: _this.props.close,
-      ticker_symbol: _this.props.tickerSymbol
+      ticker_symbol: _this.props.tickerSymbol,
+      purchase_shares: 0
     };
-    debugger;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -2397,8 +2393,7 @@ function (_React$Component) {
 
       return function (e) {
         _this2.setState({
-          purchase_shares: parseInt(e.target.value) ? parseInt(e.target.value) : "",
-          purchase_price: _this2.props.close
+          purchase_shares: parseInt(e.target.value)
         });
       };
     }
@@ -2411,10 +2406,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger; //buy symbol if buy is clicked, else sell symbol
+      //buy symbol if buy is clicked, else sell symbol
       //if buy - subtract from buying power and total val, if sell add to
       //show buying power on bottom of form?
-
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2440,9 +2434,9 @@ function (_React$Component) {
       }, "Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "share share-box",
         id: "shares",
-        type: "text",
-        value: this.state.shares,
-        onChange: this.updateShares('shares'),
+        type: "number",
+        value: this.state.purchase_shares,
+        onChange: this.updateShares(),
         placeholder: "0"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "shares"
@@ -2456,7 +2450,7 @@ function (_React$Component) {
         className: "share share-two"
       }, "Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "share share-two"
-      }, "$".concat(parseFloat(this.state.purchase_price).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Execute Order",
         className: "execute-button nav-bar-logout review-button"
@@ -2603,7 +2597,6 @@ var _nullSession = {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      debugger;
       return Object.assign({}, {
         id: action.currentUser.id
       });
@@ -2641,7 +2634,6 @@ var tickerDataReducer = function tickerDataReducer() {
     // case RECEIVE_TICKERS:
     //     return action.tickers
     case _actions_ticker_data_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKER_DATA"]:
-      debugger;
       return Object.assign({}, state, _defineProperty({}, action.symbol, action.data));
 
     default:
@@ -2740,7 +2732,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      debugger;
       return Object.assign({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
 
     default:

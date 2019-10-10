@@ -45,7 +45,6 @@ class TickerChart extends React.Component {
     render(){
         debugger
         let data = this.props.ticker || [];
-        console.log(data)
         const label = this.props.timeFrame === "1D" ? "label" : "date";
         return (
             <div className="ticker-chart block-paddings">

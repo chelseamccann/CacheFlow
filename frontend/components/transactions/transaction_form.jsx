@@ -8,8 +8,9 @@ class TransactionForm extends React.Component{
         this.state = {
             purchase_price: this.props.close,
             ticker_symbol: this.props.tickerSymbol,
+            purchase_shares: 0
         };
-        debugger
+
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -20,7 +21,8 @@ class TransactionForm extends React.Component{
 
     updateShares(){
         return e => {
-            this.setState({purchase_shares: parseInt(e.target.value) ? parseInt(e.target.value) : "", purchase_price: this.props.close})
+
+            this.setState({purchase_shares: parseInt(e.target.value) })
         }
     }
 
@@ -30,7 +32,7 @@ class TransactionForm extends React.Component{
     }
 
     render(){
-        debugger
+
         //buy symbol if buy is clicked, else sell symbol
         //if buy - subtract from buying power and total val, if sell add to
         //show buying power on bottom of form?
@@ -51,9 +53,9 @@ class TransactionForm extends React.Component{
                     <input 
                     className="share share-box"
                     id="shares" 
-                    type="text" 
-                    value={this.state.shares} 
-                    onChange={this.updateShares('shares')}
+                    type="number" 
+                    value={this.state.purchase_shares} 
+                    onChange={this.updateShares()}
                     placeholder="0"
                     />
                 </div>
@@ -65,7 +67,7 @@ class TransactionForm extends React.Component{
 
                 <div className="shares">
                     <label className="share share-two">Estimated Cost</label>
-                    <p className="share share-two">{`$${parseFloat(this.state.purchase_price).toFixed(2)}`}</p>
+                    <p className="share share-two">{`$${parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)}`}</p>
                 </div>
 
                 {/* <Link to="/"> */}
