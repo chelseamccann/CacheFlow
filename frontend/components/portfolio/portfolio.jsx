@@ -8,53 +8,50 @@ class Portfolio extends React.Component{
     constructor(props){
         super(props)
         this.state = { 
-            "1D": {},
+            "1D": [],
             "5dm": [],
             "1mm": [],
             "3M": [],
             "1Y": [],
             "5Y": [],
+            fetched: false,
             timeFrame: "",
             tickerSymbol: "",
-            open: null,
-            close: null,
+            openValue: null,
+            closeValue: null,
             change: 0,
             changePercent: 0,
             portfolioValue: null
         }
+        debugger
         this.updatePrices = this.updatePrices.bind(this);
     }
 
     // add an API call to fetch daily prices 
     componentDidMount(){
-        // fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
-        debugger
         this.props.fetchTransactions().then(response => this.calcVal(response))
-        // .then(results => {
-        //     debugger
-        //     this.calcVal(results)})
-        // .then(secondResults => {
-        //     debugger
-        //     secondResults.map(price => {}
-        //     return fetchDailyPrices(secondResults)})
-        // .then(thirdResults => this.renderDaily(thirdResults))
     }
 
     calcVal(response){
-        debugger
         const data = response.transactions.map(asset => {
-            debugger
             if(this.state["1D"][asset.ticker_symbol] === undefined){
             fetchDailyPrices(asset.ticker_symbol).then(price => {
                 let num_shares = asset.purchase_shares
-                // price.map(close_price => {
-
-                // })
+                const values = price.map(close_price => {
+                    //close_price.minute.slice(0,2)+close_price.minute.slice(3)
+                    if (close_price.close > 0){
+                        return {date: new Date(Date.parse(`${close_price.date} ${close_price.label}`)).toLocaleString('en-US'), value: close_price.close * num_shares, close_value: close_price.close * num_shares, open_value: close_price.open * num_shares}
+                    }
+                })
+                console.log(values)
                 Object.freeze(this.state)
-                const newState = Object.assign({}, this.state["1D"], {[asset.ticker_symbol]: price})
-                debugger
-                this.setState({"1D": newState})
-            })}
+                const newState = Object.assign({}, this.state["1D"], values)  //[asset.ticker_symbol]:
+                this.setState({
+                    "1D": newState, 
+                    fetched: true,
+                    timeFrame: "1D", 
+            })
+            })
             
             // let date = asset.created_at
             // let value = asset.purchase_price * asset.purchase_shares
@@ -62,9 +59,7 @@ class Portfolio extends React.Component{
             // pVal += value
             // debugger
             // return {pVal, date}
-        })
-        // debugger
-        // this.setState({portfolioValue: data})
+        }})
     }
 
     updatePrices(timeFrame){
@@ -92,14 +87,13 @@ class Portfolio extends React.Component{
 
 
     render(){
-        debugger
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
             }
         })
-
-        if(this.state.portfolioValue !== null){
+        debugger
+        if(this.state.fetched){
             return (
                 <>
                 <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
@@ -107,7 +101,12 @@ class Portfolio extends React.Component{
                     <div>   
                     <div className="chart-wrap"> 
                         <PortfolioChart 
-                        portfolioValue={this.state.portfolioValue}
+                        portfolioValue={this.state["1D"]}
+                        timeFrame={this.state.timeFrame}
+                        // openValue={this.state["1D"][0].open_value}
+                        // closeValue={this.state.closeValue}
+                        change={this.state.change}
+                        changePercent={this.state.changePercent}
                         tF={tF}
                         />
                         

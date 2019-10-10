@@ -51,6 +51,7 @@ class TickerShow extends React.Component{
 
     renderPrices(response, timeFramePassed){
         const data = response.map(price => {
+            //new Date(Date.parse(`${close_price.date} ${close_price.label}`)).toLocaleString('en-US')
             return {price: price.close, date: price.date, open: price.open, change: price.change, changePercent: price.changePercent}
         })
         this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol})

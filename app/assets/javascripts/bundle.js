@@ -911,8 +911,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -947,20 +945,22 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Portfolio).call(this, props));
     _this.state = {
-      "1D": {},
+      "1D": [],
       "5dm": [],
       "1mm": [],
       "3M": [],
       "1Y": [],
       "5Y": [],
+      fetched: false,
       timeFrame: "",
       tickerSymbol: "",
-      open: null,
-      close: null,
+      openValue: null,
+      closeValue: null,
       change: 0,
       changePercent: 0,
       portfolioValue: null
     };
+    debugger;
     _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
     return _this;
   } // add an API call to fetch daily prices 
@@ -971,50 +971,47 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      // fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
-      debugger;
       this.props.fetchTransactions().then(function (response) {
         return _this2.calcVal(response);
-      }); // .then(results => {
-      //     debugger
-      //     this.calcVal(results)})
-      // .then(secondResults => {
-      //     debugger
-      //     secondResults.map(price => {}
-      //     return fetchDailyPrices(secondResults)})
-      // .then(thirdResults => this.renderDaily(thirdResults))
+      });
     }
   }, {
     key: "calcVal",
     value: function calcVal(response) {
       var _this3 = this;
 
-      debugger;
       var data = response.transactions.map(function (asset) {
-        debugger;
-
         if (_this3.state["1D"][asset.ticker_symbol] === undefined) {
           Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (price) {
-            var num_shares = asset.purchase_shares; // price.map(close_price => {
-            // })
-
+            var num_shares = asset.purchase_shares;
+            var values = price.map(function (close_price) {
+              //close_price.minute.slice(0,2)+close_price.minute.slice(3)
+              if (close_price.close > 0) {
+                return {
+                  date: new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.label))).toLocaleString('en-US'),
+                  value: close_price.close * num_shares,
+                  close_value: close_price.close * num_shares,
+                  open_value: close_price.open * num_shares
+                };
+              }
+            });
+            console.log(values);
             Object.freeze(_this3.state);
-            var newState = Object.assign({}, _this3.state["1D"], _defineProperty({}, asset.ticker_symbol, price));
-            debugger;
+            var newState = Object.assign({}, _this3.state["1D"], values); //[asset.ticker_symbol]:
 
             _this3.setState({
-              "1D": newState
+              "1D": newState,
+              fetched: true,
+              timeFrame: "1D"
             });
-          });
-        } // let date = asset.created_at
-        // let value = asset.purchase_price * asset.purchase_shares
-        // let pVal = this.state.portfolioValue || 0
-        // pVal += value
-        // debugger
-        // return {pVal, date}
-
-      }); // debugger
-      // this.setState({portfolioValue: data})
+          }); // let date = asset.created_at
+          // let value = asset.purchase_price * asset.purchase_shares
+          // let pVal = this.state.portfolioValue || 0
+          // pVal += value
+          // debugger
+          // return {pVal, date}
+        }
+      });
     }
   }, {
     key: "updatePrices",
@@ -1053,7 +1050,6 @@ function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
-      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -1063,8 +1059,9 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
+      debugger;
 
-      if (this.state.portfolioValue !== null) {
+      if (this.state.fetched) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
           exact: true,
           path: "/",
@@ -1074,7 +1071,12 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          portfolioValue: this.state.portfolioValue,
+          portfolioValue: this.state["1D"],
+          timeFrame: this.state.timeFrame // openValue={this.state["1D"][0].open_value}
+          // closeValue={this.state.closeValue}
+          ,
+          change: this.state.change,
+          changePercent: this.state.changePercent,
           tF: tF
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
@@ -1116,9 +1118,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1128,67 +1130,76 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var TickerChart =
+var PortfolioChart =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(TickerChart, _React$Component);
+  _inherits(PortfolioChart, _React$Component);
 
-  function TickerChart(props) {
+  function PortfolioChart(props) {
     var _this;
 
-    _classCallCheck(this, TickerChart);
+    _classCallCheck(this, PortfolioChart);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerChart).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PortfolioChart).call(this, props));
     _this.state = {
-      pVal: 0 // closePrice: this.props.close,
-      // change: this.props.change, 
-      // percentChange: this.props.changePercent,
-      // chartX: null,
-      // chartY: null,
-
+      closeValue: _this.props.portfolioValue[0].closeValue,
+      change: _this.props.change,
+      percentChange: _this.props.changePercent
     };
-    debugger; // this.handleMouseOver = this.handleMouseOver.bind(this);
-    // this.handleMouseOut = this.handleMouseOut.bind(this);
-
+    debugger;
+    _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
+    _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
-  } // handleMouseOver(e){
-  //     debugger
-  //     if(e && e.activePayload !== undefined){
-  //         let hoverPrice = e.activePayload[0].payload.pVal;
-  //         // let openPrice = this.props.open;
-  //         // let change = hoverPrice - openPrice;
-  //         // let dailyPercentChange = (change/hoverPrice)*100
-  //         this.setState({pVal: parseFloat(e.activePayload[0].payload.pVal).toFixed(2)})
-  //         this.setState({chartX: e.chartX})
-  //         this.setState({chartY: e.chartY}) 
-  //         // this.setState({change: parseFloat(change.toFixed(2))})
-  //         // this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
-  //     }
-  // }
-  // handleMouseOut(e){
-  //     debugger
-  //     let currentChange = this.props.change || (this.props.open - this.props.close)
-  //     let currentPercentChange = (currentChange/this.props.open)/100
-  //     this.setState({
-  //         closePrice: this.props.close, 
-  //         change: parseFloat(currentChange).toFixed(2), 
-  //         percentChange: parseFloat(currentPercentChange).toFixed(2)
-  //     })
-  // }
+  }
 
-
-  _createClass(TickerChart, [{
+  _createClass(PortfolioChart, [{
+    key: "handleMouseOver",
+    value: function handleMouseOver(e) {
+      if (e && e.activePayload !== undefined) {
+        debugger;
+        var hoverValue = e.activePayload[0].payload.value;
+        var openValue = this.props.openValue;
+        var change = hoverValue - openValue;
+        var dailyPercentChange = change / hoverValue * 100;
+        this.setState({
+          closeValue: hoverValue
+        });
+        this.setState({
+          chartX: e.chartX
+        });
+        this.setState({
+          chartY: e.chartY
+        });
+        this.setState({
+          change: parseFloat(change.toFixed(2))
+        });
+        this.setState({
+          percentChange: parseFloat(dailyPercentChange).toFixed(2)
+        });
+      }
+    }
+  }, {
+    key: "handleMouseOut",
+    value: function handleMouseOut(e) {
+      var currentChange = this.props.change || this.props.open - this.props.close;
+      var currentPercentChange = currentChange / this.props.open / 100;
+      this.setState({
+        closeValue: this.props.closeValue,
+        change: parseFloat(currentChange).toFixed(2),
+        percentChange: parseFloat(currentPercentChange).toFixed(2)
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      // debugger
-      var data = this.props.portfolioValue || [];
-      var label = this.props.timeFrame === "1D" ? "label" : "date";
-      debugger;
+      var data = Object.values(this.props.portfolioValue) || []; // const label = this.props.timeFrame === "1D" ? "label" : "date";
+      // let odometer = this.state.hoverValue || this.state.open_value
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        value: this.state.pVal
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+        value: this.state.closeValue
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
         width: 676,
         height: 196,
         data: data,
@@ -1197,11 +1208,11 @@ function (_React$Component) {
           right: 10,
           left: 10,
           bottom: 5
-        } // onMouseOver={this.handleMouseOver}
-        // onMouseLeave={this.handleMouseOut}
+        },
+        onMouseOver: this.handleMouseOver // onMouseLeave={this.handleMouseOut}
 
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
-        dataKey: label,
+        dataKey: "date",
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
         hide: true,
@@ -1225,7 +1236,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
         connectNulls: true,
         type: "linear",
-        dataKey: "pVal",
+        dataKey: "value",
         dot: false,
         stroke: "#21ce99",
         strokeWidth: 1
@@ -1233,10 +1244,10 @@ function (_React$Component) {
     }
   }]);
 
-  return TickerChart;
+  return PortfolioChart;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (TickerChart);
+/* harmony default export */ __webpack_exports__["default"] = (PortfolioChart);
 
 /***/ }),
 
@@ -2165,6 +2176,7 @@ function (_React$Component) {
       var _this$setState;
 
       var data = response.map(function (price) {
+        //new Date(Date.parse(`${close_price.date} ${close_price.label}`)).toLocaleString('en-US')
         return {
           price: price.close,
           date: price.date,
