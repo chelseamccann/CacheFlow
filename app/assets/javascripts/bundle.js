@@ -195,14 +195,14 @@ var receiveTicker = function receiveTicker(ticker) {
 };
 var fetchTickers = function fetchTickers() {
   return function (dispatch) {
-    return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTickers"]().then(function (tickers) {
+    return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["APIfetchTickers"]().then(function (tickers) {
       return dispatch(receiveTickers(tickers));
     });
   };
 };
 var fetchTicker = function fetchTicker(tickerId) {
   return function (dispatch) {
-    return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTicker"](tickerId).then(function (ticker) {
+    return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["APIfetchTicker"](tickerId).then(function (ticker) {
       return dispatch(receiveTicker(ticker));
     });
   };
@@ -241,27 +241,44 @@ var receiveTickerData = function receiveTickerData(symbol, data) {
 /*!*************************************************!*\
   !*** ./frontend/actions/transaction_actions.js ***!
   \*************************************************/
-/*! exports provided: RECEIVE_TRANSACTION, receiveTransaction, executeTransaction */
+/*! exports provided: RECEIVE_TRANSACTION, RECEIVE_TRANSACTIONS, receiveTransaction, receiveTransactions, executeTransaction, fetchTransactions */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRANSACTION", function() { return RECEIVE_TRANSACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRANSACTIONS", function() { return RECEIVE_TRANSACTIONS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTransaction", function() { return receiveTransaction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTransactions", function() { return receiveTransactions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "executeTransaction", function() { return executeTransaction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransactions", function() { return fetchTransactions; });
 /* harmony import */ var _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/transaction_api_util */ "./frontend/util/transaction_api_util.js");
 
 var RECEIVE_TRANSACTION = "RECEIVE_TRANSACTION";
+var RECEIVE_TRANSACTIONS = "RECEIVE_TRANSACTIONS";
 var receiveTransaction = function receiveTransaction(transaction) {
   return {
     type: RECEIVE_TRANSACTION,
     transaction: transaction
   };
 };
+var receiveTransactions = function receiveTransactions(transactions) {
+  return {
+    type: RECEIVE_TRANSACTIONS,
+    transactions: transactions
+  };
+};
 var executeTransaction = function executeTransaction(transaction) {
   return function (dispatch) {
     return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["createTransaction"](transaction).then(function (transaction) {
       return dispatch(receiveTransaction(transaction));
+    });
+  };
+};
+var fetchTransactions = function fetchTransactions() {
+  return function (dispatch) {
+    return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTransactions"]().then(function (transactions) {
+      return dispatch(receiveTransactions(transactions));
     });
   };
 };
@@ -886,6 +903,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ticker/ticker_index_container */ "./frontend/components/ticker/ticker_index_container.jsx");
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
+/* harmony import */ var _portfolio_chart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./portfolio_chart */ "./frontend/components/portfolio/portfolio_chart.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -908,26 +926,115 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Portfolio =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(Portfolio, _React$Component);
 
-  function Portfolio() {
+  function Portfolio(props) {
+    var _this;
+
     _classCallCheck(this, Portfolio);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Portfolio).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Portfolio).call(this, props));
+    _this.state = {
+      "1D": [],
+      "5dm": [],
+      "1mm": [],
+      "3M": [],
+      "1Y": [],
+      "5Y": [],
+      timeFrame: "",
+      tickerSymbol: "",
+      open: null,
+      close: null,
+      change: 0,
+      changePercent: 0,
+      portfolioValue: null
+    };
+    debugger;
+    return _this;
   }
 
   _createClass(Portfolio, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      // fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
+      this.props.fetchTransactions().then(function (results) {
+        return _this2.calcVal(results);
+      }); // this.props.fetchTickers().then(results => calcVal(results))
+    }
+  }, {
+    key: "calcVal",
+    value: function calcVal(response) {
+      var _this3 = this;
+
+      var data = response.transactions.map(function (asset) {
+        var date = asset.created_at;
+        var value = asset.purchase_price * asset.purchase_shares;
+        var pVal = _this3.state.portfolioValue || 0;
+        pVal += value;
+        debugger;
+        return {
+          pVal: pVal,
+          date: date
+        };
+      });
+      debugger;
+      this.setState({
+        portfolioValue: data
+      });
+    }
+  }, {
+    key: "updatePrices",
+    value: function updatePrices(timeFrame) {
+      var _this4 = this;
+
+      if (this.state.timeFrame !== timeFrame) {
+        return function (e) {
+          fetchPrices(_this4.props.tickerSymbol, timeFrame).then(function (response) {
+            return _this4.renderPrices(response, timeFrame);
+          });
+        };
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this5 = this;
+
       debugger;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
-        exact: true,
-        path: "/",
-        component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
+      var tF = Object.keys(this.state).map(function (key) {
+        if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "btns",
+            key: "".concat(key, "-id"),
+            onClick: _this5.updatePrices(key)
+          }, key.slice(0, 2).toUpperCase());
+        }
       });
+
+      if (this.state.portfolioValue !== null) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+          exact: true,
+          path: "/",
+          component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show-wrap"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "chart-wrap"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          portfolioValue: this.props.portfolioValue,
+          tF: tF
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "time-frame-buttons"
+        }, tF)))));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      }
     }
   }]);
 
@@ -935,6 +1042,153 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Portfolio);
+
+/***/ }),
+
+/***/ "./frontend/components/portfolio/portfolio_chart.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/portfolio/portfolio_chart.jsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/index.js");
+/* harmony import */ var react_odometerjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-odometerjs */ "./node_modules/react-odometerjs/dist/index.js");
+/* harmony import */ var react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_odometerjs__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var TickerChart =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(TickerChart, _React$Component);
+
+  function TickerChart(props) {
+    var _this;
+
+    _classCallCheck(this, TickerChart);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerChart).call(this, props));
+    _this.state = {
+      pVal: _this.props.portfolioValue // closePrice: this.props.close,
+      // change: this.props.change, 
+      // percentChange: this.props.changePercent,
+      // chartX: null,
+      // chartY: null,
+
+    };
+    debugger; // this.handleMouseOver = this.handleMouseOver.bind(this);
+    // this.handleMouseOut = this.handleMouseOut.bind(this);
+
+    return _this;
+  } // handleMouseOver(e){
+  //     debugger
+  //     if(e && e.activePayload !== undefined){
+  //         let hoverPrice = e.activePayload[0].payload.price;
+  //         let openPrice = this.props.open;
+  //         let change = hoverPrice - openPrice;
+  //         let dailyPercentChange = (change/hoverPrice)*100
+  //         this.setState({closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2)})
+  //         this.setState({chartX: e.chartX})
+  //         this.setState({chartY: e.chartY}) 
+  //         this.setState({change: parseFloat(change.toFixed(2))})
+  //         this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+  //     }
+  // }
+  // handleMouseOut(e){
+  //     debugger
+  //     let currentChange = this.props.change || (this.props.open - this.props.close)
+  //     let currentPercentChange = (currentChange/this.props.open)/100
+  //     this.setState({
+  //         closePrice: this.props.close, 
+  //         change: parseFloat(currentChange).toFixed(2), 
+  //         percentChange: parseFloat(currentPercentChange).toFixed(2)
+  //     })
+  // }
+
+
+  _createClass(TickerChart, [{
+    key: "render",
+    value: function render() {
+      debugger; // let data = this.props.ticker || [];
+
+      var label = this.props.timeFrame === "1D" ? "label" : "date";
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ticker-chart block-paddings"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
+        value: this.state.pVal
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+        width: 676,
+        height: 196,
+        data: data,
+        margin: {
+          top: 5,
+          right: 10,
+          left: 10,
+          bottom: 5
+        } // onMouseOver={this.handleMouseOver}
+        // onMouseLeave={this.handleMouseOut}
+
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
+        dataKey: label,
+        hide: true
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
+        hide: true,
+        domain: ['dataMin', 'dataMax']
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
+        className: "tooltip",
+        contentStyle: {
+          border: '0',
+          backgroundColor: 'transparent',
+          color: 'grey'
+        },
+        formatter: function formatter(value, name, props) {
+          return [""];
+        } // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
+        ,
+        isAnimationActive: false,
+        cursor: {
+          stroke: "Gainsboro",
+          strokeWidth: 1.5
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
+        connectNulls: true,
+        type: "linear",
+        dataKey: "pVal",
+        dot: false,
+        stroke: "#21ce99",
+        strokeWidth: 1
+      })));
+    }
+  }]);
+
+  return TickerChart;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (TickerChart);
 
 /***/ }),
 
@@ -949,18 +1203,32 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _portfolio__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./portfolio */ "./frontend/components/portfolio/portfolio.jsx");
+/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
+/* harmony import */ var _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/ticker_actions */ "./frontend/actions/ticker_actions.js");
+
+
 
 
 
 var msp = function msp(state) {
   var userId = state.session.id;
-  debugger;
   return {
     currentUser: state.entities.users[userId]
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, null)(_portfolio__WEBPACK_IMPORTED_MODULE_1__["default"]));
+var mdp = function mdp(dispatch) {
+  return {
+    fetchTransactions: function fetchTransactions() {
+      return dispatch(Object(_actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__["fetchTransactions"])());
+    },
+    fetchTickers: function fetchTickers() {
+      return dispatch(Object(_actions_ticker_actions__WEBPACK_IMPORTED_MODULE_3__["fetchTickers"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_portfolio__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -1511,7 +1779,7 @@ function (_React$Component) {
   return TickerChart;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (TickerChart); // <link rel="stylesheet" href="odometer-theme-default.css" />
+/* harmony default export */ __webpack_exports__["default"] = (TickerChart);
 
 /***/ }),
 
@@ -2046,7 +2314,7 @@ function (_React$Component) {
       return function (e) {
         _this2.setState({
           purchase_shares: parseInt(e.target.value) ? parseInt(e.target.value) : "",
-          purchase_price: e.target.value * _this2.props.close
+          purchase_price: _this2.props.close
         });
       };
     }
@@ -2357,6 +2625,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTION"]:
       return Object.assign({}, _defineProperty({}, action.transaction.id, action.transaction));
 
+    case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTIONS"]:
+      return action.transactions;
+
     default:
       return state;
   }
@@ -2524,20 +2795,20 @@ var logout = function logout() {
 /*!******************************************!*\
   !*** ./frontend/util/ticker_api_util.js ***!
   \******************************************/
-/*! exports provided: fetchTickers, fetchTicker */
+/*! exports provided: APIfetchTickers, APIfetchTicker */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTickers", function() { return fetchTickers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTicker", function() { return fetchTicker; });
-var fetchTickers = function fetchTickers() {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "APIfetchTickers", function() { return APIfetchTickers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "APIfetchTicker", function() { return APIfetchTicker; });
+var APIfetchTickers = function APIfetchTickers() {
   return $.ajax({
     method: 'GET',
     url: 'api/tickers'
   });
 };
-var fetchTicker = function fetchTicker(id) {
+var APIfetchTicker = function APIfetchTicker(id) {
   return $.ajax({
     method: 'GET',
     url: "api/tickers/".concat(id)
@@ -2597,19 +2868,28 @@ var fetchTickerStats = function fetchTickerStats(symbol) {
 /*!***********************************************!*\
   !*** ./frontend/util/transaction_api_util.js ***!
   \***********************************************/
-/*! exports provided: createTransaction */
+/*! exports provided: createTransaction, fetchTransactions */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTransaction", function() { return createTransaction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransactions", function() { return fetchTransactions; });
 var createTransaction = function createTransaction(transaction) {
-  debugger;
   return $.ajax({
     method: "POST",
     url: "/api/transactions",
     data: {
       transaction: transaction
+    }
+  });
+};
+var fetchTransactions = function fetchTransactions(transactions) {
+  return $.ajax({
+    method: "GET",
+    url: "/api/transactions",
+    data: {
+      transactions: transactions
     }
   });
 };

@@ -20,7 +20,7 @@ class TransactionForm extends React.Component{
 
     updateShares(){
         return e => {
-            this.setState({purchase_shares: parseInt(e.target.value) ? parseInt(e.target.value) : "", purchase_price: e.target.value * this.props.close})
+            this.setState({purchase_shares: parseInt(e.target.value) ? parseInt(e.target.value) : "", purchase_price: this.props.close})
         }
     }
 

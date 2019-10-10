@@ -76,6 +76,3 @@ class TickerChart extends React.Component {
 
 
 export default TickerChart;
-
-
-// <link rel="stylesheet" href="odometer-theme-default.css" />
