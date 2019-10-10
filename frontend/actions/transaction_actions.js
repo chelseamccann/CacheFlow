@@ -15,7 +15,9 @@ export const receiveTransactions = transactions => ({
 
 
 export const executeTransaction = transaction => dispatch =>  API.createTransaction(transaction)
-  .then(transaction => dispatch(receiveTransaction(transaction))
+  .then(transaction => {
+    return dispatch(receiveTransaction(transaction))
+  }
   );
 
   export const fetchTransactions = () => dispatch => API.fetchTransactions()
