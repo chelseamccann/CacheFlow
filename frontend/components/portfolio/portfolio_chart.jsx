@@ -6,7 +6,7 @@ class TickerChart extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            pVal: this.props.portfolioValue
+            pVal: 0,
             // closePrice: this.props.close,
             // change: this.props.change, 
             // percentChange: this.props.changePercent,
@@ -22,16 +22,16 @@ class TickerChart extends React.Component {
     // handleMouseOver(e){
     //     debugger
     //     if(e && e.activePayload !== undefined){
-    //         let hoverPrice = e.activePayload[0].payload.price;
-    //         let openPrice = this.props.open;
-    //         let change = hoverPrice - openPrice;
-    //         let dailyPercentChange = (change/hoverPrice)*100
+    //         let hoverPrice = e.activePayload[0].payload.pVal;
+    //         // let openPrice = this.props.open;
+    //         // let change = hoverPrice - openPrice;
+    //         // let dailyPercentChange = (change/hoverPrice)*100
 
-    //         this.setState({closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2)})
+    //         this.setState({pVal: parseFloat(e.activePayload[0].payload.pVal).toFixed(2)})
     //         this.setState({chartX: e.chartX})
     //         this.setState({chartY: e.chartY}) 
-    //         this.setState({change: parseFloat(change.toFixed(2))})
-    //         this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+    //         // this.setState({change: parseFloat(change.toFixed(2))})
+    //         // this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
     //     }
     // }
 
@@ -48,9 +48,10 @@ class TickerChart extends React.Component {
     // }
 
     render(){
-        debugger
-        // let data = this.props.ticker || [];
+        // debugger
+        let data = this.props.portfolioValue || [];
         const label = this.props.timeFrame === "1D" ? "label" : "date";
+        debugger
         return (
             <div className="ticker-chart block-paddings">
                 

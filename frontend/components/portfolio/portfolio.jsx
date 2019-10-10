@@ -21,7 +21,7 @@ class Portfolio extends React.Component{
             changePercent: 0,
             portfolioValue: null
         }
-        debugger
+
     }
 
     componentDidMount(){
@@ -37,10 +37,9 @@ class Portfolio extends React.Component{
             let value = asset.purchase_price * asset.purchase_shares
             let pVal = this.state.portfolioValue || 0
             pVal += value
-            debugger
             return {pVal, date}
         })
-        debugger
+
         this.setState({portfolioValue: data})
     }
 
@@ -54,7 +53,7 @@ class Portfolio extends React.Component{
 
 
     render(){
-        debugger
+
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
@@ -69,7 +68,7 @@ class Portfolio extends React.Component{
                     <div>   
                     <div className="chart-wrap"> 
                         <PortfolioChart 
-                        portfolioValue={this.props.portfolioValue}
+                        portfolioValue={this.state.portfolioValue}
                         tF={tF}
                         />
                         

@@ -953,7 +953,6 @@ function (_React$Component) {
       changePercent: 0,
       portfolioValue: null
     };
-    debugger;
     return _this;
   }
 
@@ -977,13 +976,11 @@ function (_React$Component) {
         var value = asset.purchase_price * asset.purchase_shares;
         var pVal = _this3.state.portfolioValue || 0;
         pVal += value;
-        debugger;
         return {
           pVal: pVal,
           date: date
         };
       });
-      debugger;
       this.setState({
         portfolioValue: data
       });
@@ -1006,7 +1003,6 @@ function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
-      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -1027,7 +1023,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          portfolioValue: this.props.portfolioValue,
+          portfolioValue: this.state.portfolioValue,
           tF: tF
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
@@ -1093,7 +1089,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerChart).call(this, props));
     _this.state = {
-      pVal: _this.props.portfolioValue // closePrice: this.props.close,
+      pVal: 0 // closePrice: this.props.close,
       // change: this.props.change, 
       // percentChange: this.props.changePercent,
       // chartX: null,
@@ -1107,15 +1103,15 @@ function (_React$Component) {
   } // handleMouseOver(e){
   //     debugger
   //     if(e && e.activePayload !== undefined){
-  //         let hoverPrice = e.activePayload[0].payload.price;
-  //         let openPrice = this.props.open;
-  //         let change = hoverPrice - openPrice;
-  //         let dailyPercentChange = (change/hoverPrice)*100
-  //         this.setState({closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2)})
+  //         let hoverPrice = e.activePayload[0].payload.pVal;
+  //         // let openPrice = this.props.open;
+  //         // let change = hoverPrice - openPrice;
+  //         // let dailyPercentChange = (change/hoverPrice)*100
+  //         this.setState({pVal: parseFloat(e.activePayload[0].payload.pVal).toFixed(2)})
   //         this.setState({chartX: e.chartX})
   //         this.setState({chartY: e.chartY}) 
-  //         this.setState({change: parseFloat(change.toFixed(2))})
-  //         this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+  //         // this.setState({change: parseFloat(change.toFixed(2))})
+  //         // this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
   //     }
   // }
   // handleMouseOut(e){
@@ -1133,9 +1129,10 @@ function (_React$Component) {
   _createClass(TickerChart, [{
     key: "render",
     value: function render() {
-      debugger; // let data = this.props.ticker || [];
-
+      // debugger
+      var data = this.props.portfolioValue || [];
       var label = this.props.timeFrame === "1D" ? "label" : "date";
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
