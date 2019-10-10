@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_09_152841) do
+ActiveRecord::Schema.define(version: 2019_10_09_221824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,12 +25,11 @@ ActiveRecord::Schema.define(version: 2019_10_09_152841) do
   create_table "transactions", force: :cascade do |t|
     t.integer "purchase_shares", null: false
     t.float "purchase_price", null: false
-    t.integer "total_shares", null: false
-    t.float "average_price", null: false
     t.integer "user_id", null: false
-    t.string "ticker_id", null: false
+    t.string "ticker_symbol", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ticker_id", null: false
     t.index ["user_id"], name: "index_transactions_on_user_id", unique: true
   end
 
@@ -38,9 +37,10 @@ ActiveRecord::Schema.define(version: 2019_10_09_152841) do
     t.string "email", null: false
     t.string "password_digest", null: false
     t.string "session_token", null: false
-    t.float "buying_power", null: false
+    t.float "buying_power", default: 0.0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "total_portfolio_value", default: 0.0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
   end

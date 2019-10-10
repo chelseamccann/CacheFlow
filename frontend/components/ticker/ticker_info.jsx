@@ -38,8 +38,9 @@ class TickerInfo extends React.Component {
     render(){
         return (
         <>
-        <h1>{this.state.name}</h1>
+
         <div className="ticker-info">
+        <h1>{this.state.name}</h1>
             <div className="ticker-about">
                 <h3>About</h3>
                 <p>{this.state.desc}</p>

@@ -2,11 +2,13 @@ import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import TickerShowContainer from './ticker_show_container';
 import { ProtectedRoute } from '../../util/route_utils';
+import PortfolioContainer from '../portfolio/portfolio_container';
 
 class TickerIndex extends React.Component{
     constructor(props){
         super(props)
         this.state = {}
+        debugger
     }
 
     componentDidMount(){
@@ -27,7 +29,7 @@ class TickerIndex extends React.Component{
         
         return(
             <ul className="ticker-index block-paddings">
-                
+                <PortfolioContainer />
                 {tickers}
                 
             </ul>

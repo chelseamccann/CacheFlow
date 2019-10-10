@@ -2,7 +2,8 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.buying_power ||= 0.00
+    debugger
+    # @user.buying_power ||= 0.00
     if @user.save 
       login!(@user)
       render "api/users/show"
@@ -13,7 +14,7 @@ class Api::UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:email, :password, :buying_power)
+    params.require(:user).permit(:email, :password, :buying_power, :total_portfolio_value)
   end
 
 end

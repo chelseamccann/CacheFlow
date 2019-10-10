@@ -1,13 +1,14 @@
-class TransactionsController < ApplicationController
+class Api::TransactionsController < ApplicationController
 
     def create
        @transaction = Transaction.new(transaction_params)
-       @transaction.user_id = @current_user.id
-       debugger
-       if @transaction.save
+       @transaction.user_id = current_user.id
+       ticker = Ticker.find_by(ticker_symbol: params[:transaction][:ticker_symbol])
+        @transaction.ticker_id = ticker.id
+       if @transaction.save!
         render "api/users/show"
        else
-        render json: @transaction.errors.full_messages
+        render json:["Not enough buying power."]
        end
     end
 
@@ -27,8 +28,7 @@ class TransactionsController < ApplicationController
 
     private
     def transaction_params
-        debugger
-        params.require(:transaction).permit(:ticker_id, :purchase_price, :purchase_shares)
+        params.require(:transaction).permit(:ticker_symbol, :purchase_price, :purchase_shares)
     end
 
 end

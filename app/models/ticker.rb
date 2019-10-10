@@ -12,6 +12,9 @@ class Ticker < ApplicationRecord
 
     validates :symbol, presence: true
 
-    has_many :transactions
+    has_many :transactions,
+    primary_key: :id,
+    foreign_key: :ticker_id,
+    class_name: 'Transaction'
 
 end

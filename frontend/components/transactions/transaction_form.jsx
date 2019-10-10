@@ -1,22 +1,32 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 class TransactionForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            cost: this.props.close
+            purchase_price: this.props.close,
+            ticker_symbol: this.props.tickerSymbol
         };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(e){
         e.preventDefault();
-        
+        this.props.executeTransaction(this.state);
     }
 
     updateShares(){
         return e => {
-            this.setState({shares: parseInt(e.target.value) ? parseInt(e.target.value) : "", cost: e.target.value * this.props.close})
+            this.setState({purchase_shares: parseInt(e.target.value) ? parseInt(e.target.value) : "", purchase_price: e.target.value * this.props.close})
         }
+    }
+
+    highlightClicked(e){
+        e.preventDefault();
+            document.getElementById(e.target.id).classList.toggle("bsactive");
     }
 
     render(){
@@ -25,14 +35,20 @@ class TransactionForm extends React.Component{
         //show buying power on bottom of form?
         return (
         <div className="transaction-form">
-            <button className="drop-down-button nav-bar-logout buy-sell-buttons" >Buy {this.props.tickerSymbol}</button>
-            <button className="drop-down-button nav-bar-logout buy-sell-buttons" >Sell {this.props.tickerSymbol}</button>
+            <div className="buy-sell-buttons">
+                <button id="buy" className="" onClick={this.highlightClicked}
+                >Buy {this.props.tickerSymbol}</button>
+                <button id="sell" className="" onClick={this.highlightClicked}>Sell {this.props.tickerSymbol}</button>
+            </div>
             
             <form className="t-form" onSubmit={this.handleSubmit}>
 
-                <div >
-                    <label id="shares">Shares</label>
+            <div className="buy-sell">
+            
+                <div className="shares">
+                    <label className="share" id="shares">Shares</label>
                     <input 
+                    className="share share-box"
                     id="shares" 
                     type="text" 
                     value={this.state.shares} 
@@ -41,17 +57,23 @@ class TransactionForm extends React.Component{
                     />
                 </div>
 
-                <div>
-                    <label>Market Price</label>
-                    <p>{`$${parseFloat(this.props.close).toFixed(2)}`}</p>
+                <div className="shares">
+                    <label className="share share-two">Market Price</label>
+                    <p className="share share-two">{`$${parseFloat(this.props.close).toFixed(2)}`}</p>
                 </div>
 
-                <div>
-                    <label>Estimated Cost</label>
-                    <p>{`$${parseFloat(this.state.cost).toFixed(2)}`}</p>
+                <div className="shares">
+                    <label className="share share-two">Estimated Cost</label>
+                    <p className="share share-two">{`$${parseFloat(this.state.purchase_price).toFixed(2)}`}</p>
                 </div>
 
-                <input type="submit" value="Execute Order" className=" nav-bar-logout review-button"/>
+                {/* <Link to="/"> */}
+                    <input type="submit" value="Execute Order" className="execute-button nav-bar-logout review-button"/>
+                {/* </Link> */}
+
+                <p className="bp share share-two">Buying power</p>
+
+            </div>
             </form>
         </div>
         )

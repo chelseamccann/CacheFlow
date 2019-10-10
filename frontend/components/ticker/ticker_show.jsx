@@ -21,7 +21,6 @@ class TickerShow extends React.Component{
             change: 0,
             changePercent: 0
         }
-
         this.updatePrices = this.updatePrices.bind(this);
     }
 
@@ -103,6 +102,7 @@ class TickerShow extends React.Component{
                     <TransactionForm 
                     tickerSymbol={this.props.tickerSymbol} 
                     close={this.state.close}
+                    executeTransaction={this.props.executeTransaction}
                     />
                 </div>
                 )

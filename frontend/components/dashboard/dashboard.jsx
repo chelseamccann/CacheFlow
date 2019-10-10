@@ -7,8 +7,8 @@ import TickerShowContainer from '../ticker/ticker_show_container';
 import NavBar from '../nav_bar/nav_bar';
 
 class Dashboard extends React.Component {
-
     render(){
+        debugger
         return (
             <div className="dashboard">
                 <NavBar logout={this.props.logout}/>

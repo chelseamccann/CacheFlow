@@ -5,12 +5,12 @@
 }
 
 .transaction-form{
-    /* margin-top: 50px;
-    margin-left: 40px; */
+    margin-top: 50px;
+    margin-left: 90px;
     display: inline-block;
     width: 225px;
     align-content: center;
-    max-height: 100px;
+    max-height: 300px;
     background: white;
     box-sizing: border-box;
     z-index: 1;
@@ -20,10 +20,12 @@
 
 .show-wrap{
     display: flex;
+    margin-top: 50px;
 }
 
 .t-form{
     font-size: 13px;
+    height: 100%;
 }
 
 .t-form > div{
@@ -35,12 +37,104 @@
     color: white;
     background-color: #21ce99;
     border-color: #21ce99;
+    
+}
+
+.buy-sell-buttons > button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-weight: 650;
+    font-size: 13px;
+    letter-spacing: .25px;
+    line-height: 19px;
+    box-sizing: content-box;
+}
+
+.buy-sell-buttons > button:hover{
+    color: #21ce99;
+}
+
+.bsactive{
+    color: #21ce99;
+    text-decoration: underline;
+    text-decoration-color: #21ce99;
 }
 
 .buy-sell-buttons{
-    text-decoration: none;
+    display: flex;
+    width: 100%;
+    height: 50px;
 }
 
-.buy-sell-buttons:hover{
-    color: #21ce99;
+.buy-sell-buttons > button {
+    width: 50%;
+}
+
+.buy-sell-buttons > button:focus{
+    outline: none;  
+}
+
+.shares{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.share{
+    align-content: center;
+    padding: 10px;
+}
+
+.share-box{
+    border: 1px solid;
+    border-radius: 4px;
+    height: 15px;
+    line-height: 1.5em;
+    outline: 0;
+    /* padding: 0 13px; */
+    transition: border-color 200ms;
+    width: 35%;
+    margin-right: 10px;
+}
+
+.share-two{
+    display: flex;
+}
+
+.buy-sell{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.execute-button{
+    /* margin-top: 20px; */
+    border-radius: 4px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    line-height: 19px;
+    margin: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #21ce99;
+}
+
+.execute-button:hover{
+    background-color: #1ae99a;
+    cursor: pointer;
+    border-color: #1ae99a;
+}
+
+.bp{
+    margin: 0 auto;
+    margin-top: 5px;
 }
