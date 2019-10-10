@@ -6,8 +6,10 @@ import {ProtectedRoute} from '../../util/route_utils';
 import TickerShowContainer from '../ticker/ticker_show_container';
 import NavBar from '../nav_bar/nav_bar';
 import PortfolioContainer from '../portfolio/portfolio_container';
+import News from '../news/news';
 
 class Dashboard extends React.Component {
+
     render(){
         return (
             <div className="dashboard">
@@ -15,8 +17,9 @@ class Dashboard extends React.Component {
                 <div className="dashboard-middle">
                     <Switch>
                         <ProtectedRoute exact path='/:tickerSymbol' component={TickerShowContainer}/>
+                        <ProtectedRoute exact path="/" component={News}/>
                         <ProtectedRoute exact path="/" component={PortfolioContainer}/>
-                        <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
+                        {/* <ProtectedRoute exact path="/" component={TickerIndexContainer}/> */}
                     </Switch>
                 </div>
             </div>
@@ -25,8 +28,3 @@ class Dashboard extends React.Component {
 }
 
 export default Dashboard;
-
-
-
-
-{/* <ProtectedRoute exact path="/" component={TickerIndexContainer}/> */}

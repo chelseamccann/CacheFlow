@@ -8,7 +8,7 @@ class TransactionForm extends React.Component{
         this.state = {
             purchase_price: this.props.close,
             ticker_symbol: this.props.tickerSymbol,
-            purchase_shares: 0
+            // purchase_shares: 0
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,8 +49,9 @@ class TransactionForm extends React.Component{
             <div className="buy-sell">
             
                 <div className="shares">
-                    <label className="share" id="shares">Shares</label>
+                    <label className="share" id="shares" >Shares</label>
                     <input 
+                    autoComplete="off"
                     className="share share-box"
                     id="shares" 
                     type="number" 

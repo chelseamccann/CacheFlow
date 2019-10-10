@@ -397,6 +397,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ticker_ticker_show_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ticker/ticker_show_container */ "./frontend/components/ticker/ticker_show_container.jsx");
 /* harmony import */ var _nav_bar_nav_bar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../nav_bar/nav_bar */ "./frontend/components/nav_bar/nav_bar.jsx");
 /* harmony import */ var _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../portfolio/portfolio_container */ "./frontend/components/portfolio/portfolio_container.jsx");
+/* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -414,6 +415,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -451,11 +453,11 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
         exact: true,
         path: "/",
-        component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__["default"]
+        component: _news_news__WEBPACK_IMPORTED_MODULE_8__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
         exact: true,
         path: "/",
-        component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
+        component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__["default"]
       }))));
     }
   }]);
@@ -464,9 +466,6 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Dashboard);
-{
-  /* <ProtectedRoute exact path="/" component={TickerIndexContainer}/> */
-}
 
 /***/ }),
 
@@ -894,6 +893,105 @@ function (_React$Component) {
 
 /***/ }),
 
+/***/ "./frontend/components/news/news.jsx":
+/*!*******************************************!*\
+  !*** ./frontend/components/news/news.jsx ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_news_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/news_api_util */ "./frontend/util/news_api_util.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var News =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(News, _React$Component);
+
+  function News(props) {
+    var _this;
+
+    _classCallCheck(this, News);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(News).call(this, props));
+    _this.state = {
+      isLoading: true
+    };
+    return _this;
+  }
+
+  _createClass(News, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      Object(_util_news_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchNews"])().then(function (news) {
+        debugger;
+
+        _this2.setState({
+          news: news.articles,
+          isLoading: false
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      debugger;
+
+      if (!this.state.isLoading) {
+        var news = this.state.news;
+        debugger;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "bigger-news-box"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, news.reverse().map(function (newsPiece, idx) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "news-box",
+            key: "".concat(newsPiece, "-idx")
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "news"
+          }, newsPiece.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "news-image",
+            src: newsPiece.urlToImage,
+            alt: ""
+          }));
+        })));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "no news friends ");
+      }
+    }
+  }]);
+
+  return News;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (News);
+
+/***/ }),
+
 /***/ "./frontend/components/portfolio/portfolio.jsx":
 /*!*****************************************************!*\
   !*** ./frontend/components/portfolio/portfolio.jsx ***!
@@ -1068,7 +1166,7 @@ function (_React$Component) {
       var _this4 = this;
 
       var tF = Object.keys(this.state).map(function (key) {
-        if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
+        if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "ALL") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "btns",
             key: "".concat(key, "-id"),
@@ -1098,7 +1196,11 @@ function (_React$Component) {
           className: "time-frame-buttons"
         }, tF)))));
       } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "testing");
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+          exact: true,
+          path: "/",
+          component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
+        });
       }
     }
   }]);
@@ -2373,8 +2475,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TransactionForm).call(this, props));
     _this.state = {
       purchase_price: _this.props.close,
-      ticker_symbol: _this.props.tickerSymbol,
-      purchase_shares: 0
+      ticker_symbol: _this.props.tickerSymbol // purchase_shares: 0
+
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -2432,6 +2534,7 @@ function (_React$Component) {
         className: "share",
         id: "shares"
       }, "Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        autoComplete: "off",
         className: "share share-box",
         id: "shares",
         type: "number",
@@ -2766,6 +2869,25 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/news_api_util.js":
+/*!****************************************!*\
+  !*** ./frontend/util/news_api_util.js ***!
+  \****************************************/
+/*! exports provided: fetchNews */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNews", function() { return fetchNews; });
+var fetchNews = function fetchNews() {
+  return $.ajax({
+    method: "GET",
+    url: "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=f9c0700888a04dd7ba2d78e2fe32dfe7"
+  });
+};
 
 /***/ }),
 
