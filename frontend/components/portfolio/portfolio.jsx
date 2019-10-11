@@ -3,6 +3,7 @@ import TickerIndexContainer from '../ticker/ticker_index_container';
 import {ProtectedRoute} from '../../util/route_utils';
 import PortfolioChart from './portfolio_chart'
 import { fetchDailyPrices, fetchPrices } from '../../util/ticker_data_api_util';
+import News from '../news/news';
 
 class Portfolio extends React.Component{
     constructor(props){
@@ -120,30 +121,31 @@ class Portfolio extends React.Component{
         if(this.state.fetched){
             return (
                 <>
+                
                 <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
-                <div className="show-wrap">
-                    <div>   
-                    <div className="chart-wrap"> 
-                        <PortfolioChart 
-                        portfolioValue={this.state["1D"]}
-                        timeFrame={this.state.timeFrame}
-                        openValue={Math.max(this.state["1D"].open_value)}
-                        // closeValue={this.state.closeValue}
-                        change={this.state.change}
-                        changePercent={this.state.changePercent}
-                        tF={tF}
-                        />
-                        
-                        <div className="time-frame-buttons">{tF}</div>
-    
-                    </div>
-    
-                    </div>
+                <div className="chart-and-news-wrap">
+                <div className="chart-wrap"> 
+                    <PortfolioChart 
+                    portfolioValue={this.state["1D"]}
+                    timeFrame={this.state.timeFrame}
+                    openValue={Math.max(this.state["1D"].open_value)}
+                    // closeValue={this.state.closeValue}
+                    change={this.state.change}
+                    changePercent={this.state.changePercent}
+                    tF={tF}
+                    />
+                    
+                    <div className="time-frame-buttons">{tF}</div>
+                </div>
+                <ProtectedRoute exact path="/" component={News}/>
                 </div>
                 </>
                 )
             } else {
-                return <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
+                
+                return <div> </div>
+                {/* <ProtectedRoute exact path="/" component={News}/>
+                <ProtectedRoute exact path="/" component={TickerIndexContainer}/></>) */}
             }
     }
 }

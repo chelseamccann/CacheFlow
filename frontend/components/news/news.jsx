@@ -23,19 +23,17 @@ class News extends React.Component{
             const { news } = this.state;
             debugger
             return (
-                <div className="bigger-news-box">
-                <ul>
+                <ul className="news-box">
                     {news.reverse().map((newsPiece, idx) => (
-                        <div className="news-box" key={`${newsPiece}-idx`}>
-                            <div className="news">{newsPiece.description}</div>
-                            <img className="news-image" src={newsPiece.urlToImage} alt=""/>
+                        <div className="news-box nws" key={`${newsPiece}-idx`}>
+                            <img className="news-image news-img" src={newsPiece.urlToImage} alt=""/>
+                            <div className="news nws-text">{newsPiece.description}</div>
                         </div>
                     ))}
                 </ul>
-                </div>
             )
         } else{
-            return <div>no news friends </div>
+            return <div>   </div>
         }
     }
 }

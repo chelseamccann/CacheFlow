@@ -453,10 +453,6 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
         exact: true,
         path: "/",
-        component: _news_news__WEBPACK_IMPORTED_MODULE_8__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
-        exact: true,
-        path: "/",
         component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__["default"]
       }))));
     }
@@ -965,22 +961,22 @@ function (_React$Component) {
       if (!this.state.isLoading) {
         var news = this.state.news;
         debugger;
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "bigger-news-box"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, news.reverse().map(function (newsPiece, idx) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "news-box"
+        }, news.reverse().map(function (newsPiece, idx) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "news-box",
+            className: "news-box nws",
             key: "".concat(newsPiece, "-idx")
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "news"
-          }, newsPiece.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            className: "news-image",
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "news-image news-img",
             src: newsPiece.urlToImage,
             alt: ""
-          }));
-        })));
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "news nws-text"
+          }, newsPiece.description));
+        }));
       } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "no news friends ");
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "   ");
       }
     }
   }]);
@@ -1007,6 +1003,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
 /* harmony import */ var _portfolio_chart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./portfolio_chart */ "./frontend/components/portfolio/portfolio_chart.jsx");
 /* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
+/* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1026,6 +1023,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1181,8 +1179,8 @@ function (_React$Component) {
           path: "/",
           component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "show-wrap"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "chart-and-news-wrap"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
           portfolioValue: this.state["1D"],
@@ -1194,13 +1192,17 @@ function (_React$Component) {
           tF: tF
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
-        }, tF)))));
-      } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+        }, tF)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
           exact: true,
           path: "/",
-          component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
-        });
+          component: _news_news__WEBPACK_IMPORTED_MODULE_5__["default"]
+        })));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ");
+        {
+          /* <ProtectedRoute exact path="/" component={News}/>
+          <ProtectedRoute exact path="/" component={TickerIndexContainer}/></>) */
+        }
       }
     }
   }]);

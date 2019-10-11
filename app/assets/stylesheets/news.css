@@ -1,13 +1,44 @@
 .news-box{
-    width: 50%
-
+    width: 60%;
+    align-content: center;
+    justify-content: center;
+    margin-left: 80px;
 }
 
 .news-image{
-    width: 800px;
-    height: 400px;
+    height: 150px;  
+    width: 300px;
+}
+.chart-and-news-wrap{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
-.bigger-news-box{
-    
+.chart-wrap{
+    /* margin: 0 auto; */
+    margin-right: 10%;
+}
+
+.news-img{
+    margin-top: 10%;
+    margin-bottom: 2%;
+    margin-left: 2%;
+}
+
+.news{
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6%;
+}
+
+.nws{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nws-text{
+    width: 75%;
+    margin-left: 2%;
 }
