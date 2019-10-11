@@ -18,7 +18,7 @@ class TickerIndex extends React.Component{
          
         const tickers = this.props.tickers.map((ticker, idx) => {
             return (
-                <li key={`${ticker}-${idx}`} className="each-ticker">
+                <li key={`${ticker}-${idx}`} className="each-ticker watchlist-ticker">
                     <Link to={`/${ticker.symbol}`} id={ticker.id}>
                         {ticker.symbol} 
                     </Link>
@@ -31,7 +31,7 @@ class TickerIndex extends React.Component{
             <ul className="ticker-index block-paddings">
                 <h1 className="watchlist">Watchlist</h1>
                 <div className="watchlists">
-                <li className="watchlist-ticker">{tickers}</li>
+                {tickers}
                 </div>
             </ul>
 

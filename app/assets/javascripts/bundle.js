@@ -681,7 +681,6 @@ function (_React$Component) {
         buying_power: 0.00,
         total_portfolio_value: 0.00
       };
-      debugger;
       this.props.processForm(demoUser);
     }
   }, {
@@ -2169,7 +2168,7 @@ function (_React$Component) {
       var tickers = this.props.tickers.map(function (ticker, idx) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: "".concat(ticker, "-").concat(idx),
-          className: "each-ticker"
+          className: "each-ticker watchlist-ticker"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           to: "/".concat(ticker.symbol),
           id: ticker.id
@@ -2181,9 +2180,7 @@ function (_React$Component) {
         className: "watchlist"
       }, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "watchlists"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "watchlist-ticker"
-      }, tickers)));
+      }, tickers));
     }
   }]);
 
