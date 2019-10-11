@@ -5,13 +5,12 @@
 ![Alt Text](https://media.giphy.com/media/YnkTiJZ5WUIULC3mP0/giphy.gif)
 
 
-<h1>Technologies</h1>
-
-Frontend: React, Redux
-Backend: Ruby on Rails, PostgreSQL
-API: IEX Trading, NewsAPI
-Data Visualization: Recharts library
-Styling: HTML, CSS
+# Technologies
+* Frontend: React, Redux
+* Backend: Ruby on Rails, PostgreSQL
+* API: IEX Trading, NewsAPI
+* Data Visualization: Recharts library
+* Styling: HTML, CSS
 
 # Features
 * User Auth
