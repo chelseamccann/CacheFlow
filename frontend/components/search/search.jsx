@@ -54,11 +54,13 @@ class Search extends React.Component{
                 <>
                 <form onSubmit={this.handleSubmit}>
                     <input 
+                    id="search"
+                    autoComplete="off"
                     type="search" 
                     onChange={this.onSearchChange}
                     ref={(input) => this.inputText = input}
                     />
-                        <button>Search!</button>
+                    <button className="search-button"></button>
 
                 </form>
                 </>

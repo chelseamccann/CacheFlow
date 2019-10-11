@@ -27,11 +27,14 @@ class TickerIndex extends React.Component{
         })
         
         return(
+
             <ul className="ticker-index block-paddings">
-                
-                {tickers}
-                
+                <h1 className="watchlist">Watchlist</h1>
+                <div className="watchlists">
+                <li className="watchlist-ticker">{tickers}</li>
+                </div>
             </ul>
+
         )
     }
 }

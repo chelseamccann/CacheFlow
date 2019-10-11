@@ -2,7 +2,9 @@ import React from 'react';
 import TickerChart from './ticker_chart';
 import TickerInfo from './ticker_info';
 import TransactionForm from '../transactions/transaction_form';
-import {fetchPrices, fetchDailyPrices } from '../../util/ticker_data_api_util'; 
+import {fetchPrices, fetchDailyPrices, fetchTickerInfo } from '../../util/ticker_data_api_util'; 
+import News from '../news/news';
+import { ProtectedRoute } from '../../util/route_utils';
 
 class TickerShow extends React.Component{
     constructor(props){
@@ -26,11 +28,13 @@ class TickerShow extends React.Component{
 
     componentDidMount(){
         fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
+        this.tickerInfo();
     }
 
     componentDidUpdate(prevProps){
         if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){ 
             fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
+            this.tickerInfo();
         }
     }
 
@@ -71,18 +75,35 @@ class TickerShow extends React.Component{
         }
     }
 
+    tickerInfo(){
+        fetchTickerInfo(this.props.tickerSymbol).then(response => {
+            debugger
+            this.setState(
+            {name: response.companyName, 
+                desc: response.short_description, 
+                ceo: response.CEO, 
+                // sector: response.sector, 
+                // ticker: response.ticker, 
+                employees: response.employees.toLocaleString(),
+                city: response.city,
+                state: response.state
+            })
+        })
+    }
+
     render(){
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
             }
         })
-
         if(this.state.timeFrame !== ""){
+
             return (
                 <div className="show-wrap">
                     <div>
                     <div className="chart-wrap"> 
+                        <h1 className="company-name">{this.state.name}</h1>
                         <TickerChart 
                         tickerSymbol={this.props.tickerSymbol}
                         ticker={this.state[this.state.timeFrame]}
@@ -101,16 +122,22 @@ class TickerShow extends React.Component{
                     <div className="info-and-transaction-form">
                     <TickerInfo 
                     tickerSymbol={this.props.tickerSymbol} 
+                    desc={this.state.desc}
+                    ceo={this.state.ceo}
+                    employees={this.state.employees}
+                    city={this.state.city}
+                    state={this.state.state}
                     />
+                    <ProtectedRoute exact path="/" component={News}/>
                     </div>
 
                     </div>
-
                     <TransactionForm 
                     tickerSymbol={this.props.tickerSymbol} 
                     close={this.state.close}
                     executeTransaction={this.props.executeTransaction}
                     />
+
                 </div>
                 )
             } else {

@@ -852,9 +852,7 @@ function (_React$Component) {
         className: "dash-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.rh
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        id: "search"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_search_search__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_search_search__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dash-right"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop-down"
@@ -949,8 +947,6 @@ function (_React$Component) {
       var _this2 = this;
 
       Object(_util_news_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchNews"])().then(function (news) {
-        debugger;
-
         _this2.setState({
           news: news.articles,
           isLoading: false
@@ -968,16 +964,24 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "news-box"
         }, news.reverse().map(function (newsPiece, idx) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "news-box nws",
-            key: "".concat(newsPiece, "-idx")
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-            className: "news-image news-img",
-            src: newsPiece.urlToImage,
-            alt: ""
-          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "news nws-text"
-          }, newsPiece.description));
+          return (// <div >
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              href: newsPiece.url,
+              className: "news-box nws",
+              key: "".concat(newsPiece, "-idx")
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "news-text"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "news-name"
+            }, newsPiece.source.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "news nws-text"
+            }, newsPiece.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              className: "news-image news-img",
+              src: newsPiece.urlToImage,
+              alt: ""
+            })) // </div>
+
+          );
         }));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "   ");
@@ -1549,12 +1553,16 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleSubmit
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          id: "search",
+          autoComplete: "off",
           type: "search",
           onChange: this.onSearchChange,
           ref: function ref(input) {
             return _this3.inputText = input;
           }
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Search!")));
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "search-button"
+        })));
       } else {
         return " ";
       }
@@ -2163,7 +2171,13 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "ticker-index block-paddings"
-      }, tickers);
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "watchlist"
+      }, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "watchlists"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "watchlist-ticker"
+      }, tickers)));
     }
   }]);
 
@@ -2268,8 +2282,10 @@ function (_React$Component) {
       var _this2 = this;
 
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchTickerInfo"])(this.props.tickerSymbol).then(function (response) {
+        debugger;
+
         _this2.setState({
-          name: response.name,
+          name: response.companyName,
           desc: response.short_description,
           ceo: response.ceo,
           sector: response.sector,
@@ -2293,11 +2309,11 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-info"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-about"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.desc)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.desc)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "CEO"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.ceo)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Employees"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Headquarters"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.city, ", ", this.state.state)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Founded"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "????")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Market Cap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.marketcap)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Price-Earnings Ratio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.peRatio)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Dividend Yield"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.dividendYield)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Average Volume"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.avg30Volume)))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "CEO"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.ceo)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Employees"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Headquarters"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.city, ", ", this.props.state)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Founded"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " - ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Market Cap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.marketcap)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Price-Earnings Ratio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.peRatio)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Dividend Yield"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.dividendYield)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Average Volume"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.avg30Volume)))));
     }
   }]);
 
@@ -2323,6 +2339,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ticker_info__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ticker_info */ "./frontend/components/ticker/ticker_info.jsx");
 /* harmony import */ var _transactions_transaction_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../transactions/transaction_form */ "./frontend/components/transactions/transaction_form.jsx");
 /* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
+/* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
+/* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2342,6 +2360,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -2386,6 +2406,7 @@ function (_React$Component) {
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
         return _this2.renderDaily(response);
       });
+      this.tickerInfo();
     }
   }, {
     key: "componentDidUpdate",
@@ -2396,6 +2417,7 @@ function (_React$Component) {
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
           return _this3.renderDaily(response);
         });
+        this.tickerInfo();
       }
     }
   }, {
@@ -2448,16 +2470,36 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "tickerInfo",
+    value: function tickerInfo() {
+      var _this5 = this;
+
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchTickerInfo"])(this.props.tickerSymbol).then(function (response) {
+        debugger;
+
+        _this5.setState({
+          name: response.companyName,
+          desc: response.short_description,
+          ceo: response.CEO,
+          // sector: response.sector, 
+          // ticker: response.ticker, 
+          employees: response.employees.toLocaleString(),
+          city: response.city,
+          state: response.state
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "btns",
             key: "".concat(key, "-id"),
-            onClick: _this5.updatePrices(key)
+            onClick: _this6.updatePrices(key)
           }, key.slice(0, 2).toUpperCase());
         }
       });
@@ -2467,7 +2509,9 @@ function (_React$Component) {
           className: "show-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "company-name"
+        }, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
           tickerSymbol: this.props.tickerSymbol,
           ticker: this.state[this.state.timeFrame],
           timeFrame: this.state.timeFrame,
@@ -2481,7 +2525,16 @@ function (_React$Component) {
         }, tF)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "info-and-transaction-form"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_info__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          tickerSymbol: this.props.tickerSymbol
+          tickerSymbol: this.props.tickerSymbol,
+          desc: this.state.desc,
+          ceo: this.state.ceo,
+          employees: this.state.employees,
+          city: this.state.city,
+          state: this.state.state
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
+          exact: true,
+          path: "/",
+          component: _news_news__WEBPACK_IMPORTED_MODULE_5__["default"]
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transactions_transaction_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
           tickerSymbol: this.props.tickerSymbol,
           close: this.state.close,
@@ -2601,8 +2654,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TransactionForm).call(this, props));
     _this.state = {
       purchase_price: _this.props.close,
-      ticker_symbol: _this.props.tickerSymbol // purchase_shares: 0
-
+      ticker_symbol: _this.props.tickerSymbol
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -2612,7 +2664,11 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.executeTransaction(this.state);
+      debugger;
+      this.props.executeTransaction(this.state); // .success(message => {
+      //     debugger
+      //     this.setState({message: "Sucessful Buy!"})
+      // });
     }
   }, {
     key: "updateShares",

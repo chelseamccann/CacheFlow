@@ -12,7 +12,6 @@ class News extends React.Component{
 
     componentDidMount(){
         fetchNews().then(news => {
-            debugger
             this.setState({ news: news.articles, isLoading: false })
         })
     }
@@ -25,10 +24,16 @@ class News extends React.Component{
             return (
                 <ul className="news-box">
                     {news.reverse().map((newsPiece, idx) => (
-                        <div className="news-box nws" key={`${newsPiece}-idx`}>
-                            <img className="news-image news-img" src={newsPiece.urlToImage} alt=""/>
+                        // <div >
+                        <a href={newsPiece.url} className="news-box nws" key={`${newsPiece}-idx`} >
+                            <div className="news-text">
+                            <div className="news-name">{newsPiece.source.name}</div> 
                             <div className="news nws-text">{newsPiece.description}</div>
-                        </div>
+                            </div>
+                            
+                            <img className="news-image news-img" src={newsPiece.urlToImage} alt=""/>
+                            </a>
+                        // </div>
                     ))}
                 </ul>
             )

@@ -76,6 +76,7 @@
     flex-direction: column;
     padding: 10px;
     z-index: 50;
+    background-color: white;
 }
 
 .right-right{

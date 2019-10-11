@@ -8,7 +8,6 @@ class TransactionForm extends React.Component{
         this.state = {
             purchase_price: this.props.close,
             ticker_symbol: this.props.tickerSymbol,
-            // purchase_shares: 0
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,7 +15,12 @@ class TransactionForm extends React.Component{
 
     handleSubmit(e){
         e.preventDefault();
-        this.props.executeTransaction(this.state);
+        debugger
+        this.props.executeTransaction(this.state)
+        // .success(message => {
+        //     debugger
+        //     this.setState({message: "Sucessful Buy!"})
+        // });
     }
 
     updateShares(){

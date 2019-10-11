@@ -1,0 +1,19 @@
+.search-text{
+    width: 100%
+}
+
+
+.search-button{
+    background: none;
+    border: none;
+    bottom: 5px;
+    
+}
+
+.search-button:placeholder-shown{
+    visibility: hidden;
+}
+
+#search{
+    color: black;
+}
