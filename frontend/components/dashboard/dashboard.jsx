@@ -7,6 +7,7 @@ import TickerShowContainer from '../ticker/ticker_show_container';
 import NavBar from '../nav_bar/nav_bar';
 import PortfolioContainer from '../portfolio/portfolio_container';
 import News from '../news/news';
+import Search from '../search/search';
 
 class Dashboard extends React.Component {
 
@@ -22,6 +23,7 @@ class Dashboard extends React.Component {
                         {/* <ProtectedRoute exact path="/" component={TickerIndexContainer}/> */}
                     </Switch>
                 </div>
+                <Search />
             </div>
         )
     }
