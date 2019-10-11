@@ -4,7 +4,7 @@
 
 ![Alt Text](https://media.giphy.com/media/YnkTiJZ5WUIULC3mP0/giphy.gif)
 
-```
+
 <h1>Technologies</h1>
 
 Frontend: React, Redux
@@ -25,4 +25,3 @@ Styling: HTML, CSS
 View list of holdings on dashboard
 View watchlist items on dashboard
 Transaction functionality to sell shares
-```
