@@ -13,13 +13,13 @@ API: IEX Trading, NewsAPI
 Data Visualization: Recharts library
 Styling: HTML, CSS
 
-#Features
-*User Auth
+# Features
+* User Auth
 <li>Transaction functionality to buy shares</li>
 <li>Search Companies in the API Cloud</li>
 <li>News and Company Blurb</li>
 
 
-#Future Features
-*View watchlist items on dashboard
-*Transaction functionality to sell shares
+# Future Features
+* View watchlist items on dashboard
+* Transaction functionality to sell shares
