@@ -22,7 +22,6 @@ class Search extends React.Component{
 
 
     onSearchChange(e){
-        debugger
         this.setState({
             inputText: e.target.value
         });
@@ -30,19 +29,12 @@ class Search extends React.Component{
 
     handleSubmit(e){
         e.preventDefault();
-        debugger
         this.search(this.inputText.value); 
-        // e.currentTarget.reset(); //
     }
-
-    // reset() {
-    //     this.setState({query: ""})
-    // }
 
     search(query){
         fetchFromAPI(query)
         .then(response => {
-            debugger
             this.setState({
                 symbol: response.symbol,
                 isLoading: false,
@@ -51,12 +43,11 @@ class Search extends React.Component{
             
         }).then(() => this.props.history.push(`/${this.state.inputText}`))
         // .catch(error => {
-        //     console.log("error getting ticker", error)
+        //     console.error(error)
         // })
     }
 
     render(){
-        debugger
         
         if(!this.isLoading){
             return (
@@ -67,12 +58,9 @@ class Search extends React.Component{
                     onChange={this.onSearchChange}
                     ref={(input) => this.inputText = input}
                     />
-                    {/* <input type="submit" value="Search!"/> */}
-                    {/* <Link to={`/${this.state.symbol}`}> */}
                         <button>Search!</button>
-                    {/* </Link> */}
+
                 </form>
-                {/* <Link to={`/${this.state.inputText}`} onClick={}/> */}
                 </>
             )
         } else {

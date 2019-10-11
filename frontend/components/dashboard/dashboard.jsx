@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
                         {/* <ProtectedRoute exact path="/" component={TickerIndexContainer}/> */}
                     </Switch>
                 </div>
-                <Search />
+                
             </div>
         )
     }

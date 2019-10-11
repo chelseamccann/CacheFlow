@@ -36,6 +36,7 @@ class TransactionForm extends React.Component{
         //buy symbol if buy is clicked, else sell symbol
         //if buy - subtract from buying power and total val, if sell add to
         //show buying power on bottom of form?
+        const cost = this.state.purchase_shares ? `$${parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)}` : 0
         return (
         <div className="transaction-form">
             <div className="buy-sell-buttons">
@@ -68,7 +69,7 @@ class TransactionForm extends React.Component{
 
                 <div className="shares">
                     <label className="share share-two">Estimated Cost</label>
-                    <p className="share share-two">{`$${parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)}`}</p>
+                    <p className="share share-two">{cost}</p>
                 </div>
 
                 {/* <Link to="/"> */}

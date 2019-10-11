@@ -456,7 +456,7 @@ function (_React$Component) {
         exact: true,
         path: "/",
         component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_search_search__WEBPACK_IMPORTED_MODULE_9__["default"], null));
+      }))));
     }
   }]);
 
@@ -800,6 +800,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _search_search__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../search/search */ "./frontend/components/search/search.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -817,6 +818,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -852,7 +854,7 @@ function (_React$Component) {
         src: window.rh
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         id: "search"
-      }, "Search")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_search_search__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dash-right"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop-down"
@@ -1511,7 +1513,6 @@ function (_React$Component) {
   }, {
     key: "onSearchChange",
     value: function onSearchChange(e) {
-      debugger;
       this.setState({
         inputText: e.target.value
       });
@@ -1520,20 +1521,14 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      debugger;
-      this.search(this.inputText.value); // e.currentTarget.reset(); //
-    } // reset() {
-    //     this.setState({query: ""})
-    // }
-
+      this.search(this.inputText.value);
+    }
   }, {
     key: "search",
     value: function search(query) {
       var _this2 = this;
 
       Object(_util_search_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchFromAPI"])(query).then(function (response) {
-        debugger;
-
         _this2.setState({
           symbol: response.symbol,
           isLoading: false,
@@ -1542,15 +1537,13 @@ function (_React$Component) {
       }).then(function () {
         return _this2.props.history.push("/".concat(_this2.state.inputText));
       }); // .catch(error => {
-      //     console.log("error getting ticker", error)
+      //     console.error(error)
       // })
     }
   }, {
     key: "render",
     value: function render() {
       var _this3 = this;
-
-      debugger;
 
       if (!this.isLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -2644,6 +2637,7 @@ function (_React$Component) {
       //buy symbol if buy is clicked, else sell symbol
       //if buy - subtract from buying power and total val, if sell add to
       //show buying power on bottom of form?
+      var cost = this.state.purchase_shares ? "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)) : 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2686,7 +2680,7 @@ function (_React$Component) {
         className: "share share-two"
       }, "Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "share share-two"
-      }, "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, cost)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Execute Order",
         className: "execute-button nav-bar-logout review-button"
@@ -3096,14 +3090,10 @@ __webpack_require__.r(__webpack_exports__);
 var fetchFromAPI = function fetchFromAPI(query) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stock/${symbol}/company`
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(query, "/quote?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${}/company&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    // url: `https://sandbox.iexapis.com/stable/stock/${query}/company&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(query, "/quote?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${query}/quote?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
 
   });
-}; // https://cloud.iexapis.com/stable/stock/aapl/quote?token=pk_b6f890a95fb24dbfb1a85f362fe5687f
-// url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
-// url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+};
 
 /***/ }),
 

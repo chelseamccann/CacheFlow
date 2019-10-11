@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
+import Search from '../search/search';
 
 class NavBar extends React.Component {
     
@@ -17,7 +18,7 @@ class NavBar extends React.Component {
                 <ul className="dash-nav">
                     <div className="dash-left">
                         <li><img src={window.rh} /></li>
-                        <li id="search" >Search</li>
+                        <li id="search" ><Search /></li>
                     </div>
                     <div className="dash-right">
                         <div className="drop-down" >
