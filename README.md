@@ -27,7 +27,7 @@
 
 * News and Company Blurb
 
-![Alt Text](https://ibb.co/M5Mpknx)
+![Alt Text](https://imgur.com/Hb0VNer)
 
 
 # Future Features
