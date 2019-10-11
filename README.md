@@ -15,9 +15,9 @@ Styling: HTML, CSS
 
 # Features
 * User Auth
-<li>Transaction functionality to buy shares</li>
-<li>Search Companies in the API Cloud</li>
-<li>News and Company Blurb</li>
+*Transaction functionality to buy shares
+*Search Companies in the API Cloud
+*News and Company Blurb
 
 
 # Future Features
