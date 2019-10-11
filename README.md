@@ -18,8 +18,16 @@
 ![Alt Text](https://media.giphy.com/media/KxVsFA7EJnewOh6gUJ/giphy.gif)
 
 * Transaction functionality to buy shares
+
+![Alt Text](https://media.giphy.com/media/Xcw2Gl4aYkYFo20y7S/giphy.gif)
+
 * Search Companies in the API Cloud
+
+![Alt Text](https://media.giphy.com/media/htv9oOuhNjQFmZikjg/giphy.gif)
+
 * News and Company Blurb
+
+![Alt Text](https://ibb.co/M5Mpknx)
 
 
 # Future Features
