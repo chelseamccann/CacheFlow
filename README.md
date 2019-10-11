@@ -13,6 +13,9 @@
 
 # Features
 * User Auth
+* Data Visualization Charts
+![Alt Text](https://media.giphy.com/media/KxVsFA7EJnewOh6gUJ/giphy.gif)
+
 * Transaction functionality to buy shares
 * Search Companies in the API Cloud
 * News and Company Blurb
