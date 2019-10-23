@@ -61,6 +61,7 @@ class LoginForm extends React.Component {
             <img src="https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png"/>
           </div>
           <div className="login-form">
+            <div className="login-box">
             <h2>Welcome to CacheFlow</h2>
       
             <label>Email or Username</label>
@@ -93,7 +94,7 @@ class LoginForm extends React.Component {
           </div>
 
 
-          
+          </div>
           </div>
         </form>
       </>

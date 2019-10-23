@@ -22,24 +22,34 @@
     flex-direction: column;
     position: relative;
     align-items: left;
-    margin: 150px;
-    margin-top: 300px;
+    margin-top: 12%;
+    margin-left: 3.9%;
+    margin-right: 22.3%;
     width: 50%;
 }
 
 .login-form h2 {
+    margin-bottom: 7%;
+    font-weight: 500;
     font-size: 26px;
-    margin-bottom: 30px;
+    letter-spacing: -0.14px;
 }
 
 .login-form label {
-    font-size: 12px;
+    font-size: 13px;
     margin-bottom: 15px;
+    font-weight: 340;
+}
+
+.login-box {
+    box-sizing: border-box;
+    width: 135%;
 }
 
 .login-container input[type="text"], 
 .login-container input[type="password"] {
-    padding: 5px 20px 5px 20px;
+    box-sizing: border-box;
+    padding: 15px 20px 15px 20px;
     border: 1px solid #fafafa;
     background-color: #fafafa;
     width: 100%;
@@ -49,6 +59,9 @@
     height: 30px;
     font-size: 13px;
     box-shadow: none;
+    margin-top: 2%;
+    margin-bottom: 2.5%;
+    height: 15.5%;
 }
 
 .login-container input[type="text"]:hover,
@@ -67,6 +80,7 @@
 .lb {
     display: flex;
     justify-content: space-between;
+    margin-top: 6.5%;
 }
 
 .login-buttons {

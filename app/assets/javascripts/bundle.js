@@ -707,6 +707,8 @@ function (_React$Component) {
         src: "https://cdn.robinhood.com/assets/generated_assets/94977d34f99015525dcd0fc9987fcbe6.png"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Welcome to CacheFlow"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Email or Username"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.email,
@@ -733,7 +735,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleDemo,
         className: "login-buttons"
-      }, "Demo User")))));
+      }, "Demo User"))))));
     }
   }]);
 
