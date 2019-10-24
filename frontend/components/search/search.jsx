@@ -13,10 +13,11 @@ class Search extends React.Component{
         this.onSearchChange = this.onSearchChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.search = this.search.bind(this);
-
+        debugger
     }
 
     componentDidMount(){
+        debugger
         this.search()
     }
 
@@ -29,7 +30,7 @@ class Search extends React.Component{
 
     handleSubmit(e){
         e.preventDefault();
-        this.search(this.inputText.value); 
+        this.search(this.state.inputText); 
     }
 
     search(query){
@@ -58,7 +59,7 @@ class Search extends React.Component{
                     autoComplete="off"
                     type="search" 
                     onChange={this.onSearchChange}
-                    ref={(input) => this.inputText = input}
+                    // ref={(input) => this.inputText = input}
                     />
                     <button className="search-button"></button>
 

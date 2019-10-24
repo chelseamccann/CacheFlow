@@ -2,7 +2,7 @@ import React from 'react';
 import TickerChart from './ticker_chart';
 import TickerInfo from './ticker_info';
 import TransactionForm from '../transactions/transaction_form';
-import {fetchPrices, fetchDailyPrices, fetchTickerInfo } from '../../util/ticker_data_api_util'; 
+import {fetchPrices, fetchDailyPrices, fetchTickerInfo, fetchTickerStats } from '../../util/ticker_data_api_util'; 
 import News from '../news/news';
 import { ProtectedRoute } from '../../util/route_utils';
 
@@ -24,17 +24,21 @@ class TickerShow extends React.Component{
             changePercent: 0
         }
         this.updatePrices = this.updatePrices.bind(this);
+        this.tickerInfo = this.tickerInfo.bind(this);
+        this.updateStats = this.updateStats.bind(this);
     }
 
     componentDidMount(){
         fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
         this.tickerInfo();
+        this.updateStats();
     }
 
     componentDidUpdate(prevProps){
         if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){ 
             fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
             this.tickerInfo();
+            this.updateStats();
         }
     }
 
@@ -55,7 +59,6 @@ class TickerShow extends React.Component{
 
     renderPrices(response, timeFramePassed){
         const data = response.map(price => {
-            debugger
             return {
                 price: price.close, 
                 // date: price.date, 
@@ -64,7 +67,6 @@ class TickerShow extends React.Component{
                 change: price.change, 
                 changePercent: price.changePercent
             }
-            debugger
         })
         this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol})
     }
@@ -90,13 +92,27 @@ class TickerShow extends React.Component{
         })
     }
 
+
+    updateStats(){
+        fetchTickerStats(this.props.tickerSymbol).then(res => {
+            debugger
+            this.setState({
+                marketcap: res.marketcap.toLocaleString(),
+                peRatio: parseFloat(res.peRatio).toFixed(2),
+                dividendYield: parseFloat(res.dividendYield).toFixed(2),
+                avg30Volume: res.avg30Volume.toLocaleString()
+            })
+        })
+    }
+
     render(){
+        debugger
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
             }
         })
-        if(this.state.timeFrame !== ""){
+        if(this.state.timeFrame !== "" && this.state.marketcap){
 
             return (
                 <div className="show-wrap">
@@ -126,6 +142,10 @@ class TickerShow extends React.Component{
                     employees={this.state.employees}
                     city={this.state.city}
                     state={this.state.state}
+                    marketcap={this.state.marketcap}
+                    peRatio={this.state.peRatio}
+                    dividendYield={this.state.dividendYield}
+                    avg30Volume={this.state.avg30Volume}
                     />
                     <ProtectedRoute exact path="/" component={News}/>
                     </div>

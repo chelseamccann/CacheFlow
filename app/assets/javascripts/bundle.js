@@ -1504,12 +1504,14 @@ function (_React$Component) {
     _this.onSearchChange = _this.onSearchChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.search = _this.search.bind(_assertThisInitialized(_this));
+    debugger;
     return _this;
   }
 
   _createClass(Search, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      debugger;
       this.search();
     }
   }, {
@@ -1523,7 +1525,7 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.search(this.inputText.value);
+      this.search(this.state.inputText);
     }
   }, {
     key: "search",
@@ -1545,8 +1547,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
-
       if (!this.isLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleSubmit
@@ -1554,10 +1554,8 @@ function (_React$Component) {
           id: "search",
           autoComplete: "off",
           type: "search",
-          onChange: this.onSearchChange,
-          ref: function ref(input) {
-            return _this3.inputText = input;
-          }
+          onChange: this.onSearchChange // ref={(input) => this.inputText = input}
+
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "search-button"
         })));
@@ -2275,46 +2273,55 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerInfo).call(this, props));
     _this.state = {};
     return _this;
-  }
+  } // componentDidMount(){
+  //     // this.updateInfo()
+  //     this.updateStats()
+  // }
+  // componentDidUpdate(prevProps){
+  //     debugger
+  //     if(this.props.tickerSymbol !== prevProps.tickerSymbol){
+  //         // this.updateInfo()
+  //         this.updateStats()
+  //     }
+  // }
+  // updateInfo(){
+  //     fetchTickerInfo(this.props.tickerSymbol).then(response => {
+  //         this.setState(
+  //         {name: response.companyName, 
+  //             desc: response.short_description, 
+  //             ceo: response.ceo, 
+  //             sector: response.sector, 
+  //             ticker: response.ticker, 
+  //             employees: response.employees.toLocaleString(),
+  //             city: response.hq_address_city,
+  //             state: response.hq_state
+  //         })
+  //     })
+  // }
+  // updateStats(){
+  //     fetchTickerStats(this.props.tickerSymbol).then(res => {
+  //         debugger
+  //         this.setState({
+  //             marketcap: res.marketcap.toLocaleString(),
+  //             peRatio: parseFloat(res.peRatio).toFixed(2),
+  //             dividendYield: parseFloat(res.dividendYield).toFixed(2),
+  //             avg30Volume: res.avg30Volume.toLocaleString()
+  //         })
+  //     })
+  // }
+
 
   _createClass(TickerInfo, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchTickerInfo"])(this.props.tickerSymbol).then(function (response) {
-        debugger;
-
-        _this2.setState({
-          name: response.companyName,
-          desc: response.short_description,
-          ceo: response.ceo,
-          sector: response.sector,
-          ticker: response.ticker,
-          employees: response.employees.toLocaleString(),
-          city: response.hq_address_city,
-          state: response.hq_state
-        });
-      });
-      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchTickerStats"])(this.props.tickerSymbol).then(function (res) {
-        _this2.setState({
-          marketcap: res.marketcap.toLocaleString(),
-          peRatio: parseFloat(res.peRatio).toFixed(2),
-          dividendYield: parseFloat(res.dividendYield).toFixed(2),
-          avg30Volume: res.avg30Volume.toLocaleString()
-        });
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-about"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.desc)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "CEO"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.ceo)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Employees"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Headquarters"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.city, ", ", this.props.state)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Founded"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " - ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Market Cap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.marketcap)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Price-Earnings Ratio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.peRatio)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Dividend Yield"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.dividendYield)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Average Volume"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.avg30Volume)))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "CEO"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.ceo)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Employees"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Headquarters"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.city, ", ", this.props.state)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Founded"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " - ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Market Cap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.marketcap)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Price-Earnings Ratio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.peRatio)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Dividend Yield"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.dividendYield)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Average Volume"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.avg30Volume)))));
     }
   }]);
 
@@ -2396,6 +2403,8 @@ function (_React$Component) {
       changePercent: 0
     };
     _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
+    _this.tickerInfo = _this.tickerInfo.bind(_assertThisInitialized(_this));
+    _this.updateStats = _this.updateStats.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2408,6 +2417,7 @@ function (_React$Component) {
         return _this2.renderDaily(response);
       });
       this.tickerInfo();
+      this.updateStats();
     }
   }, {
     key: "componentDidUpdate",
@@ -2419,6 +2429,7 @@ function (_React$Component) {
           return _this3.renderDaily(response);
         });
         this.tickerInfo();
+        this.updateStats();
       }
     }
   }, {
@@ -2446,7 +2457,6 @@ function (_React$Component) {
       var _this$setState;
 
       var data = response.map(function (price) {
-        debugger;
         return {
           price: price.close,
           // date: price.date, 
@@ -2455,7 +2465,6 @@ function (_React$Component) {
           change: price.change,
           changePercent: price.changePercent
         };
-        debugger;
       });
       this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _this$setState));
     }
@@ -2489,21 +2498,38 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "updateStats",
+    value: function updateStats() {
       var _this6 = this;
 
+      Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchTickerStats"])(this.props.tickerSymbol).then(function (res) {
+        debugger;
+
+        _this6.setState({
+          marketcap: res.marketcap.toLocaleString(),
+          peRatio: parseFloat(res.peRatio).toFixed(2),
+          dividendYield: parseFloat(res.dividendYield).toFixed(2),
+          avg30Volume: res.avg30Volume.toLocaleString()
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this7 = this;
+
+      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "btns",
             key: "".concat(key, "-id"),
-            onClick: _this6.updatePrices(key)
+            onClick: _this7.updatePrices(key)
           }, key.slice(0, 2).toUpperCase());
         }
       });
 
-      if (this.state.timeFrame !== "") {
+      if (this.state.timeFrame !== "" && this.state.marketcap) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "show-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2529,7 +2555,11 @@ function (_React$Component) {
           ceo: this.state.ceo,
           employees: this.state.employees,
           city: this.state.city,
-          state: this.state.state
+          state: this.state.state,
+          marketcap: this.state.marketcap,
+          peRatio: this.state.peRatio,
+          dividendYield: this.state.dividendYield,
+          avg30Volume: this.state.avg30Volume
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
           exact: true,
           path: "/",

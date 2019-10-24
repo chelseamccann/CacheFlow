@@ -7,36 +7,49 @@ class TickerInfo extends React.Component {
         this.state = { }
     }
 
-    componentDidMount(){
-        
+    // componentDidMount(){
+    //     // this.updateInfo()
+    //     this.updateStats()
+    // }
 
-        fetchTickerInfo(this.props.tickerSymbol).then(response => {
-            debugger
-            this.setState(
-            {name: response.companyName, 
-                desc: response.short_description, 
-                ceo: response.ceo, 
-                sector: response.sector, 
-                ticker: response.ticker, 
-                employees: response.employees.toLocaleString(),
-                city: response.hq_address_city,
-                state: response.hq_state
-            })
-        })
-        
-        fetchTickerStats(this.props.tickerSymbol).then(res => {
-            this.setState({
-                marketcap: res.marketcap.toLocaleString(),
-                peRatio: parseFloat(res.peRatio).toFixed(2),
-                dividendYield: parseFloat(res.dividendYield).toFixed(2),
-                avg30Volume: res.avg30Volume.toLocaleString()
-            })
-        })
+    // componentDidUpdate(prevProps){
+    //     debugger
+    //     if(this.props.tickerSymbol !== prevProps.tickerSymbol){
+    //         // this.updateInfo()
+    //         this.updateStats()
+    //     }
+    // }
 
-    }
+    // updateInfo(){
+    //     fetchTickerInfo(this.props.tickerSymbol).then(response => {
+    //         this.setState(
+    //         {name: response.companyName, 
+    //             desc: response.short_description, 
+    //             ceo: response.ceo, 
+    //             sector: response.sector, 
+    //             ticker: response.ticker, 
+    //             employees: response.employees.toLocaleString(),
+    //             city: response.hq_address_city,
+    //             state: response.hq_state
+    //         })
+    //     })
+    // }
+
+    // updateStats(){
+    //     fetchTickerStats(this.props.tickerSymbol).then(res => {
+    //         debugger
+    //         this.setState({
+    //             marketcap: res.marketcap.toLocaleString(),
+    //             peRatio: parseFloat(res.peRatio).toFixed(2),
+    //             dividendYield: parseFloat(res.dividendYield).toFixed(2),
+    //             avg30Volume: res.avg30Volume.toLocaleString()
+    //         })
+    //     })
+    // }
 
 
     render(){
+        debugger
         return (
         <>
 
@@ -68,22 +81,22 @@ class TickerInfo extends React.Component {
 
                 <div>
                     <h6>Market Cap</h6>
-                    <p>{this.state.marketcap}</p>
+                    <p>{this.props.marketcap}</p>
                 </div>
 
                 <div>
                     <h6>Price-Earnings Ratio</h6>
-                    <p>{this.state.peRatio}</p>
+                    <p>{this.props.peRatio}</p>
                 </div>
 
                 <div>
                     <h6>Dividend Yield</h6>
-                    <p>{this.state.dividendYield}</p>
+                    <p>{this.props.dividendYield}</p>
                 </div>
 
                 <div>
                     <h6>Average Volume</h6>
-                    <p>{this.state.avg30Volume}</p>
+                    <p>{this.props.avg30Volume}</p>
                 </div>
 
             </div>
