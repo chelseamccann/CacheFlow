@@ -7,49 +7,10 @@ class TickerInfo extends React.Component {
         this.state = { }
     }
 
-    // componentDidMount(){
-    //     // this.updateInfo()
-    //     this.updateStats()
-    // }
-
-    // componentDidUpdate(prevProps){
-    //     debugger
-    //     if(this.props.tickerSymbol !== prevProps.tickerSymbol){
-    //         // this.updateInfo()
-    //         this.updateStats()
-    //     }
-    // }
-
-    // updateInfo(){
-    //     fetchTickerInfo(this.props.tickerSymbol).then(response => {
-    //         this.setState(
-    //         {name: response.companyName, 
-    //             desc: response.short_description, 
-    //             ceo: response.ceo, 
-    //             sector: response.sector, 
-    //             ticker: response.ticker, 
-    //             employees: response.employees.toLocaleString(),
-    //             city: response.hq_address_city,
-    //             state: response.hq_state
-    //         })
-    //     })
-    // }
-
-    // updateStats(){
-    //     fetchTickerStats(this.props.tickerSymbol).then(res => {
-    //         debugger
-    //         this.setState({
-    //             marketcap: res.marketcap.toLocaleString(),
-    //             peRatio: parseFloat(res.peRatio).toFixed(2),
-    //             dividendYield: parseFloat(res.dividendYield).toFixed(2),
-    //             avg30Volume: res.avg30Volume.toLocaleString()
-    //         })
-    //     })
-    // }
-
 
     render(){
-        debugger
+
+        
         return (
         <>
 

@@ -13,11 +13,9 @@ class Search extends React.Component{
         this.onSearchChange = this.onSearchChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.search = this.search.bind(this);
-        debugger
     }
 
     componentDidMount(){
-        debugger
         this.search()
     }
 
@@ -49,7 +47,6 @@ class Search extends React.Component{
     }
 
     render(){
-        
         if(!this.isLoading){
             return (
                 <>

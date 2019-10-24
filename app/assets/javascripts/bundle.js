@@ -1504,14 +1504,12 @@ function (_React$Component) {
     _this.onSearchChange = _this.onSearchChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.search = _this.search.bind(_assertThisInitialized(_this));
-    debugger;
     return _this;
   }
 
   _createClass(Search, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       this.search();
     }
   }, {
@@ -2273,48 +2271,11 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerInfo).call(this, props));
     _this.state = {};
     return _this;
-  } // componentDidMount(){
-  //     // this.updateInfo()
-  //     this.updateStats()
-  // }
-  // componentDidUpdate(prevProps){
-  //     debugger
-  //     if(this.props.tickerSymbol !== prevProps.tickerSymbol){
-  //         // this.updateInfo()
-  //         this.updateStats()
-  //     }
-  // }
-  // updateInfo(){
-  //     fetchTickerInfo(this.props.tickerSymbol).then(response => {
-  //         this.setState(
-  //         {name: response.companyName, 
-  //             desc: response.short_description, 
-  //             ceo: response.ceo, 
-  //             sector: response.sector, 
-  //             ticker: response.ticker, 
-  //             employees: response.employees.toLocaleString(),
-  //             city: response.hq_address_city,
-  //             state: response.hq_state
-  //         })
-  //     })
-  // }
-  // updateStats(){
-  //     fetchTickerStats(this.props.tickerSymbol).then(res => {
-  //         debugger
-  //         this.setState({
-  //             marketcap: res.marketcap.toLocaleString(),
-  //             peRatio: parseFloat(res.peRatio).toFixed(2),
-  //             dividendYield: parseFloat(res.dividendYield).toFixed(2),
-  //             avg30Volume: res.avg30Volume.toLocaleString()
-  //         })
-  //     })
-  // }
-
+  }
 
   _createClass(TickerInfo, [{
     key: "render",
     value: function render() {
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2503,8 +2464,6 @@ function (_React$Component) {
       var _this6 = this;
 
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchTickerStats"])(this.props.tickerSymbol).then(function (res) {
-        debugger;
-
         _this6.setState({
           marketcap: res.marketcap.toLocaleString(),
           peRatio: parseFloat(res.peRatio).toFixed(2),
@@ -2518,7 +2477,6 @@ function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
-      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {

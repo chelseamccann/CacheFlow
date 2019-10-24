@@ -95,7 +95,6 @@ class TickerShow extends React.Component{
 
     updateStats(){
         fetchTickerStats(this.props.tickerSymbol).then(res => {
-            debugger
             this.setState({
                 marketcap: res.marketcap.toLocaleString(),
                 peRatio: parseFloat(res.peRatio).toFixed(2),
@@ -106,7 +105,6 @@ class TickerShow extends React.Component{
     }
 
     render(){
-        debugger
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
