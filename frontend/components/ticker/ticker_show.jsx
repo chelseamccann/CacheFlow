@@ -55,14 +55,16 @@ class TickerShow extends React.Component{
 
     renderPrices(response, timeFramePassed){
         const data = response.map(price => {
+            debugger
             return {
                 price: price.close, 
                 // date: price.date, 
-                date: new Date(Date.parse(`${price.date} ${price.label}`)).toLocaleString('en-US'),
+                date: timeFramePassed==="3M" || timeFramePassed==="1Y" || timeFramePassed==="5Y"  ? price.date : new Date(Date.parse(`${price.date} ${price.label}`)).toLocaleString('en-US'),
                 open: price.open, 
                 change: price.change, 
                 changePercent: price.changePercent
             }
+            debugger
         })
         this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol})
     }
@@ -77,13 +79,10 @@ class TickerShow extends React.Component{
 
     tickerInfo(){
         fetchTickerInfo(this.props.tickerSymbol).then(response => {
-            debugger
             this.setState(
             {name: response.companyName, 
                 desc: response.short_description, 
                 ceo: response.CEO, 
-                // sector: response.sector, 
-                // ticker: response.ticker, 
                 employees: response.employees.toLocaleString(),
                 city: response.city,
                 state: response.state

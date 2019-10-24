@@ -17,15 +17,13 @@ class News extends React.Component{
     }
 
     render(){
-        debugger
         if (!this.state.isLoading){
             const { news } = this.state;
-            debugger
             return (
                 <ul className="news-box">
                     {news.reverse().map((newsPiece, idx) => (
                         // <div >
-                        <a href={newsPiece.url} className="news-box nws" key={`${newsPiece}-idx`} >
+                        <a href={newsPiece.url} className="news-box nws" key={`${newsPiece}-${idx}`} >
                             <div className="news-text">
                             <div className="news-name">{newsPiece.source.name}</div> 
                             <div className="news nws-text">{newsPiece.description}</div>

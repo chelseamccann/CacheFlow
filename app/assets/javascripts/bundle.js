@@ -957,11 +957,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
-
       if (!this.state.isLoading) {
         var news = this.state.news;
-        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "news-box"
         }, news.reverse().map(function (newsPiece, idx) {
@@ -969,7 +966,7 @@ function (_React$Component) {
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               href: newsPiece.url,
               className: "news-box nws",
-              key: "".concat(newsPiece, "-idx")
+              key: "".concat(newsPiece, "-").concat(idx)
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               className: "news-text"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2046,7 +2043,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       var data = this.props.ticker || [];
       var label = this.props.timeFrame === "1D" ? "label" : "date";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2450,14 +2446,16 @@ function (_React$Component) {
       var _this$setState;
 
       var data = response.map(function (price) {
+        debugger;
         return {
           price: price.close,
           // date: price.date, 
-          date: new Date(Date.parse("".concat(price.date, " ").concat(price.label))).toLocaleString('en-US'),
+          date: timeFramePassed === "3M" || timeFramePassed === "1Y" || timeFramePassed === "5Y" ? price.date : new Date(Date.parse("".concat(price.date, " ").concat(price.label))).toLocaleString('en-US'),
           open: price.open,
           change: price.change,
           changePercent: price.changePercent
         };
+        debugger;
       });
       this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _this$setState));
     }
@@ -2480,14 +2478,10 @@ function (_React$Component) {
       var _this5 = this;
 
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchTickerInfo"])(this.props.tickerSymbol).then(function (response) {
-        debugger;
-
         _this5.setState({
           name: response.companyName,
           desc: response.short_description,
           ceo: response.CEO,
-          // sector: response.sector, 
-          // ticker: response.ticker, 
           employees: response.employees.toLocaleString(),
           city: response.city,
           state: response.state
