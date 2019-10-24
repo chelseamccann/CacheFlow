@@ -2417,6 +2417,7 @@ function (_React$Component) {
     value: function renderPrices(response, timeFramePassed) {
       var _this$setState;
 
+      debugger;
       var data = response.map(function (price) {
         return {
           price: price.close,
@@ -2427,7 +2428,7 @@ function (_React$Component) {
           changePercent: price.changePercent
         };
       });
-      this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _this$setState));
+      this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _defineProperty(_this$setState, "timeFrameColor", "#21ce99"), _this$setState));
     }
   }, {
     key: "updatePrices",
@@ -2483,7 +2484,7 @@ function (_React$Component) {
             className: "btns",
             key: "".concat(key, "-id"),
             onClick: _this7.updatePrices(key)
-          }, key.slice(0, 2).toUpperCase());
+          }, key.slice(0, 2).toUpperCase()); // style={{ color:this.state.timeFrameColor }}
         }
       });
 

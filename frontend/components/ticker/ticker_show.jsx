@@ -58,6 +58,7 @@ class TickerShow extends React.Component{
     }
 
     renderPrices(response, timeFramePassed){
+        debugger
         const data = response.map(price => {
             return {
                 price: price.close, 
@@ -68,7 +69,7 @@ class TickerShow extends React.Component{
                 changePercent: price.changePercent
             }
         })
-        this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol})
+        this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol, timeFrameColor: "#21ce99"})
     }
 
     updatePrices(timeFrame){
@@ -107,7 +108,7 @@ class TickerShow extends React.Component{
     render(){
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
-                return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
+                return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  // style={{ color:this.state.timeFrameColor }}
             }
         })
         if(this.state.timeFrame !== "" && this.state.marketcap){
