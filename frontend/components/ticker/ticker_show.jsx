@@ -49,17 +49,25 @@ class TickerShow extends React.Component{
     }
 
     renderDaily(response){
-        debugger
+        // debugger
         const daily = response.map(price => {
             return {label: price.label, price: price.close}
         })
+        debugger
+
+        let lastValidRow = response.length - 1
+        debugger
+        while(response[lastValidRow].close === null){
+            lastValidRow -= 1
+        }
+        let lastValidClose = response[lastValidRow].close
         debugger
         this.setState({
             "1D": daily, 
             timeFrame: "1D", 
             tickerSymbol: this.props.tickerSymbol, 
             open: response[0].open || response[0].marketOpen, 
-            close: response[response.length-1].close,
+            close: lastValidClose, //response[response.length-1].close,
             change: parseFloat(response[response.length-1].close - response[0].open).toFixed(2),
             changePercent: parseFloat(((response[response.length-1].close - response[0].open)/response[response.length-1].close)*100).toFixed(2)
     })
@@ -119,7 +127,7 @@ class TickerShow extends React.Component{
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
             }
         })
-        debugger
+        // debugger
         if(this.state.timeFrame !== "" && this.state.marketcap){
             
             return (

@@ -2065,8 +2065,8 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var data = this.props.ticker || [];
-      var label = this.props.timeFrame === "1D" ? "label" : "date";
-      debugger;
+      var label = this.props.timeFrame === "1D" ? "label" : "date"; // debugger
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -2122,7 +2122,7 @@ function (_React$Component) {
       if (nextProps.tickerSymbol !== prevState.tickerSymbol && nextProps.close) {
         debugger;
         return {
-          closePrice: nextProps.close || 0
+          closePrice: nextProps.close
         };
       }
     }
@@ -2440,7 +2440,7 @@ function (_React$Component) {
   }, {
     key: "renderDaily",
     value: function renderDaily(response) {
-      debugger;
+      // debugger
       var daily = response.map(function (price) {
         return {
           label: price.label,
@@ -2448,12 +2448,22 @@ function (_React$Component) {
         };
       });
       debugger;
+      var lastValidRow = response.length - 1;
+      debugger;
+
+      while (response[lastValidRow].close === null) {
+        lastValidRow -= 1;
+      }
+
+      var lastValidClose = response[lastValidRow].close;
+      debugger;
       this.setState({
         "1D": daily,
         timeFrame: "1D",
         tickerSymbol: this.props.tickerSymbol,
         open: response[0].open || response[0].marketOpen,
-        close: response[response.length - 1].close,
+        close: lastValidClose,
+        //response[response.length-1].close,
         change: parseFloat(response[response.length - 1].close - response[0].open).toFixed(2),
         changePercent: parseFloat((response[response.length - 1].close - response[0].open) / response[response.length - 1].close * 100).toFixed(2)
       });
@@ -2531,8 +2541,7 @@ function (_React$Component) {
             onClick: _this7.updatePrices(key)
           }, key.slice(0, 2).toUpperCase());
         }
-      });
-      debugger;
+      }); // debugger
 
       if (this.state.timeFrame !== "" && this.state.marketcap) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

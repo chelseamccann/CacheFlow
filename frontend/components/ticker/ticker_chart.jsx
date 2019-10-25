@@ -25,7 +25,7 @@ class TickerChart extends React.Component {
         debugger
         if (nextProps.tickerSymbol !== prevState.tickerSymbol && nextProps.close){
             debugger
-            return {closePrice: nextProps.close || 0 }
+            return {closePrice: nextProps.close }
         }
     }
     // componentDidUpdate(prevProps){
@@ -78,7 +78,7 @@ class TickerChart extends React.Component {
     render(){
         let data = this.props.ticker || [];
         const label = this.props.timeFrame === "1D" ? "label" : "date";
-        debugger
+        // debugger
         return (
             <div className="ticker-chart block-paddings">
                 
