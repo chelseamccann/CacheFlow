@@ -25,30 +25,13 @@ class TickerChart extends React.Component {
         debugger
         if (nextProps.tickerSymbol !== prevState.tickerSymbol && nextProps.close){
             debugger
-            return {closePrice: nextProps.close }
+            return { 
+                closePrice: nextProps.close,
+                change: nextProps.change,
+                percentChange: nextProps.changePercent
+            }
         }
     }
-    // componentDidUpdate(prevProps){
-    //     debugger
-    //     // if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
-    //     if (this.props.tickerSymbol !== this.props.oldTicker){
-    //         this.setState({ closePrice: this.props.close })
-    //     }
-    // }
-
-    // componentDidUpdate(prevProps){
-    //     debugger
-    //     if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
-    //         let currentChange = this.state.change || (this.state.open - this.state.close)
-    //         let currentPercentChange = (currentChange/this.state.open)/100
-    //         this.setState({
-    //             closePrice: this.state.close, 
-    //             change: parseFloat(currentChange).toFixed(2), 
-    //             percentChange: parseFloat(currentPercentChange).toFixed(2)
-    //         }) 
-    //         debugger
-    //     }
-    // }
 
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){

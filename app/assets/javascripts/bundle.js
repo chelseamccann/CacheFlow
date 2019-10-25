@@ -2007,26 +2007,6 @@ function (_React$Component) {
 
   _createClass(TickerChart, [{
     key: "handleMouseOver",
-    // componentDidUpdate(prevProps){
-    //     debugger
-    //     // if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
-    //     if (this.props.tickerSymbol !== this.props.oldTicker){
-    //         this.setState({ closePrice: this.props.close })
-    //     }
-    // }
-    // componentDidUpdate(prevProps){
-    //     debugger
-    //     if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
-    //         let currentChange = this.state.change || (this.state.open - this.state.close)
-    //         let currentPercentChange = (currentChange/this.state.open)/100
-    //         this.setState({
-    //             closePrice: this.state.close, 
-    //             change: parseFloat(currentChange).toFixed(2), 
-    //             percentChange: parseFloat(currentPercentChange).toFixed(2)
-    //         }) 
-    //         debugger
-    //     }
-    // }
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
         var hoverPrice = e.activePayload[0].payload.price;
@@ -2122,7 +2102,9 @@ function (_React$Component) {
       if (nextProps.tickerSymbol !== prevState.tickerSymbol && nextProps.close) {
         debugger;
         return {
-          closePrice: nextProps.close
+          closePrice: nextProps.close,
+          change: nextProps.change,
+          percentChange: nextProps.changePercent
         };
       }
     }
@@ -2448,24 +2430,25 @@ function (_React$Component) {
         };
       });
       debugger;
-      var lastValidRow = response.length - 1;
+      var lastValidIdx = response.length - 1;
       debugger;
 
-      while (response[lastValidRow].close === null) {
-        lastValidRow -= 1;
+      while (response[lastValidIdx].close === null) {
+        lastValidIdx -= 1;
       }
 
-      var lastValidClose = response[lastValidRow].close;
+      var lastValidClose = response[lastValidIdx].close;
+      var lastValidOpen = response[lastValidIdx].open;
       debugger;
       this.setState({
         "1D": daily,
         timeFrame: "1D",
         tickerSymbol: this.props.tickerSymbol,
-        open: response[0].open || response[0].marketOpen,
+        open: lastValidOpen,
         close: lastValidClose,
         //response[response.length-1].close,
-        change: parseFloat(response[response.length - 1].close - response[0].open).toFixed(2),
-        changePercent: parseFloat((response[response.length - 1].close - response[0].open) / response[response.length - 1].close * 100).toFixed(2)
+        change: parseFloat(lastValidClose - lastValidOpen).toFixed(2),
+        changePercent: parseFloat((lastValidClose - lastValidOpen) / lastValidClose * 100).toFixed(2)
       });
     }
   }, {

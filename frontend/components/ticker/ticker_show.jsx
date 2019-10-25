@@ -55,21 +55,24 @@ class TickerShow extends React.Component{
         })
         debugger
 
-        let lastValidRow = response.length - 1
+        let lastValidIdx = response.length - 1
         debugger
-        while(response[lastValidRow].close === null){
-            lastValidRow -= 1
+        while(response[lastValidIdx].close === null){
+            lastValidIdx -= 1
         }
-        let lastValidClose = response[lastValidRow].close
+
+        let lastValidClose = response[lastValidIdx].close
+        let lastValidOpen = response[lastValidIdx].open
+
         debugger
         this.setState({
             "1D": daily, 
             timeFrame: "1D", 
             tickerSymbol: this.props.tickerSymbol, 
-            open: response[0].open || response[0].marketOpen, 
+            open: lastValidOpen, 
             close: lastValidClose, //response[response.length-1].close,
-            change: parseFloat(response[response.length-1].close - response[0].open).toFixed(2),
-            changePercent: parseFloat(((response[response.length-1].close - response[0].open)/response[response.length-1].close)*100).toFixed(2)
+            change: parseFloat(lastValidClose - lastValidOpen).toFixed(2),
+            changePercent: parseFloat(((lastValidClose - lastValidOpen)/lastValidClose)*100).toFixed(2)
     })
 
     }
