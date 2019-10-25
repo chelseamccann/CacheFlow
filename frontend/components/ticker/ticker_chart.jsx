@@ -7,6 +7,7 @@ class TickerChart extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            tickerSymbol: this.props.tickerSymbol,
             closePrice: this.props.close,
             change: this.props.change, 
             percentChange: this.props.changePercent,
@@ -19,11 +20,21 @@ class TickerChart extends React.Component {
         this.handleMouseOut = this.handleMouseOut.bind(this);
     }
 
-    componentDidUpdate(prevProps){
-        if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
-            this.setState({ closePrice: this.props.close })
+    
+    static getDerivedStateFromProps(nextProps, prevState){
+        debugger
+        if (nextProps.tickerSymbol !== prevState.tickerSymbol && nextProps.close){
+            debugger
+            return {closePrice: nextProps.close || 0 }
         }
     }
+    // componentDidUpdate(prevProps){
+    //     debugger
+    //     // if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
+    //     if (this.props.tickerSymbol !== this.props.oldTicker){
+    //         this.setState({ closePrice: this.props.close })
+    //     }
+    // }
 
     // componentDidUpdate(prevProps){
     //     debugger

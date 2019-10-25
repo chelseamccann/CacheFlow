@@ -1991,6 +1991,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TickerChart).call(this, props));
     _this.state = {
+      tickerSymbol: _this.props.tickerSymbol,
       closePrice: _this.props.close,
       change: _this.props.change,
       percentChange: _this.props.changePercent,
@@ -2005,14 +2006,15 @@ function (_React$Component) {
   }
 
   _createClass(TickerChart, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol) {
-        this.setState({
-          closePrice: this.props.close
-        });
-      }
-    } // componentDidUpdate(prevProps){
+    key: "handleMouseOver",
+    // componentDidUpdate(prevProps){
+    //     debugger
+    //     // if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
+    //     if (this.props.tickerSymbol !== this.props.oldTicker){
+    //         this.setState({ closePrice: this.props.close })
+    //     }
+    // }
+    // componentDidUpdate(prevProps){
     //     debugger
     //     if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
     //         let currentChange = this.state.change || (this.state.open - this.state.close)
@@ -2025,9 +2027,6 @@ function (_React$Component) {
     //         debugger
     //     }
     // }
-
-  }, {
-    key: "handleMouseOver",
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
         var hoverPrice = e.activePayload[0].payload.price;
@@ -2114,6 +2113,18 @@ function (_React$Component) {
         stroke: "#21ce99",
         strokeWidth: 1
       })));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      debugger;
+
+      if (nextProps.tickerSymbol !== prevState.tickerSymbol && nextProps.close) {
+        debugger;
+        return {
+          closePrice: nextProps.close || 0
+        };
+      }
     }
   }]);
 
@@ -2412,9 +2423,15 @@ function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
+      debugger;
+
       if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol) {
+        debugger; // this.setState({ oldTicker: prevProps.match.params.tickerSymbol })
+
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
-          return _this3.renderDaily(response);
+          debugger;
+
+          _this3.renderDaily(response);
         });
         this.tickerInfo();
         this.updateStats();
@@ -2423,19 +2440,20 @@ function (_React$Component) {
   }, {
     key: "renderDaily",
     value: function renderDaily(response) {
+      debugger;
       var daily = response.map(function (price) {
         return {
           label: price.label,
           price: price.close
         };
       });
+      debugger;
       this.setState({
         "1D": daily,
         timeFrame: "1D",
         tickerSymbol: this.props.tickerSymbol,
         open: response[0].open || response[0].marketOpen,
-        close: response[response.length - 5].close,
-        // PROBLEM
+        close: response[response.length - 1].close,
         change: parseFloat(response[response.length - 1].close - response[0].open).toFixed(2),
         changePercent: parseFloat((response[response.length - 1].close - response[0].open) / response[response.length - 1].close * 100).toFixed(2)
       });
@@ -2524,6 +2542,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "company-name"
         }, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          oldTicker: this.state.oldTicker,
           tickerSymbol: this.props.tickerSymbol,
           ticker: this.state[this.state.timeFrame],
           timeFrame: this.state.timeFrame,
