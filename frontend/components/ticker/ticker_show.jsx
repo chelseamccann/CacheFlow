@@ -46,19 +46,20 @@ class TickerShow extends React.Component{
         const daily = response.map(price => {
             return {label: price.label, price: price.close}
         })
+
         this.setState({
             "1D": daily, 
             timeFrame: "1D", 
             tickerSymbol: this.props.tickerSymbol, 
-            open: response[0].open, 
-            close: response[response.length-1].close,
+            open: response[0].open || response[0].marketOpen, 
+            close: response[response.length-5].close, // PROBLEM
             change: parseFloat(response[response.length-1].close - response[0].open).toFixed(2),
             changePercent: parseFloat(((response[response.length-1].close - response[0].open)/response[response.length-1].close)*100).toFixed(2)
     })
+
     }
 
     renderPrices(response, timeFramePassed){
-        debugger
         const data = response.map(price => {
             return {
                 price: price.close, 
@@ -69,7 +70,7 @@ class TickerShow extends React.Component{
                 changePercent: price.changePercent
             }
         })
-        this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol, timeFrameColor: "#21ce99"})
+        this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol })
     }
 
     updatePrices(timeFrame){
@@ -108,11 +109,12 @@ class TickerShow extends React.Component{
     render(){
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
-                return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  // style={{ color:this.state.timeFrameColor }}
+                return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
             }
         })
+        debugger
         if(this.state.timeFrame !== "" && this.state.marketcap){
-
+            
             return (
                 <div className="show-wrap">
                     <div>

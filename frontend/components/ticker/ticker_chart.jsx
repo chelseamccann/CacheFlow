@@ -1,6 +1,7 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 import Odometer from 'react-odometerjs';
+import { withRouter } from 'react-router-dom';
 
 class TickerChart extends React.Component {
     constructor(props){
@@ -9,18 +10,39 @@ class TickerChart extends React.Component {
             closePrice: this.props.close,
             change: this.props.change, 
             percentChange: this.props.changePercent,
+            open: this.props.open,
             chartX: null,
             chartY: null,
         }
-
+        debugger
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
     }
 
+    componentDidUpdate(prevProps){
+        if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
+            this.setState({ closePrice: this.props.close })
+        }
+    }
+
+    // componentDidUpdate(prevProps){
+    //     debugger
+    //     if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){
+    //         let currentChange = this.state.change || (this.state.open - this.state.close)
+    //         let currentPercentChange = (currentChange/this.state.open)/100
+    //         this.setState({
+    //             closePrice: this.state.close, 
+    //             change: parseFloat(currentChange).toFixed(2), 
+    //             percentChange: parseFloat(currentPercentChange).toFixed(2)
+    //         }) 
+    //         debugger
+    //     }
+    // }
+
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){
             let hoverPrice = e.activePayload[0].payload.price;
-            let openPrice = this.props.open;
+            let openPrice = this.state.open;
             let change = hoverPrice - openPrice;
             let dailyPercentChange = (change/hoverPrice)*100
 
@@ -34,8 +56,8 @@ class TickerChart extends React.Component {
 
 
     handleMouseOut(e){
-        let currentChange = this.props.change || (this.props.open - this.props.close)
-        let currentPercentChange = (currentChange/this.props.open)/100
+        let currentChange = this.state.change || (this.state.open - this.state.close)
+        let currentPercentChange = (currentChange/this.state.open)/100
         this.setState({
             closePrice: this.props.close, 
             change: parseFloat(currentChange).toFixed(2), 
@@ -45,6 +67,7 @@ class TickerChart extends React.Component {
     render(){
         let data = this.props.ticker || [];
         const label = this.props.timeFrame === "1D" ? "label" : "date";
+        debugger
         return (
             <div className="ticker-chart block-paddings">
                 
@@ -74,4 +97,4 @@ class TickerChart extends React.Component {
 }
 
 
-export default TickerChart;
+export default withRouter(TickerChart);
