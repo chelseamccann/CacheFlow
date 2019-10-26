@@ -271,6 +271,7 @@ var receiveTransactions = function receiveTransactions(transactions) {
 var executeTransaction = function executeTransaction(transaction) {
   return function (dispatch) {
     return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["createTransaction"](transaction).then(function (transaction) {
+      debugger;
       return dispatch(receiveTransaction(transaction));
     });
   };
@@ -2662,6 +2663,7 @@ function (_React$Component) {
       purchase_price: _this.props.close,
       ticker_symbol: _this.props.tickerSymbol
     };
+    debugger;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -2696,9 +2698,10 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      //buy symbol if buy is clicked, else sell symbol
+      debugger; //buy symbol if buy is clicked, else sell symbol
       //if buy - subtract from buying power and total val, if sell add to
       //show buying power on bottom of form?
+
       var cost = this.state.purchase_shares ? "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)) : 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form"
@@ -3283,6 +3286,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTransaction", function() { return createTransaction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransactions", function() { return fetchTransactions; });
 var createTransaction = function createTransaction(transaction) {
+  debugger;
   return $.ajax({
     method: "POST",
     url: "/api/transactions",

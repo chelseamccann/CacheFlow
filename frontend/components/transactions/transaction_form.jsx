@@ -9,7 +9,7 @@ class TransactionForm extends React.Component{
             purchase_price: this.props.close,
             ticker_symbol: this.props.tickerSymbol,
         };
-
+        debugger
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -25,18 +25,17 @@ class TransactionForm extends React.Component{
 
     updateShares(){
         return e => {
-
             this.setState({purchase_shares: parseInt(e.target.value) })
         }
     }
 
     highlightClicked(e){
         e.preventDefault();
-            document.getElementById(e.target.id).classList.toggle("bsactive");
+        document.getElementById(e.target.id).classList.toggle("bsactive");
     }
 
     render(){
-
+        debugger
         //buy symbol if buy is clicked, else sell symbol
         //if buy - subtract from buying power and total val, if sell add to
         //show buying power on bottom of form?

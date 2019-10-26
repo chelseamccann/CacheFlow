@@ -5,6 +5,7 @@ class Api::TransactionsController < ApplicationController
        @transaction.user_id = current_user.id
        ticker = Ticker.find_by(symbol: params[:transaction][:ticker_symbol])
         @transaction.ticker_id = ticker.id
+        debugger
        if @transaction.save!
         render "api/transactions/show" # create jbuilder
        else
