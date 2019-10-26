@@ -15,16 +15,20 @@ class TickerChart extends React.Component {
             chartX: null,
             chartY: null,
         }
-        debugger
+        
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
-        debugger
+        
     }
 
     componentDidUpdate(){
-        debugger
+        
         if (this.state.closePrice !== this.props.close){
-            this.setState({closePrice: this.props.close})
+            this.setState({
+                closePrice: this.props.close,
+                change: this.props.change,
+                percentChange: this.props.changePercent
+            })
         }
     }
 
@@ -60,7 +64,7 @@ class TickerChart extends React.Component {
         
         let data = this.props.ticker || [];
         const label = this.props.timeFrame === "1D" ? "label" : "date";
-        debugger
+        
 
 
         return (

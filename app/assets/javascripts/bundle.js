@@ -1999,21 +1999,19 @@ function (_React$Component) {
       chartX: null,
       chartY: null
     };
-    debugger;
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
-    debugger;
     return _this;
   }
 
   _createClass(TickerChart, [{
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      debugger;
-
       if (this.state.closePrice !== this.props.close) {
         this.setState({
-          closePrice: this.props.close
+          closePrice: this.props.close,
+          change: this.props.change,
+          percentChange: this.props.changePercent
         });
       }
     }
@@ -2050,7 +2048,6 @@ function (_React$Component) {
     value: function render() {
       var data = this.props.ticker || [];
       var label = this.props.timeFrame === "1D" ? "label" : "date";
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -2396,9 +2393,7 @@ function (_React$Component) {
       var _this3 = this;
 
       if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol) {
-        debugger;
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
-          debugger;
           return _this3.renderDaily(response);
         });
         this.tickerInfo();
@@ -2422,7 +2417,6 @@ function (_React$Component) {
 
       var lastValidClose = response[lastValidIdx].close;
       var firstValidOpen = response[0].open;
-      debugger;
       this.setState({
         "1D": daily,
         timeFrame: "1D",
@@ -2440,7 +2434,6 @@ function (_React$Component) {
       var _this$setState;
 
       var data = response.map(function (price) {
-        debugger;
         return {
           price: price.close,
           // date: price.date, 
@@ -2509,12 +2502,13 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
-      debugger;
 
       if (this.state.timeFrame !== "" && this.state.marketcap) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "show-wrap"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "chart-info-wrap"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "company-name"

@@ -7,7 +7,6 @@
 
 .transaction-form{
     margin-top: 50px;
-    margin-left: 90px;
     display: inline-block;
     width: 225px;
     align-content: center;
@@ -17,6 +16,8 @@
     z-index: 1;
     box-shadow: 0 0 4px 1px rgba(0,0,0,0.01), 0 3px 24px rgba(48,51,51,0.09);
     box-sizing: content-box;
+    margin-left: 70%;
+    position: fixed;
 }
 
 .show-wrap{

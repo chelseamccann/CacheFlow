@@ -36,9 +36,9 @@ class TickerShow extends React.Component{
 
     componentDidUpdate(prevProps){
         if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){ 
-            debugger
+            
             fetchDailyPrices(this.props.tickerSymbol).then(response => {
-                debugger
+                
                 return this.renderDaily(response)
             });
             this.tickerInfo();
@@ -58,7 +58,7 @@ class TickerShow extends React.Component{
 
         let lastValidClose = response[lastValidIdx].close
         let firstValidOpen = response[0].open
-        debugger
+        
         this.setState({
             "1D": daily, 
             timeFrame: "1D", 
@@ -73,7 +73,7 @@ class TickerShow extends React.Component{
 
     renderPrices(response, timeFramePassed){
         const data = response.map(price => {
-            debugger
+            
             return {
                 price: price.close, 
                 // date: price.date, 
@@ -125,12 +125,12 @@ class TickerShow extends React.Component{
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
             }
         })
-        debugger
+        
         if(this.state.timeFrame !== "" && this.state.marketcap){
             
             return (
                 <div className="show-wrap">
-                    <div>
+                    <div className="chart-info-wrap">
                     <div className="chart-wrap"> 
                         <h1 className="company-name">{this.state.name}</h1>
                         <TickerChart 
