@@ -18,33 +18,31 @@ class TickerChart extends React.Component {
         debugger
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
+        debugger
     }
 
-    
-    static getDerivedStateFromProps(nextProps, prevState){
+    componentDidUpdate(){
         debugger
-        if (nextProps.tickerSymbol !== prevState.tickerSymbol && nextProps.close){
-            debugger
-            return { 
-                closePrice: nextProps.close,
-                change: nextProps.change,
-                percentChange: nextProps.changePercent
-            }
+        if (this.state.closePrice !== this.props.close){
+            this.setState({closePrice: this.props.close})
         }
     }
 
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){
+
             let hoverPrice = e.activePayload[0].payload.price;
             let openPrice = this.state.open;
             let change = hoverPrice - openPrice;
             let dailyPercentChange = (change/hoverPrice)*100
 
-            this.setState({closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2)})
-            this.setState({chartX: e.chartX})
-            this.setState({chartY: e.chartY}) 
-            this.setState({change: parseFloat(change.toFixed(2))})
-            this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+            this.setState({
+                closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2), 
+                chartX: e.chartX, 
+                chartY: e.chartY,
+                change: parseFloat(change.toFixed(2)),
+                percentChange: parseFloat(dailyPercentChange).toFixed(2)
+            })
         }
     }
 
@@ -53,15 +51,18 @@ class TickerChart extends React.Component {
         let currentChange = this.state.change || (this.state.open - this.state.close)
         let currentPercentChange = (currentChange/this.state.open)/100
         this.setState({
-            closePrice: this.props.close, 
+            closePrice: this.state.close, 
             change: parseFloat(currentChange).toFixed(2), 
             percentChange: parseFloat(currentPercentChange).toFixed(2)
         })
     }
     render(){
+        
         let data = this.props.ticker || [];
         const label = this.props.timeFrame === "1D" ? "label" : "date";
-        // debugger
+        debugger
+
+
         return (
             <div className="ticker-chart block-paddings">
                 

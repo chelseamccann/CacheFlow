@@ -35,13 +35,11 @@ class TickerShow extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        debugger
         if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){ 
             debugger
-            // this.setState({ oldTicker: prevProps.match.params.tickerSymbol })
             fetchDailyPrices(this.props.tickerSymbol).then(response => {
-                debugger 
-                this.renderDaily(response)
+                debugger
+                return this.renderDaily(response)
             });
             this.tickerInfo();
             this.updateStats();
@@ -49,36 +47,33 @@ class TickerShow extends React.Component{
     }
 
     renderDaily(response){
-        // debugger
         const daily = response.map(price => {
             return {label: price.label, price: price.close}
         })
-        debugger
 
         let lastValidIdx = response.length - 1
-        debugger
         while(response[lastValidIdx].close === null){
             lastValidIdx -= 1
         }
 
         let lastValidClose = response[lastValidIdx].close
-        let lastValidOpen = response[lastValidIdx].open
-
+        let firstValidOpen = response[0].open
         debugger
         this.setState({
             "1D": daily, 
             timeFrame: "1D", 
             tickerSymbol: this.props.tickerSymbol, 
-            open: lastValidOpen, 
+            open: firstValidOpen, 
             close: lastValidClose, //response[response.length-1].close,
-            change: parseFloat(lastValidClose - lastValidOpen).toFixed(2),
-            changePercent: parseFloat(((lastValidClose - lastValidOpen)/lastValidClose)*100).toFixed(2)
+            change: parseFloat(lastValidClose - firstValidOpen).toFixed(2),
+            changePercent: parseFloat(((lastValidClose - firstValidOpen)/lastValidClose)*100).toFixed(2)
     })
 
     }
 
     renderPrices(response, timeFramePassed){
         const data = response.map(price => {
+            debugger
             return {
                 price: price.close, 
                 // date: price.date, 
@@ -130,7 +125,7 @@ class TickerShow extends React.Component{
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
             }
         })
-        // debugger
+        debugger
         if(this.state.timeFrame !== "" && this.state.marketcap){
             
             return (
