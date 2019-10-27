@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import Tabs from './tabs'
 
 class TransactionForm extends React.Component{
     constructor(props){
@@ -43,6 +43,7 @@ class TransactionForm extends React.Component{
         return (
         <div className="transaction-form">
             <div className="buy-sell-buttons">
+                {/* <Tabs tabStuff={[{title:'Buy', content: 'someconent'}, {title: 'Sell', content: 'someconentother'}]} /> */}
                 <button id="buy" className="" onClick={this.highlightClicked}
                 >Buy {this.props.tickerSymbol}</button>
                 <button id="sell" className="" onClick={this.highlightClicked}>Sell {this.props.tickerSymbol}</button>
