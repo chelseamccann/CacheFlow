@@ -141,3 +141,15 @@
     margin: 0 auto;
     margin-top: 5px;
 }
+
+.tab-title {
+    display: flex;
+}
+
+
+.buy-sell-buttons {
+    box-sizing: border-box;
+    justify-content: space-evenly;
+    padding: 10%;
+    height: 100%;
+}

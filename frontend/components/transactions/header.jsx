@@ -6,7 +6,7 @@ class Header extends React.Component {
         const idxTab = this.props.indexTab;
         const headers = this.props.tabStuff.map((el, indx) => {
             const title = el.title;
-            const toggleActive = indx === idxTab ? 'active' : '';
+            const toggleActive = indx === idxTab ? 'bsactive' : '';
             return (
                 <li 
                 key = {indx}

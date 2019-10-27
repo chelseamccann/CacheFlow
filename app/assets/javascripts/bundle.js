@@ -2665,7 +2665,7 @@ function (_React$Component) {
       var idxTab = this.props.indexTab;
       var headers = this.props.tabStuff.map(function (el, indx) {
         var title = el.title;
-        var toggleActive = indx === idxTab ? 'active' : '';
+        var toggleActive = indx === idxTab ? 'bsactive' : '';
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: indx,
           className: toggleActive,
@@ -2857,58 +2857,95 @@ function (_React$Component) {
     value: function render() {
       debugger; //buy symbol if buy is clicked, else sell symbol
       //if buy - subtract from buying power and total val, if sell add to
-      //show buying power on bottom of form?
+      //show buying power on bottom of form
+      //either use two different forms under content or put conditional inside the handleUpdate
 
       var cost = this.state.purchase_shares ? "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)) : 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "buy-sell-buttons"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        id: "buy",
-        className: "",
-        onClick: this.highlightClicked
-      }, "Buy ", this.props.tickerSymbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        id: "sell",
-        className: "",
-        onClick: this.highlightClicked
-      }, "Sell ", this.props.tickerSymbol)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "t-form",
-        onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "buy-sell"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "shares"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "share",
-        id: "shares"
-      }, "Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        autoComplete: "off",
-        className: "share share-box",
-        id: "shares",
-        type: "number",
-        value: this.state.purchase_shares,
-        onChange: this.updateShares(),
-        placeholder: "0"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "shares"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "share share-two"
-      }, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "share share-two"
-      }, "$".concat(parseFloat(this.props.close).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "shares"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "share share-two"
-      }, "Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "share share-two"
-      }, cost)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: "Execute Order",
-        className: "execute-button nav-bar-logout review-button"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "bp share share-two"
-      }, "Buying power"))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tabs__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        tabStuff: [{
+          title: "Buy ".concat(this.props.tickerSymbol),
+          content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+            className: "t-form",
+            onSubmit: this.handleSubmit
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "buy-sell"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "shares"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "share",
+            id: "shares"
+          }, "Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            autoComplete: "off",
+            className: "share share-box",
+            id: "shares",
+            type: "number",
+            value: this.state.purchase_shares,
+            onChange: this.updateShares(),
+            placeholder: "0"
+          })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "shares"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "share share-two"
+          }, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "share share-two"
+          }, "$".concat(parseFloat(this.props.close).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "shares"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "share share-two"
+          }, "Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "share share-two"
+          }, cost)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            type: "submit",
+            value: "Buy",
+            className: "execute-button nav-bar-logout review-button"
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "bp share share-two"
+          }, "Buying power")))
+        }, {
+          title: "Sell ".concat(this.props.tickerSymbol),
+          content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+            className: "t-form",
+            onSubmit: this.handleSubmit
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "buy-sell"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "shares"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "share",
+            id: "shares"
+          }, "Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            autoComplete: "off",
+            className: "share share-box",
+            id: "shares",
+            type: "number",
+            value: this.state.purchase_shares,
+            onChange: this.updateShares(),
+            placeholder: "0"
+          })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "shares"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "share share-two"
+          }, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "share share-two"
+          }, "$".concat(parseFloat(this.props.close).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "shares"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "share share-two"
+          }, "Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "share share-two"
+          }, cost)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            type: "submit",
+            value: "Sell",
+            className: "execute-button nav-bar-logout review-button"
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "bp share share-two"
+          }, "Buying power")))
+        }]
+      })));
     }
   }]);
 
