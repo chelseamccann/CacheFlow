@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchTicker } from '../../actions/ticker_actions';
-import { executeTransaction } from '../../actions/transaction_actions';
+import { executeBuy } from '../../actions/transaction_actions';
 import TickerShow from './ticker_show';
 
 const mapStateToProps = (state, ownProps) => {
@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
   fetchTicker: tickerId => dispatch(fetchTicker(tickerId)),
   fetchTickerInfo: symbol => dispatch(fetchTickerInfo(symbol)),
-  executeTransaction: transaction => dispatch(executeTransaction(transaction))
+  executeBuy: transaction => dispatch(executeBuy(transaction))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TickerShow);

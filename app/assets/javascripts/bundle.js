@@ -241,7 +241,7 @@ var receiveTickerData = function receiveTickerData(symbol, data) {
 /*!*************************************************!*\
   !*** ./frontend/actions/transaction_actions.js ***!
   \*************************************************/
-/*! exports provided: RECEIVE_TRANSACTION, RECEIVE_TRANSACTIONS, receiveTransaction, receiveTransactions, executeTransaction, fetchTransactions */
+/*! exports provided: RECEIVE_TRANSACTION, RECEIVE_TRANSACTIONS, receiveTransaction, receiveTransactions, executeBuy, fetchTransactions */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -250,7 +250,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRANSACTIONS", function() { return RECEIVE_TRANSACTIONS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTransaction", function() { return receiveTransaction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveTransactions", function() { return receiveTransactions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "executeTransaction", function() { return executeTransaction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "executeBuy", function() { return executeBuy; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransactions", function() { return fetchTransactions; });
 /* harmony import */ var _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/transaction_api_util */ "./frontend/util/transaction_api_util.js");
 
@@ -268,7 +268,7 @@ var receiveTransactions = function receiveTransactions(transactions) {
     transactions: transactions
   };
 };
-var executeTransaction = function executeTransaction(transaction) {
+var executeBuy = function executeBuy(transaction) {
   return function (dispatch) {
     return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["createTransaction"](transaction).then(function (transaction) {
       debugger;
@@ -2545,7 +2545,7 @@ function (_React$Component) {
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transactions_transaction_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
           tickerSymbol: this.props.tickerSymbol,
           close: this.state.close,
-          executeTransaction: this.props.executeTransaction
+          executeBuy: this.props.executeBuy
         }));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
@@ -2605,8 +2605,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     }(function (symbol) {
       return dispatch(fetchTickerInfo(symbol));
     }),
-    executeTransaction: function executeTransaction(transaction) {
-      return dispatch(Object(_actions_transaction_actions__WEBPACK_IMPORTED_MODULE_3__["executeTransaction"])(transaction));
+    executeBuy: function executeBuy(transaction) {
+      return dispatch(Object(_actions_transaction_actions__WEBPACK_IMPORTED_MODULE_3__["executeBuy"])(transaction));
     }
   };
 };
@@ -2820,28 +2820,43 @@ function (_React$Component) {
       purchase_price: _this.props.close,
       ticker_symbol: _this.props.tickerSymbol
     };
-    debugger;
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleBuySubmit = _this.handleBuySubmit.bind(_assertThisInitialized(_this));
+    _this.handleSellSubmit = _this.handleSellSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(TransactionForm, [{
-    key: "handleSubmit",
-    value: function handleSubmit(e) {
+    key: "handleBuySubmit",
+    value: function handleBuySubmit(e) {
+      var _this2 = this;
+
       e.preventDefault();
       debugger;
-      this.props.executeTransaction(this.state); // .success(message => {
-      //     debugger
+      this.setState({
+        buy: true
+      }, function () {
+        return _this2.props.executeBuy(_this2.state);
+      }); // .success(message => {
       //     this.setState({message: "Sucessful Buy!"})
       // });
     }
   }, {
+    key: "handleSellSubmit",
+    value: function handleSellSubmit(e) {
+      e.preventDefault();
+      debugger;
+      this.setState({
+        buy: false
+      });
+      this.props.executeBuy(this.state);
+    }
+  }, {
     key: "updateShares",
     value: function updateShares() {
-      var _this2 = this;
+      var _this3 = this;
 
       return function (e) {
-        _this2.setState({
+        _this3.setState({
           purchase_shares: parseInt(e.target.value)
         });
       };
@@ -2855,11 +2870,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger; //buy symbol if buy is clicked, else sell symbol
+      //buy symbol if buy is clicked, else sell symbol
       //if buy - subtract from buying power and total val, if sell add to
       //show buying power on bottom of form
-      //either use two different forms under content or put conditional inside the handleUpdate
-
       var cost = this.state.purchase_shares ? "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)) : 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form"
@@ -2870,7 +2883,7 @@ function (_React$Component) {
           title: "Buy ".concat(this.props.tickerSymbol),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
             className: "t-form",
-            onSubmit: this.handleSubmit
+            onSubmit: this.handleBuySubmit
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "buy-sell"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2909,7 +2922,7 @@ function (_React$Component) {
           title: "Sell ".concat(this.props.tickerSymbol),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
             className: "t-form",
-            onSubmit: this.handleSubmit
+            onSubmit: this.handleSellSubmit
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "buy-sell"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -62731,7 +62744,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

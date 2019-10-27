@@ -169,7 +169,7 @@ class TickerShow extends React.Component{
                     <TransactionForm 
                     tickerSymbol={this.props.tickerSymbol} 
                     close={this.state.close}
-                    executeTransaction={this.props.executeTransaction}
+                    executeBuy={this.props.executeBuy}
                     />
 
                 </div>
