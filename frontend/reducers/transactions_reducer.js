@@ -4,9 +4,10 @@ export default (state = {}, action) => {
     Object.freeze(state);
     switch(action.type){
         case RECEIVE_TRANSACTION:
-            return Object.assign({}, {[action.transaction.id]: action.transaction})
+            debugger
+            return Object.assign({}, state, {[action.transaction.id]: action.transaction})
         case RECEIVE_TRANSACTIONS:
-                return action.transactions
+            return action.transactions
         default:
             return state;
     }

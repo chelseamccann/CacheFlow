@@ -2995,7 +2995,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   switch (action.type) {
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTION"]:
-      return Object.assign({}, _defineProperty({}, action.transaction.id, action.transaction));
+      debugger;
+      return Object.assign({}, state, _defineProperty({}, action.transaction.id, action.transaction));
 
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTIONS"]:
       return action.transactions;
