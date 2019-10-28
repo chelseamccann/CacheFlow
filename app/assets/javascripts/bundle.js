@@ -113,6 +113,7 @@ var LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
 var RECEIVE_ERRORS = "RECEIVE_ERRORS";
 var CLEAR_ERRORS = "CLEAR_ERRORS";
 var receiveCurrentUser = function receiveCurrentUser(currentUser) {
+  debugger;
   return {
     type: RECEIVE_CURRENT_USER,
     currentUser: currentUser
@@ -2494,6 +2495,7 @@ function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
+      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2545,7 +2547,8 @@ function (_React$Component) {
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transactions_transaction_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
           tickerSymbol: this.props.tickerSymbol,
           close: this.state.close,
-          executeBuy: this.props.executeBuy
+          executeBuy: this.props.executeBuy,
+          currentBuyingPower: this.props.currentBuyingPower
         }));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
@@ -2582,8 +2585,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
+  var userId = state.session.id;
+  debugger;
   return {
-    tickerSymbol: ownProps.match.params.tickerSymbol
+    tickerSymbol: ownProps.match.params.tickerSymbol,
+    currentUser: state.entities.users[userId],
+    currentBuyingPower: state.entities.users[userId].buying_power
   };
 };
 
@@ -2818,10 +2825,13 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TransactionForm).call(this, props));
     _this.state = {
       purchase_price: _this.props.close,
-      ticker_symbol: _this.props.tickerSymbol
+      ticker_symbol: _this.props.tickerSymbol,
+      currentBuyingPower: _this.props.currentBuyingPower
     };
+    debugger;
     _this.handleBuySubmit = _this.handleBuySubmit.bind(_assertThisInitialized(_this));
     _this.handleSellSubmit = _this.handleSellSubmit.bind(_assertThisInitialized(_this));
+    _this.updateShares = _this.updateShares.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2833,7 +2843,8 @@ function (_React$Component) {
       e.preventDefault();
       debugger;
       this.setState({
-        buy: true
+        buy: true,
+        currentBuyingPower: this.state.currentBuyingPower - this.state.purchase_price * this.state.purchase_shares
       }, function () {
         return _this2.props.executeBuy(_this2.state);
       }); // .success(message => {
@@ -2843,20 +2854,24 @@ function (_React$Component) {
   }, {
     key: "handleSellSubmit",
     value: function handleSellSubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
       debugger;
       this.setState({
-        buy: false
+        buy: false,
+        currentBuyingPower: this.state.currentBuyingPower + this.state.purchase_price * this.state.purchase_shares
+      }, function () {
+        return _this3.props.executeBuy(_this3.state);
       });
-      this.props.executeBuy(this.state);
     }
   }, {
     key: "updateShares",
     value: function updateShares() {
-      var _this3 = this;
+      var _this4 = this;
 
       return function (e) {
-        _this3.setState({
+        _this4.setState({
           purchase_shares: parseInt(e.target.value)
         });
       };
@@ -2917,7 +2932,7 @@ function (_React$Component) {
             className: "execute-button nav-bar-logout review-button"
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "bp share share-two"
-          }, "Buying power")))
+          }, "Buying power: ", this.state.currentBuyingPower)))
         }, {
           title: "Sell ".concat(this.props.tickerSymbol),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -2956,7 +2971,7 @@ function (_React$Component) {
             className: "execute-button nav-bar-logout review-button"
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "bp share share-two"
-          }, "Buying power")))
+          }, "Buying power: ", this.state.currentBuyingPower)))
         }]
       })));
     }
@@ -3099,6 +3114,7 @@ var _nullSession = {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
+      debugger;
       return Object.assign({}, {
         id: action.currentUser.id
       });
@@ -3235,6 +3251,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
+      debugger;
       return Object.assign({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
 
     default:
@@ -62744,7 +62761,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

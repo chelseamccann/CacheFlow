@@ -8,16 +8,21 @@ class TransactionForm extends React.Component{
         this.state = {
             purchase_price: this.props.close,
             ticker_symbol: this.props.tickerSymbol,
+            currentBuyingPower: this.props.currentBuyingPower
         };
-        
+        debugger
         this.handleBuySubmit = this.handleBuySubmit.bind(this);
         this.handleSellSubmit = this.handleSellSubmit.bind(this);
+        this.updateShares = this.updateShares.bind(this);
     }
 
     handleBuySubmit(e){
         e.preventDefault();
         debugger
-        this.setState({ buy: true }, () => this.props.executeBuy(this.state) )
+        this.setState({ 
+            buy: true, 
+            currentBuyingPower: this.state.currentBuyingPower - (this.state.purchase_price * this.state.purchase_shares) 
+        }, () => this.props.executeBuy(this.state) )
 
         // .success(message => {
         //     this.setState({message: "Sucessful Buy!"})
@@ -27,8 +32,10 @@ class TransactionForm extends React.Component{
     handleSellSubmit(e){
         e.preventDefault();
         debugger
-        this.setState({ buy: false})
-        this.props.executeBuy(this.state)
+        this.setState({ 
+            buy: false,
+            currentBuyingPower: this.state.currentBuyingPower + (this.state.purchase_price * this.state.purchase_shares) 
+        }, () => this.props.executeBuy(this.state) )
     }
 
     updateShares(){
@@ -84,7 +91,7 @@ class TransactionForm extends React.Component{
         
                         <input type="submit" value="Buy" className="execute-button nav-bar-logout review-button"/>
         
-                        <p className="bp share share-two">Buying power</p>
+                        <p className="bp share share-two">Buying power: {this.state.currentBuyingPower}</p>
         
                     </div>
                     </form>
@@ -121,7 +128,7 @@ class TransactionForm extends React.Component{
 
                         <input type="submit" value="Sell" className="execute-button nav-bar-logout review-button"/>
 
-                        <p className="bp share share-two">Buying power</p>
+                        <p className="bp share share-two">Buying power: {this.state.currentBuyingPower}</p>
 
                     </div>
                     </form>
