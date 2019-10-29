@@ -19,11 +19,14 @@ class TransactionForm extends React.Component{
     handleBuySubmit(e){
         e.preventDefault();
         debugger
+        let currentBuyingPower = this.state.currentBuyingPower
+        let currentCost = this.state.purchase_price * this.state.purchase_shares 
+        if (currentBuyingPower >= currentCost){
         this.setState({ 
             buy: true, 
-            currentBuyingPower: this.state.currentBuyingPower - (this.state.purchase_price * this.state.purchase_shares) 
+            currentBuyingPower: currentBuyingPower - currentCost
         }, () => this.props.executeBuy(this.state) )
-
+    }
         // .success(message => {
         //     this.setState({message: "Sucessful Buy!"})
         // });

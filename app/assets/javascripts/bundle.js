@@ -2590,7 +2590,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     tickerSymbol: ownProps.match.params.tickerSymbol,
     currentUser: state.entities.users[userId],
-    currentBuyingPower: state.entities.users[userId].buyingPower
+    currentBuyingPower: state.entities.users[userId].buying_power
   };
 };
 
@@ -2842,14 +2842,20 @@ function (_React$Component) {
 
       e.preventDefault();
       debugger;
-      this.setState({
-        buy: true,
-        currentBuyingPower: this.state.currentBuyingPower - this.state.purchase_price * this.state.purchase_shares
-      }, function () {
-        return _this2.props.executeBuy(_this2.state);
-      }); // .success(message => {
+      var currentBuyingPower = this.state.currentBuyingPower;
+      var currentCost = this.state.purchase_price * this.state.purchase_shares;
+
+      if (currentBuyingPower >= currentCost) {
+        this.setState({
+          buy: true,
+          currentBuyingPower: currentBuyingPower - currentCost
+        }, function () {
+          return _this2.props.executeBuy(_this2.state);
+        });
+      } // .success(message => {
       //     this.setState({message: "Sucessful Buy!"})
       // });
+
     }
   }, {
     key: "handleSellSubmit",
