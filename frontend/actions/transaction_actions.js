@@ -16,7 +16,6 @@ export const receiveTransactions = transactions => ({
 
 export const executeBuy = transaction => dispatch =>  API.createTransaction(transaction)
   .then(transaction => {
-    debugger
     return dispatch(receiveTransaction(transaction))
   }
   );

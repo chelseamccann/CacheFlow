@@ -1,1 +1,1 @@
-json.extract! ticker, :symbol, :id
+json.extract! ticker, :symbol, :id, :num_shares

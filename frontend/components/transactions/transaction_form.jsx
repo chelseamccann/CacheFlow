@@ -12,6 +12,7 @@ class TransactionForm extends React.Component{
             message: ""
         };
         debugger
+
         this.handleBuySubmit = this.handleBuySubmit.bind(this);
         this.handleSellSubmit = this.handleSellSubmit.bind(this);
         this.updateShares = this.updateShares.bind(this);
@@ -152,7 +153,7 @@ class TransactionForm extends React.Component{
 
                         <input type="submit" value="Sell" className="execute-button nav-bar-logout review-button"/>
 
-                        <p className="bp share share-two">Buying power: {this.state.currentBuyingPower}</p>
+                        <p className="bp share share-two">Buying power: {this.state.currentBuyingPower}</p> {/* CHANGE TO SHARES HELD */}
                         <p>{this.state.message}</p>
 
                     </div>
