@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     tickerSymbol: ownProps.match.params.tickerSymbol,
     currentUser: state.entities.users[userId],
-    currentBuyingPower: state.entities.users[userId].buying_power
+    currentBuyingPower: state.entities.users[userId].buyingPower
   }
 }
 
