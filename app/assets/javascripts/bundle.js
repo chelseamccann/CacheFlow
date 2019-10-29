@@ -2826,7 +2826,8 @@ function (_React$Component) {
     _this.state = {
       purchase_price: _this.props.close,
       ticker_symbol: _this.props.tickerSymbol,
-      currentBuyingPower: _this.props.currentBuyingPower
+      currentBuyingPower: _this.props.currentBuyingPower,
+      message: ""
     };
     debugger;
     _this.handleBuySubmit = _this.handleBuySubmit.bind(_assertThisInitialized(_this));
@@ -2841,21 +2842,36 @@ function (_React$Component) {
       var _this2 = this;
 
       e.preventDefault();
-      debugger;
-      var currentBuyingPower = this.state.currentBuyingPower;
+      var currentBuyingPower = parseFloat(this.state.currentBuyingPower);
       var currentCost = this.state.purchase_price * this.state.purchase_shares;
 
       if (currentBuyingPower >= currentCost) {
-        this.setState({
-          buy: true,
-          currentBuyingPower: currentBuyingPower - currentCost
-        }, function () {
-          return _this2.props.executeBuy(_this2.state);
-        });
-      } // .success(message => {
-      //     this.setState({message: "Sucessful Buy!"})
-      // });
+        var tr = {
+          purchase_price: this.state.purchase_price,
+          ticker_symbol: this.state.ticker_symbol,
+          currentBuyingPower: this.state.currentBuyingPower,
+          purchase_shares: this.state.purchase_shares,
+          buy: true
+        };
+        this.props.executeBuy(tr).then(function (response) {
+          debugger;
 
+          if (Array.isArray(response.transaction)) {
+            _this2.setState({
+              message: response.transaction[0]
+            });
+          } else {
+            _this2.setState({
+              currentBuyingPower: currentBuyingPower - currentCost,
+              message: 'Successfully bought!'
+            });
+          }
+        });
+      } else {
+        this.setState({
+          message: 'Not enough buying power.'
+        });
+      }
     }
   }, {
     key: "handleSellSubmit",
@@ -2863,12 +2879,26 @@ function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      debugger;
-      this.setState({
-        buy: false,
-        currentBuyingPower: this.state.currentBuyingPower + this.state.purchase_price * this.state.purchase_shares
-      }, function () {
-        return _this3.props.executeBuy(_this3.state);
+      var currentBuyingPower = parseFloat(this.state.currentBuyingPower);
+      var currentCost = this.state.purchase_price * this.state.purchase_shares;
+      var tr = {
+        purchase_price: this.state.purchase_price,
+        ticker_symbol: this.state.ticker_symbol,
+        currentBuyingPower: this.state.currentBuyingPower,
+        purchase_shares: this.state.purchase_shares,
+        buy: false
+      };
+      this.props.executeBuy(tr).then(function (response) {
+        if (Array.isArray(response.transaction)) {
+          _this3.setState({
+            message: response.transaction[0]
+          });
+        } else {
+          _this3.setState({
+            currentBuyingPower: currentBuyingPower + currentCost,
+            message: 'Successfully sold!'
+          });
+        }
       });
     }
   }, {
@@ -2891,9 +2921,10 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      //buy symbol if buy is clicked, else sell symbol
+      debugger; //buy symbol if buy is clicked, else sell symbol
       //if buy - subtract from buying power and total val, if sell add to
       //show buying power on bottom of form
+
       var cost = this.state.purchase_shares ? "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)) : 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form"
@@ -2938,7 +2969,7 @@ function (_React$Component) {
             className: "execute-button nav-bar-logout review-button"
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "bp share share-two"
-          }, "Buying power: ", this.state.currentBuyingPower)))
+          }, "Buying power: ", this.state.currentBuyingPower), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
         }, {
           title: "Sell ".concat(this.props.tickerSymbol),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -2977,7 +3008,7 @@ function (_React$Component) {
             className: "execute-button nav-bar-logout review-button"
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "bp share share-two"
-          }, "Buying power: ", this.state.currentBuyingPower)))
+          }, "Buying power: ", this.state.currentBuyingPower), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
         }]
       })));
     }

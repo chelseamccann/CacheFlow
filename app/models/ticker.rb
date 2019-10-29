@@ -10,7 +10,7 @@
 
 class Ticker < ApplicationRecord 
 
-    validates :symbol, presence: true
+    validates :symbol, :num_shares, presence: true
 
     has_many :transactions,
     primary_key: :id,

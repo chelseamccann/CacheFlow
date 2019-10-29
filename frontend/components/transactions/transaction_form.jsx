@@ -8,7 +8,8 @@ class TransactionForm extends React.Component{
         this.state = {
             purchase_price: this.props.close,
             ticker_symbol: this.props.tickerSymbol,
-            currentBuyingPower: this.props.currentBuyingPower
+            currentBuyingPower: this.props.currentBuyingPower,
+            message: ""
         };
         debugger
         this.handleBuySubmit = this.handleBuySubmit.bind(this);
@@ -18,27 +19,46 @@ class TransactionForm extends React.Component{
 
     handleBuySubmit(e){
         e.preventDefault();
-        debugger
-        let currentBuyingPower = this.state.currentBuyingPower
+        let currentBuyingPower = parseFloat(this.state.currentBuyingPower)
         let currentCost = this.state.purchase_price * this.state.purchase_shares 
+
         if (currentBuyingPower >= currentCost){
-        this.setState({ 
-            buy: true, 
-            currentBuyingPower: currentBuyingPower - currentCost
-        }, () => this.props.executeBuy(this.state) )
-    }
-        // .success(message => {
-        //     this.setState({message: "Sucessful Buy!"})
-        // });
+            let tr = { purchase_price: this.state.purchase_price,
+                        ticker_symbol: this.state.ticker_symbol,
+                        currentBuyingPower: this.state.currentBuyingPower,
+                        purchase_shares: this.state.purchase_shares,
+                        buy: true}
+                        
+            this.props.executeBuy(tr).then(response => {
+                debugger
+                if (Array.isArray(response.transaction)){
+                    this.setState({message: response.transaction[0]})
+                } else {
+                    this.setState({currentBuyingPower: currentBuyingPower - currentCost, message: 'Successfully bought!'})
+                }
+            })
+        } else {
+            this.setState({message: 'Not enough buying power.'})
+        }
     }
 
     handleSellSubmit(e){
         e.preventDefault();
-        debugger
-        this.setState({ 
-            buy: false,
-            currentBuyingPower: this.state.currentBuyingPower + (this.state.purchase_price * this.state.purchase_shares) 
-        }, () => this.props.executeBuy(this.state) )
+        let currentBuyingPower = parseFloat(this.state.currentBuyingPower)
+        let currentCost = this.state.purchase_price * this.state.purchase_shares 
+        let tr = { purchase_price: this.state.purchase_price,
+                        ticker_symbol: this.state.ticker_symbol,
+                        currentBuyingPower: this.state.currentBuyingPower,
+                        purchase_shares: this.state.purchase_shares,
+                        buy: false}
+                        
+            this.props.executeBuy(tr).then(response => {
+                if (Array.isArray(response.transaction)){
+                    this.setState({message: response.transaction[0]})
+                } else {
+                    this.setState({currentBuyingPower: currentBuyingPower + currentCost, message: 'Successfully sold!'})
+                }
+            })
     }
 
     updateShares(){
@@ -53,7 +73,7 @@ class TransactionForm extends React.Component{
     }
 
     render(){
-        
+        debugger
         //buy symbol if buy is clicked, else sell symbol
         //if buy - subtract from buying power and total val, if sell add to
         //show buying power on bottom of form
@@ -95,6 +115,7 @@ class TransactionForm extends React.Component{
                         <input type="submit" value="Buy" className="execute-button nav-bar-logout review-button"/>
         
                         <p className="bp share share-two">Buying power: {this.state.currentBuyingPower}</p>
+                        <p>{this.state.message}</p>
         
                     </div>
                     </form>
@@ -132,6 +153,7 @@ class TransactionForm extends React.Component{
                         <input type="submit" value="Sell" className="execute-button nav-bar-logout review-button"/>
 
                         <p className="bp share share-two">Buying power: {this.state.currentBuyingPower}</p>
+                        <p>{this.state.message}</p>
 
                     </div>
                     </form>
