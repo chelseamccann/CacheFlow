@@ -2861,6 +2861,9 @@ function (_React$Component) {
           purchase_shares: this.state.purchase_shares,
           buy: true
         };
+        this.setState({
+          buy: true
+        });
         this.props.executeBuy(tr).then(function (response) {
           debugger;
 
@@ -2897,6 +2900,9 @@ function (_React$Component) {
         purchase_shares: this.state.purchase_shares,
         buy: false
       };
+      this.setState({
+        buy: false
+      });
       this.props.executeBuy(tr).then(function (response) {
         if (Array.isArray(response.transaction)) {
           _this4.setState({
@@ -2978,7 +2984,7 @@ function (_React$Component) {
             className: "execute-button nav-bar-logout review-button"
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "bp share share-two"
-          }, "Buying power: $", this.state.currentBuyingPower.replace(/\d(?=(\d{3})+\.)/g, '$&,')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
+          }, "Buying power: $", parseFloat(this.state.currentBuyingPower).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
         }, {
           title: "Sell ".concat(this.props.tickerSymbol),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {

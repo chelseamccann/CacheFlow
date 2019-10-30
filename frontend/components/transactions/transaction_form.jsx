@@ -34,7 +34,8 @@ class TransactionForm extends React.Component{
                         currentBuyingPower: this.state.currentBuyingPower,
                         purchase_shares: this.state.purchase_shares,
                         buy: true}
-                        
+            
+            this.setState({buy: true})
             this.props.executeBuy(tr).then(response => {
                 debugger
                 if (Array.isArray(response.transaction)){
@@ -57,7 +58,7 @@ class TransactionForm extends React.Component{
                         currentBuyingPower: this.state.currentBuyingPower,
                         purchase_shares: this.state.purchase_shares,
                         buy: false}
-                        
+            this.setState({buy: false})     
             this.props.executeBuy(tr).then(response => {
                 if (Array.isArray(response.transaction)){
                     this.setState({message: response.transaction[0]})
@@ -119,7 +120,7 @@ class TransactionForm extends React.Component{
         
                         <input type="submit" value="Buy" className="execute-button nav-bar-logout review-button"/>
         
-                        <p className="bp share share-two">Buying power: ${this.state.currentBuyingPower.replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
+                        <p className="bp share share-two">Buying power: ${parseFloat(this.state.currentBuyingPower).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
                         <p>{this.state.message}</p>
         
                     </div>
