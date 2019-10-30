@@ -6,11 +6,12 @@ import TickerShow from './ticker_show';
 
 const mapStateToProps = (state, ownProps) => {
   let userId = state.session.id;
-  debugger
+  let tickerSymbol = ownProps.match.params.tickerSymbol
+  
   return {
-    tickerSymbol: ownProps.match.params.tickerSymbol,
+    tickerSymbol: tickerSymbol,
     currentUser: state.entities.users[userId],
-    currentBuyingPower: state.entities.users[userId].buying_power
+    currentBuyingPower: state.entities.users[userId].buying_power,
   }
 }
 

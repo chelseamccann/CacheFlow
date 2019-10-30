@@ -2493,7 +2493,6 @@ function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
-      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2546,7 +2545,8 @@ function (_React$Component) {
           tickerSymbol: this.props.tickerSymbol,
           close: this.state.close,
           executeBuy: this.props.executeBuy,
-          currentBuyingPower: this.props.currentBuyingPower
+          currentBuyingPower: this.props.currentBuyingPower,
+          fetchTicker: this.props.fetchTicker
         }));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
@@ -2584,9 +2584,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var userId = state.session.id;
-  debugger;
+  var tickerSymbol = ownProps.match.params.tickerSymbol;
   return {
-    tickerSymbol: ownProps.match.params.tickerSymbol,
+    tickerSymbol: tickerSymbol,
     currentUser: state.entities.users[userId],
     currentBuyingPower: state.entities.users[userId].buying_power
   };
@@ -2827,7 +2827,6 @@ function (_React$Component) {
       currentBuyingPower: _this.props.currentBuyingPower,
       message: ""
     };
-    debugger;
     _this.handleBuySubmit = _this.handleBuySubmit.bind(_assertThisInitialized(_this));
     _this.handleSellSubmit = _this.handleSellSubmit.bind(_assertThisInitialized(_this));
     _this.updateShares = _this.updateShares.bind(_assertThisInitialized(_this));
@@ -2835,9 +2834,20 @@ function (_React$Component) {
   }
 
   _createClass(TransactionForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.props.fetchTicker(this.state.ticker_symbol).then(function (response) {
+        _this2.setState({
+          currentTickerNumShares: response.ticker.num_shares
+        });
+      });
+    }
+  }, {
     key: "handleBuySubmit",
     value: function handleBuySubmit(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       e.preventDefault();
       var currentBuyingPower = parseFloat(this.state.currentBuyingPower);
@@ -2855,11 +2865,11 @@ function (_React$Component) {
           debugger;
 
           if (Array.isArray(response.transaction)) {
-            _this2.setState({
+            _this3.setState({
               message: response.transaction[0]
             });
           } else {
-            _this2.setState({
+            _this3.setState({
               currentBuyingPower: currentBuyingPower - currentCost,
               message: 'Successfully bought!',
               purchase_shares: ''
@@ -2875,7 +2885,7 @@ function (_React$Component) {
   }, {
     key: "handleSellSubmit",
     value: function handleSellSubmit(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       e.preventDefault();
       var currentBuyingPower = parseFloat(this.state.currentBuyingPower);
@@ -2889,11 +2899,11 @@ function (_React$Component) {
       };
       this.props.executeBuy(tr).then(function (response) {
         if (Array.isArray(response.transaction)) {
-          _this3.setState({
+          _this4.setState({
             message: response.transaction[0]
           });
         } else {
-          _this3.setState({
+          _this4.setState({
             currentBuyingPower: currentBuyingPower + currentCost,
             message: 'Successfully sold!',
             purchase_shares: ''
@@ -2904,10 +2914,10 @@ function (_React$Component) {
   }, {
     key: "updateShares",
     value: function updateShares() {
-      var _this4 = this;
+      var _this5 = this;
 
       return function (e) {
-        _this4.setState({
+        _this5.setState({
           purchase_shares: parseInt(e.target.value)
         });
       };
@@ -2921,10 +2931,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger; //buy symbol if buy is clicked, else sell symbol
+      //buy symbol if buy is clicked, else sell symbol
       //if buy - subtract from buying power and total val, if sell add to
       //show buying power on bottom of form
-
       var cost = this.state.purchase_shares ? "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)) : 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form"
@@ -3008,7 +3017,7 @@ function (_React$Component) {
             className: "execute-button nav-bar-logout review-button"
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "bp share share-two"
-          }, "Buying power: ", this.state.currentBuyingPower), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
+          }, "".concat(this.state.currentTickerNumShares, " shares available")), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
         }]
       })));
     }
@@ -3223,7 +3232,7 @@ var tickerReducer = function tickerReducer() {
       return action.tickers;
 
     case _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKER"]:
-      return Object.assign({}, state, _defineProperty({}, action.ticker.id, action.ticker));
+      return Object.assign({}, state, _defineProperty({}, action.ticker.symbol, action.ticker.num_shares));
 
     default:
       return state;

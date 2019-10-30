@@ -11,11 +11,16 @@ class TransactionForm extends React.Component{
             currentBuyingPower: this.props.currentBuyingPower,
             message: ""
         };
-        debugger
 
         this.handleBuySubmit = this.handleBuySubmit.bind(this);
         this.handleSellSubmit = this.handleSellSubmit.bind(this);
         this.updateShares = this.updateShares.bind(this);
+    }
+
+    componentDidMount(){
+        this.props.fetchTicker(this.state.ticker_symbol).then(response => { 
+            this.setState({currentTickerNumShares: response.ticker.num_shares})
+        })
     }
 
     handleBuySubmit(e){
@@ -74,7 +79,6 @@ class TransactionForm extends React.Component{
     }
 
     render(){
-        debugger
         //buy symbol if buy is clicked, else sell symbol
         //if buy - subtract from buying power and total val, if sell add to
         //show buying power on bottom of form
@@ -153,7 +157,7 @@ class TransactionForm extends React.Component{
 
                         <input type="submit" value="Sell" className="execute-button nav-bar-logout review-button"/>
 
-                        <p className="bp share share-two">Buying power: {this.state.currentBuyingPower}</p> {/* CHANGE TO SHARES HELD */}
+                        <p className="bp share share-two">{`${this.state.currentTickerNumShares} shares available`}</p> {/* CHANGE TO SHARES HELD */}
                         <p>{this.state.message}</p>
 
                     </div>
