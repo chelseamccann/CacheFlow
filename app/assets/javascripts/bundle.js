@@ -1530,17 +1530,20 @@ function (_React$Component) {
     value: function search(query) {
       var _this2 = this;
 
-      Object(_util_search_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchFromAPI"])(query).then(function (response) {
-        _this2.setState({
-          symbol: response.symbol,
-          isLoading: false,
-          companyName: response.companyName
+      if (query !== undefined) {
+        Object(_util_search_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchFromAPI"])(query).then(function (response) {
+          _this2.setState({
+            symbol: response.symbol,
+            isLoading: false,
+            companyName: response.companyName
+          });
+        }).then(function () {
+          return _this2.props.history.push("/".concat(_this2.state.inputText));
         });
-      }).then(function () {
-        return _this2.props.history.push("/".concat(_this2.state.inputText));
-      }); // .catch(error => {
+      } // .catch(error => {
       //     console.error(error)
       // })
+
     }
   }, {
     key: "render",

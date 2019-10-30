@@ -32,6 +32,7 @@ class Search extends React.Component{
     }
 
     search(query){
+        if (query !== undefined){
         fetchFromAPI(query)
         .then(response => {
             this.setState({
@@ -41,6 +42,7 @@ class Search extends React.Component{
             })
             
         }).then(() => this.props.history.push(`/${this.state.inputText}`))
+    }
         // .catch(error => {
         //     console.error(error)
         // })
