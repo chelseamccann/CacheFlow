@@ -2840,7 +2840,7 @@ function (_React$Component) {
 
       this.props.fetchTicker(this.state.ticker_symbol).then(function (response) {
         _this2.setState({
-          currentTickerNumShares: response.ticker.num_shares
+          currentTickerNumShares: parseInt(response.ticker.num_shares)
         });
       });
     }
@@ -2850,7 +2850,7 @@ function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      var currentBuyingPower = parseFloat(this.state.currentBuyingPower);
+      var currentBuyingPower = parseFloat(this.state.currentBuyingPower).toFixed(2);
       var currentCost = this.state.purchase_price * this.state.purchase_shares;
 
       if (currentBuyingPower >= currentCost) {
@@ -2934,7 +2934,7 @@ function (_React$Component) {
       //buy symbol if buy is clicked, else sell symbol
       //if buy - subtract from buying power and total val, if sell add to
       //show buying power on bottom of form
-      var cost = this.state.purchase_shares ? "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)) : 0;
+      var cost = this.state.purchase_shares ? "$".concat(parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')) : "$".concat(parseFloat(0).toFixed(2));
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2966,7 +2966,7 @@ function (_React$Component) {
             className: "share share-two"
           }, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "share share-two"
-          }, "$".concat(parseFloat(this.props.close).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          }, "$".concat(parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "shares"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
             className: "share share-two"
@@ -2978,7 +2978,7 @@ function (_React$Component) {
             className: "execute-button nav-bar-logout review-button"
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "bp share share-two"
-          }, "Buying power: ", this.state.currentBuyingPower), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
+          }, "Buying power: $", this.state.currentBuyingPower.replace(/\d(?=(\d{3})+\.)/g, '$&,')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
         }, {
           title: "Sell ".concat(this.props.tickerSymbol),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -3005,7 +3005,7 @@ function (_React$Component) {
             className: "share share-two"
           }, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "share share-two"
-          }, "$".concat(parseFloat(this.props.close).toFixed(2)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          }, "$".concat(parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "shares"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
             className: "share share-two"

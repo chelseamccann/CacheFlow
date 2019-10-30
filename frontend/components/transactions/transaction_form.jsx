@@ -19,13 +19,13 @@ class TransactionForm extends React.Component{
 
     componentDidMount(){
         this.props.fetchTicker(this.state.ticker_symbol).then(response => { 
-            this.setState({currentTickerNumShares: response.ticker.num_shares})
+            this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
         })
     }
 
     handleBuySubmit(e){
         e.preventDefault();
-        let currentBuyingPower = parseFloat(this.state.currentBuyingPower)
+        let currentBuyingPower = parseFloat(this.state.currentBuyingPower).toFixed(2)
         let currentCost = this.state.purchase_price * this.state.purchase_shares 
 
         if (currentBuyingPower >= currentCost){
@@ -83,7 +83,7 @@ class TransactionForm extends React.Component{
         //if buy - subtract from buying power and total val, if sell add to
         //show buying power on bottom of form
         
-        const cost = this.state.purchase_shares ? `$${parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2)}` : 0
+        const cost = this.state.purchase_shares ? `$${parseFloat(this.state.purchase_price * this.state.purchase_shares).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}` : `$${parseFloat(0).toFixed(2)}`
         return (
         <div className="transaction-form">
             <div className="buy-sell-buttons">
@@ -109,7 +109,7 @@ class TransactionForm extends React.Component{
         
                         <div className="shares">
                             <label className="share share-two">Market Price</label>
-                            <p className="share share-two">{`$${parseFloat(this.props.close).toFixed(2)}`}</p>
+                            <p className="share share-two">{`$${parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</p>
                         </div>
         
                         <div className="shares">
@@ -119,7 +119,7 @@ class TransactionForm extends React.Component{
         
                         <input type="submit" value="Buy" className="execute-button nav-bar-logout review-button"/>
         
-                        <p className="bp share share-two">Buying power: {this.state.currentBuyingPower}</p>
+                        <p className="bp share share-two">Buying power: ${this.state.currentBuyingPower.replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
                         <p>{this.state.message}</p>
         
                     </div>
@@ -147,7 +147,7 @@ class TransactionForm extends React.Component{
 
                         <div className="shares">
                             <label className="share share-two">Market Price</label>
-                            <p className="share share-two">{`$${parseFloat(this.props.close).toFixed(2)}`}</p>
+                            <p className="share share-two">{`$${parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</p>
                         </div>
 
                         <div className="shares">
