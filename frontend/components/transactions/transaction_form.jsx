@@ -23,6 +23,14 @@ class TransactionForm extends React.Component{
         })
     }
 
+    componentDidUpdate(prevProps){
+        if(this.props.tickerSymbol !== prevProps.tickerSymbol){
+            this.props.fetchTicker(this.props.tickerSymbol).then(response => { 
+                this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
+            })
+        }
+    }
+
     handleBuySubmit(e){
         e.preventDefault();
         let currentBuyingPower = parseFloat(this.state.currentBuyingPower).toFixed(2)
@@ -37,7 +45,6 @@ class TransactionForm extends React.Component{
             
             this.setState({buy: true})
             this.props.executeBuy(tr).then(response => {
-                debugger
                 if (Array.isArray(response.transaction)){
                     this.setState({message: response.transaction[0]})
                 } else {
@@ -89,7 +96,7 @@ class TransactionForm extends React.Component{
         <div className="transaction-form">
             <div className="buy-sell-buttons">
                 <Tabs tabStuff={[
-                    {title:`Buy ${this.props.tickerSymbol}`, content: 
+                    {title:`Buy ${this.props.tickerSymbol.toUpperCase()}`, content: 
                     
                     <form className="t-form" onSubmit={this.handleBuySubmit}>
 
@@ -127,7 +134,7 @@ class TransactionForm extends React.Component{
                     </form>
                     }, 
 
-                    {title: `Sell ${this.props.tickerSymbol}`, content:
+                    {title: `Sell ${this.props.tickerSymbol.toUpperCase()}`, content:
                     
                     <form className="t-form" onSubmit={this.handleSellSubmit}>
 

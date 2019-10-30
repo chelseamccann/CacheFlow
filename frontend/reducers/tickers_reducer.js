@@ -2,7 +2,6 @@ import { RECEIVE_TICKER, RECEIVE_TICKERS } from '../actions/ticker_actions';
 
 const tickerReducer = (state = {}, action) => {
     Object.freeze(state)
-    
     switch(action.type){
         case RECEIVE_TICKERS:
             return action.tickers

@@ -91,6 +91,7 @@ class TickerShow extends React.Component{
             return e => {
                 fetchPrices(this.props.tickerSymbol, timeFrame).then(response => this.renderPrices(response, timeFrame))
             }
+            
         }
     }
 

@@ -2845,9 +2845,22 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var _this3 = this;
+
+      if (this.props.tickerSymbol !== prevProps.tickerSymbol) {
+        this.props.fetchTicker(this.props.tickerSymbol).then(function (response) {
+          _this3.setState({
+            currentTickerNumShares: parseInt(response.ticker.num_shares)
+          });
+        });
+      }
+    }
+  }, {
     key: "handleBuySubmit",
     value: function handleBuySubmit(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       e.preventDefault();
       var currentBuyingPower = parseFloat(this.state.currentBuyingPower).toFixed(2);
@@ -2865,14 +2878,12 @@ function (_React$Component) {
           buy: true
         });
         this.props.executeBuy(tr).then(function (response) {
-          debugger;
-
           if (Array.isArray(response.transaction)) {
-            _this3.setState({
+            _this4.setState({
               message: response.transaction[0]
             });
           } else {
-            _this3.setState({
+            _this4.setState({
               currentBuyingPower: currentBuyingPower - currentCost,
               message: 'Successfully bought!',
               purchase_shares: ''
@@ -2888,7 +2899,7 @@ function (_React$Component) {
   }, {
     key: "handleSellSubmit",
     value: function handleSellSubmit(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       e.preventDefault();
       var currentBuyingPower = parseFloat(this.state.currentBuyingPower);
@@ -2905,11 +2916,11 @@ function (_React$Component) {
       });
       this.props.executeBuy(tr).then(function (response) {
         if (Array.isArray(response.transaction)) {
-          _this4.setState({
+          _this5.setState({
             message: response.transaction[0]
           });
         } else {
-          _this4.setState({
+          _this5.setState({
             currentBuyingPower: currentBuyingPower + currentCost,
             message: 'Successfully sold!',
             purchase_shares: ''
@@ -2920,10 +2931,10 @@ function (_React$Component) {
   }, {
     key: "updateShares",
     value: function updateShares() {
-      var _this5 = this;
+      var _this6 = this;
 
       return function (e) {
-        _this5.setState({
+        _this6.setState({
           purchase_shares: parseInt(e.target.value)
         });
       };
@@ -2947,7 +2958,7 @@ function (_React$Component) {
         className: "buy-sell-buttons"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tabs__WEBPACK_IMPORTED_MODULE_2__["default"], {
         tabStuff: [{
-          title: "Buy ".concat(this.props.tickerSymbol),
+          title: "Buy ".concat(this.props.tickerSymbol.toUpperCase()),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
             className: "t-form",
             onSubmit: this.handleBuySubmit
@@ -2986,7 +2997,7 @@ function (_React$Component) {
             className: "bp share share-two"
           }, "Buying power: $", parseFloat(this.state.currentBuyingPower).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
         }, {
-          title: "Sell ".concat(this.props.tickerSymbol),
+          title: "Sell ".concat(this.props.tickerSymbol.toUpperCase()),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
             className: "t-form",
             onSubmit: this.handleSellSubmit
