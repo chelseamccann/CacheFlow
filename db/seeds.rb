@@ -8,6 +8,7 @@
 
 Ticker.destroy_all
 User.destroy_all
+Transaction.destroy_all
 
 User.create!(email: "JordanBelfort@w.com", password: "password123", buying_power: 1000000)
 
