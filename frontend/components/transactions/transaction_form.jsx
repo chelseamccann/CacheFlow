@@ -48,7 +48,7 @@ class TransactionForm extends React.Component{
                 if (Array.isArray(response.transaction)){
                     this.setState({message: response.transaction[0]})
                 } else {
-                    this.setState({currentBuyingPower: currentBuyingPower - currentCost, message: 'Successfully bought!', purchase_shares: ''})
+                    this.setState({currentBuyingPower: currentBuyingPower - currentCost, message: 'Successfully bought!', purchase_shares: '', currentTickerNumShares: this.state.currentTickerNumShares + this.state.purchase_shares})
                 }
             })
         } else {
@@ -70,7 +70,7 @@ class TransactionForm extends React.Component{
                 if (Array.isArray(response.transaction)){
                     this.setState({message: response.transaction[0]})
                 } else {
-                    this.setState({currentBuyingPower: currentBuyingPower + currentCost, message: 'Successfully sold!', purchase_shares: ''})
+                    this.setState({currentBuyingPower: currentBuyingPower + currentCost, message: 'Successfully sold!', purchase_shares: '', currentTickerNumShares: this.state.currentTickerNumShares - this.state.purchase_shares})
                 }
             })
     }

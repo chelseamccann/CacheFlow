@@ -2889,7 +2889,8 @@ function (_React$Component) {
             _this4.setState({
               currentBuyingPower: currentBuyingPower - currentCost,
               message: 'Successfully bought!',
-              purchase_shares: ''
+              purchase_shares: '',
+              currentTickerNumShares: _this4.state.currentTickerNumShares + _this4.state.purchase_shares
             });
           }
         });
@@ -2926,7 +2927,8 @@ function (_React$Component) {
           _this5.setState({
             currentBuyingPower: currentBuyingPower + currentCost,
             message: 'Successfully sold!',
-            purchase_shares: ''
+            purchase_shares: '',
+            currentTickerNumShares: _this5.state.currentTickerNumShares - _this5.state.purchase_shares
           });
         }
       });
