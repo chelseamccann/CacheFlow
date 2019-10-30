@@ -271,6 +271,7 @@ var receiveTransactions = function receiveTransactions(transactions) {
 var executeBuy = function executeBuy(transaction) {
   return function (dispatch) {
     return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["createTransaction"](transaction).then(function (transaction) {
+      debugger;
       return dispatch(receiveTransaction(transaction));
     });
   };
@@ -1083,8 +1084,10 @@ function (_React$Component) {
     key: "calcVal",
     value: function calcVal(response) {
       var that = this;
+      debugger;
       var data = response.transactions.forEach(function (asset, idx) {
-        // if(this.state["1D"][asset.ticker_symbol] === undefined){
+        debugger; // if(this.state["1D"][asset.ticker_symbol] === undefined){
+
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (price) {
           var num_shares = asset.purchase_shares;
           price.forEach(function (close_price) {
@@ -1205,10 +1208,6 @@ function (_React$Component) {
         })));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ");
-        {
-          /* <ProtectedRoute exact path="/" component={News}/>
-          <ProtectedRoute exact path="/" component={TickerIndexContainer}/></>) */
-        }
       }
     }
   }]);
@@ -3282,6 +3281,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
+  debugger;
 
   switch (action.type) {
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTION"]:

@@ -2,6 +2,7 @@ import { RECEIVE_TRANSACTION, RECEIVE_TRANSACTIONS } from '../actions/transactio
 
 export default (state = {}, action) => {
     Object.freeze(state);
+    debugger
     switch(action.type){
         case RECEIVE_TRANSACTION:
             return Object.assign({}, state, {[action.transaction.id]: action.transaction})

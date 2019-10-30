@@ -14,7 +14,8 @@
 
 class Transaction < ApplicationRecord
     
-    validates :ticker_symbol, :purchase_shares, :purchase_price, :buy, presence: true 
+    validates :ticker_symbol, :purchase_shares, :purchase_price, presence: true 
+    validates :buy, inclusion: { in: [ true, false ] }
     
     belongs_to :user
 

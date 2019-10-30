@@ -12,17 +12,17 @@ class Api::TransactionsController < ApplicationController
         
         @bp = current_user.buying_power 
         cost = @transaction.purchase_price * @transaction.purchase_shares
-
+        debugger
         if @transaction.buy === true && @bp >= cost && @transaction.save!
             new_shares = ticker_current_shares + @transaction.purchase_shares
             current_user.update_attribute(:buying_power, @bp - cost)
             ticker.update_attribute(:num_shares, new_shares)
             render "api/transactions/show" 
 
-        elsif @transaction.buy === false && ticker_current_shares - @transaction.purchase_shares > 0 
+        elsif @transaction.buy === false && ticker_current_shares - @transaction.purchase_shares > 0 && @transaction.save!
             new_shares = ticker_current_shares - @transaction.purchase_shares
             current_user.update_attribute(:buying_power, @bp + cost)
-            ticker.update_attribute(:num_shares, new_shares)      
+            ticker.update_attribute(:num_shares, new_shares)
             render "api/transactions/show" 
 
         elsif @bp < cost      

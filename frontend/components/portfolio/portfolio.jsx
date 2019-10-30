@@ -36,7 +36,9 @@ class Portfolio extends React.Component{
 
     calcVal(response){
         let that = this;
+        debugger
         const data = response.transactions.forEach((asset, idx) => {
+            debugger
             // if(this.state["1D"][asset.ticker_symbol] === undefined){
             fetchDailyPrices(asset.ticker_symbol).then(price => {
 
@@ -141,11 +143,8 @@ class Portfolio extends React.Component{
                 </div>
                 </>
                 )
-            } else {
-                
+            } else { 
                 return <div> </div>
-                {/* <ProtectedRoute exact path="/" component={News}/>
-                <ProtectedRoute exact path="/" component={TickerIndexContainer}/></>) */}
             }
     }
 }
