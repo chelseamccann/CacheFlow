@@ -5,3 +5,12 @@ export const fetchFromAPI = (query) => {
         // url: `https://cloud.iexapis.com/stable/stock/${query}/quote?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
     })
 }
+
+
+export const fetchAllFromAPI = () => {
+    return $.ajax({
+        method: "GET",
+        url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+        // url: `https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    })
+}

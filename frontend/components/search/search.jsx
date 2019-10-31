@@ -1,6 +1,7 @@
 import React from 'react';
-import { fetchFromAPI } from '../../util/search_api_util';
+import { fetchFromAPI, fetchAllFromAPI } from '../../util/search_api_util';
 import { Link, withRouter } from 'react-router-dom'
+import Suggestions from './suggestions'
 
 class Search extends React.Component{
     constructor(props){
@@ -12,12 +13,13 @@ class Search extends React.Component{
         }
         this.onSearchChange = this.onSearchChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.search = this.search.bind(this);
+        this.searchOnSubmit = this.searchOnSubmit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    componentDidMount(){
-        this.search()
-    }
+    // componentDidMount(){
+    //     this.search()
+    // }
 
 
     onSearchChange(e){
@@ -28,28 +30,52 @@ class Search extends React.Component{
 
     handleSubmit(e){
         e.preventDefault();
-        this.search(this.state.inputText); 
+        this.searchOnSubmit(this.state.inputText); 
     }
 
-    search(query){
+    searchOnSubmit(query){
         if (query !== undefined){
         fetchFromAPI(query)
-        .then(response => {
-            this.setState({
-                symbol: response.symbol,
-                isLoading: false,
-                companyName: response.companyName
-            })
-            
-        }).then(() => this.props.history.push(`/${this.state.inputText}`))
-    }
-        // .catch(error => {
-        //     console.error(error)
-        // })
+            .then(response => {
+                this.setState({
+                    symbol: response.symbol,
+                    isLoading: false,
+                    companyName: response.companyName
+                })
+                
+            }).then(() => this.props.history.push(`/${this.state.inputText}`))
+        }
     }
 
+
+    getInfo(){
+        fetchAllFromAPI().then(response => {
+            debugger
+            this.setState({
+                searchResults: response
+            })
+
+            // response.forEach(el => {
+            //     this.setState({
+            //         searchResults: [...this.state.searchResults, ...[el.symbol] ]
+            //       })
+            // })
+          })
+      }
+    
+      handleInputChange(){
+        this.setState({ inputText: event.target.value }, () => {
+          if (this.state.inputText && this.state.inputText.length === 1) {
+            // if (this.state.inputText.length % 2 === 0) {
+              this.getInfo()
+            // }
+          }
+        })
+      }
+
     render(){
-        if(!this.isLoading){
+        debugger
+        if(!this.isLoading || this.state.searchResults.length <= 5){
             return (
                 <>
                 <form onSubmit={this.handleSubmit}>
@@ -57,11 +83,12 @@ class Search extends React.Component{
                     id="search"
                     autoComplete="off"
                     type="search" 
-                    onChange={this.onSearchChange}
+                    // ref={input => this.searchOnSubmit = input}
                     // ref={(input) => this.inputText = input}
+                    onChange={this.handleInputChange}
                     />
                     <button className="search-button"></button>
-
+                    <Suggestions results={this.state.searchResults.slice(0,5)}/>
                 </form>
                 </>
             )
