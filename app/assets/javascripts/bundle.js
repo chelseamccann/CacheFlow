@@ -1572,6 +1572,10 @@ function (_React$Component) {
           // if (this.state.inputText.length % 2 === 0) {
           _this4.getInfo(); // }
 
+        } else if (_this4.state.inputText.length === 0) {
+          _this4.setState({
+            searchResults: []
+          });
         }
       });
     }

@@ -69,6 +69,8 @@ class Search extends React.Component{
             // if (this.state.inputText.length % 2 === 0) {
               this.getInfo()
             // }
+          } else if (this.state.inputText.length === 0){
+              this.setState({ searchResults: [] })
           }
         })
       }
