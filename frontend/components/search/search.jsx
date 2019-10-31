@@ -49,7 +49,7 @@ class Search extends React.Component{
 
 
     getInfo(){
-        fetchAllFromAPI().then(response => {
+        fetchAllFromAPI(this.state.inputText).then(response => {
             debugger
             this.setState({
                 searchResults: response
@@ -65,7 +65,7 @@ class Search extends React.Component{
     
       handleInputChange(){
         this.setState({ inputText: event.target.value }, () => {
-          if (this.state.inputText && this.state.inputText.length === 1) {
+          if (this.state.inputText && this.state.inputText.length > 0) {
             // if (this.state.inputText.length % 2 === 0) {
               this.getInfo()
             // }

@@ -1547,7 +1547,7 @@ function (_React$Component) {
     value: function getInfo() {
       var _this3 = this;
 
-      Object(_util_search_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchAllFromAPI"])().then(function (response) {
+      Object(_util_search_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchAllFromAPI"])(this.state.inputText).then(function (response) {
         debugger;
 
         _this3.setState({
@@ -1568,7 +1568,7 @@ function (_React$Component) {
       this.setState({
         inputText: event.target.value
       }, function () {
-        if (_this4.state.inputText && _this4.state.inputText.length === 1) {
+        if (_this4.state.inputText && _this4.state.inputText.length > 0) {
           // if (this.state.inputText.length % 2 === 0) {
           _this4.getInfo(); // }
 
@@ -3512,10 +3512,11 @@ var fetchFromAPI = function fetchFromAPI(query) {
 
   });
 };
-var fetchAllFromAPI = function fetchAllFromAPI() {
+var fetchAllFromAPI = function fetchAllFromAPI(query) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa" // url: `https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://sandbox.iexapis.com/stable/search/".concat(query, "?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    // url: `https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
 
   });
 };

@@ -7,10 +7,12 @@ export const fetchFromAPI = (query) => {
 }
 
 
-export const fetchAllFromAPI = () => {
+export const fetchAllFromAPI = (query) => {
     return $.ajax({
         method: "GET",
-        url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+        url: `https://sandbox.iexapis.com/stable/search/${query}?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
+        // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
         // url: `https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
     })
 }
