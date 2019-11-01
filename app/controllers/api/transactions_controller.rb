@@ -7,11 +7,11 @@ class Api::TransactionsController < ApplicationController
 
         ticker = Ticker.find_by(symbol: params[:transaction][:ticker_symbol].upcase)
 
-        debugger
         # CHECK IF IN DB, IF NOT CREATE IT
         if ticker === nil 
             Ticker.create!(symbol: params[:transaction][:ticker_symbol].upcase, num_shares: 0) #ADD CREATE IN TICKER
         end
+        debugger
         ticker_current_shares = ticker.num_shares
         
         @transaction.ticker_id = ticker.id

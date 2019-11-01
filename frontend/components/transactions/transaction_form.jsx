@@ -9,6 +9,7 @@ class TransactionForm extends React.Component{
             purchase_price: this.props.close,
             ticker_symbol: this.props.tickerSymbol,
             currentBuyingPower: this.props.currentBuyingPower,
+            currentTickerNumShares: 0,
             message: ""
         };
 
@@ -18,9 +19,6 @@ class TransactionForm extends React.Component{
     }
 
     componentDidMount(){
-        // ADD A DISPATCH TO CREATE TICKER IN DB
-
-        
         this.props.fetchTicker(this.state.ticker_symbol).then(response => { 
             this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
         })
@@ -29,7 +27,7 @@ class TransactionForm extends React.Component{
     componentDidUpdate(prevProps){
         if(this.props.tickerSymbol !== prevProps.tickerSymbol){
             this.props.fetchTicker(this.props.tickerSymbol).then(response => { 
-                this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
+                this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares) || 0})
             })
         }
     }

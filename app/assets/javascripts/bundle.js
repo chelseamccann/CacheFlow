@@ -2880,6 +2880,7 @@ function (_React$Component) {
       purchase_price: _this.props.close,
       ticker_symbol: _this.props.tickerSymbol,
       currentBuyingPower: _this.props.currentBuyingPower,
+      currentTickerNumShares: 0,
       message: ""
     };
     _this.handleBuySubmit = _this.handleBuySubmit.bind(_assertThisInitialized(_this));
@@ -2893,7 +2894,6 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      // ADD A DISPATCH TO CREATE TICKER IN DB
       this.props.fetchTicker(this.state.ticker_symbol).then(function (response) {
         _this2.setState({
           currentTickerNumShares: parseInt(response.ticker.num_shares)
@@ -2908,7 +2908,7 @@ function (_React$Component) {
       if (this.props.tickerSymbol !== prevProps.tickerSymbol) {
         this.props.fetchTicker(this.props.tickerSymbol).then(function (response) {
           _this3.setState({
-            currentTickerNumShares: parseInt(response.ticker.num_shares)
+            currentTickerNumShares: parseInt(response.ticker.num_shares) || 0
           });
         });
       }
