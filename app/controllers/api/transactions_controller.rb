@@ -11,7 +11,6 @@ class Api::TransactionsController < ApplicationController
         if ticker === nil 
             Ticker.create!(symbol: params[:transaction][:ticker_symbol].upcase, num_shares: 0) #ADD CREATE IN TICKER
         end
-        debugger
         ticker_current_shares = ticker.num_shares
         
         @transaction.ticker_id = ticker.id
@@ -25,7 +24,7 @@ class Api::TransactionsController < ApplicationController
             ticker.update_attribute(:num_shares, new_shares)
             render "api/transactions/show" 
 
-        elsif @transaction.buy === false && ticker_current_shares - @transaction.purchase_shares > 0 && @transaction.save!
+        elsif @transaction.buy === false && ticker_current_shares - @transaction.purchase_shares >= 0 && @transaction.save!
             new_shares = ticker_current_shares - @transaction.purchase_shares
             current_user.update_attribute(:buying_power, @bp + cost)
             ticker.update_attribute(:num_shares, new_shares)

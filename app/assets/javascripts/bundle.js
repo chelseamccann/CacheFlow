@@ -995,6 +995,99 @@ function (_React$Component) {
 
 /***/ }),
 
+/***/ "./frontend/components/owned_stocks/owned_stocks.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/owned_stocks/owned_stocks.jsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/ticker_api_util */ "./frontend/util/ticker_api_util.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var OwnedStocks =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(OwnedStocks, _React$Component);
+
+  function OwnedStocks(props) {
+    var _this;
+
+    _classCallCheck(this, OwnedStocks);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(OwnedStocks).call(this, props));
+    _this.state = {
+      owned: []
+    };
+    return _this;
+  }
+
+  _createClass(OwnedStocks, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      Object(_util_ticker_api_util__WEBPACK_IMPORTED_MODULE_1__["APIfetchTickers"])().then(function (results) {
+        _this2.setState({
+          owned: results
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var symbols = Object.values(this.state.owned).map(function (el, idx) {
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: "".concat(el, "-").concat(idx),
+          className: "each-ticker watchlist-ticker"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: "/".concat(el.symbol),
+          id: el.id
+        }, el.symbol));
+      });
+      debugger;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "ticker-index block-paddings"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "watchlist"
+      }, "Portfolio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "watchlists"
+      }, symbols));
+    }
+  }]);
+
+  return OwnedStocks;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (OwnedStocks);
+
+/***/ }),
+
 /***/ "./frontend/components/portfolio/portfolio.jsx":
 /*!*****************************************************!*\
   !*** ./frontend/components/portfolio/portfolio.jsx ***!
@@ -1011,6 +1104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _portfolio_chart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./portfolio_chart */ "./frontend/components/portfolio/portfolio_chart.jsx");
 /* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 /* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
+/* harmony import */ var _owned_stocks_owned_stocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../owned_stocks/owned_stocks */ "./frontend/components/owned_stocks/owned_stocks.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1030,6 +1124,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1084,10 +1179,8 @@ function (_React$Component) {
     key: "calcVal",
     value: function calcVal(response) {
       var that = this;
-      debugger;
       var data = response.transactions.forEach(function (asset, idx) {
-        debugger; // if(this.state["1D"][asset.ticker_symbol] === undefined){
-
+        // if(this.state["1D"][asset.ticker_symbol] === undefined){
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (price) {
           var num_shares = asset.purchase_shares;
           price.forEach(function (close_price) {
@@ -1183,7 +1276,7 @@ function (_React$Component) {
       });
 
       if (this.state.fetched) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_owned_stocks_owned_stocks__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
           exact: true,
           path: "/",
           component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -2222,19 +2315,24 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var tickers = this.props.tickers.map(function (ticker, idx) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: "".concat(ticker, "-").concat(idx),
-          className: "each-ticker watchlist-ticker"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-          to: "/".concat(ticker.symbol),
-          id: ticker.id
-        }, ticker.symbol));
+        debugger;
+
+        if (ticker.num_shares > 0) {
+          debugger;
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: "".concat(ticker, "-").concat(idx),
+            className: "each-ticker watchlist-ticker"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            to: "/".concat(ticker.symbol),
+            id: ticker.id
+          }, ticker.symbol, " ", ticker.num_shares));
+        }
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "ticker-index block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "watchlist"
-      }, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Portfolio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "watchlists"
       }, tickers));
     }

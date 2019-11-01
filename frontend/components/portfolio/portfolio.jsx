@@ -4,6 +4,7 @@ import {ProtectedRoute} from '../../util/route_utils';
 import PortfolioChart from './portfolio_chart'
 import { fetchDailyPrices, fetchPrices } from '../../util/ticker_data_api_util';
 import News from '../news/news';
+import OwnedStocks from '../owned_stocks/owned_stocks';
 
 class Portfolio extends React.Component{
     constructor(props){
@@ -36,9 +37,9 @@ class Portfolio extends React.Component{
 
     calcVal(response){
         let that = this;
-        debugger
+        
         const data = response.transactions.forEach((asset, idx) => {
-            debugger
+            
             // if(this.state["1D"][asset.ticker_symbol] === undefined){
             fetchDailyPrices(asset.ticker_symbol).then(price => {
 
@@ -123,7 +124,7 @@ class Portfolio extends React.Component{
         if(this.state.fetched){
             return (
                 <>
-                
+                <OwnedStocks/>
                 <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
                 <div className="chart-and-news-wrap">
                 <div className="chart-wrap"> 
