@@ -5,6 +5,7 @@ import { executeBuy } from '../../actions/transaction_actions';
 import TickerShow from './ticker_show';
 
 const mapStateToProps = (state, ownProps) => {
+
   let userId = state.session.id;
   let tickerSymbol = ownProps.match.params.tickerSymbol
   

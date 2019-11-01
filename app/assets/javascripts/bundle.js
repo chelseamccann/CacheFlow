@@ -1507,10 +1507,7 @@ function (_React$Component) {
     _this.searchOnSubmit = _this.searchOnSubmit.bind(_assertThisInitialized(_this));
     _this.handleInputChange = _this.handleInputChange.bind(_assertThisInitialized(_this));
     return _this;
-  } // componentDidMount(){
-  //     this.search()
-  // }
-
+  }
 
   _createClass(Search, [{
     key: "onSearchChange",
@@ -1535,7 +1532,8 @@ function (_React$Component) {
           _this2.setState({
             symbol: response.symbol,
             isLoading: false,
-            companyName: response.companyName
+            companyName: response.companyName,
+            searchResults: []
           });
         }).then(function () {
           return _this2.props.history.push("/".concat(_this2.state.inputText));
@@ -1548,16 +1546,9 @@ function (_React$Component) {
       var _this3 = this;
 
       Object(_util_search_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchAllFromAPI"])(this.state.inputText).then(function (response) {
-        debugger;
-
         _this3.setState({
           searchResults: response
-        }); // response.forEach(el => {
-        //     this.setState({
-        //         searchResults: [...this.state.searchResults, ...[el.symbol] ]
-        //       })
-        // })
-
+        });
       });
     }
   }, {
@@ -1569,9 +1560,7 @@ function (_React$Component) {
         inputText: event.target.value
       }, function () {
         if (_this4.state.inputText && _this4.state.inputText.length > 0) {
-          // if (this.state.inputText.length % 2 === 0) {
-          _this4.getInfo(); // }
-
+          _this4.getInfo();
         } else if (_this4.state.inputText.length === 0) {
           _this4.setState({
             searchResults: []
@@ -1582,8 +1571,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
-
       if (!this.isLoading || this.state.searchResults.length <= 5) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleSubmit
@@ -1600,7 +1587,7 @@ function (_React$Component) {
           results: this.state.searchResults.slice(0, 5)
         })));
       } else {
-        return " ";
+        return "";
       }
     }
   }]);
@@ -1626,7 +1613,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Suggestions = function Suggestions(props) {
-  debugger;
   var options = props.results.map(function (r, idx) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: idx
@@ -2907,6 +2893,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      // ADD A DISPATCH TO CREATE TICKER IN DB
       this.props.fetchTicker(this.state.ticker_symbol).then(function (response) {
         _this2.setState({
           currentTickerNumShares: parseInt(response.ticker.num_shares)

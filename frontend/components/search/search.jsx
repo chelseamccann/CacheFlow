@@ -17,11 +17,6 @@ class Search extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    // componentDidMount(){
-    //     this.search()
-    // }
-
-
     onSearchChange(e){
         this.setState({
             inputText: e.target.value
@@ -40,7 +35,8 @@ class Search extends React.Component{
                 this.setState({
                     symbol: response.symbol,
                     isLoading: false,
-                    companyName: response.companyName
+                    companyName: response.companyName,
+                    searchResults: []
                 })
                 
             }).then(() => this.props.history.push(`/${this.state.inputText}`))
@@ -50,25 +46,16 @@ class Search extends React.Component{
 
     getInfo(){
         fetchAllFromAPI(this.state.inputText).then(response => {
-            debugger
             this.setState({
                 searchResults: response
             })
-
-            // response.forEach(el => {
-            //     this.setState({
-            //         searchResults: [...this.state.searchResults, ...[el.symbol] ]
-            //       })
-            // })
           })
       }
     
       handleInputChange(){
         this.setState({ inputText: event.target.value }, () => {
           if (this.state.inputText && this.state.inputText.length > 0) {
-            // if (this.state.inputText.length % 2 === 0) {
               this.getInfo()
-            // }
           } else if (this.state.inputText.length === 0){
               this.setState({ searchResults: [] })
           }
@@ -76,7 +63,7 @@ class Search extends React.Component{
       }
 
     render(){
-        debugger
+
         if(!this.isLoading || this.state.searchResults.length <= 5){
             return (
                 <>
@@ -95,7 +82,7 @@ class Search extends React.Component{
                 </>
             )
         } else {
-            return " "
+            return ""
         }
     }
 }

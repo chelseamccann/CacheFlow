@@ -1,5 +1,11 @@
 class Api::TickersController < ApplicationController 
 
+    def create
+        @ticker = Ticker.new(ticker_params)
+        debugger
+        @ticker.save
+    end
+
     def index
         @tickers = Ticker.all
         render :index

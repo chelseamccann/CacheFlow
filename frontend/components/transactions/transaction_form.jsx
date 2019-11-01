@@ -18,6 +18,9 @@ class TransactionForm extends React.Component{
     }
 
     componentDidMount(){
+        // ADD A DISPATCH TO CREATE TICKER IN DB
+
+        
         this.props.fetchTicker(this.state.ticker_symbol).then(response => { 
             this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
         })
