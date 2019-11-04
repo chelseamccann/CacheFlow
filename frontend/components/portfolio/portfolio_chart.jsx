@@ -28,6 +28,13 @@ class PortfolioChart extends React.Component {
             this.setState({chartY: e.chartY}) 
             this.setState({change: parseFloat(change.toFixed(2))})
             this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+
+
+            // this.setState({closeValue: hoverValue, 
+            //     chartX: e.chartX,
+            //     chartY: e.chartY,
+            //     change: parseFloat(change.toFixed(2)),
+            //     percentChange: parseFloat(dailyPercentChange).toFixed(2)})
         }
     }
 

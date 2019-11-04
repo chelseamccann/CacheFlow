@@ -17,9 +17,7 @@ class TickerIndex extends React.Component{
     render(){
          
         const tickers = this.props.tickers.map((ticker, idx) => {
-            debugger
             if (ticker.num_shares > 0){
-                debugger
                 return (
                     <li key={`${ticker}-${idx}`} className="each-ticker watchlist-ticker">
                         <Link to={`/${ticker.symbol}`} id={ticker.id}>

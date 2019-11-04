@@ -6,9 +6,10 @@ export const APIfetchTickers = () => (
 )
 
 
-export const APIfetchTicker = id => (
-    $.ajax({
+export const APIfetchTicker = tickerSymbol => {
+    debugger
+    return $.ajax({
         method: 'GET',
-        url: `api/tickers/${id}`
+        url: `api/tickers/${tickerSymbol}`
     })
-)
+}

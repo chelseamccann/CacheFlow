@@ -200,9 +200,9 @@ var fetchTickers = function fetchTickers() {
     });
   };
 };
-var fetchTicker = function fetchTicker(tickerId) {
+var fetchTicker = function fetchTicker(tickerSymbol) {
   return function (dispatch) {
-    return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["APIfetchTicker"](tickerId).then(function (ticker) {
+    return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["APIfetchTicker"](tickerSymbol).then(function (ticker) {
       return dispatch(receiveTicker(ticker));
     });
   };
@@ -995,99 +995,6 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./frontend/components/owned_stocks/owned_stocks.jsx":
-/*!***********************************************************!*\
-  !*** ./frontend/components/owned_stocks/owned_stocks.jsx ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/ticker_api_util */ "./frontend/util/ticker_api_util.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-
-var OwnedStocks =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(OwnedStocks, _React$Component);
-
-  function OwnedStocks(props) {
-    var _this;
-
-    _classCallCheck(this, OwnedStocks);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(OwnedStocks).call(this, props));
-    _this.state = {
-      owned: []
-    };
-    return _this;
-  }
-
-  _createClass(OwnedStocks, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      Object(_util_ticker_api_util__WEBPACK_IMPORTED_MODULE_1__["APIfetchTickers"])().then(function (results) {
-        _this2.setState({
-          owned: results
-        });
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var symbols = Object.values(this.state.owned).map(function (el, idx) {
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: "".concat(el, "-").concat(idx),
-          className: "each-ticker watchlist-ticker"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-          to: "/".concat(el.symbol),
-          id: el.id
-        }, el.symbol));
-      });
-      debugger;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "ticker-index block-paddings"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-        className: "watchlist"
-      }, "Portfolio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "watchlists"
-      }, symbols));
-    }
-  }]);
-
-  return OwnedStocks;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (OwnedStocks);
-
-/***/ }),
-
 /***/ "./frontend/components/portfolio/portfolio.jsx":
 /*!*****************************************************!*\
   !*** ./frontend/components/portfolio/portfolio.jsx ***!
@@ -1104,7 +1011,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _portfolio_chart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./portfolio_chart */ "./frontend/components/portfolio/portfolio_chart.jsx");
 /* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 /* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
-/* harmony import */ var _owned_stocks_owned_stocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../owned_stocks/owned_stocks */ "./frontend/components/owned_stocks/owned_stocks.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1124,7 +1030,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -1161,8 +1066,9 @@ function (_React$Component) {
       portfolioValue: null
     };
     _this.dailyPrices = {};
+    _this.weeklyPrices = {};
     _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
-    _this.calcVal = _this.calcVal.bind(_assertThisInitialized(_this));
+    _this.dailyVal = _this.dailyVal.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1172,22 +1078,29 @@ function (_React$Component) {
       var _this2 = this;
 
       this.props.fetchTransactions().then(function (response) {
-        return _this2.calcVal(response);
-      });
+        // debugger
+        _this2.setState({
+          transactions: response.transactions
+        });
+
+        _this2.dailyVal(response);
+      }); // DAILY PORTFOLIO CALC
     }
   }, {
-    key: "calcVal",
-    value: function calcVal(response) {
+    key: "dailyVal",
+    value: function dailyVal(response) {
+      // DAILY PORTFOLIO CALC
       var that = this;
       var data = response.transactions.forEach(function (asset, idx) {
         // if(this.state["1D"][asset.ticker_symbol] === undefined){
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (price) {
+          debugger;
           var num_shares = asset.purchase_shares;
           price.forEach(function (close_price) {
             var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))).toLocaleString('en-US');
 
             if (close_price.close !== null) {
-              if (that.dailyPrices[date] === 0 || that.dailyPrices[date] > 0) {
+              if (that.dailyPrices[date] >= 0) {
                 that.dailyPrices[date] += close_price.close * num_shares;
               } else {
                 that.dailyPrices[date] = close_price.close * num_shares;
@@ -1215,7 +1128,9 @@ function (_React$Component) {
     value: function renderPrices(response, timeFramePassed) {
       var _this$setState;
 
-      this.calcVal(reponse);
+      // NEVER CALLED
+      debugger;
+      this.dailyVal(reponse);
       this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _this$setState));
     }
   }, {
@@ -1224,39 +1139,43 @@ function (_React$Component) {
       var _this3 = this;
 
       if (this.state.timeFrame !== timeFrame) {
+        // CLICKED TIMEFRAME CALC
+        this.weeklyPrices = {};
         return function (e) {
+          // let that = this;
+          // this.state.transactions
+          ///////////////////////////////////////// OLD //////////////////////////////////////
           var that = _this3;
-          that.props.fetchTransactions().then(function (response) {
-            return response.transactions.forEach(function (asset, idx) {
-              Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (price) {
-                var num_shares = asset.purchase_shares;
-                price.forEach(function (close_price) {
-                  var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))).toLocaleString('en-US');
+          Object.values(_this3.state.transactions).forEach(function (asset, idx) {
+            Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (price) {
+              // debugger
+              var num_shares = asset.purchase_shares;
+              price.forEach(function (close_price) {
+                var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))).toLocaleString('en-US');
 
-                  if (close_price.close !== null) {
-                    if (that.dailyPrices[date] === 0 || that.dailyPrices[date] > 0) {
-                      that.dailyPrices[date] += close_price.close * num_shares;
-                    } else {
-                      that.dailyPrices[date] = close_price.close * num_shares;
-                    }
+                if (close_price.close !== null && date !== "Invalid Date") {
+                  if (that.weeklyPrices[date] === 0 || that.weeklyPrices[date] > 0) {
+                    that.weeklyPrices[date] += close_price.close * num_shares;
+                  } else {
+                    that.weeklyPrices[date] = close_price.close * num_shares;
                   }
-                });
-
-                if (idx === response.transactions.length - 1) {
-                  var newArr = Object.keys(that.dailyPrices).map(function (key) {
-                    return {
-                      "date": key,
-                      "value": that.dailyPrices[key]
-                    };
-                  });
-                  that.setState({
-                    fetched: true,
-                    "1D": newArr
-                  });
                 }
               });
+
+              if (idx === _this3.state.transactions.length - 1) {
+                var newArr = Object.keys(that.weeklyPrices).map(function (key) {
+                  return {
+                    "date": key,
+                    "value": that.weeklyPrices[key]
+                  };
+                });
+                that.setState({
+                  fetched: true,
+                  "1D": newArr
+                });
+              }
             });
-          });
+          }); ///////////////////////////////////////// OLD //////////////////////////////////////
         };
       }
     }
@@ -1274,9 +1193,10 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
+      debugger;
 
       if (this.state.fetched) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_owned_stocks_owned_stocks__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
           exact: true,
           path: "/",
           component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -1392,7 +1312,11 @@ function (_React$Component) {
         });
         this.setState({
           percentChange: parseFloat(dailyPercentChange).toFixed(2)
-        });
+        }); // this.setState({closeValue: hoverValue, 
+        //     chartX: e.chartX,
+        //     chartY: e.chartY,
+        //     change: parseFloat(change.toFixed(2)),
+        //     percentChange: parseFloat(dailyPercentChange).toFixed(2)})
       }
     }
   }, {
@@ -2315,10 +2239,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var tickers = this.props.tickers.map(function (ticker, idx) {
-        debugger;
-
         if (ticker.num_shares > 0) {
-          debugger;
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             key: "".concat(ticker, "-").concat(idx),
             className: "each-ticker watchlist-ticker"
@@ -2985,36 +2906,27 @@ function (_React$Component) {
     _this.handleSellSubmit = _this.handleSellSubmit.bind(_assertThisInitialized(_this));
     _this.updateShares = _this.updateShares.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // componentDidMount(){
+  //     debugger
+  //     this.props.fetchTicker(this.state.ticker_symbol).then(response => { 
+  //         this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
+  //     })
+  // }
+  // componentDidUpdate(prevProps){
+  //     if(this.props.tickerSymbol !== prevProps.tickerSymbol){
+  //         debugger
+  //         this.props.fetchTicker(this.props.tickerSymbol).then(response => { 
+  //             debugger
+  //             this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares) || 0})
+  //         })
+  //     }
+  // }
+
 
   _createClass(TransactionForm, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      this.props.fetchTicker(this.state.ticker_symbol).then(function (response) {
-        _this2.setState({
-          currentTickerNumShares: parseInt(response.ticker.num_shares)
-        });
-      });
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      var _this3 = this;
-
-      if (this.props.tickerSymbol !== prevProps.tickerSymbol) {
-        this.props.fetchTicker(this.props.tickerSymbol).then(function (response) {
-          _this3.setState({
-            currentTickerNumShares: parseInt(response.ticker.num_shares) || 0
-          });
-        });
-      }
-    }
-  }, {
     key: "handleBuySubmit",
     value: function handleBuySubmit(e) {
-      var _this4 = this;
+      var _this2 = this;
 
       e.preventDefault();
       var currentBuyingPower = parseFloat(this.state.currentBuyingPower).toFixed(2);
@@ -3033,15 +2945,15 @@ function (_React$Component) {
         });
         this.props.executeBuy(tr).then(function (response) {
           if (Array.isArray(response.transaction)) {
-            _this4.setState({
+            _this2.setState({
               message: response.transaction[0]
             });
           } else {
-            _this4.setState({
+            _this2.setState({
               currentBuyingPower: currentBuyingPower - currentCost,
               message: 'Successfully bought!',
               purchase_shares: '',
-              currentTickerNumShares: _this4.state.currentTickerNumShares + _this4.state.purchase_shares
+              currentTickerNumShares: _this2.state.currentTickerNumShares + _this2.state.purchase_shares
             });
           }
         });
@@ -3054,7 +2966,7 @@ function (_React$Component) {
   }, {
     key: "handleSellSubmit",
     value: function handleSellSubmit(e) {
-      var _this5 = this;
+      var _this3 = this;
 
       e.preventDefault();
       var currentBuyingPower = parseFloat(this.state.currentBuyingPower);
@@ -3071,15 +2983,15 @@ function (_React$Component) {
       });
       this.props.executeBuy(tr).then(function (response) {
         if (Array.isArray(response.transaction)) {
-          _this5.setState({
+          _this3.setState({
             message: response.transaction[0]
           });
         } else {
-          _this5.setState({
+          _this3.setState({
             currentBuyingPower: currentBuyingPower + currentCost,
             message: 'Successfully sold!',
             purchase_shares: '',
-            currentTickerNumShares: _this5.state.currentTickerNumShares - _this5.state.purchase_shares
+            currentTickerNumShares: _this3.state.currentTickerNumShares - _this3.state.purchase_shares
           });
         }
       });
@@ -3087,10 +2999,10 @@ function (_React$Component) {
   }, {
     key: "updateShares",
     value: function updateShares() {
-      var _this6 = this;
+      var _this4 = this;
 
       return function (e) {
-        _this6.setState({
+        _this4.setState({
           purchase_shares: parseInt(e.target.value)
         });
       };
@@ -3405,6 +3317,7 @@ var tickerReducer = function tickerReducer() {
       return action.tickers;
 
     case _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKER"]:
+      debugger;
       return Object.assign({}, state, _defineProperty({}, action.ticker.symbol, action.ticker.num_shares));
 
     default:
@@ -3668,10 +3581,11 @@ var APIfetchTickers = function APIfetchTickers() {
     url: 'api/tickers'
   });
 };
-var APIfetchTicker = function APIfetchTicker(id) {
+var APIfetchTicker = function APIfetchTicker(tickerSymbol) {
+  debugger;
   return $.ajax({
     method: 'GET',
-    url: "api/tickers/".concat(id)
+    url: "api/tickers/".concat(tickerSymbol)
   });
 };
 

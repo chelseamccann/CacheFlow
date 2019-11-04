@@ -12,6 +12,7 @@ class Api::TickersController < ApplicationController
     end
 
     def show
+        debugger
         @ticker = Ticker.find_by(symbol: params[:id].upcase)
         render json: @ticker
     end
