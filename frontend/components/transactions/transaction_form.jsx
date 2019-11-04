@@ -19,7 +19,6 @@ class TransactionForm extends React.Component{
     }
     
     componentDidMount(){
-        debugger
         this.props.fetchTicker(this.state.ticker_symbol).then(response => { 
             this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
         })
@@ -27,9 +26,7 @@ class TransactionForm extends React.Component{
 
     componentDidUpdate(prevProps){
         if(this.props.tickerSymbol !== prevProps.tickerSymbol){
-            debugger
             this.props.fetchTicker(this.props.tickerSymbol).then(response => { 
-                debugger
                 this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares) || 0})
             })
         }
