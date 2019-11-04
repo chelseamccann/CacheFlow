@@ -2,7 +2,6 @@ class Api::TickersController < ApplicationController
 
     def create
         @ticker = Ticker.new(ticker_params)
-        debugger
         @ticker.save
     end
 
@@ -12,8 +11,10 @@ class Api::TickersController < ApplicationController
     end
 
     def show
-        debugger
         @ticker = Ticker.find_by(symbol: params[:id].upcase)
+        if @ticker === nil 
+            @ticker = Ticker.create!(symbol: params[:id].upcase, num_shares: 0) #ADD CREATE IN TICKER
+        end
         render json: @ticker
     end
 

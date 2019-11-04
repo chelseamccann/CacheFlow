@@ -19,5 +19,6 @@ export const fetchTickers = () => dispatch => TickerApiUtil.APIfetchTickers()
 
 export const fetchTicker = tickerSymbol => dispatch => TickerApiUtil.APIfetchTicker(tickerSymbol)
     .then(ticker => {
-        return dispatch(receiveTicker(ticker))
+        debugger
+        return dispatch(receiveTicker(ticker)) 
     })

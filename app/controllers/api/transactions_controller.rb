@@ -4,17 +4,13 @@ class Api::TransactionsController < ApplicationController
         
         @transaction = Transaction.new(transaction_params)
         @transaction.user_id = current_user.id
-
         ticker = Ticker.find_by(symbol: params[:transaction][:ticker_symbol].upcase)
-
         # CHECK IF IN DB, IF NOT CREATE IT
-        debugger
         if ticker === nil 
             ticker = Ticker.create!(symbol: params[:transaction][:ticker_symbol].upcase, num_shares: 0) #ADD CREATE IN TICKER
         end
-        debugger
+
         ticker_current_shares = ticker.num_shares
-        
         @transaction.ticker_id = ticker.id
         
         @bp = current_user.buying_power 

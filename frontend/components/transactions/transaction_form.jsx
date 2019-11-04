@@ -17,23 +17,23 @@ class TransactionForm extends React.Component{
         this.handleSellSubmit = this.handleSellSubmit.bind(this);
         this.updateShares = this.updateShares.bind(this);
     }
+    
+    componentDidMount(){
+        debugger
+        this.props.fetchTicker(this.state.ticker_symbol).then(response => { 
+            this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
+        })
+    }
 
-    // componentDidMount(){
-    //     debugger
-    //     this.props.fetchTicker(this.state.ticker_symbol).then(response => { 
-    //         this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
-    //     })
-    // }
-
-    // componentDidUpdate(prevProps){
-    //     if(this.props.tickerSymbol !== prevProps.tickerSymbol){
-    //         debugger
-    //         this.props.fetchTicker(this.props.tickerSymbol).then(response => { 
-    //             debugger
-    //             this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares) || 0})
-    //         })
-    //     }
-    // }
+    componentDidUpdate(prevProps){
+        if(this.props.tickerSymbol !== prevProps.tickerSymbol){
+            debugger
+            this.props.fetchTicker(this.props.tickerSymbol).then(response => { 
+                debugger
+                this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares) || 0})
+            })
+        }
+    }
 
     handleBuySubmit(e){
         e.preventDefault();

@@ -203,6 +203,7 @@ var fetchTickers = function fetchTickers() {
 var fetchTicker = function fetchTicker(tickerSymbol) {
   return function (dispatch) {
     return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["APIfetchTicker"](tickerSymbol).then(function (ticker) {
+      debugger;
       return dispatch(receiveTicker(ticker));
     });
   };
@@ -2906,27 +2907,40 @@ function (_React$Component) {
     _this.handleSellSubmit = _this.handleSellSubmit.bind(_assertThisInitialized(_this));
     _this.updateShares = _this.updateShares.bind(_assertThisInitialized(_this));
     return _this;
-  } // componentDidMount(){
-  //     debugger
-  //     this.props.fetchTicker(this.state.ticker_symbol).then(response => { 
-  //         this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares)})
-  //     })
-  // }
-  // componentDidUpdate(prevProps){
-  //     if(this.props.tickerSymbol !== prevProps.tickerSymbol){
-  //         debugger
-  //         this.props.fetchTicker(this.props.tickerSymbol).then(response => { 
-  //             debugger
-  //             this.setState({currentTickerNumShares: parseInt(response.ticker.num_shares) || 0})
-  //         })
-  //     }
-  // }
-
+  }
 
   _createClass(TransactionForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      debugger;
+      this.props.fetchTicker(this.state.ticker_symbol).then(function (response) {
+        _this2.setState({
+          currentTickerNumShares: parseInt(response.ticker.num_shares)
+        });
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var _this3 = this;
+
+      if (this.props.tickerSymbol !== prevProps.tickerSymbol) {
+        debugger;
+        this.props.fetchTicker(this.props.tickerSymbol).then(function (response) {
+          debugger;
+
+          _this3.setState({
+            currentTickerNumShares: parseInt(response.ticker.num_shares) || 0
+          });
+        });
+      }
+    }
+  }, {
     key: "handleBuySubmit",
     value: function handleBuySubmit(e) {
-      var _this2 = this;
+      var _this4 = this;
 
       e.preventDefault();
       var currentBuyingPower = parseFloat(this.state.currentBuyingPower).toFixed(2);
@@ -2945,15 +2959,15 @@ function (_React$Component) {
         });
         this.props.executeBuy(tr).then(function (response) {
           if (Array.isArray(response.transaction)) {
-            _this2.setState({
+            _this4.setState({
               message: response.transaction[0]
             });
           } else {
-            _this2.setState({
+            _this4.setState({
               currentBuyingPower: currentBuyingPower - currentCost,
               message: 'Successfully bought!',
               purchase_shares: '',
-              currentTickerNumShares: _this2.state.currentTickerNumShares + _this2.state.purchase_shares
+              currentTickerNumShares: _this4.state.currentTickerNumShares + _this4.state.purchase_shares
             });
           }
         });
@@ -2966,7 +2980,7 @@ function (_React$Component) {
   }, {
     key: "handleSellSubmit",
     value: function handleSellSubmit(e) {
-      var _this3 = this;
+      var _this5 = this;
 
       e.preventDefault();
       var currentBuyingPower = parseFloat(this.state.currentBuyingPower);
@@ -2983,15 +2997,15 @@ function (_React$Component) {
       });
       this.props.executeBuy(tr).then(function (response) {
         if (Array.isArray(response.transaction)) {
-          _this3.setState({
+          _this5.setState({
             message: response.transaction[0]
           });
         } else {
-          _this3.setState({
+          _this5.setState({
             currentBuyingPower: currentBuyingPower + currentCost,
             message: 'Successfully sold!',
             purchase_shares: '',
-            currentTickerNumShares: _this3.state.currentTickerNumShares - _this3.state.purchase_shares
+            currentTickerNumShares: _this5.state.currentTickerNumShares - _this5.state.purchase_shares
           });
         }
       });
@@ -2999,10 +3013,10 @@ function (_React$Component) {
   }, {
     key: "updateShares",
     value: function updateShares() {
-      var _this4 = this;
+      var _this6 = this;
 
       return function (e) {
-        _this4.setState({
+        _this6.setState({
           purchase_shares: parseInt(e.target.value)
         });
       };
