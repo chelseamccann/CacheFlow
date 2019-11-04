@@ -1012,8 +1012,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1061,8 +1059,8 @@ function (_React$Component) {
       openValue: null,
       closeValue: null,
       change: 0,
-      changePercent: 0,
-      portfolioValue: null
+      changePercent: 0 // portfolioValue: null
+
     };
     _this.dailyPrices = {};
     _this.weeklyPrices = {};
@@ -1090,8 +1088,6 @@ function (_React$Component) {
       // DAILY PORTFOLIO CALC
       var that = this;
       var data = response.transactions.forEach(function (asset, idx) {
-        console.log(!_this3.props.tickers[asset.ticker_symbol.toUpperCase()]);
-
         if (_this3.props.tickers[asset.ticker_symbol.toUpperCase()]) {
           var createdAt = new Date(Date.parse("".concat(asset.created_at))); //.toLocaleString('en-US')
 
@@ -1099,6 +1095,8 @@ function (_React$Component) {
             var num_shares = asset.purchase_shares;
             prices.forEach(function (close_price) {
               var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))); //.toLocaleString('en-US')
+
+              console.log(date > createdAt);
 
               if (date > createdAt && close_price.close !== null) {
                 if (that.dailyPrices[date.toLocaleString('en-US')] >= 0) {
@@ -1118,21 +1116,12 @@ function (_React$Component) {
               });
               that.setState({
                 fetched: true,
-                "1D": newArr
+                portfolioValue: newArr
               });
             }
           });
         }
       });
-    }
-  }, {
-    key: "renderPrices",
-    value: function renderPrices(response, timeFramePassed) {
-      var _this$setState;
-
-      // NEVER CALLED
-      this.dailyVal(reponse);
-      this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _this$setState));
     }
   }, {
     key: "updatePrices",
@@ -1142,27 +1131,33 @@ function (_React$Component) {
       if (this.state.timeFrame !== timeFrame) {
         // CLICKED TIMEFRAME CALC
         this.weeklyPrices = {};
-        return function (e) {
-          // let that = this;
-          // this.state.transactions
-          ///////////////////////////////////////// OLD //////////////////////////////////////
-          var that = _this4;
-          Object.values(_this4.state.transactions).forEach(function (asset, idx) {
-            Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (price) {
-              var num_shares = asset.purchase_shares;
-              price.forEach(function (close_price) {
-                var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))).toLocaleString('en-US');
+        debugger; // return e => {
 
-                if (close_price.close !== null && date !== "Invalid Date") {
-                  if (that.weeklyPrices[date] === 0 || that.weeklyPrices[date] > 0) {
-                    that.weeklyPrices[date] += close_price.close * num_shares;
+        var that = this;
+        debugger;
+        Object.values(this.props.transactions).forEach(function (asset, idx) {
+          if (_this4.props.tickers[asset.ticker_symbol.toUpperCase()]) {
+            var createdAt = new Date(Date.parse("".concat(asset.created_at))); //.toLocaleString('en-US')
+
+            Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (prices) {
+              var num_shares = asset.purchase_shares;
+              prices.forEach(function (close_price) {
+                var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))); //.toLocaleString('en-US')
+
+                console.log(date > createdAt);
+
+                if (date > createdAt && close_price.close !== null) {
+                  if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0) {
+                    that.weeklyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares;
                   } else {
-                    that.weeklyPrices[date] = close_price.close * num_shares;
+                    that.weeklyPrices[date.toLocaleString('en-US')] = close_price.close * num_shares + parseFloat(_this4.props.currentBuyingPower);
                   }
                 }
               });
+              debugger;
 
-              if (idx === _this4.state.transactions.length - 1) {
+              if (idx === _this4.props.transactions.length - 1) {
+                debugger;
                 var newArr = Object.keys(that.weeklyPrices).map(function (key) {
                   return {
                     "date": key,
@@ -1171,12 +1166,12 @@ function (_React$Component) {
                 });
                 that.setState({
                   fetched: true,
-                  "1D": newArr
+                  portfolioValue: newArr
                 });
               }
             });
-          }); ///////////////////////////////////////// OLD //////////////////////////////////////
-        };
+          }
+        }); // }
       }
     }
   }, {
@@ -1189,7 +1184,9 @@ function (_React$Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "btns",
             key: "".concat(key, "-id"),
-            onClick: _this5.updatePrices(key)
+            onClick: function onClick() {
+              _this5.updatePrices(key);
+            }
           }, key.slice(0, 2).toUpperCase());
         }
       });
@@ -1204,7 +1201,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          portfolioValue: this.state["1D"],
+          portfolioValue: this.state.portfolioValue,
           tfVal: this.state[this.state.timeFrame],
           timeFrame: this.state.timeFrame // openValue={Math.max(this.state["1D"].open_value)}
           // change={this.state.change}
@@ -1284,6 +1281,7 @@ function (_React$Component) {
       percentChange: (parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value / _this.props.portfolioValue[0].value) / 1000).toFixed(2),
       pVal: _this.props.portfolioValue
     };
+    debugger;
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
@@ -1332,6 +1330,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      debugger;
       var data = this.props.portfolioValue.slice().sort(function (a, b) {
         return Date.parse(a.date) - Date.parse(b.date);
       }).filter(function (el) {

@@ -12,7 +12,7 @@ Transaction.destroy_all
 
 User.create!(email: "JordanBelfort@w.com", password: "password123", buying_power: 1000000)
 
-Ticker.create!(symbol: "AAPL", num_shares: 2) 
+# Ticker.create!(symbol: "AAPL", num_shares: 2) 
 # Ticker.create!(symbol: "FB", num_shares: 2)
 # Ticker.create!(symbol: "GOOG", num_shares: 1)
 # Ticker.create!(symbol: "NKE", num_shares: 12)
