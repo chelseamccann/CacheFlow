@@ -22,3 +22,5 @@ Ticker.create!(symbol: "AAPL", num_shares: 2)
 # Ticker.create!(symbol: "CRM", num_shares: 5)
 # Ticker.create!(symbol: "LYFT", num_shares: 3)
 # Ticker.create!(symbol: "OSTK", num_shares: 4)
+
+# Transaction.create!(ticker_symbol: "AAPL", purchase_price: 251.30, purchase_shares: 2, buy: true)

@@ -1283,8 +1283,7 @@ function (_React$Component) {
       change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
       percentChange: (parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value / _this.props.portfolioValue[0].value) / 1000).toFixed(2),
       pVal: _this.props.portfolioValue
-    }; // debugger
-
+    };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
@@ -2923,7 +2922,6 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      debugger;
       this.props.fetchTicker(this.state.ticker_symbol).then(function (response) {
         _this2.setState({
           currentTickerNumShares: parseInt(response.ticker.num_shares)
@@ -2936,10 +2934,7 @@ function (_React$Component) {
       var _this3 = this;
 
       if (this.props.tickerSymbol !== prevProps.tickerSymbol) {
-        debugger;
         this.props.fetchTicker(this.props.tickerSymbol).then(function (response) {
-          debugger;
-
           _this3.setState({
             currentTickerNumShares: parseInt(response.ticker.num_shares) || 0
           });
@@ -62920,7 +62915,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
