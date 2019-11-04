@@ -16,7 +16,7 @@ class Portfolio extends React.Component{
             "1Y": [],
             "5Y": [],
             fetched: false,
-            timeFrame: "",
+            timeFrame: "1D",
             tickerSymbol: "",
             openValue: null,
             closeValue: null,
@@ -32,50 +32,50 @@ class Portfolio extends React.Component{
     }
 
     componentDidMount(){
+        this.props.fetchTickers();
         this.props.fetchTransactions().then(response => {
-            // debugger
-            this.setState({ transactions: response.transactions })
+            // this.setState({ transactions: response.transactions })
             this.dailyVal(response)
         }) // DAILY PORTFOLIO CALC
+
     }
 
     dailyVal(response){ // DAILY PORTFOLIO CALC
         let that = this;
-        
-        const data = response.transactions.forEach((asset, idx) => {
-            
-            // if(this.state["1D"][asset.ticker_symbol] === undefined){
-            fetchDailyPrices(asset.ticker_symbol).then(price => {
-                debugger
-                let num_shares = asset.purchase_shares
-                price.forEach(close_price => {
-                    const date = new Date(Date.parse(`${close_price.date} ${close_price.minute}`)).toLocaleString('en-US')
-                    if(close_price.close !== null)
-                    {
-                        if (that.dailyPrices[date] >= 0){
-                            that.dailyPrices[date] += close_price.close * num_shares
-                        } else {
-                            that.dailyPrices[date] = close_price.close * num_shares
-                        }
-                    }
-                })
 
-                if(idx === response.transactions.length - 1){
-                    const newArr = Object.keys(that.dailyPrices).map(key => {
-                        return {"date": key, "value": that.dailyPrices[key]}
+        const data = response.transactions.forEach((asset, idx) => {
+            console.log(!this.props.tickers[asset.ticker_symbol.toUpperCase()])
+            if (this.props.tickers[asset.ticker_symbol.toUpperCase()]){
+                const createdAt = new Date(Date.parse(`${asset.created_at}`))//.toLocaleString('en-US')
+
+                fetchDailyPrices(asset.ticker_symbol).then(prices => {
+                    let num_shares = asset.purchase_shares
+                    prices.forEach(close_price => {
+                        const date = new Date(Date.parse(`${close_price.date} ${close_price.minute}`))//.toLocaleString('en-US')
+                        if(date > createdAt && close_price.close !== null){
+                            if (that.dailyPrices[date.toLocaleString('en-US')] >= 0){
+                                that.dailyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares
+                            } else {
+                                that.dailyPrices[date.toLocaleString('en-US')] = (close_price.close * num_shares) + parseFloat(this.props.currentBuyingPower)
+                            }
+                        }
                     })
 
-                    that.setState({fetched: true, "1D": newArr})
-          
-                }
+                    if(idx === response.transactions.length - 1){
+                        const newArr = Object.keys(that.dailyPrices).map(key => {
+                            return {"date": key, "value": that.dailyPrices[key]}
+                        })
 
-            })
+                        that.setState({fetched: true, "1D": newArr})
             
+                    }
+
+                })
+            }
         })
     }
 
     renderPrices(response, timeFramePassed){ // NEVER CALLED
-        debugger
         this.dailyVal(reponse)
         this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol})
     }
@@ -92,7 +92,6 @@ class Portfolio extends React.Component{
                 let that = this;
                 Object.values(this.state.transactions).forEach((asset, idx) => {
                 fetchPrices(asset.ticker_symbol, timeFrame).then(price => {
-                    // debugger
                     let num_shares = asset.purchase_shares
                     price.forEach(close_price => {
                         const date = new Date(Date.parse(`${close_price.date} ${close_price.minute}`)).toLocaleString('en-US')
@@ -123,13 +122,12 @@ class Portfolio extends React.Component{
 
 
     render(){
-
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="ALL"){
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)}>{key.slice(0, 2).toUpperCase()}</button>
             }
         })
-debugger
+
         if(this.state.fetched){
             return (
                 <>
@@ -138,12 +136,12 @@ debugger
                 <div className="chart-wrap"> 
                     <PortfolioChart 
                     portfolioValue={this.state["1D"]}
+                    tfVal={this.state[this.state.timeFrame]}
                     timeFrame={this.state.timeFrame}
-                    openValue={Math.max(this.state["1D"].open_value)}
-                    // closeValue={this.state.closeValue}
-                    change={this.state.change}
-                    changePercent={this.state.changePercent}
-                    tF={tF}
+                    // openValue={Math.max(this.state["1D"].open_value)}
+                    // change={this.state.change}
+                    // changePercent={this.state.changePercent}
+                    // tF={tF}
                     />
                     
                     <div className="time-frame-buttons">{tF}</div>

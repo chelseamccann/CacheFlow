@@ -203,7 +203,6 @@ var fetchTickers = function fetchTickers() {
 var fetchTicker = function fetchTicker(tickerSymbol) {
   return function (dispatch) {
     return _util_ticker_api_util__WEBPACK_IMPORTED_MODULE_0__["APIfetchTicker"](tickerSymbol).then(function (ticker) {
-      debugger;
       return dispatch(receiveTicker(ticker));
     });
   };
@@ -272,7 +271,6 @@ var receiveTransactions = function receiveTransactions(transactions) {
 var executeBuy = function executeBuy(transaction) {
   return function (dispatch) {
     return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["createTransaction"](transaction).then(function (transaction) {
-      debugger;
       return dispatch(receiveTransaction(transaction));
     });
   };
@@ -1058,7 +1056,7 @@ function (_React$Component) {
       "1Y": [],
       "5Y": [],
       fetched: false,
-      timeFrame: "",
+      timeFrame: "1D",
       tickerSymbol: "",
       openValue: null,
       closeValue: null,
@@ -1078,50 +1076,53 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      this.props.fetchTickers();
       this.props.fetchTransactions().then(function (response) {
-        // debugger
-        _this2.setState({
-          transactions: response.transactions
-        });
-
+        // this.setState({ transactions: response.transactions })
         _this2.dailyVal(response);
       }); // DAILY PORTFOLIO CALC
     }
   }, {
     key: "dailyVal",
     value: function dailyVal(response) {
+      var _this3 = this;
+
       // DAILY PORTFOLIO CALC
       var that = this;
       var data = response.transactions.forEach(function (asset, idx) {
-        // if(this.state["1D"][asset.ticker_symbol] === undefined){
-        Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (price) {
-          debugger;
-          var num_shares = asset.purchase_shares;
-          price.forEach(function (close_price) {
-            var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))).toLocaleString('en-US');
+        console.log(!_this3.props.tickers[asset.ticker_symbol.toUpperCase()]);
 
-            if (close_price.close !== null) {
-              if (that.dailyPrices[date] >= 0) {
-                that.dailyPrices[date] += close_price.close * num_shares;
-              } else {
-                that.dailyPrices[date] = close_price.close * num_shares;
+        if (_this3.props.tickers[asset.ticker_symbol.toUpperCase()]) {
+          var createdAt = new Date(Date.parse("".concat(asset.created_at))); //.toLocaleString('en-US')
+
+          Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (prices) {
+            var num_shares = asset.purchase_shares;
+            prices.forEach(function (close_price) {
+              var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))); //.toLocaleString('en-US')
+
+              if (date > createdAt && close_price.close !== null) {
+                if (that.dailyPrices[date.toLocaleString('en-US')] >= 0) {
+                  that.dailyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares;
+                } else {
+                  that.dailyPrices[date.toLocaleString('en-US')] = close_price.close * num_shares + parseFloat(_this3.props.currentBuyingPower);
+                }
               }
+            });
+
+            if (idx === response.transactions.length - 1) {
+              var newArr = Object.keys(that.dailyPrices).map(function (key) {
+                return {
+                  "date": key,
+                  "value": that.dailyPrices[key]
+                };
+              });
+              that.setState({
+                fetched: true,
+                "1D": newArr
+              });
             }
           });
-
-          if (idx === response.transactions.length - 1) {
-            var newArr = Object.keys(that.dailyPrices).map(function (key) {
-              return {
-                "date": key,
-                "value": that.dailyPrices[key]
-              };
-            });
-            that.setState({
-              fetched: true,
-              "1D": newArr
-            });
-          }
-        });
+        }
       });
     }
   }, {
@@ -1130,14 +1131,13 @@ function (_React$Component) {
       var _this$setState;
 
       // NEVER CALLED
-      debugger;
       this.dailyVal(reponse);
       this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _this$setState));
     }
   }, {
     key: "updatePrices",
     value: function updatePrices(timeFrame) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.state.timeFrame !== timeFrame) {
         // CLICKED TIMEFRAME CALC
@@ -1146,10 +1146,9 @@ function (_React$Component) {
           // let that = this;
           // this.state.transactions
           ///////////////////////////////////////// OLD //////////////////////////////////////
-          var that = _this3;
-          Object.values(_this3.state.transactions).forEach(function (asset, idx) {
+          var that = _this4;
+          Object.values(_this4.state.transactions).forEach(function (asset, idx) {
             Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (price) {
-              // debugger
               var num_shares = asset.purchase_shares;
               price.forEach(function (close_price) {
                 var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))).toLocaleString('en-US');
@@ -1163,7 +1162,7 @@ function (_React$Component) {
                 }
               });
 
-              if (idx === _this3.state.transactions.length - 1) {
+              if (idx === _this4.state.transactions.length - 1) {
                 var newArr = Object.keys(that.weeklyPrices).map(function (key) {
                   return {
                     "date": key,
@@ -1183,18 +1182,17 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "ALL") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "btns",
             key: "".concat(key, "-id"),
-            onClick: _this4.updatePrices(key)
+            onClick: _this5.updatePrices(key)
           }, key.slice(0, 2).toUpperCase());
         }
       });
-      debugger;
 
       if (this.state.fetched) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
@@ -1207,12 +1205,12 @@ function (_React$Component) {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
           portfolioValue: this.state["1D"],
-          timeFrame: this.state.timeFrame,
-          openValue: Math.max(this.state["1D"].open_value) // closeValue={this.state.closeValue}
-          ,
-          change: this.state.change,
-          changePercent: this.state.changePercent,
-          tF: tF
+          tfVal: this.state[this.state.timeFrame],
+          timeFrame: this.state.timeFrame // openValue={Math.max(this.state["1D"].open_value)}
+          // change={this.state.change}
+          // changePercent={this.state.changePercent}
+          // tF={tF}
+
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
         }, tF)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
@@ -1285,7 +1283,8 @@ function (_React$Component) {
       change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
       percentChange: (parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value / _this.props.portfolioValue[0].value) / 1000).toFixed(2),
       pVal: _this.props.portfolioValue
-    };
+    }; // debugger
+
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
@@ -1362,7 +1361,7 @@ function (_React$Component) {
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
         hide: true,
-        domain: [0, 0]
+        domain: ['min', 'max']
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
         className: "tooltip",
         contentStyle: {
@@ -1417,8 +1416,18 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(state) {
   var userId = state.session.id;
+  var tickers = {};
+  Object.values(state.entities.tickers).forEach(function (el) {
+    if (el.num_shares !== 0) {
+      tickers[el.symbol] = el.num_shares;
+    }
+  });
   return {
-    currentUser: state.entities.users[userId]
+    currentUser: state.entities.users[userId],
+    currentBuyingPower: state.entities.users[userId].buying_power,
+    tickers: tickers,
+    //Object.values(state.entities.tickers),
+    transactions: Object.values(state.entities.transactions)
   };
 };
 
@@ -3331,7 +3340,6 @@ var tickerReducer = function tickerReducer() {
       return action.tickers;
 
     case _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKER"]:
-      debugger;
       return Object.assign({}, state, _defineProperty({}, action.ticker.symbol, action.ticker.num_shares));
 
     default:
@@ -3596,7 +3604,6 @@ var APIfetchTickers = function APIfetchTickers() {
   });
 };
 var APIfetchTicker = function APIfetchTicker(tickerSymbol) {
-  debugger;
   return $.ajax({
     method: 'GET',
     url: "api/tickers/".concat(tickerSymbol)
