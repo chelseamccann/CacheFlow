@@ -20,7 +20,7 @@ class Api::TickersController < ApplicationController
 
     private
     def ticker_params
-        params.require(:ticker).permit(:symbol)
+        params.require(:ticker).permit(:symbol, :num_shares)
     end
 
 end
