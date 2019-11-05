@@ -1053,6 +1053,7 @@ function (_React$Component) {
       "3M": [],
       "1Y": [],
       "5Y": [],
+      // "ALL": [],
       fetched: false,
       timeFrame: "1D",
       tickerSymbol: "",
@@ -1076,9 +1077,9 @@ function (_React$Component) {
 
       this.props.fetchTickers();
       this.props.fetchTransactions().then(function (response) {
-        // this.setState({ transactions: response.transactions })
-        _this2.dailyVal(response);
-      }); // DAILY PORTFOLIO CALC
+        _this2.dailyVal(response); // DAILY PORTFOLIO CALC
+
+      });
     }
   }, {
     key: "dailyVal",
@@ -1128,13 +1129,10 @@ function (_React$Component) {
     value: function updatePrices(timeFrame) {
       var _this4 = this;
 
-      if (this.state.timeFrame !== timeFrame) {
-        // CLICKED TIMEFRAME CALC
+      // CLICKED TIMEFRAME CALC
+      if (this.state.timeFrame !== timeFrame && timeFrame !== '1D') {
         this.weeklyPrices = {};
-        debugger; // return e => {
-
         var that = this;
-        debugger;
         Object.values(this.props.transactions).forEach(function (asset, idx) {
           if (_this4.props.tickers[asset.ticker_symbol.toUpperCase()]) {
             var createdAt = new Date(Date.parse("".concat(asset.created_at))); //.toLocaleString('en-US')
@@ -1142,8 +1140,9 @@ function (_React$Component) {
             Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (prices) {
               var num_shares = asset.purchase_shares;
               prices.forEach(function (close_price) {
-                var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))); //.toLocaleString('en-US')
+                var date = close_price.minute ? new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))) : new Date(Date.parse("".concat(close_price.date))); //.toLocaleString('en-US')
 
+                debugger;
                 console.log(date > createdAt);
 
                 if (date > createdAt && close_price.close !== null) {
@@ -1154,10 +1153,8 @@ function (_React$Component) {
                   }
                 }
               });
-              debugger;
 
               if (idx === _this4.props.transactions.length - 1) {
-                debugger;
                 var newArr = Object.keys(that.weeklyPrices).map(function (key) {
                   return {
                     "date": key,
@@ -1171,7 +1168,11 @@ function (_React$Component) {
               }
             });
           }
-        }); // }
+        });
+      } else if (timeFrame === '1D') {
+        this.props.fetchTransactions().then(function (response) {
+          _this4.dailyVal(response);
+        });
       }
     }
   }, {
@@ -1281,7 +1282,6 @@ function (_React$Component) {
       percentChange: (parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value / _this.props.portfolioValue[0].value) / 1000).toFixed(2),
       pVal: _this.props.portfolioValue
     };
-    debugger;
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
@@ -1294,26 +1294,19 @@ function (_React$Component) {
         var hoverValue = e.activePayload[0].payload.value;
         var openValue = this.props.portfolioValue[0].value;
         var change = hoverValue - openValue;
-        var dailyPercentChange = change / hoverValue * 100;
+        var dailyPercentChange = change / hoverValue * 100; // this.setState({closeValue: hoverValue})
+        // this.setState({chartX: e.chartX})
+        // this.setState({chartY: e.chartY}) 
+        // this.setState({change: parseFloat(change.toFixed(2))})
+        // this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+
         this.setState({
-          closeValue: hoverValue
-        });
-        this.setState({
-          chartX: e.chartX
-        });
-        this.setState({
-          chartY: e.chartY
-        });
-        this.setState({
-          change: parseFloat(change.toFixed(2))
-        });
-        this.setState({
+          closeValue: hoverValue,
+          chartX: e.chartX,
+          chartY: e.chartY,
+          change: parseFloat(change.toFixed(2)),
           percentChange: parseFloat(dailyPercentChange).toFixed(2)
-        }); // this.setState({closeValue: hoverValue, 
-        //     chartX: e.chartX,
-        //     chartY: e.chartY,
-        //     change: parseFloat(change.toFixed(2)),
-        //     percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+        });
       }
     }
   }, {
@@ -1330,7 +1323,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       var data = this.props.portfolioValue.slice().sort(function (a, b) {
         return Date.parse(a.date) - Date.parse(b.date);
       }).filter(function (el) {
@@ -1359,7 +1351,7 @@ function (_React$Component) {
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
         hide: true,
-        domain: ['min', 'max']
+        domain: ['min' - 15000, 'max' + 15000]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
         className: "tooltip",
         contentStyle: {
@@ -1369,8 +1361,11 @@ function (_React$Component) {
         },
         formatter: function formatter(value, name, props) {
           return [""];
-        } // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
-        ,
+        },
+        position: {
+          x: this.state.chartX - 5000,
+          y: this.state.chartY - 1000
+        },
         isAnimationActive: false,
         cursor: {
           stroke: "Gainsboro",

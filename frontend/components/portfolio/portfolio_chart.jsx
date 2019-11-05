@@ -11,7 +11,6 @@ class PortfolioChart extends React.Component {
             percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-2].value - this.props.portfolioValue[this.props.portfolioValue.length-1].value/this.props.portfolioValue[0].value)/1000).toFixed(2),
             pVal: this.props.portfolioValue
         }
-        debugger
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
     }
@@ -23,18 +22,18 @@ class PortfolioChart extends React.Component {
             let change = hoverValue - openValue;
             let dailyPercentChange = (change/hoverValue)*100
 
-            this.setState({closeValue: hoverValue})
-            this.setState({chartX: e.chartX})
-            this.setState({chartY: e.chartY}) 
-            this.setState({change: parseFloat(change.toFixed(2))})
-            this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+            // this.setState({closeValue: hoverValue})
+            // this.setState({chartX: e.chartX})
+            // this.setState({chartY: e.chartY}) 
+            // this.setState({change: parseFloat(change.toFixed(2))})
+            // this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
 
 
-            // this.setState({closeValue: hoverValue, 
-            //     chartX: e.chartX,
-            //     chartY: e.chartY,
-            //     change: parseFloat(change.toFixed(2)),
-            //     percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+            this.setState({closeValue: hoverValue, 
+                chartX: e.chartX,
+                chartY: e.chartY,
+                change: parseFloat(change.toFixed(2)),
+                percentChange: parseFloat(dailyPercentChange).toFixed(2)})
         }
     }
 
@@ -50,7 +49,6 @@ class PortfolioChart extends React.Component {
     }
 
     render(){
-        debugger
         let data = this.props.portfolioValue.slice().sort((a, b) => {
             return Date.parse(a.date) - Date.parse(b.date)
         }).filter(el => {
@@ -75,11 +73,11 @@ class PortfolioChart extends React.Component {
                     // onMouseLeave={this.handleMouseOut}
                  >
                     <XAxis dataKey={"date"} hide={true} />
-                    <YAxis hide={true} domain={['min', 'max']}/>
+                    <YAxis hide={true} domain={['min' - 15000, 'max' + 15000]}/>
                     <Tooltip className='tooltip'
                                     contentStyle={{ border: '0', backgroundColor: 'transparent', color: 'grey'}}
                                     formatter={(value, name, props) => { return [""] }}
-                                    // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
+                                    position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
                                     isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
                     <Line connectNulls type="linear" dataKey="value" dot={false} stroke="#21ce99" strokeWidth={1}/>
                 </LineChart>
