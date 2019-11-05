@@ -7,8 +7,8 @@ class PortfolioChart extends React.Component {
         super(props);
         this.state = {
             closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value).toFixed(2),
-            change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-2].value - this.props.portfolioValue[this.props.portfolioValue.length-1].value).toFixed(2),
-            percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-2].value - this.props.portfolioValue[this.props.portfolioValue.length-1].value/this.props.portfolioValue[0].value)/1000).toFixed(2),
+            change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value).toFixed(2),
+            percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value/this.props.portfolioValue[this.props.portfolioValue.length-1].value)*100).toFixed(2),
             pVal: this.props.portfolioValue
         }
         this.handleMouseOver = this.handleMouseOver.bind(this);
@@ -39,21 +39,21 @@ class PortfolioChart extends React.Component {
 
 
     handleMouseOut(e){
-        let currentChange = this.props.portfolioValue[0].value - this.props.portfolioValue[this.props.portfolioValue.length-1].value
-        let currentPercentChange = (currentChange/this.props.portfolioValue[0].value)/100
+        let currentChange = this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value
+        let currentPercentChange = (currentChange/this.props.portfolioValue[this.props.portfolioValue.length-1].value)*100
         this.setState({
-            closeValue: this.props.portfolioValue[this.props.portfolioValue.length-1].value, 
+            closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value).toFixed(2), 
             change: parseFloat(currentChange).toFixed(2), 
             percentChange: parseFloat(currentPercentChange).toFixed(2)
         })
     }
 
     render(){
-        let data = this.props.portfolioValue.slice().sort((a, b) => {
-            return Date.parse(a.date) - Date.parse(b.date)
-        }).filter(el => {
-            return el !== undefined
-        })
+        // let data = this.props.portfolioValue.slice().sort((a, b) => {
+        //     return Date.parse(a.date) - Date.parse(b.date)
+        // }).filter(el => {
+        //     return el !== undefined
+        // })
 
         // const label = this.props.timeFrame === "1D" ? "label" : "date";
 
@@ -67,10 +67,10 @@ class PortfolioChart extends React.Component {
                  <LineChart 
                     width={676} 
                     height={196} 
-                    data={data}
+                    data={this.props.portfolioValue}
                     margin={{top: 5, right: 10, left: 10, bottom: 5}}
                     onMouseOver={this.handleMouseOver}   
-                    // onMouseLeave={this.handleMouseOut}
+                    onMouseLeave={this.handleMouseOut}
                  >
                     <XAxis dataKey={"date"} hide={true} />
                     <YAxis hide={true} domain={['dataMin', 'dataMax']}/>

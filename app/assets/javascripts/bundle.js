@@ -1115,9 +1115,16 @@ function (_React$Component) {
                   "value": that.dailyPrices[key]
                 };
               });
+
+              var _data = newArr.slice().sort(function (a, b) {
+                return Date.parse(a.date) - Date.parse(b.date);
+              }).filter(function (el) {
+                return el !== undefined;
+              });
+
               that.setState({
                 fetched: true,
-                portfolioValue: newArr
+                portfolioValue: _data
               });
             }
           });
@@ -1160,9 +1167,14 @@ function (_React$Component) {
                     "value": that.weeklyPrices[key]
                   };
                 });
+                var data = newArr.slice().sort(function (a, b) {
+                  return Date.parse(a.date) - Date.parse(b.date);
+                }).filter(function (el) {
+                  return el !== undefined;
+                });
                 that.setState({
                   fetched: true,
-                  portfolioValue: newArr
+                  portfolioValue: data
                 });
               }
             });
@@ -1277,8 +1289,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PortfolioChart).call(this, props));
     _this.state = {
       closeValue: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
-      change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
-      percentChange: (parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 2].value - _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value / _this.props.portfolioValue[0].value) / 1000).toFixed(2),
+      change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value).toFixed(2),
+      percentChange: (parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value / _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value) * 100).toFixed(2),
       pVal: _this.props.portfolioValue
     };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
@@ -1311,10 +1323,10 @@ function (_React$Component) {
   }, {
     key: "handleMouseOut",
     value: function handleMouseOut(e) {
-      var currentChange = this.props.portfolioValue[0].value - this.props.portfolioValue[this.props.portfolioValue.length - 1].value;
-      var currentPercentChange = currentChange / this.props.portfolioValue[0].value / 100;
+      var currentChange = this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value;
+      var currentPercentChange = currentChange / this.props.portfolioValue[this.props.portfolioValue.length - 1].value * 100;
       this.setState({
-        closeValue: this.props.portfolioValue[this.props.portfolioValue.length - 1].value,
+        closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value).toFixed(2),
         change: parseFloat(currentChange).toFixed(2),
         percentChange: parseFloat(currentPercentChange).toFixed(2)
       });
@@ -1322,13 +1334,13 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var data = this.props.portfolioValue.slice().sort(function (a, b) {
-        return Date.parse(a.date) - Date.parse(b.date);
-      }).filter(function (el) {
-        return el !== undefined;
-      }); // const label = this.props.timeFrame === "1D" ? "label" : "date";
+      // let data = this.props.portfolioValue.slice().sort((a, b) => {
+      //     return Date.parse(a.date) - Date.parse(b.date)
+      // }).filter(el => {
+      //     return el !== undefined
+      // })
+      // const label = this.props.timeFrame === "1D" ? "label" : "date";
       // let odometer = this.state.hoverValue || this.state.open_value
-
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -1336,15 +1348,15 @@ function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
         width: 676,
         height: 196,
-        data: data,
+        data: this.props.portfolioValue,
         margin: {
           top: 5,
           right: 10,
           left: 10,
           bottom: 5
         },
-        onMouseOver: this.handleMouseOver // onMouseLeave={this.handleMouseOut}
-
+        onMouseOver: this.handleMouseOver,
+        onMouseLeave: this.handleMouseOut
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
         dataKey: "date",
         hide: true

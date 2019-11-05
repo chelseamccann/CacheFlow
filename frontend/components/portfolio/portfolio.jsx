@@ -67,7 +67,13 @@ class Portfolio extends React.Component{
                             return {"date": key, "value": that.dailyPrices[key]}
                         })
 
-                        that.setState({fetched: true, portfolioValue: newArr})
+                        let data = newArr.slice().sort((a, b) => {
+                            return Date.parse(a.date) - Date.parse(b.date)
+                        }).filter(el => {
+                            return el !== undefined
+                        })
+
+                        that.setState({fetched: true, portfolioValue: data})
             
                     }
 
@@ -100,13 +106,20 @@ class Portfolio extends React.Component{
                                     }
                                 }
                             })
+
                             
                             if(idx === this.props.transactions.length - 1){
                                 const newArr = Object.keys(that.weeklyPrices).map(key => {
                                     return {"date": key, "value": that.weeklyPrices[key]}
                                 })
+                                
+                                let data = newArr.slice().sort((a, b) => {
+                                    return Date.parse(a.date) - Date.parse(b.date)
+                                }).filter(el => {
+                                    return el !== undefined
+                                })
 
-                                that.setState({fetched: true, portfolioValue: newArr})
+                                that.setState({fetched: true, portfolioValue: data})
                     
                             }
                         })
