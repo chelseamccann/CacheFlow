@@ -1142,7 +1142,6 @@ function (_React$Component) {
               prices.forEach(function (close_price) {
                 var date = close_price.minute ? new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))) : new Date(Date.parse("".concat(close_price.date))); //.toLocaleString('en-US')
 
-                debugger;
                 console.log(date > createdAt);
 
                 if (date > createdAt && close_price.close !== null) {
@@ -1351,7 +1350,7 @@ function (_React$Component) {
         hide: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
         hide: true,
-        domain: ['min' - 15000, 'max' + 15000]
+        domain: ['dataMin', 'dataMax']
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
         className: "tooltip",
         contentStyle: {
@@ -1361,11 +1360,8 @@ function (_React$Component) {
         },
         formatter: function formatter(value, name, props) {
           return [""];
-        },
-        position: {
-          x: this.state.chartX - 5000,
-          y: this.state.chartY - 1000
-        },
+        } // position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
+        ,
         isAnimationActive: false,
         cursor: {
           stroke: "Gainsboro",
@@ -62909,7 +62905,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

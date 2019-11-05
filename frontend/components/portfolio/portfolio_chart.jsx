@@ -73,11 +73,11 @@ class PortfolioChart extends React.Component {
                     // onMouseLeave={this.handleMouseOut}
                  >
                     <XAxis dataKey={"date"} hide={true} />
-                    <YAxis hide={true} domain={['min' - 15000, 'max' + 15000]}/>
+                    <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
                     <Tooltip className='tooltip'
                                     contentStyle={{ border: '0', backgroundColor: 'transparent', color: 'grey'}}
                                     formatter={(value, name, props) => { return [""] }}
-                                    position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
+                                    // position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
                                     isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
                     <Line connectNulls type="linear" dataKey="value" dot={false} stroke="#21ce99" strokeWidth={1}/>
                 </LineChart>
