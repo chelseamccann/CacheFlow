@@ -4,6 +4,7 @@ import {ProtectedRoute} from '../../util/route_utils';
 import PortfolioChart from './portfolio_chart'
 import { fetchDailyPrices, fetchPrices } from '../../util/ticker_data_api_util';
 import News from '../news/news';
+import WatchlistContainer from '../watchlist/watchlist_container'
 
 class Portfolio extends React.Component{
     constructor(props){
@@ -150,12 +151,12 @@ class Portfolio extends React.Component{
             }).filter(el => {
                 return el !== undefined
             })
-            debugger
 
             return (
                 
                 <>
                 <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
+                <ProtectedRoute exact path="/" component={WatchlistContainer}/>
                 <div className="chart-and-news-wrap">
                 <div className="chart-wrap"> 
                     <PortfolioChart 

@@ -25,7 +25,6 @@ class PortfolioChart extends React.Component {
     }
 
     componentDidUpdate(){
-        debugger
         if(this.state.timeFrame !== this.props.timeFrame){
             this.setState({
                 timeFrame: this.props.timeFrame,

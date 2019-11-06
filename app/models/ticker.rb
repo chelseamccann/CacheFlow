@@ -6,6 +6,7 @@
 #  symbol     :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  num_shares :integer          not null
 #
 
 class Ticker < ApplicationRecord 

@@ -10,6 +10,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  ticker_id       :integer          not null
+#  buy             :boolean          not null
 #
 
 class Transaction < ApplicationRecord
