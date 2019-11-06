@@ -67,13 +67,13 @@ class Portfolio extends React.Component{
                             return {"date": key, "value": that.dailyPrices[key]}
                         })
 
-                        let data = newArr.slice().sort((a, b) => {
-                            return Date.parse(a.date) - Date.parse(b.date)
-                        }).filter(el => {
-                            return el !== undefined
-                        })
+                        // let data = newArr.slice().sort((a, b) => {
+                        //     return Date.parse(a.date) - Date.parse(b.date)
+                        // }).filter(el => {
+                        //     return el !== undefined
+                        // })
 
-                        that.setState({fetched: true, portfolioValue: data})
+                        that.setState({fetched: true, portfolioValue: newArr})
             
                     }
 
@@ -113,13 +113,13 @@ class Portfolio extends React.Component{
                                     return {"date": key, "value": that.weeklyPrices[key]}
                                 })
                                 
-                                let data = newArr.slice().sort((a, b) => {
-                                    return Date.parse(a.date) - Date.parse(b.date)
-                                }).filter(el => {
-                                    return el !== undefined
-                                })
+                                // let data = newArr.slice().sort((a, b) => {
+                                //     return Date.parse(a.date) - Date.parse(b.date)
+                                // }).filter(el => {
+                                //     return el !== undefined
+                                // })
 
-                                that.setState({fetched: true, portfolioValue: data})
+                                that.setState({fetched: true, portfolioValue: newArr})
                     
                             }
                         })
@@ -131,6 +131,7 @@ class Portfolio extends React.Component{
                 this.dailyVal(response)
             })
         }
+        this.setState({timeFrame: timeFrame})
     }
 
 
@@ -144,13 +145,21 @@ class Portfolio extends React.Component{
         })
 
         if(this.state.fetched){
+            let data = this.state.portfolioValue.slice().sort((a, b) => {
+                return Date.parse(a.date) - Date.parse(b.date)
+            }).filter(el => {
+                return el !== undefined
+            })
+            debugger
+
             return (
+                
                 <>
                 <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
                 <div className="chart-and-news-wrap">
                 <div className="chart-wrap"> 
                     <PortfolioChart 
-                    portfolioValue={this.state.portfolioValue}
+                    portfolioValue={data}
                     tfVal={this.state[this.state.timeFrame]}
                     timeFrame={this.state.timeFrame}
                     // openValue={Math.max(this.state["1D"].open_value)}

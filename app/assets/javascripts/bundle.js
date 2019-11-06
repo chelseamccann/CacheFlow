@@ -1114,17 +1114,15 @@ function (_React$Component) {
                   "date": key,
                   "value": that.dailyPrices[key]
                 };
-              });
-
-              var _data = newArr.slice().sort(function (a, b) {
-                return Date.parse(a.date) - Date.parse(b.date);
-              }).filter(function (el) {
-                return el !== undefined;
-              });
+              }); // let data = newArr.slice().sort((a, b) => {
+              //     return Date.parse(a.date) - Date.parse(b.date)
+              // }).filter(el => {
+              //     return el !== undefined
+              // })
 
               that.setState({
                 fetched: true,
-                portfolioValue: _data
+                portfolioValue: newArr
               });
             }
           });
@@ -1166,15 +1164,15 @@ function (_React$Component) {
                     "date": key,
                     "value": that.weeklyPrices[key]
                   };
-                });
-                var data = newArr.slice().sort(function (a, b) {
-                  return Date.parse(a.date) - Date.parse(b.date);
-                }).filter(function (el) {
-                  return el !== undefined;
-                });
+                }); // let data = newArr.slice().sort((a, b) => {
+                //     return Date.parse(a.date) - Date.parse(b.date)
+                // }).filter(el => {
+                //     return el !== undefined
+                // })
+
                 that.setState({
                   fetched: true,
-                  portfolioValue: data
+                  portfolioValue: newArr
                 });
               }
             });
@@ -1185,6 +1183,10 @@ function (_React$Component) {
           _this4.dailyVal(response);
         });
       }
+
+      this.setState({
+        timeFrame: timeFrame
+      });
     }
   }, {
     key: "render",
@@ -1204,6 +1206,12 @@ function (_React$Component) {
       });
 
       if (this.state.fetched) {
+        var data = this.state.portfolioValue.slice().sort(function (a, b) {
+          return Date.parse(a.date) - Date.parse(b.date);
+        }).filter(function (el) {
+          return el !== undefined;
+        });
+        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
           exact: true,
           path: "/",
@@ -1213,7 +1221,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          portfolioValue: this.state.portfolioValue,
+          portfolioValue: data,
           tfVal: this.state[this.state.timeFrame],
           timeFrame: this.state.timeFrame // openValue={Math.max(this.state["1D"].open_value)}
           // change={this.state.change}
@@ -1291,7 +1299,7 @@ function (_React$Component) {
       closeValue: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
       change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value).toFixed(2),
       percentChange: (parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value / _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value) * 100).toFixed(2),
-      pVal: _this.props.portfolioValue
+      timeFrame: _this.props.timeFrame
     };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
@@ -1299,18 +1307,36 @@ function (_React$Component) {
   }
 
   _createClass(PortfolioChart, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value).toFixed(2),
+        change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
+        percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value / this.props.portfolioValue[this.props.portfolioValue.length - 1].value) * 100).toFixed(2),
+        timeFrame: this.props.timeFrame
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      debugger;
+
+      if (this.state.timeFrame !== this.props.timeFrame) {
+        this.setState({
+          timeFrame: this.props.timeFrame,
+          change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
+          percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value / this.props.portfolioValue[this.props.portfolioValue.length - 1].value) * 100).toFixed(2)
+        });
+      }
+    }
+  }, {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
         var hoverValue = e.activePayload[0].payload.value;
         var openValue = this.props.portfolioValue[0].value;
         var change = hoverValue - openValue;
-        var dailyPercentChange = change / hoverValue * 100; // this.setState({closeValue: hoverValue})
-        // this.setState({chartX: e.chartX})
-        // this.setState({chartY: e.chartY}) 
-        // this.setState({change: parseFloat(change.toFixed(2))})
-        // this.setState({percentChange: parseFloat(dailyPercentChange).toFixed(2)})
-
+        var dailyPercentChange = change / hoverValue * 100;
         this.setState({
           closeValue: hoverValue,
           chartX: e.chartX,
