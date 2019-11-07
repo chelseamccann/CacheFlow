@@ -52,7 +52,6 @@ class Portfolio extends React.Component{
                     let num_shares = asset.purchase_shares
                     prices.forEach(close_price => {
                         const date = new Date(Date.parse(`${close_price.date} ${close_price.minute}`))//.toLocaleString('en-US')
-                        console.log(date>createdAt)
 
                         if(date > createdAt && close_price.close !== null){
                             if (that.dailyPrices[date.toLocaleString('en-US')] >= 0){

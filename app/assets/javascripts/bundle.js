@@ -285,6 +285,63 @@ var fetchTransactions = function fetchTransactions() {
 
 /***/ }),
 
+/***/ "./frontend/actions/watchlist_actions.js":
+/*!***********************************************!*\
+  !*** ./frontend/actions/watchlist_actions.js ***!
+  \***********************************************/
+/*! exports provided: RECEIVE_WATCHLIST_ITEMS, RECEIVE_WATCHLIST_ITEM, REMOVE_WATCHLIST_ITEM, receiveWatchlistItems, receiveWatchlistItem, removeWatchlistItem, fetchWatchlistItems, createWatchlistItem */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_WATCHLIST_ITEMS", function() { return RECEIVE_WATCHLIST_ITEMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_WATCHLIST_ITEM", function() { return RECEIVE_WATCHLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_WATCHLIST_ITEM", function() { return REMOVE_WATCHLIST_ITEM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveWatchlistItems", function() { return receiveWatchlistItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveWatchlistItem", function() { return receiveWatchlistItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeWatchlistItem", function() { return removeWatchlistItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatchlistItems", function() { return fetchWatchlistItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createWatchlistItem", function() { return createWatchlistItem; });
+/* harmony import */ var _util_watchlist_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/watchlist_api_util */ "./frontend/util/watchlist_api_util.js");
+
+var RECEIVE_WATCHLIST_ITEMS = "RECEIVE_WATCHLIST_ITEMS";
+var RECEIVE_WATCHLIST_ITEM = "RECEIVE_WATCHLIST_ITEM";
+var REMOVE_WATCHLIST_ITEM = "REMOVE_WATCHLIST_ITEM";
+var receiveWatchlistItems = function receiveWatchlistItems(items) {
+  return {
+    type: RECEIVE_WATCHLIST_ITEMS,
+    items: items
+  };
+};
+var receiveWatchlistItem = function receiveWatchlistItem(item) {
+  return {
+    type: RECEIVE_WATCHLIST_ITEM,
+    item: item
+  };
+};
+var removeWatchlistItem = function removeWatchlistItem(id) {
+  return {
+    type: REMOVE_WATCHLIST_ITEM,
+    id: id
+  };
+};
+var fetchWatchlistItems = function fetchWatchlistItems() {
+  return function (dispatch) {
+    return _util_watchlist_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchWatchlistItems"]().then(function (items) {
+      return dispatch(receiveWatchlistItems(items));
+    });
+  };
+};
+var createWatchlistItem = function createWatchlistItem(item) {
+  return function (dispatch) {
+    return _util_watchlist_api_util__WEBPACK_IMPORTED_MODULE_0__["createWatchlistItem"](item).then(function (item) {
+      return dispatch(receiveWatchlistItem(item));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/cache_flow.jsx":
 /*!*********************************!*\
   !*** ./frontend/cache_flow.jsx ***!
@@ -1098,8 +1155,6 @@ function (_React$Component) {
             var num_shares = asset.purchase_shares;
             prices.forEach(function (close_price) {
               var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))); //.toLocaleString('en-US')
-
-              console.log(date > createdAt);
 
               if (date > createdAt && close_price.close !== null) {
                 if (that.dailyPrices[date.toLocaleString('en-US')] >= 0) {
@@ -2431,6 +2486,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/ticker_data_api_util */ "./frontend/util/ticker_data_api_util.js");
 /* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
+/* harmony import */ var _watchlist_watchlist_item__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../watchlist/watchlist_item */ "./frontend/components/watchlist/watchlist_item.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2450,6 +2506,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2661,6 +2718,8 @@ function (_React$Component) {
           executeBuy: this.props.executeBuy,
           currentBuyingPower: this.props.currentBuyingPower,
           fetchTicker: this.props.fetchTicker
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_item__WEBPACK_IMPORTED_MODULE_7__["default"], {
+          tickerSymbol: this.props.tickerSymbol
         }));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
@@ -3175,6 +3234,7 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3195,6 +3255,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Watchlist =
 /*#__PURE__*/
 function (_React$Component) {
@@ -3208,26 +3269,35 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Watchlist).call(this, props));
     _this.state = {};
     return _this;
-  } // componentDidMount(){
-  //     this.props.fetchWatchlistItems();
-  // }
-
+  }
 
   _createClass(Watchlist, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      debugger;
+      this.props.fetchWatchlistItems();
+    }
+  }, {
     key: "render",
     value: function render() {
-      // const tickers = this.props.watchlistItems.map((ticker, idx) => {
-      //     return (
-      //         <li key={`${ticker}-${idx}`} className="each-ticker watchlist-ticker">
-      //             <Link to={`/${ticker.symbol}`} id={ticker.id}>
-      //                 {ticker.symbol}
-      //             </Link>
-      //         </li>
-      //     )
-      // })
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "ticker-index block-paddings"
+      var tickers = this.props.watchlistItems.map(function (ticker, idx) {
+        debugger;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: "".concat(ticker, "-").concat(idx),
+          className: "each-ticker watchlist-ticker"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          to: "/".concat(ticker.symbol),
+          id: ticker.id
+        }, ticker.symbol.upcase));
       });
+      debugger;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "ticker-index block-paddings watchlist-box"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "watchlist"
+      }, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "watchlists"
+      }, tickers));
     }
   }]);
 
@@ -3250,23 +3320,124 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _watchlist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./watchlist */ "./frontend/components/watchlist/watchlist.jsx");
+/* harmony import */ var _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/watchlist_actions */ "./frontend/actions/watchlist_actions.js");
+/* harmony import */ var _watchlist__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./watchlist */ "./frontend/components/watchlist/watchlist.jsx");
+
 
 
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var userId = state.session.id;
+  debugger;
   return {
-    //   watchlistItems: Object.values(state.entities.watchlistItems), 
+    watchlistItems: Object.values(state.entities.watchlist),
     currentUser: state.entities.users[userId]
   };
-}; // const mapDispatchToProps = dispatch => {
-// return {fetchWatchlistItems: () => dispatch(fetchWatchlistItems())}
-// }
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchWatchlistItems: function fetchWatchlistItems() {
+      return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__["fetchWatchlistItems"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_watchlist__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/watchlist/watchlist_item.jsx":
+/*!**********************************************************!*\
+  !*** ./frontend/components/watchlist/watchlist_item.jsx ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/watchlist_actions */ "./frontend/actions/watchlist_actions.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, null)(_watchlist__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    removeWatchlistItem: function removeWatchlistItem(id) {
+      return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__["removeWatchlistItem"])(id));
+    },
+    createWatchlistItem: function createWatchlistItem(item) {
+      return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__["createWatchlistItem"])(item));
+    }
+  };
+};
+
+var WatchlistItem =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(WatchlistItem, _React$Component);
+
+  function WatchlistItem(props) {
+    var _this;
+
+    _classCallCheck(this, WatchlistItem);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(WatchlistItem).call(this, props));
+    _this.state = {};
+    _this.addToWatchlist = _this.addToWatchlist.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(WatchlistItem, [{
+    key: "addToWatchlist",
+    value: function addToWatchlist() {
+      // debugger
+      this.props.createWatchlistItem({
+        symbol: this.props.tickerSymbol
+      }).then(function (r) {
+        // debugger
+        console.log(r);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this2.addToWatchlist();
+        }
+      }, "Add to watchlist");
+    }
+  }]);
+
+  return WatchlistItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatchToProps)(WatchlistItem));
 
 /***/ }),
 
@@ -3284,6 +3455,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tickers_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tickers_reducer */ "./frontend/reducers/tickers_reducer.js");
 /* harmony import */ var _ticker_data_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ticker_data_reducer */ "./frontend/reducers/ticker_data_reducer.js");
 /* harmony import */ var _transactions_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./transactions_reducer */ "./frontend/reducers/transactions_reducer.js");
+/* harmony import */ var _watchlist_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./watchlist_reducer */ "./frontend/reducers/watchlist_reducer.js");
+
 
 
 
@@ -3293,7 +3466,8 @@ var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   tickers: _tickers_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   tickerData: _ticker_data_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  transactions: _transactions_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  transactions: _transactions_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
+  watchlist: _watchlist_reducer__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 
@@ -3503,6 +3677,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   switch (action.type) {
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTION"]:
+      debugger;
       return Object.assign({}, state, _defineProperty({}, action.transaction.id, action.transaction));
 
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTIONS"]:
@@ -3536,6 +3711,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return Object.assign({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
+/***/ "./frontend/reducers/watchlist_reducer.js":
+/*!************************************************!*\
+  !*** ./frontend/reducers/watchlist_reducer.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/watchlist_actions */ "./frontend/actions/watchlist_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  var oldState = Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_WATCHLIST_ITEMS"]:
+      debugger;
+      return action.items;
+
+    case _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_WATCHLIST_ITEM"]:
+      debugger;
+      return Object.assign({}, oldState, _defineProperty({}, action.item.id, action.item));
+    // {[action.currentUser.id]: action.currentUser});
+
+    case _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_WATCHLIST_ITEM"]:
+      newState = Object.assign({}, oldState);
+      delete newState[action.item.id];
+      return newState;
 
     default:
       return state;
@@ -3820,6 +4035,41 @@ var fetchTransactions = function fetchTransactions(transactions) {
     }
   });
 };
+
+/***/ }),
+
+/***/ "./frontend/util/watchlist_api_util.js":
+/*!*********************************************!*\
+  !*** ./frontend/util/watchlist_api_util.js ***!
+  \*********************************************/
+/*! exports provided: fetchWatchlistItems, createWatchlistItem */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatchlistItems", function() { return fetchWatchlistItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createWatchlistItem", function() { return createWatchlistItem; });
+var fetchWatchlistItems = function fetchWatchlistItems() {
+  return $.ajax({
+    method: "GET",
+    url: "/api/watchlists"
+  });
+};
+var createWatchlistItem = function createWatchlistItem(item) {
+  return $.ajax({
+    method: "POST",
+    url: "/api/watchlists",
+    data: {
+      item: item
+    }
+  });
+}; // export const deleteWatchlistItem = (item) => {
+//     return $.ajax({
+//       method: "DELETE",
+//       url: "/api/watchlist",
+//       data: { item }
+//     });
+// };
 
 /***/ }),
 
@@ -63052,7 +63302,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

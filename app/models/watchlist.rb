@@ -16,6 +16,6 @@ class Watchlist < ApplicationRecord
     foreign_key: :ticker_id,
     class_name: 'Ticker'
 
-    belongs_to :user,
+    belongs_to :user
 
 end

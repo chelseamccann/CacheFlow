@@ -8,7 +8,6 @@ const mapStateToProps = (state, ownProps) => {
 
   let userId = state.session.id;
   let tickerSymbol = ownProps.match.params.tickerSymbol
-  
   return {
     tickerSymbol: tickerSymbol,
     currentUser: state.entities.users[userId],
@@ -19,7 +18,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
   fetchTicker: tickerId => dispatch(fetchTicker(tickerId)),
   fetchTickerInfo: symbol => dispatch(fetchTickerInfo(symbol)),
-  executeBuy: transaction => dispatch(executeBuy(transaction))
+  executeBuy: transaction => dispatch(executeBuy(transaction)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TickerShow);

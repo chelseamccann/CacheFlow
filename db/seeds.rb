@@ -9,6 +9,7 @@
 Ticker.destroy_all
 User.destroy_all
 Transaction.destroy_all
+Watchlist.destroy_all
 
 user = User.create!(email: "JordanBelfort@w.com", password: "password123", buying_power: 1000000)
 

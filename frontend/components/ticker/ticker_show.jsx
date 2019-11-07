@@ -5,6 +5,7 @@ import TransactionForm from '../transactions/transaction_form';
 import {fetchPrices, fetchDailyPrices, fetchTickerInfo, fetchTickerStats } from '../../util/ticker_data_api_util'; 
 import News from '../news/news';
 import { ProtectedRoute } from '../../util/route_utils';
+import WatchlistItem from '../watchlist/watchlist_item'
 
 class TickerShow extends React.Component{
     constructor(props){
@@ -176,6 +177,9 @@ class TickerShow extends React.Component{
                     fetchTicker={this.props.fetchTicker}
                     />
 
+                    <WatchlistItem
+                    tickerSymbol={this.props.tickerSymbol}
+                    />
                 </div>
                 )
             } else {
