@@ -2248,7 +2248,6 @@ function (_React$Component) {
           className: "mini-close-price"
         }, "$".concat(this.props.close)));
       } else {
-        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -2612,9 +2611,11 @@ function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
+      debugger;
       var prev = prevProps.tickerSymbol || prevProps.match.params.tickerSymbol;
 
       if (this.props.tickerSymbol !== prev) {
+        debugger;
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
           return _this3.renderDaily(response);
         });
@@ -2715,6 +2716,7 @@ function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
+      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2789,7 +2791,9 @@ function (_React$Component) {
           tickerSymbol: this.props.tickerSymbol
         })));
       } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_item__WEBPACK_IMPORTED_MODULE_7__["default"], {
+          tickerSymbol: this.props.tickerSymbol
+        });
       }
     }
   }]);
@@ -3489,8 +3493,9 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(WatchlistItem).call(this, props));
     _this.state = {
-      currentButton: 'add'
+      currentButton: ''
     };
+    debugger;
     _this.addToWatchlist = _this.addToWatchlist.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -3500,15 +3505,45 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      this.setState({
+        currentButton: ''
+      });
       this.props.fetchWatchlistItems().then(function (response) {
         Object.values(response.items).forEach(function (el) {
-          if (el.symbol === _this2.props.tickerSymbol) {
+          if (el.symbol.toUpperCase() === _this2.props.tickerSymbol.toUpperCase()) {
             _this2.setState({
               currentButton: 'remove'
             });
           }
         });
+        debugger;
+
+        if (_this2.state.currentButton === '') {
+          _this2.setState({
+            currentButton: 'add'
+          });
+        }
       });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var _this3 = this;
+
+      if (prevProps.tickerSymbol.toUpperCase() !== this.props.tickerSymbol.toUpperCase()) {
+        this.props.fetchWatchlistItems().then(function (response) {
+          var button = '';
+          Object.values(response.items).forEach(function (el) {
+            if (el.symbol.toUpperCase() === _this3.props.tickerSymbol.toUpperCase()) {
+              button = 'remove';
+            }
+          })(button === 'remove') ? _this3.setState({
+            currentButton: 'remove'
+          }) : _this3.setState({
+            currentButton: 'add'
+          });
+        });
+      }
     }
   }, {
     key: "addToWatchlist",
@@ -3533,22 +3568,24 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.state.currentButton === 'add') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "watchlist-button addWatchlistButton",
           onClick: function onClick() {
-            return _this3.addToWatchlist();
+            return _this4.addToWatchlist();
           }
         }, "Add to watchlist");
       } else if (this.state.currentButton === 'remove') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "watchlist-button removeWatchlistButton",
           onClick: function onClick() {
-            return _this3.removeFromWatchlist();
+            return _this4.removeFromWatchlist();
           }
         }, "Remove from watchlist");
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       }
     }
   }]);

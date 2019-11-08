@@ -93,7 +93,7 @@ class TickerChart extends React.Component {
             )
         }
         else {
-            debugger
+
             return (
                 <div className="ticker-chart block-paddings">
                     
