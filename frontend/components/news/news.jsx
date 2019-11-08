@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchNews } from '../../util/news_api_util';
+import { fetchNews, fetchCompanyNews } from '../../util/news_api_util';
 
 class News extends React.Component{
     constructor(props){
@@ -7,21 +7,41 @@ class News extends React.Component{
         this.state = {
             isLoading: true
         }
+        this.getNews = this.getNews.bind(this);
     }
 
 
     componentDidMount(){
-        fetchNews().then(news => {
-            this.setState({ news: news.articles, isLoading: false })
-        })
+        this.getNews();
+    }
+
+    componentDidUpdate(prevProps){
+        if (prevProps.location.pathname.toUpperCase() !== this.props.location.pathname.toUpperCase()){
+            this.getNews();
+        }
+    }
+
+    getNews(){
+        let ticker = this.props.location.pathname
+        if (ticker === "/"){
+            fetchNews().then(news => {
+                this.setState({ news: news.articles, isLoading: false })
+            })
+        } else {
+            fetchCompanyNews(ticker.slice(1,ticker.length)).then(news => {
+
+                this.setState({ news: news.articles, isLoading: false })
+            })
+        }
     }
 
     render(){
+
         if (!this.state.isLoading){
             const { news } = this.state;
             return (
                 <ul className="news-box">
-                    {news.reverse().map((newsPiece, idx) => (
+                    {news.map((newsPiece, idx) => (
                         // <div >
                         <a href={newsPiece.url} className="news-box nws" key={`${newsPiece}-${idx}`} >
                             <div className="news-text">

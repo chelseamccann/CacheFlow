@@ -15,7 +15,7 @@ class TickerChart extends React.Component {
             chartX: null,
             chartY: null,
         }
-        debugger
+
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
         
@@ -33,7 +33,7 @@ class TickerChart extends React.Component {
     // }
 
     handleMouseOver(e){
-        debugger
+
         if(e && e.activePayload !== undefined){
 
             let hoverPrice = e.activePayload[0].payload.price;
@@ -94,7 +94,7 @@ class TickerChart extends React.Component {
             )
         }
         else {
-            debugger
+
             return (
                 <div className="ticker-chart block-paddings">
                     

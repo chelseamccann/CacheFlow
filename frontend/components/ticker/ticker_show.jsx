@@ -209,6 +209,7 @@ class TickerShow extends React.Component{
                 )
             } else {
                 return (
+                    
                     <WatchlistItem
                     tickerSymbol={this.props.tickerSymbol}
                     />

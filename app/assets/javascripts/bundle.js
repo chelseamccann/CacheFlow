@@ -979,9 +979,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1004,20 +1004,44 @@ function (_React$Component) {
     _this.state = {
       isLoading: true
     };
+    _this.getNews = _this.getNews.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(News, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.getNews();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.location.pathname.toUpperCase() !== this.props.location.pathname.toUpperCase()) {
+        this.getNews();
+      }
+    }
+  }, {
+    key: "getNews",
+    value: function getNews() {
       var _this2 = this;
 
-      Object(_util_news_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchNews"])().then(function (news) {
-        _this2.setState({
-          news: news.articles,
-          isLoading: false
+      var ticker = this.props.location.pathname;
+
+      if (ticker === "/") {
+        Object(_util_news_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchNews"])().then(function (news) {
+          _this2.setState({
+            news: news.articles,
+            isLoading: false
+          });
         });
-      });
+      } else {
+        Object(_util_news_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchCompanyNews"])(ticker.slice(1, ticker.length)).then(function (news) {
+          _this2.setState({
+            news: news.articles,
+            isLoading: false
+          });
+        });
+      }
     }
   }, {
     key: "render",
@@ -1026,7 +1050,7 @@ function (_React$Component) {
         var news = this.state.news;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "news-box"
-        }, news.reverse().map(function (newsPiece, idx) {
+        }, news.map(function (newsPiece, idx) {
           return (// <div >
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
               href: newsPiece.url,
@@ -2173,7 +2197,6 @@ function (_React$Component) {
       chartX: null,
       chartY: null
     };
-    debugger;
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
@@ -2192,8 +2215,6 @@ function (_React$Component) {
   _createClass(TickerChart, [{
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
-      debugger;
-
       if (e && e.activePayload !== undefined) {
         var hoverPrice = e.activePayload[0].payload.price;
         var openPrice = this.state.open;
@@ -2249,7 +2270,6 @@ function (_React$Component) {
           className: "mini-close-price"
         }, "$".concat(this.props.close)));
       } else {
-        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -3992,18 +4012,25 @@ var configureStore = function configureStore() {
 /*!****************************************!*\
   !*** ./frontend/util/news_api_util.js ***!
   \****************************************/
-/*! exports provided: fetchNews */
+/*! exports provided: fetchNews, fetchCompanyNews */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNews", function() { return fetchNews; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchCompanyNews", function() { return fetchCompanyNews; });
 var fetchNews = function fetchNews() {
   return $.ajax({
     method: "GET",
-    url: "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=f9c0700888a04dd7ba2d78e2fe32dfe7"
+    url: "https://newsapi.org/v2/everything?q=stockmarket&apiKey=f9c0700888a04dd7ba2d78e2fe32dfe7"
   });
-}; // `https://newsapi.org/v2/everything?q=${symbol}&apiKey=f9c0700888a04dd7ba2d78e2fe32dfe7`
+};
+var fetchCompanyNews = function fetchCompanyNews(symbol) {
+  return $.ajax({
+    method: "GET",
+    url: "https://newsapi.org/v2/everything?q=".concat(symbol, "&apiKey=f9c0700888a04dd7ba2d78e2fe32dfe7")
+  });
+};
 
 /***/ }),
 
