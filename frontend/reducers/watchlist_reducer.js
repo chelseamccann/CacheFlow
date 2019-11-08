@@ -8,7 +8,6 @@ const oldState = Object.freeze(state);
     case RECEIVE_WATCHLIST_ITEM:
         return Object.assign({}, oldState, { [action.item.id]: action.item});// {[action.currentUser.id]: action.currentUser});
     case REMOVE_WATCHLIST_ITEM:
-      debugger
         let newState = Object.assign({}, oldState);
         delete newState[action.symbol.id];
         return newState;

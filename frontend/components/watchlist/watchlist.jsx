@@ -10,13 +10,11 @@ class Watchlist extends React.Component {
     }
 
     componentDidMount(){
-        debugger
         this.props.fetchWatchlistItems()
     }
 
     render(){
         const tickers = this.props.watchlistItems.map((ticker, idx) => {
-                debugger
                 return (
                     <li key={`${ticker}-${idx}`} className="each-ticker watchlist-ticker">
                         <Link to={`/${ticker.symbol}`} id={ticker.id}>
@@ -26,7 +24,6 @@ class Watchlist extends React.Component {
                 )
             })
         
-        debugger
         return(
 
             <ul className="ticker-index block-paddings watchlist-box">

@@ -52,7 +52,6 @@ class Api::TransactionsController < ApplicationController
 
     private
     def transaction_params
-        debugger
         params.require(:transaction).permit(:ticker_symbol, :purchase_price, :purchase_shares, :buy)
     end
 

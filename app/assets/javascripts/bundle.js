@@ -3282,14 +3282,12 @@ function (_React$Component) {
   _createClass(Watchlist, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       this.props.fetchWatchlistItems();
     }
   }, {
     key: "render",
     value: function render() {
       var tickers = this.props.watchlistItems.map(function (ticker, idx) {
-        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: "".concat(ticker, "-").concat(idx),
           className: "each-ticker watchlist-ticker"
@@ -3298,7 +3296,6 @@ function (_React$Component) {
           id: ticker.id
         }, ticker.symbol.toUpperCase()));
       });
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "ticker-index block-paddings watchlist-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -3734,7 +3731,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   switch (action.type) {
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTION"]:
-      debugger;
       return Object.assign({}, state, _defineProperty({}, action.transaction.id, action.transaction));
 
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTIONS"]:
@@ -3803,7 +3799,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // {[action.currentUser.id]: action.currentUser});
 
     case _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_WATCHLIST_ITEM"]:
-      debugger;
       var newState = Object.assign({}, oldState);
       delete newState[action.symbol.id];
       return newState;
@@ -4122,7 +4117,6 @@ var createWatchlistItem = function createWatchlistItem(item) {
   });
 };
 var deleteWatchlistItem = function deleteWatchlistItem(item) {
-  debugger;
   return $.ajax({
     method: "DELETE",
     url: "/api/watchlists/".concat(item.symbol),
