@@ -2173,25 +2173,27 @@ function (_React$Component) {
       chartX: null,
       chartY: null
     };
+    debugger;
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // componentDidUpdate(){
+  //     debugger
+  //     if (this.state.closePrice !== this.props.close){
+  //         this.setState({
+  //             closePrice: this.props.close,
+  //             change: this.props.change,
+  //             percentChange: this.props.changePercent
+  //         })
+  //     }
+  // }
+
 
   _createClass(TickerChart, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      if (this.state.closePrice !== this.props.close) {
-        this.setState({
-          closePrice: this.props.close,
-          change: this.props.change,
-          percentChange: this.props.changePercent
-        });
-      }
-    }
-  }, {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
+      debugger;
+
       if (e && e.activePayload !== undefined) {
         var hoverPrice = e.activePayload[0].payload.price;
         var openPrice = this.state.open;
@@ -2209,10 +2211,10 @@ function (_React$Component) {
   }, {
     key: "handleMouseOut",
     value: function handleMouseOut(e) {
-      var currentChange = this.state.change || this.state.open - this.state.close;
-      var currentPercentChange = currentChange / this.state.open / 100;
+      var currentChange = this.props.change || this.props.open - this.props.close;
+      var currentPercentChange = currentChange / this.props.open / 100;
       this.setState({
-        closePrice: this.state.close,
+        closePrice: this.props.close,
         change: parseFloat(currentChange).toFixed(2),
         percentChange: parseFloat(currentPercentChange).toFixed(2)
       });
@@ -2247,6 +2249,7 @@ function (_React$Component) {
           className: "mini-close-price"
         }, "$".concat(this.props.close)));
       } else {
+        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -2740,6 +2743,9 @@ function (_React$Component) {
           tF: tF
         });
       } else if (this.state.timeFrame !== "" && this.state.marketcap) {
+        var data = this.state[this.state.timeFrame].slice().filter(function (el) {
+          return el.price !== null;
+        });
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "show-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2752,7 +2758,7 @@ function (_React$Component) {
           mini: this.props.mini,
           oldTicker: this.state.oldTicker,
           tickerSymbol: this.props.tickerSymbol,
-          ticker: this.state[this.state.timeFrame],
+          ticker: data,
           timeFrame: this.state.timeFrame,
           open: this.state.open,
           close: this.state.close,

@@ -15,24 +15,25 @@ class TickerChart extends React.Component {
             chartX: null,
             chartY: null,
         }
-        
+        debugger
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
         
     }
 
-    componentDidUpdate(){
-        
-        if (this.state.closePrice !== this.props.close){
-            this.setState({
-                closePrice: this.props.close,
-                change: this.props.change,
-                percentChange: this.props.changePercent
-            })
-        }
-    }
+    // componentDidUpdate(){
+    //     debugger
+    //     if (this.state.closePrice !== this.props.close){
+    //         this.setState({
+    //             closePrice: this.props.close,
+    //             change: this.props.change,
+    //             percentChange: this.props.changePercent
+    //         })
+    //     }
+    // }
 
     handleMouseOver(e){
+        debugger
         if(e && e.activePayload !== undefined){
 
             let hoverPrice = e.activePayload[0].payload.price;
@@ -52,10 +53,10 @@ class TickerChart extends React.Component {
 
 
     handleMouseOut(e){
-        let currentChange = this.state.change || (this.state.open - this.state.close)
-        let currentPercentChange = (currentChange/this.state.open)/100
+        let currentChange = this.props.change || (this.props.open - this.props.close)
+        let currentPercentChange = (currentChange/this.props.open)/100
         this.setState({
-            closePrice: this.state.close, 
+            closePrice: this.props.close, 
             change: parseFloat(currentChange).toFixed(2), 
             percentChange: parseFloat(currentPercentChange).toFixed(2)
         })
@@ -77,9 +78,9 @@ class TickerChart extends React.Component {
                         height={30} 
                         data={data}
                     >
-                        <XAxis hide={true} dataKey="label"/>
-                        <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
-                        <Line connectNulls type="monotone" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1.2}/>
+                    <XAxis hide={true} dataKey="label"/>
+                    <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
+                    <Line connectNulls type="monotone" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1.2}/>
                     </LineChart>
                 </div>
 
@@ -93,7 +94,7 @@ class TickerChart extends React.Component {
             )
         }
         else {
-
+            debugger
             return (
                 <div className="ticker-chart block-paddings">
                     

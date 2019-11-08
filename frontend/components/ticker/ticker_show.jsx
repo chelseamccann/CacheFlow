@@ -147,7 +147,11 @@ class TickerShow extends React.Component{
             )
         }
          else if(this.state.timeFrame !== "" && this.state.marketcap){
-            
+
+            let data = this.state[this.state.timeFrame].slice().filter(el => {
+                return el.price !== null
+            })
+
             return (
                 <div className="show-wrap">
                     <div className="chart-info-wrap">
@@ -157,7 +161,7 @@ class TickerShow extends React.Component{
                         mini={this.props.mini}
                         oldTicker={this.state.oldTicker}
                         tickerSymbol={this.props.tickerSymbol}
-                        ticker={this.state[this.state.timeFrame]}
+                        ticker={data}
                         timeFrame={this.state.timeFrame}
                         open={this.state.open}
                         close={this.state.close}
