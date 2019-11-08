@@ -17,7 +17,7 @@ export const deleteWatchlistItem = (item) => {
     debugger
     return $.ajax({
       method: "DELETE",
-      url: `/api/watchlists/${item}`,
+      url: `/api/watchlists/${item.symbol}`,
       data: { item }
     });
 };

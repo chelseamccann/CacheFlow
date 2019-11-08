@@ -10,7 +10,7 @@ const oldState = Object.freeze(state);
     case REMOVE_WATCHLIST_ITEM:
       debugger
         let newState = Object.assign({}, oldState);
-        delete newState[action.symbol];
+        delete newState[action.symbol.id];
         return newState;
     default:
       return state;

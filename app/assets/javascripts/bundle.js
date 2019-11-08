@@ -3392,8 +3392,19 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  var tickerSymbol = ownProps.match.params.tickerSymbol;
+  return {
+    tickerSymbol: tickerSymbol,
+    watchlistItems: Object.values(state.entities.watchlist)
+  };
+};
+
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    fetchWatchlistItems: function fetchWatchlistItems() {
+      return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__["fetchWatchlistItems"])());
+    },
     deleteWatchlistItem: function deleteWatchlistItem(id) {
       return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__["deleteWatchlistItem"])(id));
     },
@@ -3422,6 +3433,23 @@ function (_React$Component) {
   }
 
   _createClass(WatchlistItem, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.props.fetchWatchlistItems().then(function (response) {
+        Object.values(response.items).forEach(function (el) {
+          console.log(_this2.props.tickerSymbol);
+
+          if (el.symbol === _this2.props.tickerSymbol) {
+            _this2.setState({
+              currentButton: 'remove'
+            });
+          }
+        });
+      });
+    }
+  }, {
     key: "addToWatchlist",
     value: function addToWatchlist() {
       this.setState({
@@ -3434,7 +3462,6 @@ function (_React$Component) {
   }, {
     key: "removeFromWatchlist",
     value: function removeFromWatchlist() {
-      debugger;
       this.setState({
         currentButton: 'add'
       });
@@ -3445,20 +3472,20 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.state.currentButton === 'add') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "watchlist-button addWatchlistButton",
           onClick: function onClick() {
-            return _this2.addToWatchlist();
+            return _this3.addToWatchlist();
           }
         }, "Add to watchlist");
       } else if (this.state.currentButton === 'remove') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "watchlist-button removeWatchlistButton",
           onClick: function onClick() {
-            return _this2.removeFromWatchlist();
+            return _this3.removeFromWatchlist();
           }
         }, "Remove from watchlist");
       }
@@ -3779,7 +3806,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     case _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_WATCHLIST_ITEM"]:
       debugger;
       var newState = Object.assign({}, oldState);
-      delete newState[action.symbol];
+      delete newState[action.symbol.id];
       return newState;
 
     default:
@@ -4099,7 +4126,7 @@ var deleteWatchlistItem = function deleteWatchlistItem(item) {
   debugger;
   return $.ajax({
     method: "DELETE",
-    url: "/api/watchlists/".concat(item),
+    url: "/api/watchlists/".concat(item.symbol),
     data: {
       item: item
     }
