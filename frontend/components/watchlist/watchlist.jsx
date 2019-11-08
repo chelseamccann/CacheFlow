@@ -23,17 +23,20 @@ class Watchlist extends React.Component {
                     </li>
                 )
             })
-        
-        return(
+        if (tickers.length > 0){
+            return(
 
-            <ul className="ticker-index block-paddings watchlist-box">
-                <h1 className="watchlist">Watchlist</h1>
-                <div className="watchlists">
-                {tickers}
-                </div>
-            </ul>
+                <ul className="ticker-index block-paddings watchlist-box">
+                    <h1 className="watchlist">Watchlist</h1>
+                    <div className="watchlists">
+                    {tickers}
+                    </div>
+                </ul>
 
-        )
+            )
+        } else {
+            return <div></div>
+        }
 
     }
 }

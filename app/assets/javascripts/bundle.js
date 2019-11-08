@@ -3296,13 +3296,18 @@ function (_React$Component) {
           id: ticker.id
         }, ticker.symbol.toUpperCase()));
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "ticker-index block-paddings watchlist-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-        className: "watchlist"
-      }, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "watchlists"
-      }, tickers));
+
+      if (tickers.length > 0) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "ticker-index block-paddings watchlist-box"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "watchlist"
+        }, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "watchlists"
+        }, tickers));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      }
     }
   }]);
 
@@ -3435,8 +3440,6 @@ function (_React$Component) {
 
       this.props.fetchWatchlistItems().then(function (response) {
         Object.values(response.items).forEach(function (el) {
-          console.log(_this2.props.tickerSymbol);
-
           if (el.symbol === _this2.props.tickerSymbol) {
             _this2.setState({
               currentButton: 'remove'

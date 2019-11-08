@@ -28,7 +28,6 @@ class WatchlistItem extends React.Component{
   componentDidMount(){
     this.props.fetchWatchlistItems().then(response => {
       Object.values(response.items).forEach(el => {
-        console.log(this.props.tickerSymbol)
         if (el.symbol === this.props.tickerSymbol){
           this.setState({currentButton: 'remove'})
         } 
