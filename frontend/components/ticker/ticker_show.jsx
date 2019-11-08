@@ -36,10 +36,9 @@ class TickerShow extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        debugger
+
         let prev = prevProps.tickerSymbol || prevProps.match.params.tickerSymbol
         if (this.props.tickerSymbol !== prev){ 
-            debugger
             fetchDailyPrices(this.props.tickerSymbol).then(response => {
                 
                 return this.renderDaily(response)
@@ -125,7 +124,7 @@ class TickerShow extends React.Component{
     }
 
     render(){
-        debugger
+
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
@@ -199,6 +198,7 @@ class TickerShow extends React.Component{
 
                     <WatchlistItem
                     tickerSymbol={this.props.tickerSymbol}
+                    fetchTickers={this.props.fetchTickers}
                     />
                     </div>
                 </div>

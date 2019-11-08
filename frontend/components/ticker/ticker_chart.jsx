@@ -65,7 +65,7 @@ class TickerChart extends React.Component {
         let data = this.props.ticker || [];
         const label = this.props.timeFrame === "1D" ? "label" : "date";
         if (this.props.mini === true){
-            debugger
+
             return (
             <>
                 <div className="ticker-chart block-paddings mini-chart">

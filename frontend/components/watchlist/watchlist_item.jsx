@@ -1,19 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchWatchlistItems, createWatchlistItem, deleteWatchlistItem } from '../../actions/watchlist_actions';
+import { fetchTickers } from '../../actions/ticker_actions';
 
 const mapStateToProps = (state, ownProps) => {
-  let tickerSymbol = ownProps.match.params.tickerSymbol
+
+  let tickerSymbol = ownProps.tickerSymbol || ownProps.match.params.tickerSymbol
   return {
     tickerSymbol: tickerSymbol,
-    watchlistItems: Object.values(state.entities.watchlist)
+    watchlistItems: Object.values(state.entities.watchlist),
+    tickers: Object.values(state.entities.tickers)
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   fetchWatchlistItems: () => dispatch(fetchWatchlistItems()),
   deleteWatchlistItem: id => dispatch(deleteWatchlistItem(id)),
-  createWatchlistItem: item => dispatch(createWatchlistItem(item))
+  createWatchlistItem: item => dispatch(createWatchlistItem(item)),
+  fetchTickers: () => dispatch(fetchTickers())
 })
 
 class WatchlistItem extends React.Component{
@@ -22,36 +26,76 @@ class WatchlistItem extends React.Component{
     this.state={
       currentButton: ''
     };
-    debugger
+
     this.addToWatchlist = this.addToWatchlist.bind(this);
   }
 
   componentDidMount(){
     this.setState({currentButton: ''})
-    this.props.fetchWatchlistItems().then(response => {
-      Object.values(response.items).forEach(el => {
-        if (el.symbol.toUpperCase() === this.props.tickerSymbol.toUpperCase()){
-          this.setState({currentButton: 'remove'})
-        } 
+    let button = ''
+    let portfolio = false
+    this.props.fetchTickers().then(response => {
+      Object.values(response.tickers).forEach(el => {
+        if (el.symbol.toUpperCase() === this.props.tickerSymbol.toUpperCase() && el.num_shares > 0){
+          portfolio = true
+        }
       })
-      debugger
-      if (this.state.currentButton === ''){
-        this.setState({currentButton: 'add'})
+
+      if (portfolio === false){
+        button = 'add'
+        this.props.fetchWatchlistItems().then(response => {
+          debugger
+          Object.values(response.items).forEach(el => {
+            if (el.symbol.toUpperCase() === this.props.tickerSymbol.toUpperCase()){
+              button = 'remove'
+            } 
+          })
+          
+          debugger
+          if (button === 'remove'){
+            this.setState({currentButton: 'remove'})
+          } else if (button === 'add'){
+            this.setState({currentButton: 'add'})
+          }
+        })
       }
+      // (button === 'remove') ? this.setState({currentButton: 'remove'}) : this.setState({currentButton: 'add'})
     })
+
   }
   
   componentDidUpdate(prevProps){
+
     if(prevProps.tickerSymbol.toUpperCase() !== this.props.tickerSymbol.toUpperCase()){
-      this.props.fetchWatchlistItems().then(response => {
-        let button = ''
-        Object.values(response.items).forEach(el => {
-          if (el.symbol.toUpperCase() === this.props.tickerSymbol.toUpperCase()){
-            button = 'remove'
-          } 
+      // this.props.fetchWatchlistItems().then(response => {
+        
+      let button = ''
+      let portfolio = false
+
+        this.props.tickers.forEach(el => {
+          if (el.symbol.toUpperCase() === this.props.tickerSymbol.toUpperCase() && el.num_shares > 0){
+            portfolio = true
+          }
         })
-        (button === 'remove') ? this.setState({currentButton: 'remove'}) : this.setState({currentButton: 'add'})
-      })
+
+        if (portfolio === false){
+          button = 'add'
+        // Object.values(response.items).forEach(el => {
+          debugger
+          this.props.watchlistItems.forEach(el => {
+            if (el.symbol.toUpperCase() === this.props.tickerSymbol.toUpperCase()){
+              button = 'remove'
+            } 
+          })
+        }
+        debugger
+        if (button === 'remove'){
+          this.setState({currentButton: 'remove'})
+        } else if (button === 'add'){
+          this.setState({currentButton: 'add'})
+        }
+        // (button === 'remove') ? this.setState({currentButton: 'remove'}) : this.setState({currentButton: 'add'})
+
     }
   }
 
@@ -77,4 +121,4 @@ class WatchlistItem extends React.Component{
 }
 
 
-export default connect(null, mapDispatchToProps)(WatchlistItem);
+export default connect(mapStateToProps, mapDispatchToProps)(WatchlistItem);

@@ -2224,7 +2224,6 @@ function (_React$Component) {
       var label = this.props.timeFrame === "1D" ? "label" : "date";
 
       if (this.props.mini === true) {
-        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings mini-chart"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
@@ -2372,6 +2371,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var tickers = this.props.tickers.map(function (ticker, idx) {
         if (ticker.num_shares > 0) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -2382,7 +2383,8 @@ function (_React$Component) {
             id: ticker.id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ticker.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(ticker.num_shares, " Shares"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_show_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
             tickerSymbol: ticker.symbol,
-            mini: true
+            mini: true,
+            tickers: _this2.props.tickers
           })));
         }
       });
@@ -2611,11 +2613,9 @@ function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
-      debugger;
       var prev = prevProps.tickerSymbol || prevProps.match.params.tickerSymbol;
 
       if (this.props.tickerSymbol !== prev) {
-        debugger;
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
           return _this3.renderDaily(response);
         });
@@ -2716,7 +2716,6 @@ function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
-      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2788,7 +2787,8 @@ function (_React$Component) {
           currentBuyingPower: this.props.currentBuyingPower,
           fetchTicker: this.props.fetchTicker
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_item__WEBPACK_IMPORTED_MODULE_7__["default"], {
-          tickerSymbol: this.props.tickerSymbol
+          tickerSymbol: this.props.tickerSymbol,
+          fetchTickers: this.props.fetchTickers
         })));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_item__WEBPACK_IMPORTED_MODULE_7__["default"], {
@@ -3437,6 +3437,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/watchlist_actions */ "./frontend/actions/watchlist_actions.js");
+/* harmony import */ var _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/ticker_actions */ "./frontend/actions/ticker_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3459,11 +3460,13 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  var tickerSymbol = ownProps.match.params.tickerSymbol;
+  var tickerSymbol = ownProps.tickerSymbol || ownProps.match.params.tickerSymbol;
   return {
     tickerSymbol: tickerSymbol,
-    watchlistItems: Object.values(state.entities.watchlist)
+    watchlistItems: Object.values(state.entities.watchlist),
+    tickers: Object.values(state.entities.tickers)
   };
 };
 
@@ -3477,6 +3480,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     createWatchlistItem: function createWatchlistItem(item) {
       return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__["createWatchlistItem"])(item));
+    },
+    fetchTickers: function fetchTickers() {
+      return dispatch(Object(_actions_ticker_actions__WEBPACK_IMPORTED_MODULE_3__["fetchTickers"])());
     }
   };
 };
@@ -3495,7 +3501,6 @@ function (_React$Component) {
     _this.state = {
       currentButton: ''
     };
-    debugger;
     _this.addToWatchlist = _this.addToWatchlist.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -3508,21 +3513,39 @@ function (_React$Component) {
       this.setState({
         currentButton: ''
       });
-      this.props.fetchWatchlistItems().then(function (response) {
-        Object.values(response.items).forEach(function (el) {
-          if (el.symbol.toUpperCase() === _this2.props.tickerSymbol.toUpperCase()) {
-            _this2.setState({
-              currentButton: 'remove'
-            });
+      var button = '';
+      var portfolio = false;
+      this.props.fetchTickers().then(function (response) {
+        Object.values(response.tickers).forEach(function (el) {
+          if (el.symbol.toUpperCase() === _this2.props.tickerSymbol.toUpperCase() && el.num_shares > 0) {
+            portfolio = true;
           }
         });
-        debugger;
 
-        if (_this2.state.currentButton === '') {
-          _this2.setState({
-            currentButton: 'add'
+        if (portfolio === false) {
+          button = 'add';
+
+          _this2.props.fetchWatchlistItems().then(function (response) {
+            debugger;
+            Object.values(response.items).forEach(function (el) {
+              if (el.symbol.toUpperCase() === _this2.props.tickerSymbol.toUpperCase()) {
+                button = 'remove';
+              }
+            });
+            debugger;
+
+            if (button === 'remove') {
+              _this2.setState({
+                currentButton: 'remove'
+              });
+            } else if (button === 'add') {
+              _this2.setState({
+                currentButton: 'add'
+              });
+            }
           });
-        }
+        } // (button === 'remove') ? this.setState({currentButton: 'remove'}) : this.setState({currentButton: 'add'})
+
       });
     }
   }, {
@@ -3531,18 +3554,38 @@ function (_React$Component) {
       var _this3 = this;
 
       if (prevProps.tickerSymbol.toUpperCase() !== this.props.tickerSymbol.toUpperCase()) {
-        this.props.fetchWatchlistItems().then(function (response) {
-          var button = '';
-          Object.values(response.items).forEach(function (el) {
+        // this.props.fetchWatchlistItems().then(response => {
+        var button = '';
+        var portfolio = false;
+        this.props.tickers.forEach(function (el) {
+          if (el.symbol.toUpperCase() === _this3.props.tickerSymbol.toUpperCase() && el.num_shares > 0) {
+            portfolio = true;
+          }
+        });
+
+        if (portfolio === false) {
+          button = 'add'; // Object.values(response.items).forEach(el => {
+
+          debugger;
+          this.props.watchlistItems.forEach(function (el) {
             if (el.symbol.toUpperCase() === _this3.props.tickerSymbol.toUpperCase()) {
               button = 'remove';
             }
-          })(button === 'remove') ? _this3.setState({
+          });
+        }
+
+        debugger;
+
+        if (button === 'remove') {
+          this.setState({
             currentButton: 'remove'
-          }) : _this3.setState({
+          });
+        } else if (button === 'add') {
+          this.setState({
             currentButton: 'add'
           });
-        });
+        } // (button === 'remove') ? this.setState({currentButton: 'remove'}) : this.setState({currentButton: 'add'})
+
       }
     }
   }, {
@@ -3593,7 +3636,7 @@ function (_React$Component) {
   return WatchlistItem;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatchToProps)(WatchlistItem));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(WatchlistItem));
 
 /***/ }),
 

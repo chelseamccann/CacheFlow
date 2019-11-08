@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchTickers } from '../../actions/ticker_actions'
-import TickerIndex from './ticker_index'
+import { fetchTickers } from '../../actions/ticker_actions';
+import TickerIndex from './ticker_index';
 
 const mapStateToProps = state => {
   let userId = state.session.id;

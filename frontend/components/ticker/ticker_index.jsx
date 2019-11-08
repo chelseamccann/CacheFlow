@@ -36,6 +36,7 @@ class TickerIndex extends React.Component{
                                 <TickerShowContainer 
                                     tickerSymbol={ticker.symbol}
                                     mini={true}
+                                    tickers={this.props.tickers}
                                 />
 
                         </Link>
