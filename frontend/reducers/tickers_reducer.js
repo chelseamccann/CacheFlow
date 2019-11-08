@@ -6,7 +6,6 @@ const tickerReducer = (state = {}, action) => {
         case RECEIVE_TICKERS:
             return action.tickers
         case RECEIVE_TICKER:
-            debugger
             return Object.assign({}, state, {[action.ticker.id]: {symbol: action.ticker.symbol, id: action.ticker.id, num_shares: action.ticker.num_shares}});
         default:
             return state;

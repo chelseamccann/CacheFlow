@@ -44,14 +44,12 @@ class WatchlistItem extends React.Component{
       if (portfolio === false){
         button = 'add'
         this.props.fetchWatchlistItems().then(response => {
-          debugger
           Object.values(response.items).forEach(el => {
             if (el.symbol.toUpperCase() === this.props.tickerSymbol.toUpperCase()){
               button = 'remove'
             } 
           })
           
-          debugger
           if (button === 'remove'){
             this.setState({currentButton: 'remove'})
           } else if (button === 'add'){
@@ -81,14 +79,14 @@ class WatchlistItem extends React.Component{
         if (portfolio === false){
           button = 'add'
         // Object.values(response.items).forEach(el => {
-          debugger
+
           this.props.watchlistItems.forEach(el => {
             if (el.symbol.toUpperCase() === this.props.tickerSymbol.toUpperCase()){
               button = 'remove'
             } 
           })
         }
-        debugger
+
         if (button === 'remove'){
           this.setState({currentButton: 'remove'})
         } else if (button === 'add'){

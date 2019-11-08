@@ -1378,7 +1378,7 @@ function (_React$Component) {
       this.setState({
         closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value).toFixed(2),
         change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
-        percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value / this.props.portfolioValue[this.props.portfolioValue.length - 1].value) * 100).toFixed(2),
+        percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value) / this.props.portfolioValue[this.props.portfolioValue.length - 1].value * 100).toFixed(2),
         timeFrame: this.props.timeFrame
       });
     }
@@ -3526,13 +3526,11 @@ function (_React$Component) {
           button = 'add';
 
           _this2.props.fetchWatchlistItems().then(function (response) {
-            debugger;
             Object.values(response.items).forEach(function (el) {
               if (el.symbol.toUpperCase() === _this2.props.tickerSymbol.toUpperCase()) {
                 button = 'remove';
               }
             });
-            debugger;
 
             if (button === 'remove') {
               _this2.setState({
@@ -3566,15 +3564,12 @@ function (_React$Component) {
         if (portfolio === false) {
           button = 'add'; // Object.values(response.items).forEach(el => {
 
-          debugger;
           this.props.watchlistItems.forEach(function (el) {
             if (el.symbol.toUpperCase() === _this3.props.tickerSymbol.toUpperCase()) {
               button = 'remove';
             }
           });
         }
-
-        debugger;
 
         if (button === 'remove') {
           this.setState({
@@ -3845,7 +3840,6 @@ var tickerReducer = function tickerReducer() {
       return action.tickers;
 
     case _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKER"]:
-      debugger;
       return Object.assign({}, state, _defineProperty({}, action.ticker.id, {
         symbol: action.ticker.symbol,
         id: action.ticker.id,
