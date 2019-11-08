@@ -67,33 +67,29 @@ class TickerChart extends React.Component {
         if (this.props.mini === true){
             debugger
             return (
-                <div className="ticker-chart block-paddings">
+            <>
+                <div className="ticker-chart block-paddings mini-chart">
                             
                     {/* <h3>$<Odometer value={this.state.closePrice}/></h3>
                     <p>{`$${this.state.change}`} {`(${this.state.percentChange}%)`}</p> */}
-                    <div className="mini-chart">
                     <LineChart 
-                        // width={676} 
-                        width={50} 
-                        height={10} 
+                        width={60} 
+                        height={30} 
                         data={data}
-                        margin={{top: 5, right: 10, left: 10, bottom: 5}}
                     >
-                        <XAxis hide={true} />
+                        <XAxis hide={true} dataKey="label"/>
                         <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
-                        <Tooltip className='tooltip'
-                                        contentStyle={{ border: '0', backgroundColor: 'transparent', color: 'grey'}}
-                                        formatter={(value, name, props) => { return [""] }}
-                                        // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
-                                        isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
-                        <Line connectNulls type="linear" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1}/>
+                        <Line connectNulls type="monotone" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1.2}/>
                     </LineChart>
-                    </div>
-
-                    <div className="mini-close-price">
-                        {this.props.close}
-                    </div>
                 </div>
+
+                <div className="mini-close-price">
+
+
+                    {`$${this.props.close}`}
+
+                </div> 
+            </>
             )
         }
         else {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import TickerShowContainer from '../ticker/ticker_show_container';
 
 class Watchlist extends React.Component {
 
@@ -19,6 +20,10 @@ class Watchlist extends React.Component {
                     <li key={`${ticker}-${idx}`} className="each-ticker watchlist-ticker">
                         <Link to={`/${ticker.symbol}`} id={ticker.id}>
                             {ticker.symbol.toUpperCase()}
+                            <TickerShowContainer 
+                                    tickerSymbol={ticker.symbol}
+                                    mini={true}
+                                />
                         </Link>
                     </li>
                 )

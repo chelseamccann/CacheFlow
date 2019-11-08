@@ -108,12 +108,19 @@
     letter-spacing: .25px;
     line-height: 19px;
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .ticker-chart {
     margin-bottom: 44px;
+    margin-top: 9%;
 }
 
+.mini-chart{
+    margin: 0;
+}
 
 .ticker-info  {
     font-weight: 200;

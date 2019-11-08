@@ -2225,52 +2225,28 @@ function (_React$Component) {
 
       if (this.props.mini === true) {
         debugger;
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "ticker-chart block-paddings"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "mini-chart"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
-        , {
-          width: 50,
-          height: 10,
-          data: data,
-          margin: {
-            top: 5,
-            right: 10,
-            left: 10,
-            bottom: 5
-          }
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "ticker-chart block-paddings mini-chart"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+          width: 60,
+          height: 30,
+          data: data
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
-          hide: true
+          hide: true,
+          dataKey: "label"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
           hide: true,
           domain: ['dataMin', 'dataMax']
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
-          className: "tooltip",
-          contentStyle: {
-            border: '0',
-            backgroundColor: 'transparent',
-            color: 'grey'
-          },
-          formatter: function formatter(value, name, props) {
-            return [""];
-          } // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
-          ,
-          isAnimationActive: false,
-          cursor: {
-            stroke: "Gainsboro",
-            strokeWidth: 1.5
-          }
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
           connectNulls: true,
-          type: "linear",
+          type: "monotone",
           dataKey: "price",
           dot: false,
           stroke: "#21ce99",
-          strokeWidth: 1
+          strokeWidth: 1.2
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "mini-close-price"
-        }, this.props.close));
+        }, "$".concat(this.props.close)));
       } else {
         debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2405,10 +2381,10 @@ function (_React$Component) {
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
             to: "/".concat(ticker.symbol),
             id: ticker.id
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ticker.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(ticker.num_shares, " Shares"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_show_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ticker.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(ticker.num_shares, " Shares"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_show_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
             tickerSymbol: ticker.symbol,
             mini: true
-          }))));
+          })));
         }
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3326,6 +3302,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _ticker_ticker_show_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ticker/ticker_show_container */ "./frontend/components/ticker/ticker_show_container.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3343,6 +3320,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -3377,7 +3355,10 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           to: "/".concat(ticker.symbol),
           id: ticker.id
-        }, ticker.symbol.toUpperCase()));
+        }, ticker.symbol.toUpperCase(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_ticker_show_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          tickerSymbol: ticker.symbol,
+          mini: true
+        })));
       });
 
       if (tickers.length > 0) {
