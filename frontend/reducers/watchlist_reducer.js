@@ -4,14 +4,13 @@ export default (state = {}, action) => {
 const oldState = Object.freeze(state);
   switch (action.type) {
     case RECEIVE_WATCHLIST_ITEMS:
-        debugger
         return action.items;
     case RECEIVE_WATCHLIST_ITEM:
-        debugger
         return Object.assign({}, oldState, { [action.item.id]: action.item});// {[action.currentUser.id]: action.currentUser});
     case REMOVE_WATCHLIST_ITEM:
-        newState = Object.assign({}, oldState);
-        delete newState[action.item.id];
+      debugger
+        let newState = Object.assign({}, oldState);
+        delete newState[action.symbol];
         return newState;
     default:
       return state;

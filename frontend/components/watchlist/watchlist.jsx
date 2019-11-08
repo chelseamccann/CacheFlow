@@ -20,7 +20,7 @@ class Watchlist extends React.Component {
                 return (
                     <li key={`${ticker}-${idx}`} className="each-ticker watchlist-ticker">
                         <Link to={`/${ticker.symbol}`} id={ticker.id}>
-                            {ticker.symbol.upcase}
+                            {ticker.symbol.toUpperCase()}
                         </Link>
                     </li>
                 )

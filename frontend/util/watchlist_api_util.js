@@ -13,10 +13,11 @@ export const createWatchlistItem = (item) => {
     });
 };
 
-// export const deleteWatchlistItem = (item) => {
-//     return $.ajax({
-//       method: "DELETE",
-//       url: "/api/watchlist",
-//       data: { item }
-//     });
-// };
+export const deleteWatchlistItem = (item) => {
+    debugger
+    return $.ajax({
+      method: "DELETE",
+      url: `/api/watchlists/${item}`,
+      data: { item }
+    });
+};

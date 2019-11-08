@@ -14,9 +14,9 @@ export const receiveWatchlistItem = item => ({
     item
 })
 
-export const removeWatchlistItem = id => ({
+export const removeWatchlistItem = symbol => ({
     type: REMOVE_WATCHLIST_ITEM,
-    id
+    symbol
 })
 
 
@@ -28,3 +28,7 @@ export const fetchWatchlistItems = () => dispatch => WatchlistApiUtil.fetchWatch
 export const createWatchlistItem = item => dispatch => {
     return WatchlistApiUtil.createWatchlistItem(item)
     .then(item => dispatch(receiveWatchlistItem(item)))};
+
+export const deleteWatchlistItem = item => dispatch => {
+    return WatchlistApiUtil.deleteWatchlistItem(item)
+    .then(item => dispatch(removeWatchlistItem(item)))};

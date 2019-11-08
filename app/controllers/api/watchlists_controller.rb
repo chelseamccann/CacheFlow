@@ -6,7 +6,7 @@ class Api::WatchlistsController < ApplicationController
             ticker = Ticker.create!(symbol: params[:item][:symbol], num_shares: 0)
         end
         @watchlist = Watchlist.new(user_id: current_user.id, ticker_id: ticker.id, symbol: ticker.symbol, num_shares: ticker.num_shares)
-        debugger
+
         if @watchlist.save!
             render "api/watchlists/show" 
             # render json: @watchlist #or render show?
@@ -15,36 +15,24 @@ class Api::WatchlistsController < ApplicationController
         end
     end
 
-    # def show
-    # end
-
-    # def index
-    #     debugger
-    #     @watchlists = Watchlist.find_by(id: params[:id])
-    #     render "api/watchlist/index" 
-    # end
-
     def index
-        debugger
         @watchlists = Watchlist.all
-        debugger
         render :index
     end
 
     def show
-        debugger
         @watchlist = Watchlist.find_by(symbol: params[:id].upcase)
-        debugger
         if @watchlist === nil 
-            debugger
             @watchlist = Watchlist.create!(symbol: params[:id].upcase, num_shares: 0) #ADD CREATE IN TICKER
         end
         render json: @watchlist
     end
 
     def destroy
-        @watchlist = Watchlist.find_by(id: params[:id])
-        @watchlist.destroy 
+        debugger
+        watchlist = Watchlist.find_by(symbol: params[:item][:symbol])
+        watchlist.destroy
+        render json: watchlist
     end
 
     # private

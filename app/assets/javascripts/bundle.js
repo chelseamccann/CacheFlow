@@ -289,7 +289,7 @@ var fetchTransactions = function fetchTransactions() {
 /*!***********************************************!*\
   !*** ./frontend/actions/watchlist_actions.js ***!
   \***********************************************/
-/*! exports provided: RECEIVE_WATCHLIST_ITEMS, RECEIVE_WATCHLIST_ITEM, REMOVE_WATCHLIST_ITEM, receiveWatchlistItems, receiveWatchlistItem, removeWatchlistItem, fetchWatchlistItems, createWatchlistItem */
+/*! exports provided: RECEIVE_WATCHLIST_ITEMS, RECEIVE_WATCHLIST_ITEM, REMOVE_WATCHLIST_ITEM, receiveWatchlistItems, receiveWatchlistItem, removeWatchlistItem, fetchWatchlistItems, createWatchlistItem, deleteWatchlistItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -302,6 +302,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeWatchlistItem", function() { return removeWatchlistItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatchlistItems", function() { return fetchWatchlistItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createWatchlistItem", function() { return createWatchlistItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteWatchlistItem", function() { return deleteWatchlistItem; });
 /* harmony import */ var _util_watchlist_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/watchlist_api_util */ "./frontend/util/watchlist_api_util.js");
 
 var RECEIVE_WATCHLIST_ITEMS = "RECEIVE_WATCHLIST_ITEMS";
@@ -319,10 +320,10 @@ var receiveWatchlistItem = function receiveWatchlistItem(item) {
     item: item
   };
 };
-var removeWatchlistItem = function removeWatchlistItem(id) {
+var removeWatchlistItem = function removeWatchlistItem(symbol) {
   return {
     type: REMOVE_WATCHLIST_ITEM,
-    id: id
+    symbol: symbol
   };
 };
 var fetchWatchlistItems = function fetchWatchlistItems() {
@@ -336,6 +337,13 @@ var createWatchlistItem = function createWatchlistItem(item) {
   return function (dispatch) {
     return _util_watchlist_api_util__WEBPACK_IMPORTED_MODULE_0__["createWatchlistItem"](item).then(function (item) {
       return dispatch(receiveWatchlistItem(item));
+    });
+  };
+};
+var deleteWatchlistItem = function deleteWatchlistItem(item) {
+  return function (dispatch) {
+    return _util_watchlist_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteWatchlistItem"](item).then(function (item) {
+      return dispatch(removeWatchlistItem(item));
     });
   };
 };
@@ -3288,7 +3296,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           to: "/".concat(ticker.symbol),
           id: ticker.id
-        }, ticker.symbol.upcase));
+        }, ticker.symbol.toUpperCase()));
       });
       debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -3345,6 +3353,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_watchlist__WEBPACK_IMPORTED_MODULE_3__["default"]));
+"";
 
 /***/ }),
 
@@ -3385,8 +3394,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    removeWatchlistItem: function removeWatchlistItem(id) {
-      return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__["removeWatchlistItem"])(id));
+    deleteWatchlistItem: function deleteWatchlistItem(id) {
+      return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__["deleteWatchlistItem"])(id));
     },
     createWatchlistItem: function createWatchlistItem(item) {
       return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_2__["createWatchlistItem"])(item));
@@ -3405,7 +3414,9 @@ function (_React$Component) {
     _classCallCheck(this, WatchlistItem);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(WatchlistItem).call(this, props));
-    _this.state = {};
+    _this.state = {
+      currentButton: 'add'
+    };
     _this.addToWatchlist = _this.addToWatchlist.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -3413,12 +3424,22 @@ function (_React$Component) {
   _createClass(WatchlistItem, [{
     key: "addToWatchlist",
     value: function addToWatchlist() {
-      // debugger
+      this.setState({
+        currentButton: 'remove'
+      });
       this.props.createWatchlistItem({
         symbol: this.props.tickerSymbol
-      }).then(function (r) {
-        // debugger
-        console.log(r);
+      });
+    }
+  }, {
+    key: "removeFromWatchlist",
+    value: function removeFromWatchlist() {
+      debugger;
+      this.setState({
+        currentButton: 'add'
+      });
+      this.props.deleteWatchlistItem({
+        symbol: this.props.tickerSymbol
       });
     }
   }, {
@@ -3426,11 +3447,21 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this2.addToWatchlist();
-        }
-      }, "Add to watchlist");
+      if (this.state.currentButton === 'add') {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "watchlist-button addWatchlistButton",
+          onClick: function onClick() {
+            return _this2.addToWatchlist();
+          }
+        }, "Add to watchlist");
+      } else if (this.state.currentButton === 'remove') {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "watchlist-button removeWatchlistButton",
+          onClick: function onClick() {
+            return _this2.removeFromWatchlist();
+          }
+        }, "Remove from watchlist");
+      }
     }
   }]);
 
@@ -3739,17 +3770,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   switch (action.type) {
     case _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_WATCHLIST_ITEMS"]:
-      debugger;
       return action.items;
 
     case _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_WATCHLIST_ITEM"]:
-      debugger;
       return Object.assign({}, oldState, _defineProperty({}, action.item.id, action.item));
     // {[action.currentUser.id]: action.currentUser});
 
     case _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_WATCHLIST_ITEM"]:
-      newState = Object.assign({}, oldState);
-      delete newState[action.item.id];
+      debugger;
+      var newState = Object.assign({}, oldState);
+      delete newState[action.symbol];
       return newState;
 
     default:
@@ -4042,13 +4072,14 @@ var fetchTransactions = function fetchTransactions(transactions) {
 /*!*********************************************!*\
   !*** ./frontend/util/watchlist_api_util.js ***!
   \*********************************************/
-/*! exports provided: fetchWatchlistItems, createWatchlistItem */
+/*! exports provided: fetchWatchlistItems, createWatchlistItem, deleteWatchlistItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatchlistItems", function() { return fetchWatchlistItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createWatchlistItem", function() { return createWatchlistItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteWatchlistItem", function() { return deleteWatchlistItem; });
 var fetchWatchlistItems = function fetchWatchlistItems() {
   return $.ajax({
     method: "GET",
@@ -4063,13 +4094,17 @@ var createWatchlistItem = function createWatchlistItem(item) {
       item: item
     }
   });
-}; // export const deleteWatchlistItem = (item) => {
-//     return $.ajax({
-//       method: "DELETE",
-//       url: "/api/watchlist",
-//       data: { item }
-//     });
-// };
+};
+var deleteWatchlistItem = function deleteWatchlistItem(item) {
+  debugger;
+  return $.ajax({
+    method: "DELETE",
+    url: "/api/watchlists/".concat(item),
+    data: {
+      item: item
+    }
+  });
+};
 
 /***/ }),
 
@@ -63302,7 +63337,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
