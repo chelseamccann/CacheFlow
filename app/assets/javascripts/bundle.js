@@ -1280,10 +1280,6 @@ function (_React$Component) {
           exact: true,
           path: "/",
           component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
-          exact: true,
-          path: "/",
-          component: _watchlist_watchlist_container__WEBPACK_IMPORTED_MODULE_6__["default"]
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2294,6 +2290,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ticker_show_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ticker_show_container */ "./frontend/components/ticker/ticker_show_container.jsx");
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
 /* harmony import */ var _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../portfolio/portfolio_container */ "./frontend/components/portfolio/portfolio_container.jsx");
+/* harmony import */ var _watchlist_watchlist_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../watchlist/watchlist_container */ "./frontend/components/watchlist/watchlist_container.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2311,6 +2308,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2349,16 +2347,22 @@ function (_React$Component) {
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
             to: "/".concat(ticker.symbol),
             id: ticker.id
-          }, ticker.symbol, " ", ticker.num_shares));
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ticker.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(ticker.num_shares, " Shares"))));
         }
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-index block-paddings"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "stock-list"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "watchlist"
       }, "Portfolio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "watchlists"
-      }, tickers));
+      }, tickers)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
+        exact: true,
+        path: "/",
+        component: _watchlist_watchlist_container__WEBPACK_IMPORTED_MODULE_5__["default"]
+      }));
     }
   }]);
 
@@ -3298,9 +3302,7 @@ function (_React$Component) {
       });
 
       if (tickers.length > 0) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "ticker-index block-paddings watchlist-box"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "watchlist"
         }, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "watchlists"

@@ -16,15 +16,89 @@
     box-shadow: 0 3px 24px rgba(48,51,51,0.09);
     border-color: #f4f4f5;
     border-radius: 5px;
-    /* position: absolute; */
-    /* left: 750px; */
     height: auto;
-    /* overflow-y: scroll; */
-    /* width: 280px; */
     display: flex;
     flex-direction: column;
     right: 3%;
+    margin-top: 50px;
+    margin-left: 40px;
+    display: inline-block;
+    align-items: center;
+    width: 225px;
+    /* max-height: 600px; */
+    max-height: 815px;
+    overflow-y: scroll;
+    background: white;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    z-index: 1;
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0.01), 0 3px 24px rgba(48,51,51,0.09);
+    width: 250px;
+    height: 90% vh;
 }
+
+.stock-list, .watchlist{
+
+    border-bottom: 1px solid #f4f4f5;
+    margin-bottom: 0;
+}
+
+
+.watchlist{
+    font-weight: 500;
+    /* cursor: pointer; */
+    letter-spacing: 1px;
+    line-height: 19px;
+    /* margin-left: 8%; */
+    padding: 2%;
+    padding: 14px 24px 14px;
+}
+
+
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+.watchlist-ticker{
+
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.each-ticker:hover{
+    background-color: rgb(247, 247, 247);
+}
+
+.each-ticker{
+
+    cursor: pointer;
+    height: 60px;
+    padding: 2%;
+    padding: 4px 24px 0;
+}
+
+.each-ticker > a > p{
+    display: flex;
+
+}
+
+/* .block-paddings {
+    display: block;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+
+.watchlists{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+} */
 
 .each-ticker a{
     text-decoration: none;
@@ -40,11 +114,6 @@
     margin-bottom: 44px;
 }
 
-.block-paddings {
-    display: block;
-    padding-left: 6px;
-    padding-right: 6px;
-}
 
 .ticker-info  {
     font-weight: 200;
@@ -102,34 +171,7 @@
     margin: 0;
 }
 
-.watchlists{
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
 
-.watchlist-ticker{
-
-    padding-left: 10%;
-    padding-right: 10%;
-}
-
-.each-ticker:hover{
-    background-color: rgb(247, 247, 247);
-}
-
-.each-ticker{
-    padding: 2%;
-}
-
-.watchlist{
-    font-weight: 500;
-    cursor: pointer;
-    letter-spacing: 1px;
-    line-height: 19px;
-    margin-left: 8%;
-    padding: 2%;
-}
 
 .chart-info-wrap {
     width: 85%;

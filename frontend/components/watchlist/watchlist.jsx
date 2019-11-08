@@ -26,7 +26,7 @@ class Watchlist extends React.Component {
         if (tickers.length > 0){
             return(
 
-                <ul className="ticker-index block-paddings watchlist-box">
+                <ul>
                     <h1 className="watchlist">Watchlist</h1>
                     <div className="watchlists">
                     {tickers}

@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import TickerShowContainer from './ticker_show_container';
 import { ProtectedRoute } from '../../util/route_utils';
 import PortfolioContainer from '../portfolio/portfolio_container';
+import WatchlistContainer from '../watchlist/watchlist_container';
 
 class TickerIndex extends React.Component{
     constructor(props){
@@ -21,7 +22,8 @@ class TickerIndex extends React.Component{
                 return (
                     <li key={`${ticker}-${idx}`} className="each-ticker watchlist-ticker">
                         <Link to={`/${ticker.symbol}`} id={ticker.id}>
-                            {ticker.symbol} {ticker.num_shares}
+                            <p>{ticker.symbol}</p>
+                            <p>{`${ticker.num_shares} Shares`}</p>
                         </Link>
                     </li>
                 )
@@ -30,12 +32,15 @@ class TickerIndex extends React.Component{
         
         return(
 
-            <ul className="ticker-index block-paddings">
+            <div className="ticker-index block-paddings">
+                <ul className="stock-list">
                 <h1 className="watchlist">Portfolio</h1>
-                <div className="watchlists">
-                {tickers}
-                </div>
-            </ul>
+                    <div className="watchlists">
+                        {tickers}
+                    </div>
+                </ul>
+                <ProtectedRoute exact path="/" component={WatchlistContainer}/>
+            </div>
 
         )
     }

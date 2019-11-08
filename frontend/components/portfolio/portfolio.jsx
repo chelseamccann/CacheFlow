@@ -155,7 +155,7 @@ class Portfolio extends React.Component{
                 
                 <>
                 <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
-                <ProtectedRoute exact path="/" component={WatchlistContainer}/>
+                {/* <ProtectedRoute exact path="/" component={WatchlistContainer}/> */}
                 <div className="chart-and-news-wrap">
                 <div className="chart-wrap"> 
                     <PortfolioChart 
