@@ -11,7 +11,7 @@ export const receiveWatchlistItems = items => ({
 
 export const receiveWatchlistItem = item => ({
     type: RECEIVE_WATCHLIST_ITEM,
-    item
+    item 
 })
 
 export const removeWatchlistItem = symbol => ({

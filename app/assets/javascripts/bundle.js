@@ -3845,7 +3845,12 @@ var tickerReducer = function tickerReducer() {
       return action.tickers;
 
     case _actions_ticker_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TICKER"]:
-      return Object.assign({}, state, _defineProperty({}, action.ticker.symbol, action.ticker.num_shares));
+      debugger;
+      return Object.assign({}, state, _defineProperty({}, action.ticker.id, {
+        symbol: action.ticker.symbol,
+        id: action.ticker.id,
+        num_shares: action.ticker.num_shares
+      }));
 
     default:
       return state;
