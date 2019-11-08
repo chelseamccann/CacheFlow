@@ -1038,11 +1038,13 @@ function (_React$Component) {
               className: "news-name"
             }, newsPiece.source.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               className: "news nws-text"
-            }, newsPiece.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            }, newsPiece.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "news-pic"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
               className: "news-image news-img",
               src: newsPiece.urlToImage,
               alt: ""
-            })) // </div>
+            }))) // </div>
 
           );
         }));
@@ -1433,8 +1435,9 @@ function (_React$Component) {
         className: "ticker-chart block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
         value: this.state.closeValue
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
-        width: 676,
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
+      , {
+        width: 646,
         height: 196,
         data: this.props.portfolioValue,
         margin: {
@@ -2223,8 +2226,9 @@ function (_React$Component) {
         className: "ticker-chart block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
         value: this.state.closePrice
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
-        width: 676,
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
+      , {
+        width: 646,
         height: 196,
         data: data,
         margin: {
@@ -2724,7 +2728,9 @@ function (_React$Component) {
           exact: true,
           path: "/",
           component: _news_news__WEBPACK_IMPORTED_MODULE_5__["default"]
-        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transactions_transaction_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "sidebar"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transactions_transaction_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
           tickerSymbol: this.props.tickerSymbol,
           close: this.state.close,
           executeBuy: this.props.executeBuy,
@@ -2732,7 +2738,7 @@ function (_React$Component) {
           fetchTicker: this.props.fetchTicker
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_item__WEBPACK_IMPORTED_MODULE_7__["default"], {
           tickerSymbol: this.props.tickerSymbol
-        }));
+        })));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       }

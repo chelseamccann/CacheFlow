@@ -25,11 +25,12 @@ class News extends React.Component{
                         // <div >
                         <a href={newsPiece.url} className="news-box nws" key={`${newsPiece}-${idx}`} >
                             <div className="news-text">
-                            <div className="news-name">{newsPiece.source.name}</div> 
-                            <div className="news nws-text">{newsPiece.description}</div>
+                                <div className="news-name">{newsPiece.source.name}</div> 
+                                <div className="news nws-text">{newsPiece.description}</div>
                             </div>
-                            
-                            <img className="news-image news-img" src={newsPiece.urlToImage} alt=""/>
+                            <div className="news-pic">
+                                <img className="news-image news-img" src={newsPiece.urlToImage} alt=""/>
+                            </div>
                             </a>
                         // </div>
                     ))}

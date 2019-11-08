@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Tabs from './tabs'
+import Tabs from './tabs';
 
 class TransactionForm extends React.Component{
     constructor(props){
@@ -175,7 +175,6 @@ class TransactionForm extends React.Component{
                     }]} 
                 />
             </div>
-
         </div>
         )
     }

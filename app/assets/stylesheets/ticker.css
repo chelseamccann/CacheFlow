@@ -19,12 +19,12 @@
     height: auto;
     display: flex;
     flex-direction: column;
-    right: 3%;
+    /* right: 3%; */
     margin-top: 50px;
     margin-left: 40px;
     display: inline-block;
     align-items: center;
-    width: 225px;
+    /* width: 225px; */
     /* max-height: 600px; */
     max-height: 815px;
     overflow-y: scroll;
@@ -33,8 +33,8 @@
     overflow-y: scroll;
     z-index: 1;
     box-shadow: 0 0 4px 1px rgba(0,0,0,0.01), 0 3px 24px rgba(48,51,51,0.09);
-    width: 250px;
-    height: 90% vh;
+    width: 265px;
+    right: 22%;
 }
 
 .stock-list, .watchlist{

@@ -169,6 +169,7 @@ class TickerShow extends React.Component{
                     </div>
 
                     </div>
+                    <div className="sidebar">
                     <TransactionForm 
                     tickerSymbol={this.props.tickerSymbol} 
                     close={this.state.close}
@@ -180,6 +181,7 @@ class TickerShow extends React.Component{
                     <WatchlistItem
                     tickerSymbol={this.props.tickerSymbol}
                     />
+                    </div>
                 </div>
                 )
             } else {

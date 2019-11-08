@@ -78,7 +78,8 @@ class PortfolioChart extends React.Component {
                 <p>{`$${this.state.change}`} {`(${this.state.percentChange}%)`}</p>
 
                  <LineChart 
-                    width={676} 
+                    // width={676} 
+                    width={646} 
                     height={196} 
                     data={this.props.portfolioValue}
                     margin={{top: 5, right: 10, left: 10, bottom: 5}}

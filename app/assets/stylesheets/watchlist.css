@@ -3,5 +3,22 @@
 } */
 
 .watchlist-button{
-    height: 10%
+    color: #21ce99;
+    cursor: pointer;
+    background: none;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    height: 48px;
+    min-width: 120px;
+    padding: 0 48px;
+    white-space: nowrap;
+    margin-top: 10%;
+}
+
+.watchlist-button:focus {
+    outline: none;
+}
+
+.watchlist-button:hover{
+    color: #1ae9aa;
 }
