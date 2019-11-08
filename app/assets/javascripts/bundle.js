@@ -2222,53 +2222,105 @@ function (_React$Component) {
     value: function render() {
       var data = this.props.ticker || [];
       var label = this.props.timeFrame === "1D" ? "label" : "date";
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "ticker-chart block-paddings"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        value: this.state.closePrice
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
-      , {
-        width: 646,
-        height: 196,
-        data: data,
-        margin: {
-          top: 5,
-          right: 10,
-          left: 10,
-          bottom: 5
-        },
-        onMouseOver: this.handleMouseOver,
-        onMouseLeave: this.handleMouseOut
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
-        dataKey: label,
-        hide: true
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
-        hide: true,
-        domain: ['dataMin', 'dataMax']
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
-        className: "tooltip",
-        contentStyle: {
-          border: '0',
-          backgroundColor: 'transparent',
-          color: 'grey'
-        },
-        formatter: function formatter(value, name, props) {
-          return [""];
-        } // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
-        ,
-        isAnimationActive: false,
-        cursor: {
-          stroke: "Gainsboro",
-          strokeWidth: 1.5
-        }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
-        connectNulls: true,
-        type: "linear",
-        dataKey: "price",
-        dot: false,
-        stroke: "#21ce99",
-        strokeWidth: 1
-      })));
+
+      if (this.props.mini === true) {
+        debugger;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "ticker-chart block-paddings"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "mini-chart"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
+        , {
+          width: 50,
+          height: 10,
+          data: data,
+          margin: {
+            top: 5,
+            right: 10,
+            left: 10,
+            bottom: 5
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
+          hide: true
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
+          hide: true,
+          domain: ['dataMin', 'dataMax']
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
+          className: "tooltip",
+          contentStyle: {
+            border: '0',
+            backgroundColor: 'transparent',
+            color: 'grey'
+          },
+          formatter: function formatter(value, name, props) {
+            return [""];
+          } // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
+          ,
+          isAnimationActive: false,
+          cursor: {
+            stroke: "Gainsboro",
+            strokeWidth: 1.5
+          }
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
+          connectNulls: true,
+          type: "linear",
+          dataKey: "price",
+          dot: false,
+          stroke: "#21ce99",
+          strokeWidth: 1
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "mini-close-price"
+        }, this.props.close));
+      } else {
+        debugger;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "ticker-chart block-paddings"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
+          value: this.state.closePrice
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
+        , {
+          width: 646,
+          height: 196,
+          data: data,
+          margin: {
+            top: 5,
+            right: 10,
+            left: 10,
+            bottom: 5
+          },
+          onMouseOver: this.handleMouseOver,
+          onMouseLeave: this.handleMouseOut
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
+          dataKey: label,
+          hide: true
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
+          hide: true,
+          domain: ['dataMin', 'dataMax']
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
+          className: "tooltip",
+          contentStyle: {
+            border: '0',
+            backgroundColor: 'transparent',
+            color: 'grey'
+          },
+          formatter: function formatter(value, name, props) {
+            return [""];
+          } // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
+          ,
+          isAnimationActive: false,
+          cursor: {
+            stroke: "Gainsboro",
+            strokeWidth: 1.5
+          }
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
+          connectNulls: true,
+          type: "linear",
+          dataKey: "price",
+          dot: false,
+          stroke: "#21ce99",
+          strokeWidth: 1
+        })));
+      }
     }
   }]);
 
@@ -2295,6 +2347,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
 /* harmony import */ var _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../portfolio/portfolio_container */ "./frontend/components/portfolio/portfolio_container.jsx");
 /* harmony import */ var _watchlist_watchlist_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../watchlist/watchlist_container */ "./frontend/components/watchlist/watchlist_container.jsx");
+/* harmony import */ var _ticker_show__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ticker_show */ "./frontend/components/ticker/ticker_show.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2312,6 +2365,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2351,7 +2405,10 @@ function (_React$Component) {
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
             to: "/".concat(ticker.symbol),
             id: ticker.id
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ticker.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(ticker.num_shares, " Shares"))));
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ticker.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(ticker.num_shares, " Shares"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_show_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            tickerSymbol: ticker.symbol,
+            mini: true
+          }))));
         }
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2579,7 +2636,9 @@ function (_React$Component) {
     value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
-      if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol) {
+      var prev = prevProps.tickerSymbol || prevProps.match.params.tickerSymbol;
+
+      if (this.props.tickerSymbol !== prev) {
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
           return _this3.renderDaily(response);
         });
@@ -2690,7 +2749,20 @@ function (_React$Component) {
         }
       });
 
-      if (this.state.timeFrame !== "" && this.state.marketcap) {
+      if (this.props.mini === true) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          mini: this.props.mini,
+          oldTicker: this.state.oldTicker,
+          tickerSymbol: this.props.tickerSymbol,
+          ticker: this.state[this.state.timeFrame],
+          timeFrame: this.state.timeFrame,
+          open: this.state.open,
+          close: this.state.close,
+          change: this.state.change,
+          changePercent: this.state.changePercent,
+          tF: tF
+        });
+      } else if (this.state.timeFrame !== "" && this.state.marketcap) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "show-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2700,6 +2772,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "company-name"
         }, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          mini: this.props.mini,
           oldTicker: this.state.oldTicker,
           tickerSymbol: this.props.tickerSymbol,
           ticker: this.state[this.state.timeFrame],
@@ -2775,7 +2848,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var userId = state.session.id;
-  var tickerSymbol = ownProps.match.params.tickerSymbol;
+  var tickerSymbol = ownProps.tickerSymbol || ownProps.match.params.tickerSymbol;
   return {
     tickerSymbol: tickerSymbol,
     currentUser: state.entities.users[userId],

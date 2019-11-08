@@ -36,7 +36,9 @@ class TickerShow extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        if (this.props.tickerSymbol !== prevProps.match.params.tickerSymbol){ 
+
+        let prev = prevProps.tickerSymbol || prevProps.match.params.tickerSymbol
+        if (this.props.tickerSymbol !== prev){ 
             
             fetchDailyPrices(this.props.tickerSymbol).then(response => {
                 
@@ -128,8 +130,23 @@ class TickerShow extends React.Component{
                 return <button className="btns" key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
             }
         })
-        
-        if(this.state.timeFrame !== "" && this.state.marketcap){
+        if(this.props.mini === true){
+            return (
+                <TickerChart 
+                mini={this.props.mini}
+                oldTicker={this.state.oldTicker}
+                tickerSymbol={this.props.tickerSymbol}
+                ticker={this.state[this.state.timeFrame]}
+                timeFrame={this.state.timeFrame}
+                open={this.state.open}
+                close={this.state.close}
+                change={this.state.change}
+                changePercent={this.state.changePercent}
+                tF={tF}
+                />
+            )
+        }
+         else if(this.state.timeFrame !== "" && this.state.marketcap){
             
             return (
                 <div className="show-wrap">
@@ -137,6 +154,7 @@ class TickerShow extends React.Component{
                     <div className="chart-wrap"> 
                         <h1 className="company-name">{this.state.name}</h1>
                         <TickerChart 
+                        mini={this.props.mini}
                         oldTicker={this.state.oldTicker}
                         tickerSymbol={this.props.tickerSymbol}
                         ticker={this.state[this.state.timeFrame]}

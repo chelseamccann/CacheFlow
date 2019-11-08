@@ -7,7 +7,8 @@ import TickerShow from './ticker_show';
 const mapStateToProps = (state, ownProps) => {
 
   let userId = state.session.id;
-  let tickerSymbol = ownProps.match.params.tickerSymbol
+  let tickerSymbol = ownProps.tickerSymbol || ownProps.match.params.tickerSymbol 
+
   return {
     tickerSymbol: tickerSymbol,
     currentUser: state.entities.users[userId],
