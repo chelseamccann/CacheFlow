@@ -1051,26 +1051,23 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "news-box"
         }, news.map(function (newsPiece, idx) {
-          return (// <div >
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-              href: newsPiece.url,
-              className: "news-box nws",
-              key: "".concat(newsPiece, "-").concat(idx)
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              className: "news-text"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              className: "news-name"
-            }, newsPiece.source.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              className: "news nws-text"
-            }, newsPiece.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              className: "news-pic"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-              className: "news-image news-img",
-              src: newsPiece.urlToImage,
-              alt: ""
-            }))) // </div>
-
-          );
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            href: newsPiece.url,
+            className: "news-box nws",
+            key: "".concat(newsPiece, "-").concat(idx)
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "news-text"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "news-name"
+          }, newsPiece.source.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "news nws-text"
+          }, newsPiece.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "news-pic"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "news-image news-img",
+            src: newsPiece.urlToImage,
+            alt: ""
+          })));
         }));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "   ");
@@ -2200,17 +2197,7 @@ function (_React$Component) {
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
-  } // componentDidUpdate(){
-  //     debugger
-  //     if (this.state.closePrice !== this.props.close){
-  //         this.setState({
-  //             closePrice: this.props.close,
-  //             change: this.props.change,
-  //             percentChange: this.props.changePercent
-  //         })
-  //     }
-  // }
-
+  }
 
   _createClass(TickerChart, [{
     key: "handleMouseOver",

@@ -21,19 +21,7 @@ class TickerChart extends React.Component {
         
     }
 
-    // componentDidUpdate(){
-    //     debugger
-    //     if (this.state.closePrice !== this.props.close){
-    //         this.setState({
-    //             closePrice: this.props.close,
-    //             change: this.props.change,
-    //             percentChange: this.props.changePercent
-    //         })
-    //     }
-    // }
-
     handleMouseOver(e){
-
         if(e && e.activePayload !== undefined){
 
             let hoverPrice = e.activePayload[0].payload.price;
@@ -61,6 +49,8 @@ class TickerChart extends React.Component {
             percentChange: parseFloat(currentPercentChange).toFixed(2)
         })
     }
+
+    
     render(){
         
         let data = this.props.ticker || [];

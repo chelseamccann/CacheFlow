@@ -42,7 +42,7 @@ class News extends React.Component{
             return (
                 <ul className="news-box">
                     {news.map((newsPiece, idx) => (
-                        // <div >
+
                         <a href={newsPiece.url} className="news-box nws" key={`${newsPiece}-${idx}`} >
                             <div className="news-text">
                                 <div className="news-name">{newsPiece.source.name}</div> 
@@ -51,8 +51,8 @@ class News extends React.Component{
                             <div className="news-pic">
                                 <img className="news-image news-img" src={newsPiece.urlToImage} alt=""/>
                             </div>
-                            </a>
-                        // </div>
+                        </a>
+
                     ))}
                 </ul>
             )
