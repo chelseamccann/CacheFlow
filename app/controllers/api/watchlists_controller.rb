@@ -9,7 +9,6 @@ class Api::WatchlistsController < ApplicationController
 
         if @watchlist.save!
             render "api/watchlists/show" 
-            # render json: @watchlist #or render show?
         else
             render @watchlist.errors.full_messages
         end
@@ -20,26 +19,18 @@ class Api::WatchlistsController < ApplicationController
         render :index
     end
 
-    def show
+    def show # not needed?
         @watchlist = Watchlist.find_by(symbol: params[:id].upcase)
         if @watchlist === nil 
-            @watchlist = Watchlist.create!(symbol: params[:id].upcase, num_shares: 0) #ADD CREATE IN TICKER
+            @watchlist = Watchlist.create!(symbol: params[:id].upcase, num_shares: 0) 
         end
         render json: @watchlist
     end
 
     def destroy
-        debugger
         watchlist = Watchlist.find_by(symbol: params[:item][:symbol])
         watchlist.destroy
         render json: watchlist
     end
-
-    # private
-    # def watchlist_params
-    #     ticker_id = Ticker.find_by(symbol: params[:item][:symbol]).id
-    #     debugger
-    #     params.require(:item).permit(ticker_id: ticker_id)
-    # end
 
 end

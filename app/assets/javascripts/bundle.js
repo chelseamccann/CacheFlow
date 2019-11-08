@@ -3337,7 +3337,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var userId = state.session.id;
-  debugger;
   return {
     watchlistItems: Object.values(state.entities.watchlist),
     currentUser: state.entities.users[userId]

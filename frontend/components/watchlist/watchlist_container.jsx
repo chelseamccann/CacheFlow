@@ -5,7 +5,6 @@ import Watchlist from './watchlist';
 
 const mapStateToProps = (state, ownProps) => {
     let userId = state.session.id;
-    debugger
     return {
       watchlistItems: Object.values(state.entities.watchlist), 
       currentUser: state.entities.users[userId] 
