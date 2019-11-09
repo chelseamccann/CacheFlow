@@ -19,29 +19,29 @@ class PortfolioChart extends React.Component {
         this.setState({
             closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value).toFixed(2),
             change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value).toFixed(2),
-            percentChange: ((parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value)/this.props.portfolioValue[this.props.portfolioValue.length-1].value)*100).toFixed(2),
+            percentChange: ((parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value)/this.props.portfolioValue[0].value)*100).toFixed(2),
             timeFrame: this.props.timeFrame
         })
     }
 
-    // componentDidUpdate(){
-    //     if(this.state.timeFrame !== this.props.timeFrame){
-    //         debugger
-    //         this.setState({
-    //             timeFrame: this.props.timeFrame,
-    //             change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value).toFixed(2),
-    //             percentChange: (parseFloat((this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value)/this.props.portfolioValue[this.props.portfolioValue.length-1].value)*100).toFixed(2)
-    //         })
+    componentDidUpdate(){
+        if(this.state.timeFrame !== this.props.timeFrame){
+            debugger
+            this.setState({
+                timeFrame: this.props.timeFrame,
+                change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value).toFixed(2),
+                percentChange: (parseFloat((this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value)/this.props.portfolioValue[this.props.portfolioValue.length-1].value)*100).toFixed(2)
+            })
 
-    //     }
-    // }
+        }
+    }
 
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){
             let hoverValue = e.activePayload[0].payload.value;
             let openValue = this.props.portfolioValue[0].value;
             let change = hoverValue - openValue;
-            let dailyPercentChange = (change/hoverValue)*100
+            let dailyPercentChange = (change/openValue)*100
 
             this.setState({closeValue: hoverValue, 
                 chartX: e.chartX,
@@ -54,7 +54,7 @@ class PortfolioChart extends React.Component {
 
     handleMouseOut(e){
         let currentChange = this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value
-        let currentPercentChange = (currentChange/this.props.portfolioValue[this.props.portfolioValue.length-1].value)*100
+        let currentPercentChange = (currentChange/this.props.portfolioValue[0].value)*100
         this.setState({
             closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value).toFixed(2), 
             change: parseFloat(currentChange).toFixed(2), 

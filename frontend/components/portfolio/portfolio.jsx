@@ -109,16 +109,16 @@ class Portfolio extends React.Component{
                                 that.setState({fetched: true, portfolioValue: newArr})
                     
                             }
-                        })
+                        }).then(this.setState({timeFrame: timeFrame}))
                     }
             })
             
         } else if (timeFrame === '1D'){
             this.props.fetchTransactions().then(response => {
                 this.dailyVal(response)
-            })
+            }).then(this.setState({timeFrame: timeFrame}))
         }
-        this.setState({timeFrame: timeFrame})
+        // this.setState({timeFrame: timeFrame})
         
     }
 

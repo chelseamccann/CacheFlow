@@ -1250,18 +1250,19 @@ function (_React$Component) {
                   portfolioValue: newArr
                 });
               }
-            });
+            }).then(_this4.setState({
+              timeFrame: timeFrame
+            }));
           }
         });
       } else if (timeFrame === '1D') {
         this.props.fetchTransactions().then(function (response) {
           _this4.dailyVal(response);
-        });
-      }
+        }).then(this.setState({
+          timeFrame: timeFrame
+        }));
+      } // this.setState({timeFrame: timeFrame})
 
-      this.setState({
-        timeFrame: timeFrame
-      });
     }
   }, {
     key: "render",
@@ -1383,20 +1384,22 @@ function (_React$Component) {
       this.setState({
         closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value).toFixed(2),
         change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
-        percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value) / this.props.portfolioValue[this.props.portfolioValue.length - 1].value * 100).toFixed(2),
+        percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value) / this.props.portfolioValue[0].value * 100).toFixed(2),
         timeFrame: this.props.timeFrame
       });
-    } // componentDidUpdate(){
-    //     if(this.state.timeFrame !== this.props.timeFrame){
-    //         debugger
-    //         this.setState({
-    //             timeFrame: this.props.timeFrame,
-    //             change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value).toFixed(2),
-    //             percentChange: (parseFloat((this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value)/this.props.portfolioValue[this.props.portfolioValue.length-1].value)*100).toFixed(2)
-    //         })
-    //     }
-    // }
-
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (this.state.timeFrame !== this.props.timeFrame) {
+        debugger;
+        this.setState({
+          timeFrame: this.props.timeFrame,
+          change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
+          percentChange: (parseFloat((this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value) / this.props.portfolioValue[this.props.portfolioValue.length - 1].value) * 100).toFixed(2)
+        });
+      }
+    }
   }, {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
@@ -1404,7 +1407,7 @@ function (_React$Component) {
         var hoverValue = e.activePayload[0].payload.value;
         var openValue = this.props.portfolioValue[0].value;
         var change = hoverValue - openValue;
-        var dailyPercentChange = change / hoverValue * 100;
+        var dailyPercentChange = change / openValue * 100;
         this.setState({
           closeValue: hoverValue,
           chartX: e.chartX,
@@ -1418,7 +1421,7 @@ function (_React$Component) {
     key: "handleMouseOut",
     value: function handleMouseOut(e) {
       var currentChange = this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value;
-      var currentPercentChange = currentChange / this.props.portfolioValue[this.props.portfolioValue.length - 1].value * 100;
+      var currentPercentChange = currentChange / this.props.portfolioValue[0].value * 100;
       this.setState({
         closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value).toFixed(2),
         change: parseFloat(currentChange).toFixed(2),
