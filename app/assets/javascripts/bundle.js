@@ -1280,7 +1280,6 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
-      debugger;
 
       if (this.state.fetched) {
         var data = this.state.portfolioValue.slice().sort(function (a, b) {
@@ -1625,6 +1624,7 @@ function (_React$Component) {
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.searchOnSubmit = _this.searchOnSubmit.bind(_assertThisInitialized(_this));
     _this.handleInputChange = _this.handleInputChange.bind(_assertThisInitialized(_this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1688,11 +1688,19 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "handleClick",
+    value: function handleClick() {}
+  }, {
     key: "render",
     value: function render() {
+      var _this5 = this;
+
       if (!this.isLoading || this.state.searchResults.length <= 5) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          onSubmit: this.handleSubmit
+          onSubmit: this.handleSubmit,
+          onClick: function onClick() {
+            return _this5.handleClick;
+          }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           id: "search",
           autoComplete: "off",
@@ -1734,10 +1742,13 @@ __webpack_require__.r(__webpack_exports__);
 var Suggestions = function Suggestions(props) {
   var options = props.results.map(function (r, idx) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      className: "each-search-result",
       key: idx
-    }, r.symbol);
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, r.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, r.securityName));
   });
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, options);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "search-results"
+  }, options);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Suggestions);
@@ -2174,7 +2185,6 @@ function (_React$Component) {
       chartY: null,
       timeFrame: _this.props.timeFrame
     };
-    debugger;
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
@@ -2183,7 +2193,6 @@ function (_React$Component) {
   _createClass(TickerChart, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       this.setState({
         timeFrame: this.props.timeFrame,
         change: parseFloat(this.props.close - this.props.open).toFixed(2),
@@ -2195,7 +2204,6 @@ function (_React$Component) {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
       if (this.state.timeFrame !== this.props.timeFrame) {
-        debugger;
         this.setState({
           timeFrame: this.props.timeFrame,
           change: parseFloat(this.props.close - this.props.open).toFixed(2),
@@ -2211,7 +2219,6 @@ function (_React$Component) {
         var openPrice = this.state.open;
         var change = hoverPrice - openPrice;
         var dailyPercentChange = change / hoverPrice * 100;
-        debugger;
         this.setState({
           closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2),
           chartX: e.chartX,
@@ -2226,7 +2233,6 @@ function (_React$Component) {
     value: function handleMouseOut(e) {
       var currentChange = this.props.close - this.props.open;
       var currentPercentChange = currentChange / this.props.close * 100;
-      debugger;
       this.setState({
         closePrice: this.props.close,
         change: parseFloat(currentChange).toFixed(2),
@@ -4123,7 +4129,8 @@ var fetchFromAPI = function fetchFromAPI(query) {
 var fetchAllFromAPI = function fetchAllFromAPI(query) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/search/".concat(query, "?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://sandbox.iexapis.com/stable/search/".concat(query, "?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/search/${query}?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
     // url: `https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
 
   });

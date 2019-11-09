@@ -15,6 +15,7 @@ class Search extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.searchOnSubmit = this.searchOnSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     onSearchChange(e){
@@ -62,12 +63,16 @@ class Search extends React.Component{
         })
       }
 
+      handleClick(){
+          
+      }
+
     render(){
 
         if(!this.isLoading || this.state.searchResults.length <= 5){
             return (
                 <>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} onClick={() => this.handleClick}>
                     <input 
                     id="search"
                     autoComplete="off"
@@ -75,6 +80,7 @@ class Search extends React.Component{
                     // ref={input => this.searchOnSubmit = input}
                     // ref={(input) => this.inputText = input}
                     onChange={this.handleInputChange}
+
                     />
                     <button className="search-button"></button>
                     <Suggestions results={this.state.searchResults.slice(0,5)}/>

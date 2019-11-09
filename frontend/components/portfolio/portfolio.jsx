@@ -132,7 +132,6 @@ class Portfolio extends React.Component{
             }
         })
 
-        debugger
         if(this.state.fetched){
             let data = this.state.portfolioValue.slice().sort((a, b) => {
                 return Date.parse(a.date) - Date.parse(b.date)

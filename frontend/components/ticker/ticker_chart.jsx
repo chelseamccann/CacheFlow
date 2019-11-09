@@ -16,14 +16,12 @@ class TickerChart extends React.Component {
             chartY: null,
             timeFrame: this.props.timeFrame
         }
-        debugger
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
     }
 
 
     componentDidMount(){
-        debugger
         this.setState({
             timeFrame: this.props.timeFrame,
             change: parseFloat(this.props.close - this.props.open).toFixed(2),
@@ -34,7 +32,6 @@ class TickerChart extends React.Component {
 
     componentDidUpdate(){
         if(this.state.timeFrame !== this.props.timeFrame){
-            debugger
             this.setState({
                 timeFrame: this.props.timeFrame,
                 change: parseFloat(this.props.close - this.props.open).toFixed(2),
@@ -52,7 +49,6 @@ class TickerChart extends React.Component {
             let openPrice = this.state.open;
             let change = hoverPrice - openPrice;
             let dailyPercentChange = (change/hoverPrice)*100
-            debugger
             this.setState({
                 closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2), 
                 chartX: e.chartX, 
@@ -67,8 +63,6 @@ class TickerChart extends React.Component {
     handleMouseOut(e){
         let currentChange = (this.props.close - this.props.open)
         let currentPercentChange = (currentChange/this.props.close)*100
-
-        debugger
         
         this.setState({
             closePrice: this.props.close, 
