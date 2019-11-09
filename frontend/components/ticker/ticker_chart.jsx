@@ -28,7 +28,7 @@ class TickerChart extends React.Component {
             let openPrice = this.state.open;
             let change = hoverPrice - openPrice;
             let dailyPercentChange = (change/hoverPrice)*100
-
+            debugger
             this.setState({
                 closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2), 
                 chartX: e.chartX, 
@@ -41,8 +41,11 @@ class TickerChart extends React.Component {
 
 
     handleMouseOut(e){
-        let currentChange = this.props.change || (this.props.open - this.props.close)
-        let currentPercentChange = (currentChange/this.props.open)/100
+        let currentChange = (this.props.close - this.props.open)
+        let currentPercentChange = (currentChange/this.props.close)*100
+
+        debugger
+        
         this.setState({
             closePrice: this.props.close, 
             change: parseFloat(currentChange).toFixed(2), 

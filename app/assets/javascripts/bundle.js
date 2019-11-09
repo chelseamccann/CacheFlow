@@ -1150,8 +1150,7 @@ function (_React$Component) {
       openValue: null,
       closeValue: null,
       change: 0,
-      changePercent: 0 // portfolioValue: null
-
+      changePercent: 0
     };
     _this.dailyPrices = {};
     _this.weeklyPrices = {};
@@ -1280,6 +1279,7 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
+      debugger;
 
       if (this.state.fetched) {
         var data = this.state.portfolioValue.slice().sort(function (a, b) {
@@ -1369,7 +1369,7 @@ function (_React$Component) {
     _this.state = {
       closeValue: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
       change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value).toFixed(2),
-      percentChange: (parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value / _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value) * 100).toFixed(2),
+      percentChange: (parseFloat((_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value) / _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value) * 100).toFixed(2),
       timeFrame: _this.props.timeFrame
     };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
@@ -1386,18 +1386,17 @@ function (_React$Component) {
         percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value) / this.props.portfolioValue[this.props.portfolioValue.length - 1].value * 100).toFixed(2),
         timeFrame: this.props.timeFrame
       });
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      if (this.state.timeFrame !== this.props.timeFrame) {
-        this.setState({
-          timeFrame: this.props.timeFrame,
-          change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
-          percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value / this.props.portfolioValue[this.props.portfolioValue.length - 1].value) * 100).toFixed(2)
-        });
-      }
-    }
+    } // componentDidUpdate(){
+    //     if(this.state.timeFrame !== this.props.timeFrame){
+    //         debugger
+    //         this.setState({
+    //             timeFrame: this.props.timeFrame,
+    //             change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value).toFixed(2),
+    //             percentChange: (parseFloat((this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value)/this.props.portfolioValue[this.props.portfolioValue.length-1].value)*100).toFixed(2)
+    //         })
+    //     }
+    // }
+
   }, {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
@@ -1429,13 +1428,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // let data = this.props.portfolioValue.slice().sort((a, b) => {
-      //     return Date.parse(a.date) - Date.parse(b.date)
-      // }).filter(el => {
-      //     return el !== undefined
-      // })
-      // const label = this.props.timeFrame === "1D" ? "label" : "date";
-      // let odometer = this.state.hoverValue || this.state.open_value
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ticker-chart block-paddings"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -2191,6 +2183,7 @@ function (_React$Component) {
         var openPrice = this.state.open;
         var change = hoverPrice - openPrice;
         var dailyPercentChange = change / hoverPrice * 100;
+        debugger;
         this.setState({
           closePrice: parseFloat(e.activePayload[0].payload.price).toFixed(2),
           chartX: e.chartX,
@@ -2203,8 +2196,9 @@ function (_React$Component) {
   }, {
     key: "handleMouseOut",
     value: function handleMouseOut(e) {
-      var currentChange = this.props.change || this.props.open - this.props.close;
-      var currentPercentChange = currentChange / this.props.open / 100;
+      var currentChange = this.props.close - this.props.open;
+      var currentPercentChange = currentChange / this.props.close * 100;
+      debugger;
       this.setState({
         closePrice: this.props.close,
         change: parseFloat(currentChange).toFixed(2),
@@ -4176,8 +4170,8 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {

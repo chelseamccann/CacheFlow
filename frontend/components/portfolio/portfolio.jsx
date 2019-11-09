@@ -24,7 +24,6 @@ class Portfolio extends React.Component{
             closeValue: null,
             change: 0,
             changePercent: 0,
-            // portfolioValue: null
 
         }
         
@@ -39,8 +38,8 @@ class Portfolio extends React.Component{
         this.props.fetchTransactions().then(response => {
             this.dailyVal(response) // DAILY PORTFOLIO CALC
         }) 
-
     }
+
 
     dailyVal(response){ // DAILY PORTFOLIO CALC
         let that = this;
@@ -79,6 +78,7 @@ class Portfolio extends React.Component{
 
     updatePrices(timeFrame){ // CLICKED TIMEFRAME CALC
         if (this.state.timeFrame !== timeFrame && timeFrame !== '1D'){ 
+            
             this.weeklyPrices = {}
             let that = this;
                 Object.values(this.props.transactions).forEach((asset, idx) => {
@@ -119,6 +119,7 @@ class Portfolio extends React.Component{
             })
         }
         this.setState({timeFrame: timeFrame})
+        
     }
 
 
@@ -131,6 +132,7 @@ class Portfolio extends React.Component{
             }
         })
 
+        debugger
         if(this.state.fetched){
             let data = this.state.portfolioValue.slice().sort((a, b) => {
                 return Date.parse(a.date) - Date.parse(b.date)
