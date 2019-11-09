@@ -39,10 +39,7 @@ class TickerShow extends React.Component{
 
         let prev = prevProps.tickerSymbol || prevProps.match.params.tickerSymbol
         if (this.props.tickerSymbol !== prev){ 
-            fetchDailyPrices(this.props.tickerSymbol).then(response => {
-                
-                return this.renderDaily(response)
-            });
+            fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
             this.tickerInfo();
             this.updateStats();
 
@@ -58,10 +55,14 @@ class TickerShow extends React.Component{
         while(response[lastValidIdx].close === null){
             lastValidIdx -= 1
         }
-
         let lastValidClose = response[lastValidIdx].close
-        let firstValidOpen = response[0].open
-        
+
+        let firstValidIdx = 0
+        while(response[firstValidIdx].close === null){
+            firstValidIdx += 1
+        }
+        let firstValidOpen = response[firstValidIdx].open
+        debugger
         this.setState({
             "1D": daily, 
             timeFrame: "1D", 
@@ -69,7 +70,7 @@ class TickerShow extends React.Component{
             open: firstValidOpen, 
             close: lastValidClose, //response[response.length-1].close,
             change: parseFloat(lastValidClose - firstValidOpen).toFixed(2),
-            changePercent: parseFloat(((lastValidClose - firstValidOpen)/lastValidClose)*100).toFixed(2)
+            changePercent: parseFloat(((lastValidClose - firstValidOpen)/firstValidOpen)*100).toFixed(2)
     })
 
     }
@@ -86,13 +87,32 @@ class TickerShow extends React.Component{
                 changePercent: price.changePercent
             }
         })
-        this.setState({[timeFramePassed]: data, timeFrame: timeFramePassed, tickerSymbol: this.props.tickerSymbol })
+
+        // let lastValidIdx = response.length - 1
+        // while(response[lastValidIdx].close === null){
+        //     lastValidIdx -= 1
+        // }
+
+        // let lastValidClose = response[lastValidIdx].close
+        // let firstValidOpen = response[0].open
+
+
+        
+        this.setState({
+            [timeFramePassed]: data, 
+            timeFrame: timeFramePassed, 
+            tickerSymbol: this.props.tickerSymbol, 
+            open: response[0].open,
+            close: response[response.length-1].close,
+            change: response[response.length-1].change,
+            changePercent: response[response.length-1].changePercent
+        })
     }
 
     updatePrices(timeFrame){
         if (this.state.timeFrame !== timeFrame){
             return e => {
-                fetchPrices(this.props.tickerSymbol, timeFrame).then(response => this.renderPrices(response, timeFrame))
+                timeFrame === "1D" ? fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response)) : fetchPrices(this.props.tickerSymbol, timeFrame).then(response => this.renderPrices(response, timeFrame)) 
             }
             
         }

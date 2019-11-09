@@ -8,7 +8,7 @@ class PortfolioChart extends React.Component {
         this.state = {
             closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value).toFixed(2),
             change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value).toFixed(2),
-            percentChange: (parseFloat((this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value)/this.props.portfolioValue[this.props.portfolioValue.length-1].value)*100).toFixed(2),
+            percentChange: (parseFloat((this.props.portfolioValue[this.props.portfolioValue.length-1].value - this.props.portfolioValue[0].value)/this.props.portfolioValue[0].value)*100).toFixed(2),
             timeFrame: this.props.timeFrame
         }
         this.handleMouseOver = this.handleMouseOver.bind(this);

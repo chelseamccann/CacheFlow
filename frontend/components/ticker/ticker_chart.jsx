@@ -9,17 +9,41 @@ class TickerChart extends React.Component {
         this.state = {
             tickerSymbol: this.props.tickerSymbol,
             closePrice: this.props.close,
-            change: this.props.change, 
-            percentChange: this.props.changePercent,
+            change: parseFloat(this.props.close - this.props.open).toFixed(2), 
+            percentChange: parseFloat(((this.props.close - this.props.open)/this.props.open)*100).toFixed(2),
             open: this.props.open,
             chartX: null,
             chartY: null,
+            timeFrame: this.props.timeFrame
         }
-
+        debugger
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
-        
     }
+
+
+    componentDidMount(){
+        debugger
+        this.setState({
+            timeFrame: this.props.timeFrame,
+            change: parseFloat(this.props.close - this.props.open).toFixed(2),
+            percentChange: parseFloat(((this.props.close - this.props.open)/this.props.open)*100).toFixed(2),
+            open: this.props.open
+        })
+    }
+
+    componentDidUpdate(){
+        if(this.state.timeFrame !== this.props.timeFrame){
+            debugger
+            this.setState({
+                timeFrame: this.props.timeFrame,
+                change: parseFloat(this.props.close - this.props.open).toFixed(2),
+                percentChange: parseFloat(((this.props.close - this.props.open)/this.props.open)*100).toFixed(2)
+            })
+
+        }
+    }
+
 
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){

@@ -1370,7 +1370,7 @@ function (_React$Component) {
     _this.state = {
       closeValue: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
       change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value).toFixed(2),
-      percentChange: (parseFloat((_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value) / _this.props.portfolioValue[_this.props.portfolioValue.length - 1].value) * 100).toFixed(2),
+      percentChange: (parseFloat((_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value) / _this.props.portfolioValue[0].value) * 100).toFixed(2),
       timeFrame: _this.props.timeFrame
     };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
@@ -2167,18 +2167,43 @@ function (_React$Component) {
     _this.state = {
       tickerSymbol: _this.props.tickerSymbol,
       closePrice: _this.props.close,
-      change: _this.props.change,
-      percentChange: _this.props.changePercent,
+      change: parseFloat(_this.props.close - _this.props.open).toFixed(2),
+      percentChange: parseFloat((_this.props.close - _this.props.open) / _this.props.open * 100).toFixed(2),
       open: _this.props.open,
       chartX: null,
-      chartY: null
+      chartY: null,
+      timeFrame: _this.props.timeFrame
     };
+    debugger;
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(TickerChart, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      debugger;
+      this.setState({
+        timeFrame: this.props.timeFrame,
+        change: parseFloat(this.props.close - this.props.open).toFixed(2),
+        percentChange: parseFloat((this.props.close - this.props.open) / this.props.open * 100).toFixed(2),
+        open: this.props.open
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (this.state.timeFrame !== this.props.timeFrame) {
+        debugger;
+        this.setState({
+          timeFrame: this.props.timeFrame,
+          change: parseFloat(this.props.close - this.props.open).toFixed(2),
+          percentChange: parseFloat((this.props.close - this.props.open) / this.props.open * 100).toFixed(2)
+        });
+      }
+    }
+  }, {
     key: "handleMouseOver",
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
@@ -2631,7 +2656,14 @@ function (_React$Component) {
       }
 
       var lastValidClose = response[lastValidIdx].close;
-      var firstValidOpen = response[0].open;
+      var firstValidIdx = 0;
+
+      while (response[firstValidIdx].close === null) {
+        firstValidIdx += 1;
+      }
+
+      var firstValidOpen = response[firstValidIdx].open;
+      debugger;
       this.setState({
         "1D": daily,
         timeFrame: "1D",
@@ -2640,7 +2672,7 @@ function (_React$Component) {
         close: lastValidClose,
         //response[response.length-1].close,
         change: parseFloat(lastValidClose - firstValidOpen).toFixed(2),
-        changePercent: parseFloat((lastValidClose - firstValidOpen) / lastValidClose * 100).toFixed(2)
+        changePercent: parseFloat((lastValidClose - firstValidOpen) / firstValidOpen * 100).toFixed(2)
       });
     }
   }, {
@@ -2657,8 +2689,14 @@ function (_React$Component) {
           change: price.change,
           changePercent: price.changePercent
         };
-      });
-      this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _this$setState));
+      }); // let lastValidIdx = response.length - 1
+      // while(response[lastValidIdx].close === null){
+      //     lastValidIdx -= 1
+      // }
+      // let lastValidClose = response[lastValidIdx].close
+      // let firstValidOpen = response[0].open
+
+      this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _defineProperty(_this$setState, "open", response[0].open), _defineProperty(_this$setState, "close", response[response.length - 1].close), _defineProperty(_this$setState, "change", response[response.length - 1].change), _defineProperty(_this$setState, "changePercent", response[response.length - 1].changePercent), _this$setState));
     }
   }, {
     key: "updatePrices",
@@ -2667,7 +2705,9 @@ function (_React$Component) {
 
       if (this.state.timeFrame !== timeFrame) {
         return function (e) {
-          Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(_this4.props.tickerSymbol, timeFrame).then(function (response) {
+          timeFrame === "1D" ? Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(_this4.props.tickerSymbol).then(function (response) {
+            return _this4.renderDaily(response);
+          }) : Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(_this4.props.tickerSymbol, timeFrame).then(function (response) {
             return _this4.renderPrices(response, timeFrame);
           });
         };
@@ -4173,8 +4213,8 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
