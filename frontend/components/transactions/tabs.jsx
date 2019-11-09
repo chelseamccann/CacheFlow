@@ -20,7 +20,7 @@ class Tabs extends React.Component{
         return (
         <div className='tabs'>
             <ul className='tab-box'>
-                <Header tabStuff={this.props.tabStuff} changeTab={this.changeTab} indexTab={this.state.indexTab}/>
+                <Header tabStuff={this.props.tabStuff} changeTab={this.changeTab} indexTab={this.state.indexTab} />
                 <div className='tab-content'>    
                     <article>
                     {currentTab.content}

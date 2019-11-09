@@ -85,6 +85,8 @@ class TickerChart extends React.Component {
         }
         else {
 
+            // let color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531"
+
             return (
                 <div className="ticker-chart block-paddings">
                     
@@ -101,7 +103,7 @@ class TickerChart extends React.Component {
                         onMouseLeave={this.handleMouseOut}
                     >
                         <XAxis dataKey={label} hide={true} />
-                        <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
+                        <YAxis hide={true} domain={['dataMin', 'dataMax']} />
                         <Tooltip className='tooltip'
                                         contentStyle={{ border: '0', backgroundColor: 'transparent', color: 'grey'}}
                                         formatter={(value, name, props) => { return [""] }}

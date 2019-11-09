@@ -1202,12 +1202,7 @@ function (_React$Component) {
                   "date": key,
                   "value": that.dailyPrices[key]
                 };
-              }); // let data = newArr.slice().sort((a, b) => {
-              //     return Date.parse(a.date) - Date.parse(b.date)
-              // }).filter(el => {
-              //     return el !== undefined
-              // })
-
+              });
               that.setState({
                 fetched: true,
                 portfolioValue: newArr
@@ -1235,8 +1230,6 @@ function (_React$Component) {
               prices.forEach(function (close_price) {
                 var date = close_price.minute ? new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))) : new Date(Date.parse("".concat(close_price.date))); //.toLocaleString('en-US')
 
-                console.log(date > createdAt);
-
                 if (date > createdAt && close_price.close !== null) {
                   if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0) {
                     that.weeklyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares;
@@ -1252,12 +1245,7 @@ function (_React$Component) {
                     "date": key,
                     "value": that.weeklyPrices[key]
                   };
-                }); // let data = newArr.slice().sort((a, b) => {
-                //     return Date.parse(a.date) - Date.parse(b.date)
-                // }).filter(el => {
-                //     return el !== undefined
-                // })
-
+                });
                 that.setState({
                   fetched: true,
                   portfolioValue: newArr
@@ -1284,7 +1272,7 @@ function (_React$Component) {
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "ALL") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            className: "btns",
+            className: "btns ".concat(_this5.state.timeFrame === key ? 'active' : ''),
             key: "".concat(key, "-id"),
             onClick: function onClick() {
               _this5.updatePrices(key);
@@ -1310,11 +1298,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
           portfolioValue: data,
           tfVal: this.state[this.state.timeFrame],
-          timeFrame: this.state.timeFrame // openValue={Math.max(this.state["1D"].open_value)}
-          // change={this.state.change}
-          // changePercent={this.state.changePercent}
-          // tF={tF}
-
+          timeFrame: this.state.timeFrame
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
         }, tF)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
@@ -2257,6 +2241,7 @@ function (_React$Component) {
           className: "mini-close-price"
         }, "$".concat(this.props.close)));
       } else {
+        // let color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531"
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -2729,7 +2714,7 @@ function (_React$Component) {
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            className: "btns",
+            className: "btns ".concat(_this7.state.timeFrame === key ? 'active' : ''),
             key: "".concat(key, "-id"),
             onClick: _this7.updatePrices(key)
           }, key.slice(0, 2).toUpperCase());

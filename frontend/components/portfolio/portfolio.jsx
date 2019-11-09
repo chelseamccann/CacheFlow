@@ -25,6 +25,7 @@ class Portfolio extends React.Component{
             change: 0,
             changePercent: 0,
             // portfolioValue: null
+
         }
         
         this.dailyPrices = {}
@@ -66,13 +67,6 @@ class Portfolio extends React.Component{
                         const newArr = Object.keys(that.dailyPrices).map(key => {
                             return {"date": key, "value": that.dailyPrices[key]}
                         })
-
-                        // let data = newArr.slice().sort((a, b) => {
-                        //     return Date.parse(a.date) - Date.parse(b.date)
-                        // }).filter(el => {
-                        //     return el !== undefined
-                        // })
-
                         that.setState({fetched: true, portfolioValue: newArr})
             
                     }
@@ -96,7 +90,6 @@ class Portfolio extends React.Component{
                             let num_shares = asset.purchase_shares
                             prices.forEach(close_price => {
                                 const date = close_price.minute ? new Date(Date.parse(`${close_price.date} ${close_price.minute}`)) : new Date(Date.parse(`${close_price.date}`))//.toLocaleString('en-US')
-                                console.log(date>createdAt)
 
                                 if(date > createdAt && close_price.close !== null){
                                     if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0){
@@ -112,12 +105,6 @@ class Portfolio extends React.Component{
                                 const newArr = Object.keys(that.weeklyPrices).map(key => {
                                     return {"date": key, "value": that.weeklyPrices[key]}
                                 })
-                                
-                                // let data = newArr.slice().sort((a, b) => {
-                                //     return Date.parse(a.date) - Date.parse(b.date)
-                                // }).filter(el => {
-                                //     return el !== undefined
-                                // })
 
                                 that.setState({fetched: true, portfolioValue: newArr})
                     
@@ -138,7 +125,7 @@ class Portfolio extends React.Component{
     render(){
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="ALL"){
-                return <button className="btns" key={`${key}-id`} onClick={() => {this.updatePrices(key)}}>
+                return <button className={`btns ${this.state.timeFrame === key ? 'active': ''}`} key={`${key}-id`} onClick={() => {this.updatePrices(key)}}>
                             {key.slice(0, 2).toUpperCase()}
                        </button>
             }
@@ -154,23 +141,24 @@ class Portfolio extends React.Component{
             return (
                 
                 <>
+
                 <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
+
                 {/* <ProtectedRoute exact path="/" component={WatchlistContainer}/> */}
                 <div className="chart-and-news-wrap">
                 <div className="chart-wrap"> 
+
                     <PortfolioChart 
                     portfolioValue={data}
                     tfVal={this.state[this.state.timeFrame]}
                     timeFrame={this.state.timeFrame}
-                    // openValue={Math.max(this.state["1D"].open_value)}
-                    // change={this.state.change}
-                    // changePercent={this.state.changePercent}
-                    // tF={tF}
                     />
                     
                     <div className="time-frame-buttons">{tF}</div>
                 </div>
+
                 <ProtectedRoute exact path="/" component={News}/>
+                
                 </div>
                 </>
                 )
