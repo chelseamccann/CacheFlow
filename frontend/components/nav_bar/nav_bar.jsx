@@ -3,7 +3,7 @@ import { Link, Route } from 'react-router-dom';
 import Search from '../search/search';
 
 class NavBar extends React.Component {
-    
+
     drop(e){
         e.preventDefault();
         document.getElementById("drop-down-id").classList.toggle("show");

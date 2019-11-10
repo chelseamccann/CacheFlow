@@ -10,7 +10,8 @@ class Search extends React.Component{
             searchResults: [],
             isLoading: true,
             inputText: '',
-            clicked: false
+            clicked: false,
+            showResults: true
         }
         this.onSearchChange = this.onSearchChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -66,16 +67,31 @@ class Search extends React.Component{
 
       handleClick(){
           debugger
-          this.setState({clicked: true})
+        //   this.setState({clicked: true})
+          if(this.node.contains(event.target)){
+            this.setState({clicked: true, showResults: true})
+        } else{
+            this.setState({clicked: true, showResults: false})
+        }
       }
+
+          
+    componentWillMount(){
+        document.addEventListener('mousedown', this.handleClick, false)
+    }
+
+    componentWillUnmount(){
+        document.addEventListener('mousedown', this.handleClick, false)
+    }
 
     render(){
         debugger
-        if(!this.isLoading || this.state.searchResults.length <= 6){
+        if(this.state.showResults && (!this.isLoading || this.state.searchResults.length <= 6)){
             return (
                 <>
-                <form className={`search-form ${`${this.state.clicked ? 'clicked': ''}`}`} onSubmit={this.handleSubmit} onClick={this.handleClick}>
+                <form className={`search-form ${`${this.state.clicked ? 'clicked': ''}`}`} onSubmit={this.handleSubmit} ref={node => this.node = node} >
                     <input 
+                    
                     className={`search ${`${this.state.clicked ? 'input-clicked': ''}`}`}
                     // id="search"
                     autoComplete="off"
@@ -90,6 +106,26 @@ class Search extends React.Component{
                 </form>
                 </>
             )
+        } else if((!this.isLoading || this.state.searchResults.length <= 6) && this.state.showResults === false){
+                return (
+                    <>
+                    <form className={`search-form ${`${this.state.clicked ? 'clicked': ''}`}`} onSubmit={this.handleSubmit} ref={node => this.node = node} >
+                        <input 
+                        
+                        className={`search ${`${this.state.clicked ? 'input-clicked': ''}`}`}
+                        // id="search"
+                        autoComplete="off"
+                        type="search" 
+                        // ref={input => this.searchOnSubmit = input}
+                        // ref={(input) => this.inputText = input}
+                        onChange={this.handleInputChange}
+    
+                        />
+                        <button className="search-button"></button>
+                        {/* <Suggestions results={this.state.searchResults.slice(0,5)}/> */}
+                    </form>
+                    </>
+                )
         } else {
             return ""
         }

@@ -1619,7 +1619,8 @@ function (_React$Component) {
       searchResults: [],
       isLoading: true,
       inputText: '',
-      clicked: false
+      clicked: false,
+      showResults: true
     };
     _this.onSearchChange = _this.onSearchChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -1691,21 +1692,44 @@ function (_React$Component) {
   }, {
     key: "handleClick",
     value: function handleClick() {
-      debugger;
-      this.setState({
-        clicked: true
-      });
+      debugger; //   this.setState({clicked: true})
+
+      if (this.node.contains(event.target)) {
+        this.setState({
+          clicked: true,
+          showResults: true
+        });
+      } else {
+        this.setState({
+          clicked: true,
+          showResults: false
+        });
+      }
+    }
+  }, {
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      document.addEventListener('mousedown', this.handleClick, false);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      document.addEventListener('mousedown', this.handleClick, false);
     }
   }, {
     key: "render",
     value: function render() {
+      var _this5 = this;
+
       debugger;
 
-      if (!this.isLoading || this.state.searchResults.length <= 6) {
+      if (this.state.showResults && (!this.isLoading || this.state.searchResults.length <= 6)) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           className: "search-form ".concat("".concat(this.state.clicked ? 'clicked' : '')),
           onSubmit: this.handleSubmit,
-          onClick: this.handleClick
+          ref: function ref(node) {
+            return _this5.node = node;
+          }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "search ".concat("".concat(this.state.clicked ? 'input-clicked' : '')) // id="search"
           ,
@@ -1718,6 +1742,24 @@ function (_React$Component) {
           className: "search-button"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_suggestions__WEBPACK_IMPORTED_MODULE_3__["default"], {
           results: this.state.searchResults.slice(0, 5)
+        })));
+      } else if ((!this.isLoading || this.state.searchResults.length <= 6) && this.state.showResults === false) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          className: "search-form ".concat("".concat(this.state.clicked ? 'clicked' : '')),
+          onSubmit: this.handleSubmit,
+          ref: function ref(node) {
+            return _this5.node = node;
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "search ".concat("".concat(this.state.clicked ? 'input-clicked' : '')) // id="search"
+          ,
+          autoComplete: "off",
+          type: "search" // ref={input => this.searchOnSubmit = input}
+          // ref={(input) => this.inputText = input}
+          ,
+          onChange: this.handleInputChange
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "search-button"
         })));
       } else {
         return "";
