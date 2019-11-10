@@ -9,9 +9,9 @@ const DashToPortfolio = () => {
 
     return (
         <>
-        <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
-        <ProtectedRoute exact path="/" component={PortfolioContainer}/>
-        <ProtectedRoute exact path="/" component={News}/>
+            <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
+            <ProtectedRoute exact path="/" component={PortfolioContainer}/>
+            <ProtectedRoute exact path="/" component={News}/>
         </>
     )
 

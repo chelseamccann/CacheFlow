@@ -138,12 +138,19 @@ class TickerShow extends React.Component{
     }
 
     render(){
+        debugger
+
+        let color = this.state.close > this.state.open ? "activeGreen" : "activeRed"
+
 
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
                 return <button className={`btns ${this.state.timeFrame === key ? 'active': ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
+                // return <button className={`btns ${this.state.timeFrame === key ? color : ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
             }
         })
+
+
         if(this.state.dailyDone === false){
             return <div className="lds-facebook"><div></div><div></div><div></div></div>
         } else if(this.props.mini === true){

@@ -2362,6 +2362,7 @@ function (_React$Component) {
       var label = this.props.timeFrame === "1D" ? "label" : "date";
 
       if (this.props.mini === true) {
+        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings mini-chart"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
@@ -2385,7 +2386,8 @@ function (_React$Component) {
           className: "mini-close-price"
         }, "$".concat(this.props.close)));
       } else {
-        // let color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531"
+        debugger;
+        var color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531";
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -2430,7 +2432,7 @@ function (_React$Component) {
           type: "linear",
           dataKey: "price",
           dot: false,
-          stroke: "#21ce99",
+          stroke: color,
           strokeWidth: 1
         })));
       }
@@ -2870,13 +2872,15 @@ function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
+      debugger;
+      var color = this.state.close > this.state.open ? "activeGreen" : "activeRed";
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "btns ".concat(_this7.state.timeFrame === key ? 'active' : ''),
             key: "".concat(key, "-id"),
             onClick: _this7.updatePrices(key)
-          }, key.slice(0, 2).toUpperCase());
+          }, key.slice(0, 2).toUpperCase()); // return <button className={`btns ${this.state.timeFrame === key ? color : ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
         }
       });
 

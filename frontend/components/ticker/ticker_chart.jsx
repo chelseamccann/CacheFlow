@@ -77,7 +77,7 @@ class TickerChart extends React.Component {
         let data = this.props.ticker || [];
         const label = this.props.timeFrame === "1D" ? "label" : "date";
         if (this.props.mini === true){
-
+            debugger
             return (
             <>
                 <div className="ticker-chart block-paddings mini-chart">
@@ -105,8 +105,8 @@ class TickerChart extends React.Component {
             )
         }
         else {
-
-            // let color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531"
+            debugger
+            let color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531"
 
             return (
                 <div className="ticker-chart block-paddings">
@@ -130,7 +130,7 @@ class TickerChart extends React.Component {
                                         formatter={(value, name, props) => { return [""] }}
                                         // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
                                         isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
-                        <Line connectNulls type="linear" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1}/>
+                        <Line connectNulls type="linear" dataKey="price" dot={false} stroke={color} strokeWidth={1}/>
                     </LineChart>
                 </div>
                 ) 

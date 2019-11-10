@@ -187,6 +187,10 @@
 
 
 
-  .active{
+  .activeGreen{
       color: #21ce99;
+  }
+
+  .activeRed{
+      color: #f45531;
   }
