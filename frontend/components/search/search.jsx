@@ -66,8 +66,6 @@ class Search extends React.Component{
       }
 
       handleClick(){
-          debugger
-        //   this.setState({clicked: true})
           if(this.node.contains(event.target)){
             this.setState({clicked: true, showResults: true})
         } else{
@@ -85,19 +83,20 @@ class Search extends React.Component{
     }
 
     render(){
-        debugger
+        length = this.state.searchResults.length
         if(this.state.showResults && (!this.isLoading || this.state.searchResults.length <= 6)){
             return (
                 <>
                 <form className={`search-form`} onSubmit={this.handleSubmit} ref={node => this.node = node} >
                     <input 
                     
-                    className={`search-with-results ${`${this.state.clicked ? 'input-clicked': ''}`}`}
+                    className={`s search-with-results ${`${this.state.clicked ? 'input-clicked': ''}`}`}
                     autoComplete="off"
                     type="search" 
                     onChange={this.handleInputChange}
-
+                    
                     />
+                    <div className="search-icon-text search-icon"><i class="fa fa-search"></i><br/><p className="search-text">&ensp;{length===0 ? 'Search' : ''}</p></div>
                     <button className="search-button"></button>
                     <Suggestions results={this.state.searchResults.slice(0,5)}/>
                 </form>
@@ -108,12 +107,13 @@ class Search extends React.Component{
                     <>
                     <form className={`search-form`} onSubmit={this.handleSubmit} ref={node => this.node = node} >
                         <input 
-                        className={`search ${`${this.state.clicked ? 'input-clicked': ''}`}`}
+                        className={`s search ${`${this.state.clicked ? 'input-clicked': ''}`}`}
                         autoComplete="off"
                         type="search" 
                         onChange={this.handleInputChange}
     
                         />
+                        <div className="search-icon-text search-icon"><i class="fa fa-search"></i><br/><p className="search-text">&ensp;{length===0 ? 'Search' : ''}</p></div>
                         <button className="search-button"></button>
                         <ul className="search-results"></ul>
                     </form>

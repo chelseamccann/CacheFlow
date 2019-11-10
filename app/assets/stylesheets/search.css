@@ -7,7 +7,7 @@
     background: none;
     border: none;
     bottom: 5px;
-    
+    padding: 0;
 }
 
 .search-button:placeholder-shown{
@@ -86,7 +86,35 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 }
 
 .input-clicked{
-    /* border: none; */
+    border: none;
     cursor: text;
-    box-shadow: 2px 2px 9px 3px #a2a2a8e1
+    /* box-shadow: 2px 2px 9px 3px #a2a2a8e1 */
+}
+
+.search-icon{
+    position: fixed;
+    padding: .4em;
+    padding-left: 1.2%;
+    font-size: 19px;
+    color: #8c8c8e;
+    display: flex;
+}
+
+.search-icon-text{
+    display: flex;
+    align-items: center;
+}
+
+.search-text{
+    font-size: 13px;
+}
+
+.s{
+    text-indent: 14.5%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.search-form{
+    box-shadow: 2px 2px 9px 3px #a2a2a8e1;
 }

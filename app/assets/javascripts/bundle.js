@@ -1692,8 +1692,6 @@ function (_React$Component) {
   }, {
     key: "handleClick",
     value: function handleClick() {
-      debugger; //   this.setState({clicked: true})
-
       if (this.node.contains(event.target)) {
         this.setState({
           clicked: true,
@@ -1721,7 +1719,7 @@ function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
-      debugger;
+      length = this.state.searchResults.length;
 
       if (this.state.showResults && (!this.isLoading || this.state.searchResults.length <= 6)) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -1731,11 +1729,17 @@ function (_React$Component) {
             return _this5.node = node;
           }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "search-with-results ".concat("".concat(this.state.clicked ? 'input-clicked' : '')),
+          className: "s search-with-results ".concat("".concat(this.state.clicked ? 'input-clicked' : '')),
           autoComplete: "off",
           type: "search",
           onChange: this.handleInputChange
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "search-icon-text search-icon"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          "class": "fa fa-search"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "search-text"
+        }, "\u2002", length === 0 ? 'Search' : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "search-button"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_suggestions__WEBPACK_IMPORTED_MODULE_3__["default"], {
           results: this.state.searchResults.slice(0, 5)
@@ -1748,11 +1752,17 @@ function (_React$Component) {
             return _this5.node = node;
           }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "search ".concat("".concat(this.state.clicked ? 'input-clicked' : '')),
+          className: "s search ".concat("".concat(this.state.clicked ? 'input-clicked' : '')),
           autoComplete: "off",
           type: "search",
           onChange: this.handleInputChange
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "search-icon-text search-icon"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          "class": "fa fa-search"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "search-text"
+        }, "\u2002", length === 0 ? 'Search' : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "search-button"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "search-results"
