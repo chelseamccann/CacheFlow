@@ -115,9 +115,10 @@
 
 .dashboard-middle {
     margin: 50px;
-    /* display: flex; */
-    justify-content: center;
+    display: flex;
+    /* justify-content: center; */
     height: 100%;
+    flex-direction: column;
 }
 
 .dash-left > li {

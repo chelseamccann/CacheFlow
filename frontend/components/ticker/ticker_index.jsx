@@ -28,11 +28,7 @@ class TickerIndex extends React.Component{
                                 <p>{`${ticker.num_shares} Shares`}</p>
                             </div>
 
-                                {/* <MiniChart
-                                    tickerSymbol={ticker.symbol}
-                                    tickerId={ticker.id}
-                                    tickerShares={ticker.num_shares}
-                                /> */}
+                                
                                 <TickerShowContainer 
                                     tickerSymbol={ticker.symbol}
                                     mini={true}

@@ -8,6 +8,7 @@ import NavBar from '../nav_bar/nav_bar';
 import PortfolioContainer from '../portfolio/portfolio_container';
 import News from '../news/news';
 import Search from '../search/search';
+import DashToPortfolio from './dash_to_portfolio';
 
 class Dashboard extends React.Component {
 
@@ -16,12 +17,14 @@ class Dashboard extends React.Component {
             <div className="dashboard">
                 <NavBar logout={this.props.logout}/>
                 <div className="dashboard-middle">
+                
                     <Switch>
                         <ProtectedRoute exact path='/:tickerSymbol' component={TickerShowContainer}/>
-                        
-                        <ProtectedRoute exact path="/" component={PortfolioContainer}/>
-                        {/* <ProtectedRoute exact path="/" component={TickerIndexContainer}/> */}
+                        <ProtectedRoute exact path='/' component={DashToPortfolio}/>
+                        {/* <ProtectedRoute exact path="/" component={PortfolioContainer}/> */}
+                        {/* <DashToPortfolio /> */}
                     </Switch>
+                
                 </div>
                 
             </div>

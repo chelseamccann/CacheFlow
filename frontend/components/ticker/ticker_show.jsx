@@ -22,7 +22,8 @@ class TickerShow extends React.Component{
             open: null,
             close: null,
             change: 0,
-            changePercent: 0
+            changePercent: 0,
+            dailyDone: false
         }
         this.updatePrices = this.updatePrices.bind(this);
         this.tickerInfo = this.tickerInfo.bind(this);
@@ -46,6 +47,10 @@ class TickerShow extends React.Component{
         }
     }
 
+    componentWillUnmount(){
+        this.setState({dailyDone: false})
+    }
+
     renderDaily(response){
         const daily = response.map(price => {
             return {label: price.label, price: price.close}
@@ -67,10 +72,11 @@ class TickerShow extends React.Component{
             timeFrame: "1D", 
             tickerSymbol: this.props.tickerSymbol, 
             open: firstValidOpen, 
-            close: lastValidClose, //response[response.length-1].close,
+            close: lastValidClose, 
             change: parseFloat(lastValidClose - firstValidOpen).toFixed(2),
-            changePercent: parseFloat(((lastValidClose - firstValidOpen)/firstValidOpen)*100).toFixed(2)
-    })
+            changePercent: parseFloat(((lastValidClose - firstValidOpen)/firstValidOpen)*100).toFixed(2),
+            dailyDone: true
+             })
 
     }
 
@@ -79,23 +85,12 @@ class TickerShow extends React.Component{
             
             return {
                 price: price.close, 
-                // date: price.date, 
                 date: timeFramePassed==="3M" || timeFramePassed==="1Y" || timeFramePassed==="5Y"  ? price.date : new Date(Date.parse(`${price.date} ${price.label}`)).toLocaleString('en-US'),
                 open: price.open, 
                 change: price.change, 
                 changePercent: price.changePercent
             }
         })
-
-        // let lastValidIdx = response.length - 1
-        // while(response[lastValidIdx].close === null){
-        //     lastValidIdx -= 1
-        // }
-
-        // let lastValidClose = response[lastValidIdx].close
-        // let firstValidOpen = response[0].open
-
-
         
         this.setState({
             [timeFramePassed]: data, 
@@ -149,7 +144,9 @@ class TickerShow extends React.Component{
                 return <button className={`btns ${this.state.timeFrame === key ? 'active': ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
             }
         })
-        if(this.props.mini === true){
+        if(this.state.dailyDone === false){
+            return <div className="lds-facebook"><div></div><div></div><div></div></div>
+        } else if(this.props.mini === true){
             return (
                 <TickerChart 
                 mini={this.props.mini}

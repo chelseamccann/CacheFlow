@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const Suggestions = (props) => {
   const len=props.inputText.length
-  debugger
   const options = props.results.map((r, idx) => (
 
     <Link to={`/${r.symbol}`} style={{ textDecoration: 'none', color: 'black'}}>

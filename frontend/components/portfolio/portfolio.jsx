@@ -118,7 +118,7 @@ class Portfolio extends React.Component{
                 this.dailyVal(response)
             }).then(this.setState({timeFrame: timeFrame}))
         }
-        // this.setState({timeFrame: timeFrame})
+
         
     }
 
@@ -143,28 +143,24 @@ class Portfolio extends React.Component{
                 
                 <>
 
-                <ProtectedRoute exact path="/" component={TickerIndexContainer}/>
-
-                {/* <ProtectedRoute exact path="/" component={WatchlistContainer}/> */}
                 <div className="chart-and-news-wrap">
-                <div className="chart-wrap"> 
+                    <div className="chart-wrap"> 
 
-                    <PortfolioChart 
-                    portfolioValue={data}
-                    tfVal={this.state[this.state.timeFrame]}
-                    timeFrame={this.state.timeFrame}
-                    />
-                    
-                    <div className="time-frame-buttons">{tF}</div>
-                </div>
-
-                <ProtectedRoute exact path="/" component={News}/>
+                        <PortfolioChart 
+                        portfolioValue={data}
+                        tfVal={this.state[this.state.timeFrame]}
+                        timeFrame={this.state.timeFrame}
+                        />
+                        
+                        <div className="time-frame-buttons">{tF}</div>
+                    </div>
                 
                 </div>
                 </>
                 )
             } else { 
-                return <div> </div>
+                debugger
+                return <div className="lds-spinner chart-load"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             }
     }
 }

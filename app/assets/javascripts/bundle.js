@@ -444,6 +444,47 @@ var App = function App() {
 
 /***/ }),
 
+/***/ "./frontend/components/dashboard/dash_to_portfolio.jsx":
+/*!*************************************************************!*\
+  !*** ./frontend/components/dashboard/dash_to_portfolio.jsx ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ticker/ticker_index_container */ "./frontend/components/ticker/ticker_index_container.jsx");
+/* harmony import */ var _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../portfolio/portfolio_container */ "./frontend/components/portfolio/portfolio_container.jsx");
+/* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
+/* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
+
+
+
+
+
+
+var DashToPortfolio = function DashToPortfolio() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+    exact: true,
+    path: "/",
+    component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+    exact: true,
+    path: "/",
+    component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+    exact: true,
+    path: "/",
+    component: _news_news__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (DashToPortfolio);
+
+/***/ }),
+
 /***/ "./frontend/components/dashboard/dashboard.jsx":
 /*!*****************************************************!*\
   !*** ./frontend/components/dashboard/dashboard.jsx ***!
@@ -464,6 +505,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../portfolio/portfolio_container */ "./frontend/components/portfolio/portfolio_container.jsx");
 /* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
 /* harmony import */ var _search_search__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../search/search */ "./frontend/components/search/search.jsx");
+/* harmony import */ var _dash_to_portfolio__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./dash_to_portfolio */ "./frontend/components/dashboard/dash_to_portfolio.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -481,6 +523,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -520,7 +563,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
         exact: true,
         path: "/",
-        component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_7__["default"]
+        component: _dash_to_portfolio__WEBPACK_IMPORTED_MODULE_10__["default"]
       }))));
     }
   }]);
@@ -1261,8 +1304,7 @@ function (_React$Component) {
         }).then(this.setState({
           timeFrame: timeFrame
         }));
-      } // this.setState({timeFrame: timeFrame})
-
+      }
     }
   }, {
     key: "render",
@@ -1287,11 +1329,7 @@ function (_React$Component) {
         }).filter(function (el) {
           return el !== undefined;
         });
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
-          exact: true,
-          path: "/",
-          component: _ticker_ticker_index_container__WEBPACK_IMPORTED_MODULE_1__["default"]
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
@@ -1301,13 +1339,12 @@ function (_React$Component) {
           timeFrame: this.state.timeFrame
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
-        }, tF)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
-          exact: true,
-          path: "/",
-          component: _news_news__WEBPACK_IMPORTED_MODULE_5__["default"]
-        })));
+        }, tF))));
       } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ");
+        debugger;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "lds-spinner chart-load"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null));
       }
     }
   }]);
@@ -1805,7 +1842,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var Suggestions = function Suggestions(props) {
   var len = props.inputText.length;
-  debugger;
   var options = props.results.map(function (r, idx) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "/".concat(r.symbol),
@@ -2692,7 +2728,8 @@ function (_React$Component) {
       open: null,
       close: null,
       change: 0,
-      changePercent: 0
+      changePercent: 0,
+      dailyDone: false
     };
     _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
     _this.tickerInfo = _this.tickerInfo.bind(_assertThisInitialized(_this));
@@ -2727,6 +2764,13 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.setState({
+        dailyDone: false
+      });
+    }
+  }, {
     key: "renderDaily",
     value: function renderDaily(response) {
       var daily = response.map(function (price) {
@@ -2755,9 +2799,9 @@ function (_React$Component) {
         tickerSymbol: this.props.tickerSymbol,
         open: firstValidOpen,
         close: lastValidClose,
-        //response[response.length-1].close,
         change: parseFloat(lastValidClose - firstValidOpen).toFixed(2),
-        changePercent: parseFloat((lastValidClose - firstValidOpen) / firstValidOpen * 100).toFixed(2)
+        changePercent: parseFloat((lastValidClose - firstValidOpen) / firstValidOpen * 100).toFixed(2),
+        dailyDone: true
       });
     }
   }, {
@@ -2768,19 +2812,12 @@ function (_React$Component) {
       var data = response.map(function (price) {
         return {
           price: price.close,
-          // date: price.date, 
           date: timeFramePassed === "3M" || timeFramePassed === "1Y" || timeFramePassed === "5Y" ? price.date : new Date(Date.parse("".concat(price.date, " ").concat(price.label))).toLocaleString('en-US'),
           open: price.open,
           change: price.change,
           changePercent: price.changePercent
         };
-      }); // let lastValidIdx = response.length - 1
-      // while(response[lastValidIdx].close === null){
-      //     lastValidIdx -= 1
-      // }
-      // let lastValidClose = response[lastValidIdx].close
-      // let firstValidOpen = response[0].open
-
+      });
       this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _defineProperty(_this$setState, "open", response[0].open), _defineProperty(_this$setState, "close", response[response.length - 1].close), _defineProperty(_this$setState, "change", response[response.length - 1].change), _defineProperty(_this$setState, "changePercent", response[response.length - 1].changePercent), _this$setState));
     }
   }, {
@@ -2843,7 +2880,11 @@ function (_React$Component) {
         }
       });
 
-      if (this.props.mini === true) {
+      if (this.state.dailyDone === false) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "lds-facebook"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null));
+      } else if (this.props.mini === true) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
           mini: this.props.mini,
           oldTicker: this.state.oldTicker,
