@@ -1658,6 +1658,10 @@ function (_React$Component) {
           });
         }).then(function () {
           return _this2.props.history.push("/".concat(_this2.state.inputText));
+        }).then(function () {
+          _this2.setState({
+            inputText: ''
+          });
         });
       }
     }
@@ -1723,7 +1727,7 @@ function (_React$Component) {
 
       if (this.state.showResults && (!this.isLoading || this.state.searchResults.length <= 6)) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          className: "search-form",
+          className: "search-form ".concat("".concat(this.state.clicked ? 'form-clicked' : '')),
           onSubmit: this.handleSubmit,
           ref: function ref(node) {
             return _this5.node = node;
@@ -1732,22 +1736,24 @@ function (_React$Component) {
           className: "s search-with-results ".concat("".concat(this.state.clicked ? 'input-clicked' : '')),
           autoComplete: "off",
           type: "search",
-          onChange: this.handleInputChange
+          onChange: this.handleInputChange,
+          value: this.state.inputText
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "search-icon-text search-icon"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          "class": "fa fa-search"
+          className: "fa fa-search"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "search-text"
         }, "\u2002", length === 0 ? 'Search' : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "search-button"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_suggestions__WEBPACK_IMPORTED_MODULE_3__["default"], {
           results: this.state.searchResults.slice(0, 5),
-          inputText: this.state.inputText
+          inputText: this.state.inputText,
+          clicked: this.state.clicked
         })));
       } else if ((!this.isLoading || this.state.searchResults.length <= 6) && this.state.showResults === false) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          className: "search-form",
+          className: "search-form ".concat("".concat(this.state.clicked ? 'form-clicked' : '')),
           onSubmit: this.handleSubmit,
           ref: function ref(node) {
             return _this5.node = node;
@@ -1756,17 +1762,18 @@ function (_React$Component) {
           className: "s search ".concat("".concat(this.state.clicked ? 'input-clicked' : '')),
           autoComplete: "off",
           type: "search",
-          onChange: this.handleInputChange
+          onChange: this.handleInputChange,
+          value: this.state.inputText
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "search-icon-text search-icon"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          "class": "fa fa-search"
+          className: "fa fa-search"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "search-text"
         }, "\u2002", length === 0 ? 'Search' : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "search-button"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "search-results"
+          className: "search-results ".concat("".concat(this.state.clicked ? 'sr' : ''))
         })));
       } else {
         return "";
@@ -1792,23 +1799,35 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 var Suggestions = function Suggestions(props) {
   var len = props.inputText.length;
   debugger;
   var options = props.results.map(function (r, idx) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "/".concat(r.symbol),
+      style: {
+        textDecoration: 'none',
+        color: 'black'
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "each-search-result",
       key: idx
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "text-results"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      className: "color-text"
-    }, r.symbol.slice(0, len)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, r.symbol.slice(len))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, r.securityName));
+      className: "t color-text"
+    }, r.symbol.slice(0, len)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "t"
+    }, r.symbol.slice(len))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "t"
+    }, r.securityName)));
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "search-results"
+    className: "search-results ".concat("".concat(props.clicked && props.results.length > 0 ? 'sr' : ''))
   }, options);
 };
 
