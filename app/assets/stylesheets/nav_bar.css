@@ -124,10 +124,6 @@
     margin-right: 30px;
 }
 
-#search:hover{
-    box-shadow: 2px 2px 9px 3px #a2a2a8e1;
-    transition: color 150ms ease-out;
-}
 
 .ticker-chart h3{
     width: 100%;

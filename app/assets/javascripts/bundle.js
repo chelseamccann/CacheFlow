@@ -1701,7 +1701,7 @@ function (_React$Component) {
         });
       } else {
         this.setState({
-          clicked: true,
+          clicked: false,
           showResults: false
         });
       }
@@ -1725,18 +1725,15 @@ function (_React$Component) {
 
       if (this.state.showResults && (!this.isLoading || this.state.searchResults.length <= 6)) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          className: "search-form ".concat("".concat(this.state.clicked ? 'clicked' : '')),
+          className: "search-form",
           onSubmit: this.handleSubmit,
           ref: function ref(node) {
             return _this5.node = node;
           }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "search ".concat("".concat(this.state.clicked ? 'input-clicked' : '')) // id="search"
-          ,
+          className: "search-with-results ".concat("".concat(this.state.clicked ? 'input-clicked' : '')),
           autoComplete: "off",
-          type: "search" // ref={input => this.searchOnSubmit = input}
-          // ref={(input) => this.inputText = input}
-          ,
+          type: "search",
           onChange: this.handleInputChange
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "search-button"
@@ -1745,21 +1742,20 @@ function (_React$Component) {
         })));
       } else if ((!this.isLoading || this.state.searchResults.length <= 6) && this.state.showResults === false) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          className: "search-form ".concat("".concat(this.state.clicked ? 'clicked' : '')),
+          className: "search-form",
           onSubmit: this.handleSubmit,
           ref: function ref(node) {
             return _this5.node = node;
           }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "search ".concat("".concat(this.state.clicked ? 'input-clicked' : '')) // id="search"
-          ,
+          className: "search ".concat("".concat(this.state.clicked ? 'input-clicked' : '')),
           autoComplete: "off",
-          type: "search" // ref={input => this.searchOnSubmit = input}
-          // ref={(input) => this.inputText = input}
-          ,
+          type: "search",
           onChange: this.handleInputChange
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "search-button"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "search-results"
         })));
       } else {
         return "";
