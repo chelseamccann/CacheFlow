@@ -64,7 +64,7 @@ class Search extends React.Component{
       }
 
       handleClick(){
-          
+
       }
 
     render(){
@@ -72,7 +72,7 @@ class Search extends React.Component{
         if(!this.isLoading || this.state.searchResults.length <= 5){
             return (
                 <>
-                <form onSubmit={this.handleSubmit} onClick={() => this.handleClick}>
+                <form className="search-form" onSubmit={this.handleSubmit} onClick={() => this.handleClick}>
                     <input 
                     id="search"
                     autoComplete="off"

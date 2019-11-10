@@ -1697,6 +1697,7 @@ function (_React$Component) {
 
       if (!this.isLoading || this.state.searchResults.length <= 5) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          className: "search-form",
           onSubmit: this.handleSubmit,
           onClick: function onClick() {
             return _this5.handleClick;
