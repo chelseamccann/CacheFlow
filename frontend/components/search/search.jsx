@@ -98,7 +98,7 @@ class Search extends React.Component{
                     />
                     <div className="search-icon-text search-icon"><i class="fa fa-search"></i><br/><p className="search-text">&ensp;{length===0 ? 'Search' : ''}</p></div>
                     <button className="search-button"></button>
-                    <Suggestions results={this.state.searchResults.slice(0,5)}/>
+                    <Suggestions results={this.state.searchResults.slice(0,5)} inputText={this.state.inputText}/>
                 </form>
                 </>
             )

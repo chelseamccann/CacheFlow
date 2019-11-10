@@ -70,6 +70,10 @@
     justify-content: space-between;
 }
 
+.each-search-result:hover{
+    background-color: #a2a2a8e1;
+}
+
 /* clears the 'X' from Internet Explorer */
 input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
 input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
@@ -117,4 +121,12 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 
 .search-form{
     box-shadow: 2px 2px 9px 3px #a2a2a8e1;
+}
+
+.color-text{
+    color: #21ce99;
+}
+
+.text-results{
+    display:flex;
 }

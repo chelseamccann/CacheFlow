@@ -1742,7 +1742,8 @@ function (_React$Component) {
         }, "\u2002", length === 0 ? 'Search' : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "search-button"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_suggestions__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          results: this.state.searchResults.slice(0, 5)
+          results: this.state.searchResults.slice(0, 5),
+          inputText: this.state.inputText
         })));
       } else if ((!this.isLoading || this.state.searchResults.length <= 6) && this.state.showResults === false) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -1794,11 +1795,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Suggestions = function Suggestions(props) {
+  var len = props.inputText.length;
+  debugger;
   var options = props.results.map(function (r, idx) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "each-search-result",
       key: idx
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, r.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, r.securityName));
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "text-results"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "color-text"
+    }, r.symbol.slice(0, len)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, r.symbol.slice(len))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, r.securityName));
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "search-results"
