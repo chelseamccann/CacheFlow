@@ -62,7 +62,6 @@ class TickerShow extends React.Component{
             firstValidIdx += 1
         }
         let firstValidOpen = response[firstValidIdx].open
-        debugger
         this.setState({
             "1D": daily, 
             timeFrame: "1D", 

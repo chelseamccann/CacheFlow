@@ -1618,7 +1618,8 @@ function (_React$Component) {
     _this.state = {
       searchResults: [],
       isLoading: true,
-      inputText: ''
+      inputText: '',
+      clicked: false
     };
     _this.onSearchChange = _this.onSearchChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -1689,21 +1690,25 @@ function (_React$Component) {
     }
   }, {
     key: "handleClick",
-    value: function handleClick() {}
+    value: function handleClick() {
+      debugger;
+      this.setState({
+        clicked: true
+      });
+    }
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      debugger;
 
-      if (!this.isLoading || this.state.searchResults.length <= 5) {
+      if (!this.isLoading || this.state.searchResults.length <= 6) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          className: "search-form",
+          className: "search-form ".concat("".concat(this.state.clicked ? 'clicked' : '')),
           onSubmit: this.handleSubmit,
-          onClick: function onClick() {
-            return _this5.handleClick;
-          }
+          onClick: this.handleClick
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          id: "search",
+          className: "search ".concat("".concat(this.state.clicked ? 'input-clicked' : '')) // id="search"
+          ,
           autoComplete: "off",
           type: "search" // ref={input => this.searchOnSubmit = input}
           // ref={(input) => this.inputText = input}
@@ -2670,7 +2675,6 @@ function (_React$Component) {
       }
 
       var firstValidOpen = response[firstValidIdx].open;
-      debugger;
       this.setState({
         "1D": daily,
         timeFrame: "1D",

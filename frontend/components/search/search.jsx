@@ -9,7 +9,8 @@ class Search extends React.Component{
         this.state = {
             searchResults: [],
             isLoading: true,
-            inputText: ''
+            inputText: '',
+            clicked: false
         }
         this.onSearchChange = this.onSearchChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -64,17 +65,19 @@ class Search extends React.Component{
       }
 
       handleClick(){
-
+          debugger
+          this.setState({clicked: true})
       }
 
     render(){
-
-        if(!this.isLoading || this.state.searchResults.length <= 5){
+        debugger
+        if(!this.isLoading || this.state.searchResults.length <= 6){
             return (
                 <>
-                <form className="search-form" onSubmit={this.handleSubmit} onClick={() => this.handleClick}>
+                <form className={`search-form ${`${this.state.clicked ? 'clicked': ''}`}`} onSubmit={this.handleSubmit} onClick={this.handleClick}>
                     <input 
-                    id="search"
+                    className={`search ${`${this.state.clicked ? 'input-clicked': ''}`}`}
+                    // id="search"
                     autoComplete="off"
                     type="search" 
                     // ref={input => this.searchOnSubmit = input}
