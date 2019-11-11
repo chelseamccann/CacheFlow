@@ -2876,11 +2876,12 @@ function (_React$Component) {
       var color = this.state.close > this.state.open ? "activeGreen" : "activeRed";
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
+          // return <button className={`btns ${this.state.timeFrame === key ? 'active': ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            className: "btns ".concat(_this7.state.timeFrame === key ? 'active' : ''),
+            className: "btns ".concat(_this7.state.timeFrame === key ? color : ''),
             key: "".concat(key, "-id"),
             onClick: _this7.updatePrices(key)
-          }, key.slice(0, 2).toUpperCase()); // return <button className={`btns ${this.state.timeFrame === key ? color : ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>  
+          }, key.slice(0, 2).toUpperCase());
         }
       });
 
