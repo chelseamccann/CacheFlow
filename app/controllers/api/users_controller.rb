@@ -2,7 +2,7 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    # @user.buying_power ||= 0.00
+    @user.buying_power = 1000000.00
     if @user.save
       login!(@user)
       render "api/users/show"
@@ -12,7 +12,6 @@ class Api::UsersController < ApplicationController
   end
 
   def update
-    # @user = User.find(params[:id])
     if current_user.update_attributes(user_params)
       render "api/users/show"
     else

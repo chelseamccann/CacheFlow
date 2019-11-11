@@ -138,7 +138,6 @@ class TickerShow extends React.Component{
     }
 
     render(){
-        debugger
 
         let color = this.state.close > this.state.open ? "activeGreen" : "activeRed"
 

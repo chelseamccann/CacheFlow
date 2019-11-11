@@ -11,7 +11,7 @@ class NavBar extends React.Component {
     }
 
     render(){
-
+        debugger
         return (
         <div className="dash">
 
@@ -26,8 +26,8 @@ class NavBar extends React.Component {
                             <button  className="drop-down-button">Messages</button>
                             <button onClick={this.drop} className="drop-down-button">Account</button>
                             <div className="drop-down-content" id="drop-down-id">
-                                <div className="drop">Portfolio Value</div>
-                                <div className="drop">Buying Power</div>
+                                {/* <div className="drop">Portfolio Value: {this.props.currentUser.total_portfolio_value}</div> */}
+                                <div className="drop">Buying Power: {this.props.currentUser.buying_power}</div>
                                 <div className="drop">History</div>
                                 <div className="drop">
                                     <Link to="/"><button className="drop-down-button nav-bar-logout" onClick={this.props.logout}>Log Out</button></Link>

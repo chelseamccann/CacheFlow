@@ -15,7 +15,7 @@ class Dashboard extends React.Component {
     render(){
         return (
             <div className="dashboard">
-                <NavBar logout={this.props.logout}/>
+                <NavBar logout={this.props.logout} currentUser={this.props.currentUser}/>
                 <div className="dashboard-middle">
                 
                     <Switch>

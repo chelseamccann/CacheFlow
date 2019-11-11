@@ -14,6 +14,7 @@ class Api::TransactionsController < ApplicationController
         @transaction.ticker_id = ticker.id
         
         @bp = current_user.buying_power 
+        @pv = current_user.total_portfolio_value
         cost = @transaction.purchase_price * @transaction.purchase_shares
 
         if @transaction.buy === true && @bp >= cost && @transaction.save!

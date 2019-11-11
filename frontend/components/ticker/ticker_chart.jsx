@@ -77,7 +77,6 @@ class TickerChart extends React.Component {
         let data = this.props.ticker || [];
         const label = this.props.timeFrame === "1D" ? "label" : "date";
         if (this.props.mini === true){
-            debugger
             return (
             <>
                 <div className="ticker-chart block-paddings mini-chart">
@@ -105,7 +104,6 @@ class TickerChart extends React.Component {
             )
         }
         else {
-            debugger
             let color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531"
 
             return (
@@ -115,7 +113,6 @@ class TickerChart extends React.Component {
                     <p>{`$${this.state.change}`} {`(${this.state.percentChange}%)`}</p>
 
                     <LineChart 
-                        // width={676} 
                         width={646} 
                         height={196} 
                         data={data}

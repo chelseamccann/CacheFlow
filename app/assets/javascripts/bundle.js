@@ -553,7 +553,8 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        logout: this.props.logout
+        logout: this.props.logout,
+        currentUser: this.props.currentUser
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard-middle"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
@@ -953,6 +954,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dash"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -978,9 +980,7 @@ function (_React$Component) {
         id: "drop-down-id"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop"
-      }, "Portfolio Value"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "drop"
-      }, "Buying Power"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Buying Power: ", this.props.currentUser.buying_power), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop"
       }, "History"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop"
@@ -1219,15 +1219,15 @@ function (_React$Component) {
       var _this3 = this;
 
       // DAILY PORTFOLIO CALC
-      var that = this;
+      var that = this; // that.weeklyPrices = {}
+
       var data = response.transactions.forEach(function (asset, idx) {
         if (_this3.props.tickers[asset.ticker_symbol.toUpperCase()]) {
-          var createdAt = new Date(Date.parse("".concat(asset.created_at))); //.toLocaleString('en-US')
-
+          var createdAt = new Date(Date.parse("".concat(asset.created_at)));
           Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (prices) {
             var num_shares = asset.purchase_shares;
             prices.forEach(function (close_price) {
-              var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))); //.toLocaleString('en-US')
+              var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute)));
 
               if (date > createdAt && close_price.close !== null) {
                 if (that.dailyPrices[date.toLocaleString('en-US')] >= 0) {
@@ -1239,15 +1239,16 @@ function (_React$Component) {
             });
 
             if (idx === response.transactions.length - 1) {
-              var newArr = Object.keys(that.dailyPrices).map(function (key) {
+              var newArr = [];
+              newArr = Object.keys(that.dailyPrices).map(function (key) {
                 return {
                   "date": key,
                   "value": that.dailyPrices[key]
                 };
               });
               that.setState({
-                fetched: true,
-                portfolioValue: newArr
+                portfolioValue: newArr,
+                fetched: true
               });
             }
           });
@@ -1289,8 +1290,8 @@ function (_React$Component) {
                   };
                 });
                 that.setState({
-                  fetched: true,
-                  portfolioValue: newArr
+                  portfolioValue: newArr,
+                  fetched: true
                 });
               }
             }).then(_this4.setState({
@@ -1298,7 +1299,7 @@ function (_React$Component) {
             }));
           }
         });
-      } else if (timeFrame === '1D') {
+      } else if (this.state.timeFrame !== timeFrame && timeFrame === '1D') {
         this.props.fetchTransactions().then(function (response) {
           _this4.dailyVal(response);
         }).then(this.setState({
@@ -1328,20 +1329,19 @@ function (_React$Component) {
           return Date.parse(a.date) - Date.parse(b.date);
         }).filter(function (el) {
           return el !== undefined;
-        });
+        }); // console.log(data)
+
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
           portfolioValue: data,
-          tfVal: this.state[this.state.timeFrame],
           timeFrame: this.state.timeFrame
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
         }, tF))));
       } else {
-        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "lds-spinner chart-load"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null));
@@ -1407,7 +1407,8 @@ function (_React$Component) {
       closeValue: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
       change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value).toFixed(2),
       percentChange: (parseFloat((_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value) / _this.props.portfolioValue[0].value) * 100).toFixed(2),
-      timeFrame: _this.props.timeFrame
+      timeFrame: _this.props.timeFrame,
+      portfolioValue: _this.props.portfolioValue
     };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
@@ -1421,14 +1422,14 @@ function (_React$Component) {
         closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value).toFixed(2),
         change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
         percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value) / this.props.portfolioValue[0].value * 100).toFixed(2),
-        timeFrame: this.props.timeFrame
+        timeFrame: this.props.timeFrame,
+        chart: true
       });
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
       if (this.state.timeFrame !== this.props.timeFrame) {
-        debugger;
         this.setState({
           timeFrame: this.props.timeFrame,
           change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
@@ -1467,53 +1468,103 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "ticker-chart block-paddings"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        value: this.state.closeValue
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
-      , {
-        width: 646,
-        height: 196,
-        data: this.props.portfolioValue,
-        margin: {
-          top: 5,
-          right: 10,
-          left: 10,
-          bottom: 5
-        },
-        onMouseOver: this.handleMouseOver,
-        onMouseLeave: this.handleMouseOut
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
-        dataKey: "date",
-        hide: true
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
-        hide: true,
-        domain: ['dataMin', 'dataMax']
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
-        className: "tooltip",
-        contentStyle: {
-          border: '0',
-          backgroundColor: 'transparent',
-          color: 'grey'
-        },
-        formatter: function formatter(value, name, props) {
-          return [""];
-        } // position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
-        ,
-        isAnimationActive: false,
-        cursor: {
-          stroke: "Gainsboro",
-          strokeWidth: 1.5
-        }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
-        connectNulls: true,
-        type: "linear",
-        dataKey: "value",
-        dot: false,
-        stroke: "#21ce99",
-        strokeWidth: 1
-      })));
+      if (this.state.timeFrame === "1D") {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "ticker-chart block-paddings"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
+          value: this.state.closeValue
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
+        , {
+          width: 646,
+          height: 196,
+          data: this.state.portfolioValue,
+          margin: {
+            top: 5,
+            right: 10,
+            left: 10,
+            bottom: 5
+          },
+          onMouseOver: this.handleMouseOver,
+          onMouseLeave: this.handleMouseOut
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
+          dataKey: "date",
+          hide: true
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
+          hide: true,
+          domain: ['dataMin' - 200, 'dataMax' + 200]
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
+          className: "tooltip",
+          contentStyle: {
+            border: '0',
+            backgroundColor: 'transparent',
+            color: 'grey'
+          },
+          formatter: function formatter(value, name, props) {
+            return [""];
+          } // position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
+          ,
+          isAnimationActive: false,
+          cursor: {
+            stroke: "Gainsboro",
+            strokeWidth: 1.5
+          }
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
+          connectNulls: true,
+          type: "monotone",
+          dataKey: "value",
+          dot: false,
+          stroke: "#21ce99",
+          strokeWidth: 1
+        })));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "ticker-chart block-paddings"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
+          value: this.state.closeValue
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
+        , {
+          width: 646,
+          height: 196,
+          data: this.props.portfolioValue,
+          margin: {
+            top: 5,
+            right: 10,
+            left: 10,
+            bottom: 5
+          },
+          onMouseOver: this.handleMouseOver,
+          onMouseLeave: this.handleMouseOut
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
+          dataKey: "date",
+          hide: true
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
+          hide: true,
+          domain: ['dataMin', 'dataMax']
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
+          className: "tooltip",
+          contentStyle: {
+            border: '0',
+            backgroundColor: 'transparent',
+            color: 'grey'
+          },
+          formatter: function formatter(value, name, props) {
+            return [""];
+          } // position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
+          ,
+          isAnimationActive: false,
+          cursor: {
+            stroke: "Gainsboro",
+            strokeWidth: 1.5
+          }
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
+          connectNulls: true,
+          type: "monotone",
+          dataKey: "value",
+          dot: false,
+          stroke: "#21ce99",
+          strokeWidth: 1
+        })));
+      }
     }
   }]);
 
@@ -2362,7 +2413,6 @@ function (_React$Component) {
       var label = this.props.timeFrame === "1D" ? "label" : "date";
 
       if (this.props.mini === true) {
-        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings mini-chart"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
@@ -2386,14 +2436,12 @@ function (_React$Component) {
           className: "mini-close-price"
         }, "$".concat(this.props.close)));
       } else {
-        debugger;
         var color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531";
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
           value: this.state.closePrice
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
-        , {
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
           width: 646,
           height: 196,
           data: data,
@@ -2872,7 +2920,6 @@ function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
-      debugger;
       var color = this.state.close > this.state.open ? "activeGreen" : "activeRed";
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
@@ -4247,15 +4294,15 @@ __webpack_require__.r(__webpack_exports__);
 var fetchFromAPI = function fetchFromAPI(query) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(query, "/quote?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${query}/quote?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-
+    // url: `https://sandbox.iexapis.com/stable/stock/${query}/quote?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://cloud.iexapis.com/stable/stock/".concat(query, "/quote?token=pk_b6f890a95fb24dbfb1a85f362fe5687f")
   });
 };
 var fetchAllFromAPI = function fetchAllFromAPI(query) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/search/".concat(query, "?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/search/${query}?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    // url: `https://sandbox.iexapis.com/stable/search/${query}?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://cloud.iexapis.com/stable/search/".concat(query, "?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
     // url: `https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
 
   });
@@ -4345,15 +4392,15 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
   });
 };
 var fetchTickerInfo = function fetchTickerInfo(symbol) {
@@ -4367,7 +4414,8 @@ var fetchTickerInfo = function fetchTickerInfo(symbol) {
 var fetchTickerStats = function fetchTickerStats(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/stats?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f` //{stat?}`
+    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/stats?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") //{stat?}`
     // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 
   });
