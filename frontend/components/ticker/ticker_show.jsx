@@ -68,7 +68,7 @@ class TickerShow extends React.Component{
         }
         let firstValidOpen = response[firstValidIdx].open
 
-        
+
         let currentMinute = response[lastValidIdx].minute
         let currentDate = new Date(Date.parse(`${response[lastValidIdx].date} ${currentMinute}`))
         let closeTime = "16:00"
@@ -183,11 +183,7 @@ class TickerShow extends React.Component{
          else if(this.state.timeFrame !== "" && this.state.marketcap){
 
             let data = this.state[this.state.timeFrame].slice()
-            // .filter(el => {
-            //     return el.price !== null
-            // })
             
-
             return (
                 <div className="show-wrap">
                     <div className="chart-info-wrap">

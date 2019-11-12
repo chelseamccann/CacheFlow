@@ -44,7 +44,6 @@ class Portfolio extends React.Component{
 
     dailyVal(response){ // DAILY PORTFOLIO CALC
         let that = this;
-        // that.weeklyPrices = {}
 
         const data = response.transactions.forEach((asset, idx) => {
             if (this.props.tickers[asset.ticker_symbol.toUpperCase()]){
@@ -54,11 +53,9 @@ class Portfolio extends React.Component{
 
                     let num_shares = asset.purchase_shares
                     let currentDay = prices[0].date
-                    debugger
                     prices.forEach((close_price, idx) => {
                         const date = new Date(Date.parse(`${close_price.date} ${close_price.minute}`))
                         if (idx === prices.length-1){
-                            debugger
                             let currentMinute = prices[prices.length-1].minute
                             let currentDate = new Date(Date.parse(`${currentDay} ${currentMinute}`))
                             let closeTime = "16:00"
@@ -66,11 +63,8 @@ class Portfolio extends React.Component{
                     
                             while (currentDate < closeDate){
                                 currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes()+1))
-                                debugger
                                 that.dailyPrices[currentDate.toLocaleTimeString([], {timeStyle: 'short'})] = null
                             }
-                            console.log(that.dailyPrices)
-
                         } else if(date > createdAt && close_price.close !== null){
                             if (that.dailyPrices[date.toLocaleString('en-US')] >= 0){
                                 that.dailyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares
@@ -84,12 +78,7 @@ class Portfolio extends React.Component{
                     if(idx === response.transactions.length - 1){
                         let newArr = []
                         newArr = Object.keys(that.dailyPrices).map((key, idx) => {
-                            debugger
-                            // if (idx === newArr.length -1 ){
-
-                            // } else {
                             return {"date": key, "value": that.dailyPrices[key]}
-                            // }
                         })
                         that.setState({portfolioValue: newArr, fetched: true})
                     }
@@ -164,11 +153,6 @@ class Portfolio extends React.Component{
             let data = this.state.portfolioValue.slice().sort((a, b) => {
                 return Date.parse(a.date) - Date.parse(b.date)
             })
-            // .filter(el => {
-            //     return el !== undefined
-            // })
-
-            // console.log(data)
 
             return (
                 

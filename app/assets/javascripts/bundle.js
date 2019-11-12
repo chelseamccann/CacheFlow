@@ -1216,20 +1216,17 @@ function (_React$Component) {
       var _this3 = this;
 
       // DAILY PORTFOLIO CALC
-      var that = this; // that.weeklyPrices = {}
-
+      var that = this;
       var data = response.transactions.forEach(function (asset, idx) {
         if (_this3.props.tickers[asset.ticker_symbol.toUpperCase()]) {
           var createdAt = new Date(Date.parse("".concat(asset.created_at)));
           Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (prices) {
             var num_shares = asset.purchase_shares;
             var currentDay = prices[0].date;
-            debugger;
             prices.forEach(function (close_price, idx) {
               var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute)));
 
               if (idx === prices.length - 1) {
-                debugger;
                 var currentMinute = prices[prices.length - 1].minute;
                 var currentDate = new Date(Date.parse("".concat(currentDay, " ").concat(currentMinute)));
                 var closeTime = "16:00";
@@ -1237,13 +1234,10 @@ function (_React$Component) {
 
                 while (currentDate < closeDate) {
                   currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1));
-                  debugger;
                   that.dailyPrices[currentDate.toLocaleTimeString([], {
                     timeStyle: 'short'
                   })] = null;
                 }
-
-                console.log(that.dailyPrices);
               } else if (date > createdAt && close_price.close !== null) {
                 if (that.dailyPrices[date.toLocaleString('en-US')] >= 0) {
                   that.dailyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares;
@@ -1256,13 +1250,10 @@ function (_React$Component) {
             if (idx === response.transactions.length - 1) {
               var newArr = [];
               newArr = Object.keys(that.dailyPrices).map(function (key, idx) {
-                debugger; // if (idx === newArr.length -1 ){
-                // } else {
-
                 return {
                   "date": key,
                   "value": that.dailyPrices[key]
-                }; // }
+                };
               });
               that.setState({
                 portfolioValue: newArr,
@@ -1345,11 +1336,7 @@ function (_React$Component) {
       if (this.state.fetched) {
         var data = this.state.portfolioValue.slice().sort(function (a, b) {
           return Date.parse(a.date) - Date.parse(b.date);
-        }); // .filter(el => {
-        //     return el !== undefined
-        // })
-        // console.log(data)
-
+        });
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2985,10 +2972,7 @@ function (_React$Component) {
           tF: tF
         });
       } else if (this.state.timeFrame !== "" && this.state.marketcap) {
-        var data = this.state[this.state.timeFrame].slice(); // .filter(el => {
-        //     return el.price !== null
-        // })
-
+        var data = this.state[this.state.timeFrame].slice();
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "show-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -4428,30 +4412,29 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchTickerInfo = function fetchTickerInfo(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 
   });
 };
 var fetchTickerStats = function fetchTickerStats(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/stats?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") //{stat?}`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/stats?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f` //{stat?}`
     // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 
   });
