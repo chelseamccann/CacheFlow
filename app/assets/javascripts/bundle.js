@@ -1224,42 +1224,62 @@ function (_React$Component) {
         if (_this3.props.tickers[asset.ticker_symbol.toUpperCase()]) {
           var createdAt = new Date(Date.parse("".concat(asset.created_at)));
           Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (prices) {
-            debugger;
             var num_shares = asset.purchase_shares;
             var currentDay = prices[0].date;
+            var nullArr = [];
             prices.forEach(function (close_price, idx) {
               var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute)));
 
               if (idx === prices.length - 1) {
+                _this3.setState({
+                  lastIdx: idx
+                });
+
                 var currentMinute = prices[prices.length - 1].minute;
                 var currentDate = new Date(Date.parse("".concat(currentDay, " ").concat(currentMinute)));
                 var closeTime = "16:00";
                 var closeDate = new Date(Date.parse("".concat(currentDay, " ").concat(closeTime)));
 
                 while (currentDate < closeDate) {
-                  currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1));
-                  debugger;
-                  that.dailyPrices[currentDate.toLocaleString()] = null;
+                  currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1)); // that.dailyPrices[currentDate.toLocaleTimeString([], {timeStyle: 'short'})] = null
+
+                  nullArr.push({
+                    date: currentDate.toLocaleTimeString([], {
+                      timeStyle: 'short'
+                    }),
+                    value: null
+                  });
                 }
               } else if (date > createdAt && close_price.close !== null) {
-                if (that.dailyPrices[date.toLocaleString('en-US')] >= 0) {
-                  that.dailyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares;
+                if (that.dailyPrices[date.toLocaleTimeString([], {
+                  timeStyle: 'short'
+                })] >= 0) {
+                  that.dailyPrices[date.toLocaleTimeString([], {
+                    timeStyle: 'short'
+                  })] += close_price.close * num_shares;
                 } else {
-                  that.dailyPrices[date.toLocaleString('en-US')] = close_price.close * num_shares + parseFloat(_this3.props.currentBuyingPower);
+                  that.dailyPrices[date.toLocaleTimeString([], {
+                    timeStyle: 'short'
+                  })] = close_price.close * num_shares + parseFloat(_this3.props.currentBuyingPower);
                 }
               }
             });
+            debugger;
 
             if (idx === response.transactions.length - 1) {
               var newArr = [];
               newArr = Object.keys(that.dailyPrices).map(function (key, idx) {
+                // let d = new Date(currentDay + " " + key)
                 return {
                   "date": key,
                   "value": that.dailyPrices[key]
                 };
-              });
+              }); // let arr = newArr.concat(nullArr)
+
+              debugger;
               that.setState({
-                portfolioValue: newArr,
+                portfolioValue: newArr.concat(nullArr),
+                oldArr: newArr,
                 fetched: true
               });
             }
@@ -1273,6 +1293,7 @@ function (_React$Component) {
       var _this4 = this;
 
       // CLICKED TIMEFRAME CALC
+      // this.setState({fetched: false})
       if (this.state.timeFrame !== timeFrame && timeFrame !== '1D') {
         this.weeklyPrices = {};
         var that = this;
@@ -1335,20 +1356,20 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
-      debugger;
 
       if (this.state.fetched) {
-        var data = this.state.portfolioValue.slice().sort(function (a, b) {
-          return Date.parse(a.date) - Date.parse(b.date);
-        });
-        console.log(data);
+        // let data = this.state.portfolioValue.slice()
+        console.log(this.state.portfolioValue);
+        console.log(this.state.oldArr);
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portfolio_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          portfolioValue: data,
-          timeFrame: this.state.timeFrame
+          portfolioValue: this.state.portfolioValue,
+          oldArr: this.state.oldArr,
+          timeFrame: this.state.timeFrame,
+          lastIdx: this.state.lastIdx
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
         }, tF))));
@@ -1415,11 +1436,11 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PortfolioChart).call(this, props));
     _this.state = {
-      closeValue: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value).toFixed(2),
-      change: parseFloat(_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value).toFixed(2),
-      percentChange: (parseFloat((_this.props.portfolioValue[_this.props.portfolioValue.length - 1].value - _this.props.portfolioValue[0].value) / _this.props.portfolioValue[0].value) * 100).toFixed(2),
+      closeValue: parseFloat(_this.props.oldArr[_this.props.oldArr.length - 1].value).toFixed(2),
+      change: parseFloat(_this.props.oldArr[_this.props.oldArr.length - 1].value - _this.props.oldArr[0].value).toFixed(2),
+      percentChange: (parseFloat((_this.props.oldArr[_this.props.oldArr.length - 1].value - _this.props.oldArr[0].value) / _this.props.oldArr[0].value) * 100).toFixed(2),
       timeFrame: _this.props.timeFrame,
-      portfolioValue: _this.props.portfolioValue
+      oldArr: _this.props.oldArr
     };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
@@ -1430,9 +1451,9 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.setState({
-        closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value).toFixed(2),
-        change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
-        percentChange: (parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value) / this.props.portfolioValue[0].value * 100).toFixed(2),
+        closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value).toFixed(2),
+        change: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value).toFixed(2),
+        percentChange: (parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value) / this.props.oldArr[0].value * 100).toFixed(2),
         timeFrame: this.props.timeFrame,
         chart: true
       });
@@ -1443,8 +1464,8 @@ function (_React$Component) {
       if (this.state.timeFrame !== this.props.timeFrame) {
         this.setState({
           timeFrame: this.props.timeFrame,
-          change: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value).toFixed(2),
-          percentChange: (parseFloat((this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value) / this.props.portfolioValue[this.props.portfolioValue.length - 1].value) * 100).toFixed(2)
+          change: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value).toFixed(2),
+          percentChange: (parseFloat((this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value) / this.props.oldArr[this.props.oldArr.length - 1].value) * 100).toFixed(2)
         });
       }
     }
@@ -1453,7 +1474,7 @@ function (_React$Component) {
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
         var hoverValue = e.activePayload[0].payload.value;
-        var openValue = this.props.portfolioValue[0].value;
+        var openValue = this.props.oldArr[0].value;
         var change = hoverValue - openValue;
         var dailyPercentChange = change / openValue * 100;
         this.setState({
@@ -1468,10 +1489,10 @@ function (_React$Component) {
   }, {
     key: "handleMouseOut",
     value: function handleMouseOut(e) {
-      var currentChange = this.props.portfolioValue[this.props.portfolioValue.length - 1].value - this.props.portfolioValue[0].value;
-      var currentPercentChange = currentChange / this.props.portfolioValue[0].value * 100;
+      var currentChange = this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value;
+      var currentPercentChange = currentChange / this.props.oldArr[0].value * 100;
       this.setState({
-        closeValue: parseFloat(this.props.portfolioValue[this.props.portfolioValue.length - 1].value).toFixed(2),
+        closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value).toFixed(2),
         change: parseFloat(currentChange).toFixed(2),
         percentChange: parseFloat(currentPercentChange).toFixed(2)
       });
@@ -1489,7 +1510,7 @@ function (_React$Component) {
         , {
           width: 646,
           height: 196,
-          data: this.state.portfolioValue,
+          data: this.state.oldArr,
           margin: {
             top: 5,
             right: 10,
@@ -1537,7 +1558,7 @@ function (_React$Component) {
         , {
           width: 646,
           height: 196,
-          data: this.props.portfolioValue,
+          data: this.props.oldArr,
           margin: {
             top: 5,
             right: 10,
@@ -2972,6 +2993,7 @@ function (_React$Component) {
         });
       } else if (this.state.timeFrame !== "" && this.state.marketcap) {
         var data = this.state[this.state.timeFrame].slice();
+        console.log(data);
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "show-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

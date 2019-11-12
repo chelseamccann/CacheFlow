@@ -183,7 +183,7 @@ class TickerShow extends React.Component{
          else if(this.state.timeFrame !== "" && this.state.marketcap){
 
             let data = this.state[this.state.timeFrame].slice()
-            
+            console.log(data)
             return (
                 <div className="show-wrap">
                     <div className="chart-info-wrap">

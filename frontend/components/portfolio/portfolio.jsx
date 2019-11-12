@@ -50,12 +50,13 @@ class Portfolio extends React.Component{
                 const createdAt = new Date(Date.parse(`${asset.created_at}`))
 
                 fetchDailyPrices(asset.ticker_symbol).then(prices => {
-                    debugger
                     let num_shares = asset.purchase_shares
                     let currentDay = prices[0].date
+                    let nullArr = []
                     prices.forEach((close_price, idx) => {
                         const date = new Date(Date.parse(`${close_price.date} ${close_price.minute}`))
                         if (idx === prices.length-1){
+                            this.setState({lastIdx: idx})
                             let currentMinute = prices[prices.length-1].minute
                             let currentDate = new Date(Date.parse(`${currentDay} ${currentMinute}`))
                             let closeTime = "16:00"
@@ -63,25 +64,29 @@ class Portfolio extends React.Component{
                             
                             while (currentDate < closeDate){
                                 currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes()+1))
-                                debugger
-                                that.dailyPrices[currentDate.toLocaleString()] = null
+                                // that.dailyPrices[currentDate.toLocaleTimeString([], {timeStyle: 'short'})] = null
+                                nullArr.push({date: currentDate.toLocaleTimeString([], {timeStyle: 'short'}), value: null})
                             }
                         } else if(date > createdAt && close_price.close !== null){
-                            if (that.dailyPrices[date.toLocaleString('en-US')] >= 0){
-                                that.dailyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares
+
+                            if (that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] >= 0){
+                                that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += close_price.close * num_shares
                             } else {
-                                that.dailyPrices[date.toLocaleString('en-US')] = (close_price.close * num_shares) + parseFloat(this.props.currentBuyingPower)
+                                that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] = (close_price.close * num_shares) + parseFloat(this.props.currentBuyingPower)
                             }
                         }
                     })
 
-
+                    debugger
                     if(idx === response.transactions.length - 1){
                         let newArr = []
                         newArr = Object.keys(that.dailyPrices).map((key, idx) => {
+                            // let d = new Date(currentDay + " " + key)
                             return {"date": key, "value": that.dailyPrices[key]}
                         })
-                        that.setState({portfolioValue: newArr, fetched: true})
+                        // let arr = newArr.concat(nullArr)
+                        debugger
+                        that.setState({portfolioValue: newArr.concat(nullArr), oldArr: newArr, fetched: true})
                     }
 
                 })
@@ -91,6 +96,7 @@ class Portfolio extends React.Component{
 
 
     updatePrices(timeFrame){ // CLICKED TIMEFRAME CALC
+        // this.setState({fetched: false})
         if (this.state.timeFrame !== timeFrame && timeFrame !== '1D'){ 
             
             this.weeklyPrices = {}
@@ -148,13 +154,13 @@ class Portfolio extends React.Component{
                        </button>
             }
         })
-        debugger
+
         if(this.state.fetched){
 
-            let data = this.state.portfolioValue.slice().sort((a, b) => {
-                return Date.parse(a.date) - Date.parse(b.date)
-            })
-            console.log(data)
+            // let data = this.state.portfolioValue.slice()
+
+            console.log(this.state.portfolioValue)
+            console.log(this.state.oldArr)
             return (
                 
                 <>
@@ -162,8 +168,10 @@ class Portfolio extends React.Component{
                     <div className="chart-wrap"> 
 
                         <PortfolioChart 
-                        portfolioValue={data}
+                        portfolioValue={this.state.portfolioValue}
+                        oldArr={this.state.oldArr}
                         timeFrame={this.state.timeFrame}
+                        lastIdx={this.state.lastIdx}
                         />
                         
                         <div className="time-frame-buttons">{tF}</div>
