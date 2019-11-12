@@ -97,7 +97,7 @@ class TickerChart extends React.Component {
                 <div className="mini-close-price">
 
 
-                    {`$${this.props.close}`}
+                    {`$${parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}
 
                 </div> 
             </>

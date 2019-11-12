@@ -954,7 +954,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dash"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -980,9 +979,7 @@ function (_React$Component) {
         id: "drop-down-id"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop"
-      }, "Buying Power: ", this.props.currentUser.buying_power), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "drop"
-      }, "History"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Buying Power: ", "$".concat(parseFloat(this.props.currentUser.buying_power).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/"
@@ -1469,6 +1466,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       if (this.state.timeFrame === "1D") {
+        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -2434,7 +2432,7 @@ function (_React$Component) {
           strokeWidth: 1.2
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "mini-close-price"
-        }, "$".concat(this.props.close)));
+        }, "$".concat(parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))));
       } else {
         var color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531";
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2843,6 +2841,29 @@ function (_React$Component) {
       }
 
       var firstValidOpen = response[firstValidIdx].open;
+      debugger;
+      var currentMinute = response[lastValidIdx].minute;
+      var currentDate = new Date(Date.parse("".concat(response[lastValidIdx].date, " ").concat(currentMinute)));
+      var closeTime = "16:00";
+      var closeDate = new Date(Date.parse("".concat(response[lastValidIdx].date, " ").concat(closeTime)));
+
+      while (currentDate < closeDate) {
+        currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1)); // let d = new Date(Date.parse(`${response[lastValidIdx].date} ${currentMinute}`))
+        // let newD = d.setMinutes(d.getMinutes()+1)
+        // let saveDate = new Date(newD)
+        // console.log(saveDate)
+        // currentMinute = saveDate.getMinutes()
+
+        debugger;
+        daily.push({
+          label: currentDate.toLocaleTimeString([], {
+            timeStyle: 'short'
+          }),
+          price: null
+        });
+      }
+
+      console.log(daily);
       this.setState({
         "1D": daily,
         timeFrame: "1D",
@@ -2950,9 +2971,10 @@ function (_React$Component) {
           tF: tF
         });
       } else if (this.state.timeFrame !== "" && this.state.marketcap) {
-        var data = this.state[this.state.timeFrame].slice().filter(function (el) {
-          return el.price !== null;
-        });
+        var data = this.state[this.state.timeFrame].slice(); // .filter(el => {
+        //     return el.price !== null
+        // })
+
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "show-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -68,6 +68,7 @@ class PortfolioChart extends React.Component {
 
 
         if(this.state.timeFrame === "1D"){
+            debugger
             return (
                 <div className="ticker-chart block-paddings">
                     
