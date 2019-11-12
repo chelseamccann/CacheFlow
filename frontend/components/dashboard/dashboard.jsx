@@ -10,14 +10,16 @@ import News from '../news/news';
 import Search from '../search/search';
 import DashToPortfolio from './dash_to_portfolio';
 
+
 class Dashboard extends React.Component {
 
     render(){
+
         return (
             <div className="dashboard">
                 <NavBar logout={this.props.logout} currentUser={this.props.currentUser}/>
                 <div className="dashboard-middle">
-                
+
                     <Switch>
                         <ProtectedRoute exact path='/:tickerSymbol' component={TickerShowContainer}/>
                         <ProtectedRoute exact path='/' component={DashToPortfolio}/>

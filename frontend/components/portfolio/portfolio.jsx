@@ -50,7 +50,7 @@ class Portfolio extends React.Component{
                 const createdAt = new Date(Date.parse(`${asset.created_at}`))
 
                 fetchDailyPrices(asset.ticker_symbol).then(prices => {
-
+                    debugger
                     let num_shares = asset.purchase_shares
                     let currentDay = prices[0].date
                     prices.forEach((close_price, idx) => {
@@ -60,10 +60,11 @@ class Portfolio extends React.Component{
                             let currentDate = new Date(Date.parse(`${currentDay} ${currentMinute}`))
                             let closeTime = "16:00"
                             let closeDate = new Date(Date.parse(`${currentDay} ${closeTime}`))
-                    
+                            
                             while (currentDate < closeDate){
                                 currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes()+1))
-                                that.dailyPrices[currentDate.toLocaleTimeString([], {timeStyle: 'short'})] = null
+                                debugger
+                                that.dailyPrices[currentDate.toLocaleString()] = null
                             }
                         } else if(date > createdAt && close_price.close !== null){
                             if (that.dailyPrices[date.toLocaleString('en-US')] >= 0){
@@ -147,13 +148,13 @@ class Portfolio extends React.Component{
                        </button>
             }
         })
-
+        debugger
         if(this.state.fetched){
 
             let data = this.state.portfolioValue.slice().sort((a, b) => {
                 return Date.parse(a.date) - Date.parse(b.date)
             })
-
+            console.log(data)
             return (
                 
                 <>

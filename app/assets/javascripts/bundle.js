@@ -595,12 +595,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(state, ownProps) {
   var userId = state.session.id;
+  debugger;
+  var url = ownProps.match.params;
   return {
-    currentUser: state.entities.users[userId]
+    currentUser: state.entities.users[userId],
+    url: url
   };
-}
+};
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
@@ -680,7 +683,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   var userId = state.session.id;
   return {
     currentUser: state.entities.users[userId]
@@ -1221,6 +1224,7 @@ function (_React$Component) {
         if (_this3.props.tickers[asset.ticker_symbol.toUpperCase()]) {
           var createdAt = new Date(Date.parse("".concat(asset.created_at)));
           Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (prices) {
+            debugger;
             var num_shares = asset.purchase_shares;
             var currentDay = prices[0].date;
             prices.forEach(function (close_price, idx) {
@@ -1234,9 +1238,8 @@ function (_React$Component) {
 
                 while (currentDate < closeDate) {
                   currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1));
-                  that.dailyPrices[currentDate.toLocaleTimeString([], {
-                    timeStyle: 'short'
-                  })] = null;
+                  debugger;
+                  that.dailyPrices[currentDate.toLocaleString()] = null;
                 }
               } else if (date > createdAt && close_price.close !== null) {
                 if (that.dailyPrices[date.toLocaleString('en-US')] >= 0) {
@@ -1332,11 +1335,13 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
+      debugger;
 
       if (this.state.fetched) {
         var data = this.state.portfolioValue.slice().sort(function (a, b) {
           return Date.parse(a.date) - Date.parse(b.date);
         });
+        console.log(data);
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2005,15 +2010,11 @@ function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      this.props.processForm(this.state).then(function () {
-        return _this3.props.history.push('/');
+      this.props.processForm(this.state) //.then(() => this.props.history.push('/'))
+      .then(function () {
+        return _this3.props.history.push('/freeStock');
       });
-    } // checkErrors(error){
-    //   if (this.props.errors.includes(error)){
-    //     return error
-    //   }
-    // }
-
+    }
   }, {
     key: "renderErrors",
     value: function renderErrors() {
@@ -2028,8 +2029,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // const emailError = "Please enter a valid email address.";
-      // const pwError = "Your password must be at least 10 characters."
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "sign-up-container"
@@ -4412,8 +4411,8 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {

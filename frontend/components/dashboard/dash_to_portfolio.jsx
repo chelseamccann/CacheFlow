@@ -4,7 +4,6 @@ import PortfolioContainer from '../portfolio/portfolio_container';
 import News from '../news/news';
 import {ProtectedRoute} from '../../util/route_utils';
 
-
 const DashToPortfolio = () => {
 
     return (

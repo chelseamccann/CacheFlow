@@ -25,14 +25,9 @@ class SignupForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.processForm(this.state).then(() => this.props.history.push('/'))
+    this.props.processForm(this.state)//.then(() => this.props.history.push('/'))
+    .then(() => this.props.history.push('/freeStock'))
   }
-
-  // checkErrors(error){
-  //   if (this.props.errors.includes(error)){
-  //     return error
-  //   }
-  // }
 
   renderErrors(){
     return (
@@ -47,9 +42,6 @@ class SignupForm extends React.Component {
   }
 
   render() {
-
-    // const emailError = "Please enter a valid email address.";
-    // const pwError = "Your password must be at least 10 characters."
 
     return (
       <>
@@ -93,7 +85,6 @@ class SignupForm extends React.Component {
               required
               />
 
-            {/* <p>{this.checkErrors(pwError)}</p> */}
               <input
               type="password"
               value={this.state.password}

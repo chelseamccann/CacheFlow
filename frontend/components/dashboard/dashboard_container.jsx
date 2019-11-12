@@ -3,9 +3,15 @@ import Dashboard from './dashboard';
 import { logoutUser } from '../../actions/session_actions';
 import { connect } from 'react-redux';
 
-function mapStateToProps(state) {
-  let userId = state.session.id;
-  return { currentUser: state.entities.users[userId] }
+const mapStateToProps = (state, ownProps) => {
+  let userId = state.session.id
+  debugger
+  let url = ownProps.match.params 
+
+  return { 
+    currentUser: state.entities.users[userId],
+    url: url
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
