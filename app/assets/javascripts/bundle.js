@@ -1223,10 +1223,28 @@ function (_React$Component) {
           var createdAt = new Date(Date.parse("".concat(asset.created_at)));
           Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(asset.ticker_symbol).then(function (prices) {
             var num_shares = asset.purchase_shares;
-            prices.forEach(function (close_price) {
+            var currentDay = prices[0].date;
+            debugger;
+            prices.forEach(function (close_price, idx) {
               var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute)));
 
-              if (date > createdAt && close_price.close !== null) {
+              if (idx === prices.length - 1) {
+                debugger;
+                var currentMinute = prices[prices.length - 1].minute;
+                var currentDate = new Date(Date.parse("".concat(currentDay, " ").concat(currentMinute)));
+                var closeTime = "16:00";
+                var closeDate = new Date(Date.parse("".concat(currentDay, " ").concat(closeTime)));
+
+                while (currentDate < closeDate) {
+                  currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1));
+                  debugger;
+                  that.dailyPrices[currentDate.toLocaleTimeString([], {
+                    timeStyle: 'short'
+                  })] = null;
+                }
+
+                console.log(that.dailyPrices);
+              } else if (date > createdAt && close_price.close !== null) {
                 if (that.dailyPrices[date.toLocaleString('en-US')] >= 0) {
                   that.dailyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares;
                 } else {
@@ -1237,11 +1255,14 @@ function (_React$Component) {
 
             if (idx === response.transactions.length - 1) {
               var newArr = [];
-              newArr = Object.keys(that.dailyPrices).map(function (key) {
+              newArr = Object.keys(that.dailyPrices).map(function (key, idx) {
+                debugger; // if (idx === newArr.length -1 ){
+                // } else {
+
                 return {
                   "date": key,
                   "value": that.dailyPrices[key]
-                };
+                }; // }
               });
               that.setState({
                 portfolioValue: newArr,
@@ -1324,9 +1345,10 @@ function (_React$Component) {
       if (this.state.fetched) {
         var data = this.state.portfolioValue.slice().sort(function (a, b) {
           return Date.parse(a.date) - Date.parse(b.date);
-        }).filter(function (el) {
-          return el !== undefined;
-        }); // console.log(data)
+        }); // .filter(el => {
+        //     return el !== undefined
+        // })
+        // console.log(data)
 
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
@@ -2841,20 +2863,13 @@ function (_React$Component) {
       }
 
       var firstValidOpen = response[firstValidIdx].open;
-      debugger;
       var currentMinute = response[lastValidIdx].minute;
       var currentDate = new Date(Date.parse("".concat(response[lastValidIdx].date, " ").concat(currentMinute)));
       var closeTime = "16:00";
       var closeDate = new Date(Date.parse("".concat(response[lastValidIdx].date, " ").concat(closeTime)));
 
       while (currentDate < closeDate) {
-        currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1)); // let d = new Date(Date.parse(`${response[lastValidIdx].date} ${currentMinute}`))
-        // let newD = d.setMinutes(d.getMinutes()+1)
-        // let saveDate = new Date(newD)
-        // console.log(saveDate)
-        // currentMinute = saveDate.getMinutes()
-
-        debugger;
+        currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1));
         daily.push({
           label: currentDate.toLocaleTimeString([], {
             timeStyle: 'short'
@@ -2863,7 +2878,6 @@ function (_React$Component) {
         });
       }
 
-      console.log(daily);
       this.setState({
         "1D": daily,
         timeFrame: "1D",

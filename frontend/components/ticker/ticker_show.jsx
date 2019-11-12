@@ -67,7 +67,8 @@ class TickerShow extends React.Component{
             firstValidIdx += 1
         }
         let firstValidOpen = response[firstValidIdx].open
-        debugger
+
+        
         let currentMinute = response[lastValidIdx].minute
         let currentDate = new Date(Date.parse(`${response[lastValidIdx].date} ${currentMinute}`))
         let closeTime = "16:00"
@@ -75,18 +76,9 @@ class TickerShow extends React.Component{
 
         while (currentDate < closeDate){
             currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes()+1))
-
-
-            // let d = new Date(Date.parse(`${response[lastValidIdx].date} ${currentMinute}`))
-            // let newD = d.setMinutes(d.getMinutes()+1)
-            // let saveDate = new Date(newD)
-            // console.log(saveDate)
-            // currentMinute = saveDate.getMinutes()
-            debugger
-
             daily.push({label: currentDate.toLocaleTimeString([], {timeStyle: 'short'}), price: null})
         }
-        console.log(daily)
+
         this.setState({
             "1D": daily, 
             timeFrame: "1D", 
