@@ -12,15 +12,17 @@ class Splash extends React.Component {
 
                     <div className="splash-header">
                         {/* <div className="logo">cacheflow</div> */}
-                        <ul className="personal-buttons">
+                        <ul className="personal-buttons cache-flow-buttons">
                             <li><img src={window.rh} className="nav-left logo" /></li>
                             <li> 
-                                
-                                <Link to="/" className="nav-left">cacheflow</Link>
+                            cacheflow
+                                {/* <Link to="/" className="nav-left">cacheflow</Link> */}
                             </li>
-                            <li><a href="" className="nav-left">Personal</a></li>
-                            <li><a href="" className="nav-left"><img src={window.github} className="github" /></a></li>
-                            <li><a href="" className="nav-left"><img src={window.linkedin} className="linkedin" /></a></li>
+                            </ul><ul className="personal-buttons">
+                            <li><a href="https://github.com/chelseamccann" className="nav-left"><img src={window.github} className="github" /></a></li>
+                            <li><a href="https://angel.co/chelsea-mccann-1" className="nav-left"><img src={window.angel} className="angel" /></a></li>
+                            <li><a href="https://www.linkedin.com/in/chelseamccann/" className="nav-left"><img src={window.linkedin} className="linkedin" /></a></li>
+                            <li><a href="https://chelseamccann.github.io/" className="nav-left">Personal Site</a></li>
                         </ul>
                     </div>
 
