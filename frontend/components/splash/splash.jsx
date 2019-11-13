@@ -18,7 +18,8 @@ class Splash extends React.Component {
                             cacheflow
                                 {/* <Link to="/" className="nav-left">cacheflow</Link> */}
                             </li>
-                            </ul><ul className="personal-buttons">
+                            </ul>
+                        <ul className="personal-buttons">
                             <li><a href="https://github.com/chelseamccann" className="nav-left"><img src={window.github} className="github" /></a></li>
                             <li><a href="https://angel.co/chelsea-mccann-1" className="nav-left"><img src={window.angel} className="angel" /></a></li>
                             <li><a href="https://www.linkedin.com/in/chelseamccann/" className="nav-left"><img src={window.linkedin} className="linkedin" /></a></li>
