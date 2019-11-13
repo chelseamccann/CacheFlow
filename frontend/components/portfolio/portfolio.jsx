@@ -86,10 +86,10 @@ class Portfolio extends React.Component{
                             return el !== undefined
                         })
 
-                        that.setState({portfolioValue: newArr.concat(nullArr), oldArr: newArr, fetched: true})
+                        that.setState({portfolioValue: newArr.concat(nullArr), oldArr: newArr})//, fetched: true})
                     }
 
-                })
+                }).then(that.setState({fetched:true}))
             }
         })
     }
