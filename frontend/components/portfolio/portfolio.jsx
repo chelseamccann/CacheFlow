@@ -135,16 +135,37 @@ class Portfolio extends React.Component{
 
                         fetchPrices(asset.ticker_symbol, timeFrame).then(prices => {
                             let num_shares = asset.purchase_shares
+                            let lastCost;
                             // let currentDay = prices[0].date
                             prices.forEach(close_price => {
                                 const date = close_price.minute ? new Date(Date.parse(`${close_price.date} ${close_price.minute}`)) : new Date(Date.parse(`${close_price.date}`))//.toLocaleString('en-US')
 
-                                if(date > createdAt && close_price.close !== null){
-                                    if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0){
-                                        that.weeklyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares
+                                // if(date > createdAt && close_price.close !== null){
+                                //     if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0){
+                                //         that.weeklyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares
+                                //     } else {
+                                //         that.weeklyPrices[date.toLocaleString('en-US')] = (close_price.close * num_shares) + parseFloat(this.props.currentBuyingPower)
+                                //     }
+                                if(date > createdAt){
+
+                                    if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0 && close_price.close !== null){
+                                        Math.round(that.weeklyPrices[date.toLocaleString('en-US')] += (Math.round((close_price.close * num_shares) *1e2)/1e2))
+                                        lastCost = Math.round((close_price.close * num_shares) *1e2)/1e2
+                                    } else if (close_price.close === null){
+                                        if (that.weeklyPrices[date.toLocaleString('en-US')]){
+                                            debugger
+                                            that.weeklyPrices[date.toLocaleString('en-US')] += lastCost
+                                        } else {
+                                            debugger
+                                            that.weeklyPrices[date.toLocaleString('en-US')] = lastCost + Math.round(this.props.currentBuyingPower) 
+                                        }
                                     } else {
-                                        that.weeklyPrices[date.toLocaleString('en-US')] = (close_price.close * num_shares) + parseFloat(this.props.currentBuyingPower)
+                                        let bp = Math.round(this.props.currentBuyingPower)
+                                        let cost = close_price.close * num_shares
+                                        that.weeklyPrices[date.toLocaleString('en-US')] = Math.round((bp+cost) *1e2)/1e2
+                                        lastCost = Math.round((cost) *1e2)/1e2
                                     }
+
                                 }
                             })
 

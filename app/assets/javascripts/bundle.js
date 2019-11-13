@@ -1342,16 +1342,35 @@ function (_React$Component) {
             var createdAt = new Date(Date.parse("".concat(asset.created_at))); //.toLocaleString('en-US')
 
             Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (prices) {
-              var num_shares = asset.purchase_shares; // let currentDay = prices[0].date
+              var num_shares = asset.purchase_shares;
+              var lastCost; // let currentDay = prices[0].date
 
               prices.forEach(function (close_price) {
                 var date = close_price.minute ? new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))) : new Date(Date.parse("".concat(close_price.date))); //.toLocaleString('en-US')
+                // if(date > createdAt && close_price.close !== null){
+                //     if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0){
+                //         that.weeklyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares
+                //     } else {
+                //         that.weeklyPrices[date.toLocaleString('en-US')] = (close_price.close * num_shares) + parseFloat(this.props.currentBuyingPower)
+                //     }
 
-                if (date > createdAt && close_price.close !== null) {
-                  if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0) {
-                    that.weeklyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares;
+                if (date > createdAt) {
+                  if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0 && close_price.close !== null) {
+                    Math.round(that.weeklyPrices[date.toLocaleString('en-US')] += Math.round(close_price.close * num_shares * 1e2) / 1e2);
+                    lastCost = Math.round(close_price.close * num_shares * 1e2) / 1e2;
+                  } else if (close_price.close === null) {
+                    if (that.weeklyPrices[date.toLocaleString('en-US')]) {
+                      debugger;
+                      that.weeklyPrices[date.toLocaleString('en-US')] += lastCost;
+                    } else {
+                      debugger;
+                      that.weeklyPrices[date.toLocaleString('en-US')] = lastCost + Math.round(_this4.props.currentBuyingPower);
+                    }
                   } else {
-                    that.weeklyPrices[date.toLocaleString('en-US')] = close_price.close * num_shares + parseFloat(_this4.props.currentBuyingPower);
+                    var bp = Math.round(_this4.props.currentBuyingPower);
+                    var cost = close_price.close * num_shares;
+                    that.weeklyPrices[date.toLocaleString('en-US')] = Math.round((bp + cost) * 1e2) / 1e2;
+                    lastCost = Math.round(cost * 1e2) / 1e2;
                   }
                 }
               });
