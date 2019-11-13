@@ -215,8 +215,7 @@ class Portfolio extends React.Component{
             }
         })
         if(this.state.fetched && this.state.oldArr){
-            console.log(this.state.portfolioValue)
-            // console.log(this.state.oldArr)
+
             return (
                 
                 <>

@@ -1093,10 +1093,12 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var newsClass = this.props.location.pathname !== "/" ? "news-show-page" : "";
+
       if (!this.state.isLoading) {
         var news = this.state.news;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "news-box"
+          className: "news-box ".concat(newsClass)
         }, news.map(function (newsPiece, idx) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
             href: newsPiece.url,
@@ -1429,8 +1431,6 @@ function (_React$Component) {
       });
 
       if (this.state.fetched && this.state.oldArr) {
-        console.log(this.state.portfolioValue); // console.log(this.state.oldArr)
-
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3106,7 +3106,8 @@ function (_React$Component) {
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
           exact: true,
           path: "/",
-          component: _news_news__WEBPACK_IMPORTED_MODULE_5__["default"]
+          component: _news_news__WEBPACK_IMPORTED_MODULE_5__["default"],
+          show: true
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "sidebar"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transactions_transaction_form__WEBPACK_IMPORTED_MODULE_3__["default"], {

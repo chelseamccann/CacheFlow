@@ -8,6 +8,7 @@ class News extends React.Component{
             isLoading: true
         }
         this.getNews = this.getNews.bind(this);
+
     }
 
 
@@ -37,10 +38,11 @@ class News extends React.Component{
 
     render(){
 
+        let newsClass = this.props.location.pathname !== "/" ? "news-show-page" : ""
         if (!this.state.isLoading){
             const { news } = this.state;
             return (
-                <ul className="news-box">
+                <ul className={`news-box ${newsClass}`}>
                     {news.map((newsPiece, idx) => (
 
                         <a href={newsPiece.url} className="news-box nws" key={`${newsPiece}-${idx}`} >

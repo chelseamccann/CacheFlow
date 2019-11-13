@@ -219,7 +219,7 @@ class TickerShow extends React.Component{
                     dividendYield={this.state.dividendYield}
                     avg30Volume={this.state.avg30Volume}
                     />
-                    <ProtectedRoute exact path="/" component={News}/>
+                    <ProtectedRoute exact path="/" component={News} show={true}/>
                     </div>
 
                     </div>
