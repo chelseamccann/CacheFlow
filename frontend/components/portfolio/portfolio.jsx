@@ -70,22 +70,33 @@ class Portfolio extends React.Component{
                         } else if(date > createdAt && close_price.close !== null){
 
                             if (that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] >= 0){
-                                that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += close_price.close * num_shares
+                                let r = (Math.round(that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += (Math.round((close_price.close * num_shares) *1e2)/1e2) *1e2)/1e2)
+                                console.log(r)
                             } else {
-                                that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] = (close_price.close * num_shares) + parseFloat(this.props.currentBuyingPower)
+
+                                let bp = Math.round(this.props.currentBuyingPower)
+                                let cost = close_price.close * num_shares
+                                that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] = Math.round((bp+cost) *1e2)/1e2
                             }
                         }
                     })
-
                     if(idx === response.transactions.length - 1){
                         let newArr = []
                         newArr = Object.keys(that.dailyPrices).map((key, idx) => {
-                            // let d = new Date(currentDay + " " + key)
                             return {"date": key, "value": that.dailyPrices[key]}
                         }).filter(el => {
                             return el !== undefined
-                        })
-
+                        }).sort(function (a, b) {
+                            let dateA = new Date(currentDay + " " + a.date)
+                            let dateB = new Date(currentDay + " " + b.date)
+                            if (dateA > dateB) {
+                                return 1
+                            } else if (dateA < dateB){
+                                return -1
+                            } else {
+                                return 0
+                            }
+                          })
                         that.setState({portfolioValue: newArr.concat(nullArr), oldArr: newArr})//, fetched: true})
                     }
 
@@ -96,7 +107,7 @@ class Portfolio extends React.Component{
 
 
     updatePrices(timeFrame){ // CLICKED TIMEFRAME CALC
-        // this.setState({fetched: false})
+        this.setState({fetched: false})
         if (this.state.timeFrame !== timeFrame && timeFrame !== '1D'){ 
 
             this.weeklyPrices = {}
@@ -108,6 +119,7 @@ class Portfolio extends React.Component{
 
                         fetchPrices(asset.ticker_symbol, timeFrame).then(prices => {
                             let num_shares = asset.purchase_shares
+                            // let currentDay = prices[0].date
                             prices.forEach(close_price => {
                                 const date = close_price.minute ? new Date(Date.parse(`${close_price.date} ${close_price.minute}`)) : new Date(Date.parse(`${close_price.date}`))//.toLocaleString('en-US')
 
@@ -124,7 +136,17 @@ class Portfolio extends React.Component{
                             if(idx === this.props.transactions.length - 1){
                                 const newArr = Object.keys(that.weeklyPrices).map(key => {
                                     return {"date": key, "value": that.weeklyPrices[key]}
-                                })
+                                }).filter(el => {
+                                    return el !== undefined
+                                }).sort(function (a, b) {
+                                    if (Date.parse(a.date) > Date.parse(b.date)) {
+                                        return 1
+                                    } else if (Date.parse(a.date) < Date.parse(b.date)){
+                                        return -1
+                                    } else {
+                                        return 0
+                                    }
+                                  })
 
                                 that.setState({portfolioValue: newArr, oldArr: newArr, fetched: true})
                     
@@ -155,9 +177,9 @@ class Portfolio extends React.Component{
                        </button>
             }
         })
-        debugger
+        // debugger
         if(this.state.fetched && this.state.oldArr){
-            // console.log(this.state.portfolioValue)
+            console.log(this.state.portfolioValue)
             // console.log(this.state.oldArr)
             return (
                 

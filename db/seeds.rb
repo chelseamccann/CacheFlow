@@ -24,20 +24,20 @@ t2 = Transaction.new(ticker_symbol: "FB", purchase_price: 251.30, purchase_share
 t2.update_attributes(created_at: "2019-4-01T12:18:49.616Z", updated_at: "2019-4-01T12:18:49.616Z")
 t2.save!
 
-ticker3 = Ticker.create!(symbol: "GOOG", num_shares: 1)
-t3 = Transaction.new(ticker_symbol: "GOOG", purchase_price: 251.30, purchase_shares: 2, buy: true, ticker_id: ticker3.id, user_id: user.id)
-t3.update_attributes(created_at: "2019-7-01T12:18:49.616Z", updated_at: "2019-7-01T12:18:49.616Z")
-t3.save!
+# ticker3 = Ticker.create!(symbol: "GOOG", num_shares: 1)
+# t3 = Transaction.new(ticker_symbol: "GOOG", purchase_price: 251.30, purchase_shares: 2, buy: true, ticker_id: ticker3.id, user_id: user.id)
+# t3.update_attributes(created_at: "2019-7-01T12:18:49.616Z", updated_at: "2019-7-01T12:18:49.616Z")
+# t3.save!
 
-ticker4 = Ticker.create!(symbol: "NKE", num_shares: 12)
-t4 = Transaction.new(ticker_symbol: "NKE", purchase_price: 251.30, purchase_shares: 2, buy: true, ticker_id: ticker4.id, user_id: user.id)
-t4.update_attributes(created_at: "2019-10-23T12:18:49.616Z", updated_at: "2019-10-23T12:18:49.616Z")
-t4.save!
+# ticker4 = Ticker.create!(symbol: "NKE", num_shares: 12)
+# t4 = Transaction.new(ticker_symbol: "NKE", purchase_price: 251.30, purchase_shares: 2, buy: true, ticker_id: ticker4.id, user_id: user.id)
+# t4.update_attributes(created_at: "2019-10-23T12:18:49.616Z", updated_at: "2019-10-23T12:18:49.616Z")
+# t4.save!
 
-ticker5 = Ticker.create!(symbol: "RCL", num_shares: 5)
-t5 = Transaction.new(ticker_symbol: "RCL", purchase_price: 251.30, purchase_shares: 2, buy: true, ticker_id: ticker5.id, user_id: user.id)
-t5.update_attributes(created_at: "2019-11-04T12:18:49.616Z", updated_at: "2019-11-04T12:18:49.616Z")
-t5.save!
+# ticker5 = Ticker.create!(symbol: "RCL", num_shares: 5)
+# t5 = Transaction.new(ticker_symbol: "RCL", purchase_price: 251.30, purchase_shares: 2, buy: true, ticker_id: ticker5.id, user_id: user.id)
+# t5.update_attributes(created_at: "2019-11-04T12:18:49.616Z", updated_at: "2019-11-04T12:18:49.616Z")
+# t5.save!
 
 # Ticker.create!(symbol: "CROX", num_shares: 2)
 # Ticker.create!(symbol: "MSFT", num_shares: 8)

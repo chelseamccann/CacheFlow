@@ -1258,13 +1258,16 @@ function (_React$Component) {
                 if (that.dailyPrices[date.toLocaleTimeString([], {
                   timeStyle: 'short'
                 })] >= 0) {
-                  that.dailyPrices[date.toLocaleTimeString([], {
+                  var r = Math.round(that.dailyPrices[date.toLocaleTimeString([], {
                     timeStyle: 'short'
-                  })] += close_price.close * num_shares;
+                  })] += Math.round(close_price.close * num_shares * 1e2) / 1e2 * 1e2) / 1e2;
+                  console.log(r);
                 } else {
+                  var bp = Math.round(_this3.props.currentBuyingPower);
+                  var cost = close_price.close * num_shares;
                   that.dailyPrices[date.toLocaleTimeString([], {
                     timeStyle: 'short'
-                  })] = close_price.close * num_shares + parseFloat(_this3.props.currentBuyingPower);
+                  })] = Math.round((bp + cost) * 1e2) / 1e2;
                 }
               }
             });
@@ -1272,13 +1275,23 @@ function (_React$Component) {
             if (idx === response.transactions.length - 1) {
               var newArr = [];
               newArr = Object.keys(that.dailyPrices).map(function (key, idx) {
-                // let d = new Date(currentDay + " " + key)
                 return {
                   "date": key,
                   "value": that.dailyPrices[key]
                 };
               }).filter(function (el) {
                 return el !== undefined;
+              }).sort(function (a, b) {
+                var dateA = new Date(currentDay + " " + a.date);
+                var dateB = new Date(currentDay + " " + b.date);
+
+                if (dateA > dateB) {
+                  return 1;
+                } else if (dateA < dateB) {
+                  return -1;
+                } else {
+                  return 0;
+                }
               });
               that.setState({
                 portfolioValue: newArr.concat(nullArr),
@@ -1297,7 +1310,10 @@ function (_React$Component) {
       var _this4 = this;
 
       // CLICKED TIMEFRAME CALC
-      // this.setState({fetched: false})
+      this.setState({
+        fetched: false
+      });
+
       if (this.state.timeFrame !== timeFrame && timeFrame !== '1D') {
         this.weeklyPrices = {};
         var that = this;
@@ -1306,7 +1322,8 @@ function (_React$Component) {
             var createdAt = new Date(Date.parse("".concat(asset.created_at))); //.toLocaleString('en-US')
 
             Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (prices) {
-              var num_shares = asset.purchase_shares;
+              var num_shares = asset.purchase_shares; // let currentDay = prices[0].date
+
               prices.forEach(function (close_price) {
                 var date = close_price.minute ? new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))) : new Date(Date.parse("".concat(close_price.date))); //.toLocaleString('en-US')
 
@@ -1325,6 +1342,16 @@ function (_React$Component) {
                     "date": key,
                     "value": that.weeklyPrices[key]
                   };
+                }).filter(function (el) {
+                  return el !== undefined;
+                }).sort(function (a, b) {
+                  if (Date.parse(a.date) > Date.parse(b.date)) {
+                    return 1;
+                  } else if (Date.parse(a.date) < Date.parse(b.date)) {
+                    return -1;
+                  } else {
+                    return 0;
+                  }
                 });
                 that.setState({
                   portfolioValue: newArr,
@@ -1360,12 +1387,11 @@ function (_React$Component) {
             }
           }, key.slice(0, 2).toUpperCase());
         }
-      });
-      debugger;
+      }); // debugger
 
       if (this.state.fetched && this.state.oldArr) {
-        // console.log(this.state.portfolioValue)
-        // console.log(this.state.oldArr)
+        console.log(this.state.portfolioValue); // console.log(this.state.oldArr)
+
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -4438,15 +4464,15 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
   });
 };
 var fetchTickerInfo = function fetchTickerInfo(symbol) {
