@@ -1264,7 +1264,6 @@ function (_React$Component) {
                 }
               }
             });
-            debugger;
 
             if (idx === response.transactions.length - 1) {
               var newArr = [];
@@ -1274,9 +1273,9 @@ function (_React$Component) {
                   "date": key,
                   "value": that.dailyPrices[key]
                 };
-              }); // let arr = newArr.concat(nullArr)
-
-              debugger;
+              }).filter(function (el) {
+                return el !== undefined;
+              });
               that.setState({
                 portfolioValue: newArr.concat(nullArr),
                 oldArr: newArr,
@@ -1324,6 +1323,7 @@ function (_React$Component) {
                 });
                 that.setState({
                   portfolioValue: newArr,
+                  oldArr: newArr,
                   fetched: true
                 });
               }
@@ -1356,11 +1356,11 @@ function (_React$Component) {
           }, key.slice(0, 2).toUpperCase());
         }
       });
+      debugger;
 
-      if (this.state.fetched) {
-        // let data = this.state.portfolioValue.slice()
-        console.log(this.state.portfolioValue);
-        console.log(this.state.oldArr);
+      if (this.state.fetched && this.state.oldArr) {
+        // console.log(this.state.portfolioValue)
+        // console.log(this.state.oldArr)
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-and-news-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1440,7 +1440,8 @@ function (_React$Component) {
       change: parseFloat(_this.props.oldArr[_this.props.oldArr.length - 1].value - _this.props.oldArr[0].value).toFixed(2),
       percentChange: (parseFloat((_this.props.oldArr[_this.props.oldArr.length - 1].value - _this.props.oldArr[0].value) / _this.props.oldArr[0].value) * 100).toFixed(2),
       timeFrame: _this.props.timeFrame,
-      oldArr: _this.props.oldArr
+      oldArr: _this.props.oldArr,
+      portfolioValue: _this.props.portfolioValue
     };
     _this.handleMouseOver = _this.handleMouseOver.bind(_assertThisInitialized(_this));
     _this.handleMouseOut = _this.handleMouseOut.bind(_assertThisInitialized(_this));
@@ -1501,7 +1502,6 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       if (this.state.timeFrame === "1D") {
-        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -1510,7 +1510,7 @@ function (_React$Component) {
         , {
           width: 646,
           height: 196,
-          data: this.state.oldArr,
+          data: this.props.portfolioValue,
           margin: {
             top: 5,
             right: 10,
@@ -1558,7 +1558,7 @@ function (_React$Component) {
         , {
           width: 646,
           height: 196,
-          data: this.props.oldArr,
+          data: this.props.portfolioValue,
           margin: {
             top: 5,
             right: 10,
@@ -4440,15 +4440,15 @@ var fetchDailyPrices = function fetchDailyPrices(symbol) {
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
   });
 };
 var fetchTickerInfo = function fetchTickerInfo(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 
   });
 };

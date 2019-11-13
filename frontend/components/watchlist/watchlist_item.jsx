@@ -63,7 +63,6 @@ class WatchlistItem extends React.Component{
   }
   
   componentDidUpdate(prevProps){
-
     if(prevProps.tickerSymbol.toUpperCase() !== this.props.tickerSymbol.toUpperCase()){
       // this.props.fetchWatchlistItems().then(response => {
         

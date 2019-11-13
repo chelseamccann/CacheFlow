@@ -10,7 +10,8 @@ class PortfolioChart extends React.Component {
             change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value).toFixed(2),
             percentChange: (parseFloat((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value)/this.props.oldArr[0].value)*100).toFixed(2),
             timeFrame: this.props.timeFrame,
-            oldArr: this.props.oldArr
+            oldArr: this.props.oldArr,
+            portfolioValue: this.props.portfolioValue
         }
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
@@ -68,7 +69,7 @@ class PortfolioChart extends React.Component {
 
 
         if(this.state.timeFrame === "1D"){
-            debugger
+
             return (
                 <div className="ticker-chart block-paddings">
                     
@@ -79,7 +80,7 @@ class PortfolioChart extends React.Component {
                         // width={676} 
                         width={646} 
                         height={196} 
-                        data={this.state.oldArr}
+                        data={this.props.portfolioValue}
                         margin={{top: 5, right: 10, left: 10, bottom: 5}}
                         onMouseOver={this.handleMouseOver}   
                         onMouseLeave={this.handleMouseOut}
@@ -107,7 +108,7 @@ class PortfolioChart extends React.Component {
                         // width={676} 
                         width={646} 
                         height={196} 
-                        data={this.props.oldArr}
+                        data={this.props.portfolioValue}
                         margin={{top: 5, right: 10, left: 10, bottom: 5}}
                         onMouseOver={this.handleMouseOver}   
                         onMouseLeave={this.handleMouseOut}

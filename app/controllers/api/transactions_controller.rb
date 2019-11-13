@@ -21,6 +21,11 @@ class Api::TransactionsController < ApplicationController
             new_shares = ticker_current_shares + @transaction.purchase_shares
             current_user.update_attribute(:buying_power, @bp - cost)
             ticker.update_attribute(:num_shares, new_shares)
+            watchlist = Watchlist.find_by(symbol: @transaction.ticker_symbol)
+            if watchlist
+                Watchlist.destroy(watchlist.id)
+            end
+
             render "api/transactions/show" 
 
         elsif @transaction.buy === false && ticker_current_shares - @transaction.purchase_shares >= 0 && @transaction.save!

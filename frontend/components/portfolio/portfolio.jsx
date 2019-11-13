@@ -77,15 +77,15 @@ class Portfolio extends React.Component{
                         }
                     })
 
-                    debugger
                     if(idx === response.transactions.length - 1){
                         let newArr = []
                         newArr = Object.keys(that.dailyPrices).map((key, idx) => {
                             // let d = new Date(currentDay + " " + key)
                             return {"date": key, "value": that.dailyPrices[key]}
+                        }).filter(el => {
+                            return el !== undefined
                         })
-                        // let arr = newArr.concat(nullArr)
-                        debugger
+
                         that.setState({portfolioValue: newArr.concat(nullArr), oldArr: newArr, fetched: true})
                     }
 
@@ -98,7 +98,7 @@ class Portfolio extends React.Component{
     updatePrices(timeFrame){ // CLICKED TIMEFRAME CALC
         // this.setState({fetched: false})
         if (this.state.timeFrame !== timeFrame && timeFrame !== '1D'){ 
-            
+
             this.weeklyPrices = {}
             let that = this;
                 Object.values(this.props.transactions).forEach((asset, idx) => {
@@ -126,7 +126,7 @@ class Portfolio extends React.Component{
                                     return {"date": key, "value": that.weeklyPrices[key]}
                                 })
 
-                                that.setState({portfolioValue: newArr, fetched: true})
+                                that.setState({portfolioValue: newArr, oldArr: newArr, fetched: true})
                     
                             }
                         }).then(this.setState({timeFrame: timeFrame}))
@@ -154,13 +154,10 @@ class Portfolio extends React.Component{
                        </button>
             }
         })
-
-        if(this.state.fetched){
-
-            // let data = this.state.portfolioValue.slice()
-
-            console.log(this.state.portfolioValue)
-            console.log(this.state.oldArr)
+        debugger
+        if(this.state.fetched && this.state.oldArr){
+            // console.log(this.state.portfolioValue)
+            // console.log(this.state.oldArr)
             return (
                 
                 <>
