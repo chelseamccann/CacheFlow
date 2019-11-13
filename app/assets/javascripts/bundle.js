@@ -1333,10 +1333,7 @@ function (_React$Component) {
       var _this4 = this;
 
       // CLICKED TIMEFRAME CALC
-      this.setState({
-        fetched: false
-      });
-
+      // this.setState({fetched: false})
       if (this.state.timeFrame !== timeFrame && timeFrame !== '1D') {
         this.weeklyPrices = {};
         var that = this;
@@ -4487,15 +4484,15 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchTickerInfo = function fetchTickerInfo(symbol) {

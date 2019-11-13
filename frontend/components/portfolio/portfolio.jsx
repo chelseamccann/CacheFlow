@@ -123,7 +123,7 @@ class Portfolio extends React.Component{
 
 
     updatePrices(timeFrame){ // CLICKED TIMEFRAME CALC
-        this.setState({fetched: false})
+        // this.setState({fetched: false})
         if (this.state.timeFrame !== timeFrame && timeFrame !== '1D'){ 
 
             this.weeklyPrices = {}
