@@ -21,9 +21,8 @@ class PortfolioChart extends React.Component {
         this.setState({
             closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value).toFixed(2),
             change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value).toFixed(2),
-            percentChange: ((parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value)/this.props.oldArr[0].value)*100).toFixed(2),
-            timeFrame: this.props.timeFrame,
-            chart: true
+            percentChange: parseFloat(((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value)/this.props.oldArr[0].value)*100).toFixed(2),
+            timeFrame: this.props.timeFrame
         })
     }
 
@@ -33,7 +32,7 @@ class PortfolioChart extends React.Component {
             this.setState({
                 timeFrame: this.props.timeFrame,
                 change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value).toFixed(2),
-                percentChange: (parseFloat((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value)/this.props.oldArr[this.props.oldArr.length-1].value)*100).toFixed(2)
+                percentChange: parseFloat(((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value)/this.props.oldArr[0].value)*100).toFixed(2),
             })
 
         }
@@ -44,20 +43,21 @@ class PortfolioChart extends React.Component {
             let hoverValue = e.activePayload[0].payload.value;
             let openValue = this.props.oldArr[0].value;
             let change = hoverValue - openValue;
-            let dailyPercentChange = (change/openValue)*100
-
+            let dailyPercentChange = (change/hoverValue)*100
+            debugger
             this.setState({closeValue: hoverValue, 
                 chartX: e.chartX,
                 chartY: e.chartY,
                 change: parseFloat(change.toFixed(2)),
-                percentChange: parseFloat(dailyPercentChange).toFixed(2)})
+                percentChange: parseFloat(dailyPercentChange).toFixed(2)
+            })
         }
     }
 
 
     handleMouseOut(e){
         let currentChange = this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value
-        let currentPercentChange = (currentChange/this.props.oldArr[0].value)*100
+        let currentPercentChange = (currentChange/this.props.oldArr[this.props.oldArr.length-1].value)*100
         this.setState({
             closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value).toFixed(2), 
             change: parseFloat(currentChange).toFixed(2), 

@@ -982,14 +982,18 @@ function (_React$Component) {
         id: "drop-down-id"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop"
-      }, "Buying Power: ", "$".concat(parseFloat(this.props.currentUser.buying_power).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "drop"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", {
+        className: "title"
+      }, "Buying Power:"), " ", "$".concat(parseFloat(this.props.currentUser.buying_power).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop drop-logout"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "drop-down-button nav-bar-logout",
         onClick: this.props.logout
-      }, "Log Out"))))))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", {
+        className: "title"
+      }, "Log Out")))))))));
     }
   }]);
 
@@ -1348,7 +1352,7 @@ function (_React$Component) {
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "ALL") {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            className: "btns ".concat(_this5.state.timeFrame === key ? 'active' : ''),
+            className: "btns ".concat(_this5.state.timeFrame === key ? 'activeGreen' : ''),
             key: "".concat(key, "-id"),
             onClick: function onClick() {
               _this5.updatePrices(key);
@@ -1454,9 +1458,8 @@ function (_React$Component) {
       this.setState({
         closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value).toFixed(2),
         change: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value).toFixed(2),
-        percentChange: (parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value) / this.props.oldArr[0].value * 100).toFixed(2),
-        timeFrame: this.props.timeFrame,
-        chart: true
+        percentChange: parseFloat((this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value) / this.props.oldArr[0].value * 100).toFixed(2),
+        timeFrame: this.props.timeFrame
       });
     }
   }, {
@@ -1466,7 +1469,7 @@ function (_React$Component) {
         this.setState({
           timeFrame: this.props.timeFrame,
           change: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value).toFixed(2),
-          percentChange: (parseFloat((this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value) / this.props.oldArr[this.props.oldArr.length - 1].value) * 100).toFixed(2)
+          percentChange: parseFloat((this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value) / this.props.oldArr[0].value * 100).toFixed(2)
         });
       }
     }
@@ -1477,7 +1480,8 @@ function (_React$Component) {
         var hoverValue = e.activePayload[0].payload.value;
         var openValue = this.props.oldArr[0].value;
         var change = hoverValue - openValue;
-        var dailyPercentChange = change / openValue * 100;
+        var dailyPercentChange = change / hoverValue * 100;
+        debugger;
         this.setState({
           closeValue: hoverValue,
           chartX: e.chartX,
@@ -1491,7 +1495,7 @@ function (_React$Component) {
     key: "handleMouseOut",
     value: function handleMouseOut(e) {
       var currentChange = this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value;
-      var currentPercentChange = currentChange / this.props.oldArr[0].value * 100;
+      var currentPercentChange = currentChange / this.props.oldArr[this.props.oldArr.length - 1].value * 100;
       this.setState({
         closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value).toFixed(2),
         change: parseFloat(currentChange).toFixed(2),
@@ -4433,15 +4437,15 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchTickerInfo = function fetchTickerInfo(symbol) {

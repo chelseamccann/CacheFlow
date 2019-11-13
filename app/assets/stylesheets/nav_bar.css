@@ -4,7 +4,7 @@
     background-color: rgb(255, 255, 255);
     border: 1px solid #f4f4f5;
     box-shadow: 0 3px 24px rgba(48,51,51,0.09);
-    padding: 5px;
+    /* padding: 5px; */
     margin-left: 140px;
     font-size: 13px;
     font-weight: 400;
@@ -54,6 +54,19 @@
     padding: 0;
 }
 
+
+
+.drop-logout:hover{
+    background-color: #d4d3d3;
+}
+
+.drop{
+    padding: 1%;
+}
+
+.nav-bar-logout:focus{
+    outline: none;
+}
 
 .drop-down > button:hover{
     color: #21ce99;
@@ -206,3 +219,8 @@
 .ticker-text h6 {
     font-weight: 500;
 }
+
+.title {
+    font-weight: 800;
+}
+
