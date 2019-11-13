@@ -53,6 +53,7 @@ class Portfolio extends React.Component{
                     let num_shares = asset.purchase_shares
                     let currentDay = prices[0].date
                     let nullArr = []
+                    let lastCost;
                     prices.forEach((close_price, idx) => {
                         const date = new Date(Date.parse(`${close_price.date} ${close_price.minute}`))
                         if (idx === prices.length-1){
@@ -67,17 +68,32 @@ class Portfolio extends React.Component{
                                 // that.dailyPrices[currentDate.toLocaleTimeString([], {timeStyle: 'short'})] = null
                                 nullArr.push({date: currentDate.toLocaleTimeString([], {timeStyle: 'short'}), value: null})
                             }
-                        } else if(date > createdAt && close_price.close !== null){
-
-                            if (that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] >= 0){
-                                let r = (Math.round(that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += (Math.round((close_price.close * num_shares) *1e2)/1e2) *1e2)/1e2)
-                                console.log(r)
+                        } else if(date > createdAt){// && close_price.close !== null){
+                            if (that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] >= 0 && close_price.close!== null){
+                                Math.round(that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += (Math.round((close_price.close * num_shares) *1e2)/1e2))
+                                lastCost = Math.round((close_price.close * num_shares) *1e2)/1e2
+                            } else if (close_price.close === null){
+                                if (that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})]){
+                                    debugger
+                                    that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += lastCost
+                                } else {
+                                    debugger
+                                    that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] = lastCost + Math.round(this.props.currentBuyingPower) 
+                                }
                             } else {
-
                                 let bp = Math.round(this.props.currentBuyingPower)
                                 let cost = close_price.close * num_shares
                                 that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] = Math.round((bp+cost) *1e2)/1e2
+                                lastCost = Math.round((cost) *1e2)/1e2
                             }
+                            
+                            // if (that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] >= 0){
+                            //     Math.round(that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += (Math.round((close_price.close * num_shares) *1e2)/1e2) *1e2)/1e2
+                            // } else {
+                            //     let bp = Math.round(this.props.currentBuyingPower)
+                            //     let cost = close_price.close * num_shares
+                            //     that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] = Math.round((bp+cost) *1e2)/1e2
+                            // }
                         }
                     })
                     if(idx === response.transactions.length - 1){
@@ -97,10 +113,10 @@ class Portfolio extends React.Component{
                                 return 0
                             }
                           })
-                        that.setState({portfolioValue: newArr.concat(nullArr), oldArr: newArr})//, fetched: true})
+                        that.setState({portfolioValue: newArr.concat(nullArr), oldArr: newArr, fetched: true})
                     }
 
-                }).then(that.setState({fetched:true}))
+                })//.then(that.setState({fetched:true}))
             }
         })
     }
@@ -177,7 +193,6 @@ class Portfolio extends React.Component{
                        </button>
             }
         })
-        // debugger
         if(this.state.fetched && this.state.oldArr){
             console.log(this.state.portfolioValue)
             // console.log(this.state.oldArr)

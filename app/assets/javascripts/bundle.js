@@ -1231,6 +1231,7 @@ function (_React$Component) {
             var num_shares = asset.purchase_shares;
             var currentDay = prices[0].date;
             var nullArr = [];
+            var lastCost;
             prices.forEach(function (close_price, idx) {
               var date = new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute)));
 
@@ -1254,21 +1255,44 @@ function (_React$Component) {
                     value: null
                   });
                 }
-              } else if (date > createdAt && close_price.close !== null) {
+              } else if (date > createdAt) {
+                // && close_price.close !== null){
                 if (that.dailyPrices[date.toLocaleTimeString([], {
                   timeStyle: 'short'
-                })] >= 0) {
-                  var r = Math.round(that.dailyPrices[date.toLocaleTimeString([], {
+                })] >= 0 && close_price.close !== null) {
+                  Math.round(that.dailyPrices[date.toLocaleTimeString([], {
                     timeStyle: 'short'
-                  })] += Math.round(close_price.close * num_shares * 1e2) / 1e2 * 1e2) / 1e2;
-                  console.log(r);
+                  })] += Math.round(close_price.close * num_shares * 1e2) / 1e2);
+                  lastCost = Math.round(close_price.close * num_shares * 1e2) / 1e2;
+                } else if (close_price.close === null) {
+                  if (that.dailyPrices[date.toLocaleTimeString([], {
+                    timeStyle: 'short'
+                  })]) {
+                    debugger;
+                    that.dailyPrices[date.toLocaleTimeString([], {
+                      timeStyle: 'short'
+                    })] += lastCost;
+                  } else {
+                    debugger;
+                    that.dailyPrices[date.toLocaleTimeString([], {
+                      timeStyle: 'short'
+                    })] = lastCost + Math.round(_this3.props.currentBuyingPower);
+                  }
                 } else {
                   var bp = Math.round(_this3.props.currentBuyingPower);
                   var cost = close_price.close * num_shares;
                   that.dailyPrices[date.toLocaleTimeString([], {
                     timeStyle: 'short'
                   })] = Math.round((bp + cost) * 1e2) / 1e2;
-                }
+                  lastCost = Math.round(cost * 1e2) / 1e2;
+                } // if (that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] >= 0){
+                //     Math.round(that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += (Math.round((close_price.close * num_shares) *1e2)/1e2) *1e2)/1e2
+                // } else {
+                //     let bp = Math.round(this.props.currentBuyingPower)
+                //     let cost = close_price.close * num_shares
+                //     that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] = Math.round((bp+cost) *1e2)/1e2
+                // }
+
               }
             });
 
@@ -1295,12 +1319,11 @@ function (_React$Component) {
               });
               that.setState({
                 portfolioValue: newArr.concat(nullArr),
-                oldArr: newArr
-              }); //, fetched: true})
+                oldArr: newArr,
+                fetched: true
+              });
             }
-          }).then(that.setState({
-            fetched: true
-          }));
+          }); //.then(that.setState({fetched:true}))
         }
       });
     }
@@ -1387,7 +1410,7 @@ function (_React$Component) {
             }
           }, key.slice(0, 2).toUpperCase());
         }
-      }); // debugger
+      });
 
       if (this.state.fetched && this.state.oldArr) {
         console.log(this.state.portfolioValue); // console.log(this.state.oldArr)
