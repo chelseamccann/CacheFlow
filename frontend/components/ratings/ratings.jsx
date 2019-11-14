@@ -18,15 +18,15 @@ class Ratings extends React.Component {
                 <>
                 <p className="ipo-title">Analyst Ratings</p>
                 <div className="ratings">
-                    <div className="rating-bubble">
-                        <p className="rating-bubble-number">{`${this.props.ratingNumber}%`}</p>
-                        <p className="rating-text">{`of ${this.props.netRatings} ratings`}</p>
+                    <div className={`rating-bubble ${this.props.colorClass}-bubble`}>
+                        <p className={`rating-bubble-number ${this.props.colorClass}-text`}>{`${this.props.ratingNumber}%`}</p>
+                        <p className={`rating-text ${this.props.colorClass}-text`}>{`of ${this.props.netRatings} ratings`}</p>
                     </div>
 
                 <div className="lines">
 
                     <div className="buy" >
-                        <p style={{width: buyPercent}} className="p p-buy">Buy</p>
+                        <p style={{width: buyPercent}} className={`p p-buy ${this.props.colorClass}-buy`}>Buy</p>
                         <div>
 
                         <div className="line" ></div>

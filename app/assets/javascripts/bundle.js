@@ -1880,11 +1880,11 @@ function (_React$Component) {
         }, "Analyst Ratings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ratings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "rating-bubble"
+          className: "rating-bubble ".concat(this.props.colorClass, "-bubble")
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "rating-bubble-number"
+          className: "rating-bubble-number ".concat(this.props.colorClass, "-text")
         }, "".concat(this.props.ratingNumber, "%")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "rating-text"
+          className: "rating-text ".concat(this.props.colorClass, "-text")
         }, "of ".concat(this.props.netRatings, " ratings"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "lines"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1893,7 +1893,7 @@ function (_React$Component) {
           style: {
             width: buyPercent
           },
-          className: "p p-buy"
+          className: "p p-buy ".concat(this.props.colorClass, "-buy")
         }, "Buy"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3377,7 +3377,8 @@ function (_React$Component) {
           holdRating: this.state.holdRating,
           netRatings: this.state.netRatings,
           isLoading: this.state.isLoading,
-          ratingNumber: this.state.ratingNumber
+          ratingNumber: this.state.ratingNumber,
+          colorClass: this.state.colorClass
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
           exact: true,
           path: "/",

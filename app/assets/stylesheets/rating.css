@@ -4,7 +4,7 @@
 }
 
 .rating-bubble{
-    background-color: #e6f9f3;
+    /* background-color: #e6f9f3; */
     width: 70px;
     height: 70px;
     padding: 3%;
@@ -69,9 +69,33 @@
 }
 
 .p-buy{
-    background-color: #21ce99;
     height: 100%;
     border-radius: 5px;
+}
+
+.activeRed-bubble{
+    background-color: #fff5f3;
+}
+
+.activeGreen-bubble{
+    background-color: #e6f9f3;
+}
+
+.activeRed-text{
+    color: #f45531;
+}
+
+.activeGreen-text{
+    color: #21ce99;
+}
+
+
+.activeRed-buy{
+    background-color: #f45531;
+}
+
+.activeGreen-buy{
+    background-color: #21ce99;
 }
 
 .p-hold{

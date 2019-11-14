@@ -285,6 +285,7 @@ class TickerShow extends React.Component{
                     netRatings={this.state.netRatings}
                     isLoading={this.state.isLoading} 
                     ratingNumber={this.state.ratingNumber}
+                    colorClass={this.state.colorClass}
                     />
                     <ProtectedRoute exact path="/" component={News} show={true}/>
                     </div>
