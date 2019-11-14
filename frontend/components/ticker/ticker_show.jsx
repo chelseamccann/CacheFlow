@@ -7,6 +7,7 @@ import News from '../news/news';
 import { ProtectedRoute } from '../../util/route_utils';
 import WatchlistItem from '../watchlist/watchlist_item';
 import {fetchAnalystRatings} from '../../util/analyst_api_util';
+import Ratings from '../ratings/ratings'
 
 class TickerShow extends React.Component{
     constructor(props){
@@ -138,15 +139,27 @@ class TickerShow extends React.Component{
 
     tickerRating(ratings){
         let rating;
+        let ratingNumber;
         let netRatings = ratings[0].ratingBuy + ratings[0].ratingSell + ratings[0].ratingHold;
         if (ratings[0].ratingBuy > ratings[0].ratingSell && ratings[0].ratingBuy > ratings[0].ratingHold){
-            rating = `${Math.round((ratings[0].ratingBuy / netRatings) *1e2)/1e2 *100}% Buy`
+            ratingNumber = Math.round((ratings[0].ratingBuy / netRatings) *1e2)/1e2 *100
+            rating = `${ratingNumber}% Buy`
         } else if (ratings[0].ratingSell > ratings[0].ratingBuy && ratings[0].ratingSell > ratings[0].ratingHold){
-            rating = `${Math.round((ratings[0].ratingSell / netRatings) *1e2)/1e2 *100}% Sell`
+            ratingNumber = Math.round((ratings[0].ratingSell / netRatings) *1e2)/1e2 *100
+            rating = `${ratingNumber}% Sell`
         } else if (ratings[0].ratingHold > ratings[0].ratingBuy && ratings[0].ratingHold > ratings[0].ratingSell){
-            rating = `${Math.round((ratings[0].ratingHold / netRatings) *1e2)/1e2 *100}% Hold`
+            ratingNumber = Math.round((ratings[0].ratingHold / netRatings) *1e2)/1e2 *100
+            rating = `${ratingNumber}% Hold`
         }
-        this.setState({ rating: rating, isLoading: false }) 
+        this.setState({ 
+            rating: rating, 
+            buyRating: ratings[0].ratingBuy, 
+            sellRating: ratings[0].ratingSell, 
+            holdRating: ratings[0].ratingHold, 
+            netRatings: netRatings,
+            isLoading: false,
+            ratingNumber: ratingNumber
+        }) 
     }
 
     tickerInfo(){
@@ -250,6 +263,7 @@ class TickerShow extends React.Component{
                     </div>
 
                     <div className="info-and-transaction-form">
+
                     <TickerInfo 
                     tickerSymbol={this.props.tickerSymbol} 
                     desc={this.state.desc}
@@ -262,6 +276,15 @@ class TickerShow extends React.Component{
                     dividendYield={this.state.dividendYield}
                     avg30Volume={this.state.avg30Volume}
                     sector={this.state.sector}
+                    />
+                    <Ratings
+                    rating={this.state.rating}
+                    buyRating={this.state.buyRating}
+                    sellRating={this.state.sellRating}
+                    holdRating={this.state.holdRating}
+                    netRatings={this.state.netRatings}
+                    isLoading={this.state.isLoading} 
+                    ratingNumber={this.state.ratingNumber}
                     />
                     <ProtectedRoute exact path="/" component={News} show={true}/>
                     </div>

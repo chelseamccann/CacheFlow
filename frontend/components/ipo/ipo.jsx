@@ -18,7 +18,7 @@ class IPO extends React.Component {
     render(){
 
         if (!this.state.isLoading){
-            // const { ipos } = this.state;
+
             const ipos = this.state.ipos.slice(0,4)
 
             return (
@@ -35,13 +35,6 @@ class IPO extends React.Component {
                                 <div className="ipo-date">{ipo.symbol}</div> 
                                 <div className="ipo-date">{ipo.expectedDate}</div> 
                             </div>
-
-                            {/* <ul>
-                                <p className="underwriter">Lead Underwriters:</p>
-                                {ipo.leadUnderwriters.map((underwriter, idxU) =>(
-                                <li className="underwriter" key={`${ipo}-${idxU}`}>{`\t${underwriter}`}</li>
-                            ))}</ul> */}
-
                         </li>
 
                     ))}

@@ -1,0 +1,68 @@
+.line{
+    background-color: #21ce99;
+    width: 50%;
+}
+
+.rating-bubble{
+    background-color: #e6f9f3;
+    width: 70px;
+    height: 70px;
+    padding: 3%;
+    border-radius: 100%;
+    text-align: center;
+    margin-left: 4%;
+    margin-right: 6%;
+}
+
+.rating-bubble-number{
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.14px;
+    line-height: 30px;
+    margin: 0 0 16px;
+    color: #21ce99;
+}
+
+.rating-text{
+    letter-spacing: 0.2px;
+    margin: 0 0 24px;
+    font-weight: 400;
+    font-size: 10px;
+    color: #21ce99;
+}
+.ratings{
+    display: flex;
+}
+
+.lines{
+    display: flex;
+    flex-direction: column;
+    width: 31%;
+    justify-content: space-around;
+}
+
+.buy{
+    background-color: #f4f4f5;
+    height: 4%;
+    border-radius: 5px;
+}
+
+.hold{
+    background-color: #f4f4f5;
+    height: 4%;
+    border-radius: 5px;
+}
+
+.sell{
+    background-color: #f4f4f5;
+    height: 4%;
+    border-radius: 5px;
+}
+
+.p{
+    margin-left: -12%;
+}
+
+.n{
+    margin-top: -5.5%;
+}
