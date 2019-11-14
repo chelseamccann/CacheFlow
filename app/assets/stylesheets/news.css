@@ -1,9 +1,10 @@
 .news-box{
-    width: 69%;
+    width: 60%;
     align-content: center;
     justify-content: center;
-    margin-left: 8%;
+    margin-left: 14%;
     margin-top: 3%;
+    
 }
 
 .news-image{

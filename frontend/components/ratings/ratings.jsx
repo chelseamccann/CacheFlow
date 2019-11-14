@@ -16,7 +16,7 @@ class Ratings extends React.Component {
 
             return (
                 <>
-                <p className="ipo-title">Analyst Ratings</p>
+                <p className="ipo-title a-title">Analyst Ratings</p>
                 <div className="ratings">
                     <div className={`rating-bubble ${this.props.colorClass}-bubble`}>
                         <p className={`rating-bubble-number ${this.props.colorClass}-text`}>{`${this.props.ratingNumber}%`}</p>

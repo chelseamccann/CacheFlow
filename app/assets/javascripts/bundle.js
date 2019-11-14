@@ -1876,7 +1876,7 @@ function (_React$Component) {
 
       if (!this.props.isLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "ipo-title"
+          className: "ipo-title a-title"
         }, "Analyst Ratings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ratings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3379,6 +3379,8 @@ function (_React$Component) {
           isLoading: this.state.isLoading,
           ratingNumber: this.state.ratingNumber,
           colorClass: this.state.colorClass
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "line-above-news"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
           exact: true,
           path: "/",
