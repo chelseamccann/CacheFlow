@@ -6,7 +6,7 @@ const Suggestions = (props) => {
   const options = props.results.map((r, idx) => (
 
     <Link to={`/${r.symbol}`} style={{ textDecoration: 'none', color: 'black'}}>
-      <li className="each-search-result" key={idx}>
+      <li className="each-search-result" key={`${r}-${idx}`}>
       <div className="text-results">
         <p className="t color-text">{r.symbol.slice(0,len)}</p>
         <p className="t">{r.symbol.slice(len)}</p>

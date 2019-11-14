@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state, ownProps) => {
   let userId = state.session.id
-  debugger
   let url = ownProps.match.params 
 
   return { 

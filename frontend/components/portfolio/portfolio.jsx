@@ -74,10 +74,8 @@ class Portfolio extends React.Component{
                                 lastCost = Math.round((close_price.close * num_shares) *1e2)/1e2
                             } else if (close_price.close === null){
                                 if (that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})]){
-                                    debugger
                                     that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += lastCost
                                 } else {
-                                    debugger
                                     that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] = lastCost + Math.round(this.props.currentBuyingPower) 
                                 }
                             } else {
@@ -153,10 +151,8 @@ class Portfolio extends React.Component{
                                         lastCost = Math.round((close_price.close * num_shares) *1e2)/1e2
                                     } else if (close_price.close === null){
                                         if (that.weeklyPrices[date.toLocaleString('en-US')]){
-                                            debugger
                                             that.weeklyPrices[date.toLocaleString('en-US')] += lastCost
                                         } else {
-                                            debugger
                                             that.weeklyPrices[date.toLocaleString('en-US')] = lastCost + Math.round(this.props.currentBuyingPower) 
                                         }
                                     } else {

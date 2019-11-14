@@ -132,7 +132,9 @@ class TickerShow extends React.Component{
                 ceo: response.CEO, 
                 employees: response.employees.toLocaleString(),
                 city: response.city,
-                state: response.state
+                state: response.state,
+                sector: response.sector,
+                industry: response.industry
             })
         })
     }
@@ -148,6 +150,7 @@ class TickerShow extends React.Component{
             })
         })
     }
+    
 
     render(){
 
@@ -163,7 +166,8 @@ class TickerShow extends React.Component{
 
 
         if(this.state.dailyDone === false){
-            return <div className="lds-facebook"><div></div><div></div><div></div></div>
+
+            return <div className="lds-facebook ticker-show-loader"><div></div><div></div><div></div></div>
         } else if(this.props.mini === true){
             return (
                 <TickerChart 
@@ -189,6 +193,16 @@ class TickerShow extends React.Component{
                     <div className="chart-info-wrap">
                     <div className="chart-wrap"> 
                         <h1 className="company-name">{this.state.name}</h1>
+
+                        <div className="ticker-info-bubbles">
+                            <div className="bubble">
+                                {this.state.sector}
+                            </div>
+                            <div className="bubble">
+                                {this.state.industry}
+                            </div>
+                        </div>
+
                         <TickerChart 
                         mini={this.props.mini}
                         oldTicker={this.state.oldTicker}
@@ -218,6 +232,7 @@ class TickerShow extends React.Component{
                     peRatio={this.state.peRatio}
                     dividendYield={this.state.dividendYield}
                     avg30Volume={this.state.avg30Volume}
+                    sector={this.state.sector}
                     />
                     <ProtectedRoute exact path="/" component={News} show={true}/>
                     </div>

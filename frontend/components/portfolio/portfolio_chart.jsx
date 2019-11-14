@@ -44,7 +44,7 @@ class PortfolioChart extends React.Component {
             let openValue = this.props.oldArr[0].value;
             let change = hoverValue - openValue;
             let dailyPercentChange = (change/hoverValue)*100
-            debugger
+
             this.setState({closeValue: hoverValue, 
                 chartX: e.chartX,
                 chartY: e.chartY,

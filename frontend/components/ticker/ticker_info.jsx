@@ -10,12 +10,14 @@ class TickerInfo extends React.Component {
 
     render(){
 
-        
+        const divYield = this.props.dividendYield === "NaN" ? "-" : this.props.dividendYield
+
         return (
         <>
 
         <div className="ticker-info">
-        
+
+        <div className="info">
             <div className="ticker-about">
                 <h3>About</h3>
                 <p>{this.props.desc}</p>
@@ -36,8 +38,8 @@ class TickerInfo extends React.Component {
                 </div>
 
                 <div>
-                    <h6>Founded</h6>
-                    <p> - </p>
+                    <h6>Sector</h6>
+                    <p>{this.props.sector}</p>
                 </div>
 
                 <div>
@@ -52,14 +54,14 @@ class TickerInfo extends React.Component {
 
                 <div>
                     <h6>Dividend Yield</h6>
-                    <p>{this.props.dividendYield}</p>
+                    <p>{divYield}</p>
                 </div>
 
                 <div>
                     <h6>Average Volume</h6>
                     <p>{this.props.avg30Volume}</p>
                 </div>
-
+                </div>
             </div>
         </div>
         </>
