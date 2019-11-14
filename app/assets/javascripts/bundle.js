@@ -3077,15 +3077,15 @@ function (_React$Component) {
           className: "chart-info-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-          className: "company-name"
-        }, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-info-bubbles"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "bubble"
         }, this.state.sector), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "bubble"
-        }, this.state.industry)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        }, this.state.industry)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "company-name"
+        }, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
           mini: this.props.mini,
           oldTicker: this.state.oldTicker,
           tickerSymbol: this.props.tickerSymbol,

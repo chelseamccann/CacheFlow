@@ -192,7 +192,6 @@ class TickerShow extends React.Component{
                 <div className="show-wrap">
                     <div className="chart-info-wrap">
                     <div className="chart-wrap"> 
-                        <h1 className="company-name">{this.state.name}</h1>
 
                         <div className="ticker-info-bubbles">
                             <div className="bubble">
@@ -202,6 +201,8 @@ class TickerShow extends React.Component{
                                 {this.state.industry}
                             </div>
                         </div>
+                    
+                        <h1 className="company-name">{this.state.name}</h1>
 
                         <TickerChart 
                         mini={this.props.mini}
