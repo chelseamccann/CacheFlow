@@ -2924,6 +2924,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
 /* harmony import */ var _watchlist_watchlist_item__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../watchlist/watchlist_item */ "./frontend/components/watchlist/watchlist_item.jsx");
+/* harmony import */ var _util_analyst_api_util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../util/analyst_api_util */ "./frontend/util/analyst_api_util.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2943,6 +2944,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2977,11 +2979,13 @@ function (_React$Component) {
       close: null,
       change: 0,
       changePercent: 0,
-      dailyDone: false
+      dailyDone: false,
+      isLoading: true
     };
     _this.updatePrices = _this.updatePrices.bind(_assertThisInitialized(_this));
     _this.tickerInfo = _this.tickerInfo.bind(_assertThisInitialized(_this));
     _this.updateStats = _this.updateStats.bind(_assertThisInitialized(_this));
+    _this.tickerRating = _this.tickerRating.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2992,6 +2996,9 @@ function (_React$Component) {
 
       Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
         return _this2.renderDaily(response);
+      });
+      Object(_util_analyst_api_util__WEBPACK_IMPORTED_MODULE_8__["fetchAnalystRatings"])(this.props.tickerSymbol).then(function (ratings) {
+        _this2.tickerRating(ratings);
       });
       this.tickerInfo();
       this.updateStats();
@@ -3009,6 +3016,9 @@ function (_React$Component) {
         });
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
           return _this3.renderDaily(response);
+        });
+        Object(_util_analyst_api_util__WEBPACK_IMPORTED_MODULE_8__["fetchAnalystRatings"])(this.props.tickerSymbol).then(function (ratings) {
+          _this3.tickerRating(ratings);
         });
         this.tickerInfo();
         this.updateStats();
@@ -3105,6 +3115,25 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "tickerRating",
+    value: function tickerRating(ratings) {
+      var rating;
+      var netRatings = ratings[0].ratingBuy + ratings[0].ratingSell + ratings[0].ratingHold;
+
+      if (ratings[0].ratingBuy > ratings[0].ratingSell && ratings[0].ratingBuy > ratings[0].ratingHold) {
+        rating = "".concat(Math.round(ratings[0].ratingBuy / netRatings * 1e2) / 1e2 * 100, "% Buy");
+      } else if (ratings[0].ratingSell > ratings[0].ratingBuy && ratings[0].ratingSell > ratings[0].ratingHold) {
+        rating = "".concat(Math.round(ratings[0].ratingSell / netRatings * 1e2) / 1e2 * 100, "% Sell");
+      } else if (ratings[0].ratingHold > ratings[0].ratingBuy && ratings[0].ratingHold > ratings[0].ratingSell) {
+        rating = "".concat(Math.round(ratings[0].ratingHold / netRatings * 1e2) / 1e2 * 100, "% Hold");
+      }
+
+      this.setState({
+        rating: rating,
+        isLoading: false
+      });
+    }
+  }, {
     key: "tickerInfo",
     value: function tickerInfo() {
       var _this5 = this;
@@ -3141,7 +3170,6 @@ function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
-      // let color = this.state.close > this.state.open ? "activeGreen" : "activeRed"
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           // return <button className={`btns ${this.state.timeFrame === key ? 'active': ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>
@@ -3185,7 +3213,9 @@ function (_React$Component) {
           className: "bubble ".concat(this.state.backgroundColor)
         }, this.state.sector), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "bubble ".concat(this.state.backgroundColor)
-        }, this.state.industry)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        }, this.state.industry)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "bubble rating"
+        }, this.state.rating), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "company-name"
         }, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
           mini: this.props.mini,
@@ -4441,6 +4471,26 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/analyst_api_util.js":
+/*!*******************************************!*\
+  !*** ./frontend/util/analyst_api_util.js ***!
+  \*******************************************/
+/*! exports provided: fetchAnalystRatings */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAnalystRatings", function() { return fetchAnalystRatings; });
+var fetchAnalystRatings = function fetchAnalystRatings(symbol) {
+  return $.ajax({
+    method: "GET",
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/recommendation-trends?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/recommendation-trends?token=Tsk_06d36047391b4a858da339d6976a3238")
+  });
+};
 
 /***/ }),
 

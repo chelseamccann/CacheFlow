@@ -202,7 +202,7 @@
     background-color: #21ce9ad7;
     text-align: center;
     border-radius: 15px;
-    padding: 3px;
+    padding: 5px;
     padding-left: 7px;
     padding-right: 7px;
     margin-right: 1%;
@@ -212,7 +212,12 @@
     line-height: 19px;
   }
 
-
+.rating{
+    background-color: #f4f4f5;
+    width: 15%;
+    float: right;
+    margin-top: 2%;
+}
   .activeRedBackground{
     background-color: #fff5f3;
   }

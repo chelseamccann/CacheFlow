@@ -5,7 +5,8 @@ import TransactionForm from '../transactions/transaction_form';
 import {fetchPrices, fetchDailyPrices, fetchTickerInfo, fetchTickerStats } from '../../util/ticker_data_api_util'; 
 import News from '../news/news';
 import { ProtectedRoute } from '../../util/route_utils';
-import WatchlistItem from '../watchlist/watchlist_item'
+import WatchlistItem from '../watchlist/watchlist_item';
+import {fetchAnalystRatings} from '../../util/analyst_api_util';
 
 class TickerShow extends React.Component{
     constructor(props){
@@ -23,15 +24,18 @@ class TickerShow extends React.Component{
             close: null,
             change: 0,
             changePercent: 0,
-            dailyDone: false
+            dailyDone: false,
+            isLoading: true
         }
         this.updatePrices = this.updatePrices.bind(this);
         this.tickerInfo = this.tickerInfo.bind(this);
         this.updateStats = this.updateStats.bind(this);
+        this.tickerRating = this.tickerRating.bind(this);
     }
 
     componentDidMount(){
         fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
+        fetchAnalystRatings(this.props.tickerSymbol).then(ratings => { this.tickerRating(ratings) });
         this.tickerInfo();
         this.updateStats();
     }
@@ -41,6 +45,7 @@ class TickerShow extends React.Component{
         if (this.props.tickerSymbol !== prev){
             this.setState({dailyDone: false})
             fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
+            fetchAnalystRatings(this.props.tickerSymbol).then(ratings => { this.tickerRating(ratings) });
             this.tickerInfo();
             this.updateStats();
 
@@ -131,6 +136,19 @@ class TickerShow extends React.Component{
         }
     }
 
+    tickerRating(ratings){
+        let rating;
+        let netRatings = ratings[0].ratingBuy + ratings[0].ratingSell + ratings[0].ratingHold;
+        if (ratings[0].ratingBuy > ratings[0].ratingSell && ratings[0].ratingBuy > ratings[0].ratingHold){
+            rating = `${Math.round((ratings[0].ratingBuy / netRatings) *1e2)/1e2 *100}% Buy`
+        } else if (ratings[0].ratingSell > ratings[0].ratingBuy && ratings[0].ratingSell > ratings[0].ratingHold){
+            rating = `${Math.round((ratings[0].ratingSell / netRatings) *1e2)/1e2 *100}% Sell`
+        } else if (ratings[0].ratingHold > ratings[0].ratingBuy && ratings[0].ratingHold > ratings[0].ratingSell){
+            rating = `${Math.round((ratings[0].ratingHold / netRatings) *1e2)/1e2 *100}% Hold`
+        }
+        this.setState({ rating: rating, isLoading: false }) 
+    }
+
     tickerInfo(){
         fetchTickerInfo(this.props.tickerSymbol).then(response => {
             this.setState(
@@ -160,8 +178,6 @@ class TickerShow extends React.Component{
     
 
     render(){
-
-        // let color = this.state.close > this.state.open ? "activeGreen" : "activeRed"
 
 
         const tF = Object.keys(this.state).map(key => {
@@ -210,6 +226,8 @@ class TickerShow extends React.Component{
                                 {this.state.industry}
                             </div>
                         </div>
+
+                        <div className="bubble rating">{this.state.rating}</div>
                     
                         <h1 className="company-name">{this.state.name}</h1>
 
