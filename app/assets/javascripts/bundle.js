@@ -4623,8 +4623,8 @@ __webpack_require__.r(__webpack_exports__);
 var fetchAnalystRatings = function fetchAnalystRatings(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/recommendation-trends?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/recommendation-trends?token=Tsk_06d36047391b4a858da339d6976a3238")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/recommendation-trends?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/recommendation-trends?token=Tsk_06d36047391b4a858da339d6976a3238`
+
   });
 };
 
@@ -4749,15 +4749,15 @@ __webpack_require__.r(__webpack_exports__);
 var fetchFromAPI = function fetchFromAPI(query) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(query, "/quote?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${query}/quote?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-
+    // url: `https://sandbox.iexapis.com/stable/stock/${query}/quote?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://cloud.iexapis.com/stable/stock/".concat(query, "/quote?token=pk_b6f890a95fb24dbfb1a85f362fe5687f")
   });
 };
 var fetchAllFromAPI = function fetchAllFromAPI(query) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/search/".concat(query, "?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/search/${query}?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    // url: `https://sandbox.iexapis.com/stable/search/${query}?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://cloud.iexapis.com/stable/search/".concat(query, "?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
     // url: `https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
 
   });
@@ -4847,29 +4847,30 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
   return $.ajax({
     method: "GET",
-    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+
   });
 };
 var fetchTickerInfo = function fetchTickerInfo(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
-    // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 
   });
 };
 var fetchTickerStats = function fetchTickerStats(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/stats?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f` //{stat?}`
+    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/stats?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") //{stat?}`
     // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 
   });
