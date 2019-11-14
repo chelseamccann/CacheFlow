@@ -9,9 +9,9 @@ class Ratings extends React.Component {
 
     render(){
 
-        const buyPercent = `${Math.round((this.props.buyRating / this.props.netRatings) *1e2)/1e2 *100}%`
-        const holdPercent = `${Math.round((this.props.holdRating / this.props.netRatings) *1e2)/1e2 *100}%`
-        const sellPercent = `${Math.round((this.props.sellRating / this.props.netRatings) *1e2)/1e2 *100}%`
+        const buyPercent = `${Math.round((Math.round(this.props.buyRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100}%`
+        const holdPercent = `${Math.round((Math.round(this.props.holdRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100}%`
+        const sellPercent = `${Math.round((Math.round(this.props.sellRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100}%`
         if (!this.props.isLoading){
 
             return (
@@ -26,7 +26,7 @@ class Ratings extends React.Component {
                 <div className="lines">
 
                     <div className="buy" >
-                        <p style={{width: buyPercent, backgroudColor: "#21ce99"}} className="p">Buy</p>
+                        <p style={{width: buyPercent}} className="p p-buy">Buy</p>
                         <div>
 
                         <div className="line" ></div>
@@ -36,7 +36,7 @@ class Ratings extends React.Component {
                     </div>
 
                     <div className="hold">
-                        <p className="p">Hold</p>
+                        <p style={{width: holdPercent}} className="p p-hold">Hold</p>
                         <div>
                         <div className="line"></div>
 
@@ -47,7 +47,7 @@ class Ratings extends React.Component {
                     </div>
 
                     <div className="sell">
-                        <p className="p">Sell</p>
+                        <p style={{width: sellPercent}} className="p p-sell">Sell</p>
                         <div className="line"></div>
 
                         <div className="n">{sellPercent}</div>

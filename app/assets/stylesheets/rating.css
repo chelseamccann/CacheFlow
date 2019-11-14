@@ -67,3 +67,21 @@
     margin-top: -5.5%;
     float: right;
 }
+
+.p-buy{
+    background-color: #21ce99;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.p-hold{
+    background-color: #171718;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.p-sell{
+    background-color: #171718;
+    height: 100%;
+    border-radius: 5px;
+}

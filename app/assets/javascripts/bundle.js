@@ -1870,9 +1870,9 @@ function (_React$Component) {
   _createClass(Ratings, [{
     key: "render",
     value: function render() {
-      var buyPercent = "".concat(Math.round(this.props.buyRating / this.props.netRatings * 1e2) / 1e2 * 100, "%");
-      var holdPercent = "".concat(Math.round(this.props.holdRating / this.props.netRatings * 1e2) / 1e2 * 100, "%");
-      var sellPercent = "".concat(Math.round(this.props.sellRating / this.props.netRatings * 1e2) / 1e2 * 100, "%");
+      var buyPercent = "".concat(Math.round(Math.round(this.props.buyRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100, "%");
+      var holdPercent = "".concat(Math.round(Math.round(this.props.holdRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100, "%");
+      var sellPercent = "".concat(Math.round(Math.round(this.props.sellRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100, "%");
 
       if (!this.props.isLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -1891,10 +1891,9 @@ function (_React$Component) {
           className: "buy"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           style: {
-            width: buyPercent,
-            backgroudColor: "#21ce99"
+            width: buyPercent
           },
-          className: "p"
+          className: "p p-buy"
         }, "Buy"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1902,7 +1901,10 @@ function (_React$Component) {
         }, buyPercent))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "hold"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "p"
+          style: {
+            width: holdPercent
+          },
+          className: "p p-hold"
         }, "Hold"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1910,7 +1912,10 @@ function (_React$Component) {
         }, holdPercent))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "sell"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "p"
+          style: {
+            width: sellPercent
+          },
+          className: "p p-sell"
         }, "Sell"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
