@@ -1870,6 +1870,10 @@ function (_React$Component) {
   _createClass(Ratings, [{
     key: "render",
     value: function render() {
+      var buyPercent = "".concat(Math.round(this.props.buyRating / this.props.netRatings * 1e2) / 1e2 * 100, "%");
+      var holdPercent = "".concat(Math.round(this.props.holdRating / this.props.netRatings * 1e2) / 1e2 * 100, "%");
+      var sellPercent = "".concat(Math.round(this.props.sellRating / this.props.netRatings * 1e2) / 1e2 * 100, "%");
+
       if (!this.props.isLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "ipo-title"
@@ -1884,14 +1888,18 @@ function (_React$Component) {
         }, "of ".concat(this.props.netRatings, " ratings"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "lines"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "buy"
+          className: "buy",
+          style: {
+            backgroudColor: "#21ce99",
+            width: buyPercent
+          }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "p"
         }, "Buy"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "n"
-        }, "".concat(Math.round(this.props.buyRating / this.props.netRatings * 1e2) / 1e2 * 100, "%")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, buyPercent))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "hold"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "p"
@@ -1899,7 +1907,7 @@ function (_React$Component) {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "n"
-        }, "".concat(Math.round(this.props.holdRating / this.props.netRatings * 1e2) / 1e2 * 100, "%")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, holdPercent))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "sell"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "p"
@@ -1907,7 +1915,7 @@ function (_React$Component) {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "n"
-        }, "".concat(Math.round(this.props.sellRating / this.props.netRatings * 1e2) / 1e2 * 100, "%"))))));
+        }, sellPercent)))));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       }
