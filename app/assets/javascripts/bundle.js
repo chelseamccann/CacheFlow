@@ -1888,12 +1888,12 @@ function (_React$Component) {
         }, "of ".concat(this.props.netRatings, " ratings"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "lines"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "buy",
-          style: {
-            backgroudColor: "#21ce99",
-            width: buyPercent
-          }
+          className: "buy"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          style: {
+            width: buyPercent,
+            backgroudColor: "#21ce99"
+          },
           className: "p"
         }, "Buy"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "line"

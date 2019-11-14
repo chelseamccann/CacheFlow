@@ -25,8 +25,8 @@ class Ratings extends React.Component {
 
                 <div className="lines">
 
-                    <div className="buy" style={{ backgroudColor: "#21ce99", width: buyPercent}}>
-                        <p className="p">Buy</p>
+                    <div className="buy" >
+                        <p style={{width: buyPercent, backgroudColor: "#21ce99"}} className="p">Buy</p>
                         <div>
 
                         <div className="line" ></div>
