@@ -1247,8 +1247,7 @@ function (_React$Component) {
                 var closeDate = new Date(Date.parse("".concat(currentDay, " ").concat(closeTime)));
 
                 while (currentDate < closeDate) {
-                  currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1)); // that.dailyPrices[currentDate.toLocaleTimeString([], {timeStyle: 'short'})] = null
-
+                  currentDate = new Date(currentDate.setMinutes(currentDate.getMinutes() + 1));
                   nullArr.push({
                     date: currentDate.toLocaleTimeString([], {
                       timeStyle: 'short'
@@ -1284,14 +1283,7 @@ function (_React$Component) {
                     timeStyle: 'short'
                   })] = Math.round((bp + cost) * 1e2) / 1e2;
                   lastCost = Math.round(cost * 1e2) / 1e2;
-                } // if (that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] >= 0){
-                //     Math.round(that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] += (Math.round((close_price.close * num_shares) *1e2)/1e2) *1e2)/1e2
-                // } else {
-                //     let bp = Math.round(this.props.currentBuyingPower)
-                //     let cost = close_price.close * num_shares
-                //     that.dailyPrices[date.toLocaleTimeString([], {timeStyle: 'short'})] = Math.round((bp+cost) *1e2)/1e2
-                // }
-
+                }
               }
             });
 
@@ -1319,10 +1311,12 @@ function (_React$Component) {
               that.setState({
                 portfolioValue: newArr.concat(nullArr),
                 oldArr: newArr,
-                fetched: true
+                fetched: true,
+                color: newArr[1].value < newArr[newArr.length - 1].value ? "#21ce99" : "#f45531",
+                colorClass: newArr[1].value < newArr[newArr.length - 1].value ? "activeGreen" : "activeRed"
               });
             }
-          }); //.then(that.setState({fetched:true}))
+          });
         }
       });
     }
@@ -1332,26 +1326,17 @@ function (_React$Component) {
       var _this4 = this;
 
       // CLICKED TIMEFRAME CALC
-      // this.setState({fetched: false})
       if (this.state.timeFrame !== timeFrame && timeFrame !== '1D') {
         this.weeklyPrices = {};
         var that = this;
         Object.values(this.props.transactions).forEach(function (asset, idx) {
           if (_this4.props.tickers[asset.ticker_symbol.toUpperCase()]) {
-            var createdAt = new Date(Date.parse("".concat(asset.created_at))); //.toLocaleString('en-US')
-
+            var createdAt = new Date(Date.parse("".concat(asset.created_at)));
             Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchPrices"])(asset.ticker_symbol, timeFrame).then(function (prices) {
               var num_shares = asset.purchase_shares;
-              var lastCost; // let currentDay = prices[0].date
-
+              var lastCost;
               prices.forEach(function (close_price) {
-                var date = close_price.minute ? new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))) : new Date(Date.parse("".concat(close_price.date))); //.toLocaleString('en-US')
-                // if(date > createdAt && close_price.close !== null){
-                //     if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0){
-                //         that.weeklyPrices[date.toLocaleString('en-US')] += close_price.close * num_shares
-                //     } else {
-                //         that.weeklyPrices[date.toLocaleString('en-US')] = (close_price.close * num_shares) + parseFloat(this.props.currentBuyingPower)
-                //     }
+                var date = close_price.minute ? new Date(Date.parse("".concat(close_price.date, " ").concat(close_price.minute))) : new Date(Date.parse("".concat(close_price.date)));
 
                 if (date > createdAt) {
                   if (that.weeklyPrices[date.toLocaleString('en-US')] >= 0 && close_price.close !== null) {
@@ -1392,7 +1377,9 @@ function (_React$Component) {
                 that.setState({
                   portfolioValue: newArr,
                   oldArr: newArr,
-                  fetched: true
+                  fetched: true,
+                  color: newArr[1].value < newArr[newArr.length - 1].value ? "#21ce99" : "#f45531",
+                  colorClass: newArr[1].value < newArr[newArr.length - 1].value ? "activeGreen" : "activeRed"
                 });
               }
             }).then(_this4.setState({
@@ -1415,8 +1402,9 @@ function (_React$Component) {
 
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "ALL") {
+          // return <button className={`btns ${this.state.timeFrame === key ? 'activeGreen': ''}`} key={`${key}-id`} onClick={() => {this.updatePrices(key)}}>
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            className: "btns ".concat(_this5.state.timeFrame === key ? 'activeGreen' : ''),
+            className: "btns ".concat(_this5.state.timeFrame === key ? _this5.state.colorClass : ''),
             key: "".concat(key, "-id"),
             onClick: function onClick() {
               _this5.updatePrices(key);
@@ -1434,7 +1422,8 @@ function (_React$Component) {
           portfolioValue: this.state.portfolioValue,
           oldArr: this.state.oldArr,
           timeFrame: this.state.timeFrame,
-          lastIdx: this.state.lastIdx
+          lastIdx: this.state.lastIdx,
+          color: this.state.color
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
         }, tF))));
@@ -1610,7 +1599,7 @@ function (_React$Component) {
           type: "monotone",
           dataKey: "value",
           dot: false,
-          stroke: "#21ce99",
+          stroke: this.props.color,
           strokeWidth: 1
         })));
       } else {
@@ -1658,7 +1647,7 @@ function (_React$Component) {
           type: "monotone",
           dataKey: "value",
           dot: false,
-          stroke: "#21ce99",
+          stroke: this.props.color,
           strokeWidth: 1
         })));
       }
@@ -2527,13 +2516,13 @@ function (_React$Component) {
           type: "monotone",
           dataKey: "price",
           dot: false,
-          stroke: "#21ce99",
+          stroke: this.props.color,
           strokeWidth: 1.2
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "mini-close-price"
         }, "$".concat(parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))));
       } else {
-        var color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531";
+        // let color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531"
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -2577,7 +2566,7 @@ function (_React$Component) {
           type: "linear",
           dataKey: "price",
           dot: false,
-          stroke: color,
+          stroke: this.props.color,
           strokeWidth: 1
         })));
       }
@@ -2969,7 +2958,10 @@ function (_React$Component) {
         close: lastValidClose,
         change: parseFloat(lastValidClose - firstValidOpen).toFixed(2),
         changePercent: parseFloat((lastValidClose - firstValidOpen) / firstValidOpen * 100).toFixed(2),
-        dailyDone: true
+        dailyDone: true,
+        colorClass: firstValidOpen < lastValidClose ? "activeGreen" : "activeRed",
+        color: firstValidOpen < lastValidClose ? "#21ce99" : "#f45531",
+        backgroundColor: firstValidOpen < lastValidClose ? "activeGreenBackground" : "activeRedBackground"
       });
     }
   }, {
@@ -2986,7 +2978,7 @@ function (_React$Component) {
           changePercent: price.changePercent
         };
       });
-      this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _defineProperty(_this$setState, "open", response[0].open), _defineProperty(_this$setState, "close", response[response.length - 1].close), _defineProperty(_this$setState, "change", response[response.length - 1].change), _defineProperty(_this$setState, "changePercent", response[response.length - 1].changePercent), _this$setState));
+      this.setState((_this$setState = {}, _defineProperty(_this$setState, timeFramePassed, data), _defineProperty(_this$setState, "timeFrame", timeFramePassed), _defineProperty(_this$setState, "tickerSymbol", this.props.tickerSymbol), _defineProperty(_this$setState, "open", response[0].open), _defineProperty(_this$setState, "close", response[response.length - 1].close), _defineProperty(_this$setState, "change", response[response.length - 1].change), _defineProperty(_this$setState, "changePercent", response[response.length - 1].changePercent), _defineProperty(_this$setState, "colorClass", response[0].open < response[response.length - 1].close ? "activeGreen" : "activeRed"), _defineProperty(_this$setState, "color", response[0].open < response[response.length - 1].close ? "#21ce99" : "#f45531"), _defineProperty(_this$setState, "backgroundColor", response[0].open < response[response.length - 1].close ? "activeGreenBackground" : "activeRedBackground"), _this$setState));
     }
   }, {
     key: "updatePrices",
@@ -3040,12 +3032,12 @@ function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
-      var color = this.state.close > this.state.open ? "activeGreen" : "activeRed";
+      // let color = this.state.close > this.state.open ? "activeGreen" : "activeRed"
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "5Y") {
           // return <button className={`btns ${this.state.timeFrame === key ? 'active': ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            className: "btns ".concat(_this7.state.timeFrame === key ? color : ''),
+            className: "btns ".concat(_this7.state.timeFrame === key ? _this7.state.colorClass : ''),
             key: "".concat(key, "-id"),
             onClick: _this7.updatePrices(key)
           }, key.slice(0, 2).toUpperCase());
@@ -3067,7 +3059,8 @@ function (_React$Component) {
           close: this.state.close,
           change: this.state.change,
           changePercent: this.state.changePercent,
-          tF: tF
+          tF: tF,
+          color: this.state.color
         });
       } else if (this.state.timeFrame !== "" && this.state.marketcap && this.state.dailyDone) {
         var data = this.state[this.state.timeFrame].slice();
@@ -3078,11 +3071,11 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "chart-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "ticker-info-bubbles"
+          className: "ticker-info-bubbles ".concat(this.state.colorClass)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "bubble"
+          className: "bubble ".concat(this.state.backgroundColor)
         }, this.state.sector), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "bubble"
+          className: "bubble ".concat(this.state.backgroundColor)
         }, this.state.industry)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "company-name"
         }, this.state.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ticker_chart__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -3095,7 +3088,8 @@ function (_React$Component) {
           close: this.state.close,
           change: this.state.change,
           changePercent: this.state.changePercent,
-          tF: tF
+          tF: tF,
+          color: this.state.color
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "time-frame-buttons"
         }, tF)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3124,14 +3118,18 @@ function (_React$Component) {
           close: this.state.close,
           executeBuy: this.props.executeBuy,
           currentBuyingPower: this.props.currentBuyingPower,
-          fetchTicker: this.props.fetchTicker
+          fetchTicker: this.props.fetchTicker,
+          colorClass: this.state.colorClass,
+          backgroundColor: this.state.backgroundColor
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_item__WEBPACK_IMPORTED_MODULE_7__["default"], {
           tickerSymbol: this.props.tickerSymbol,
-          fetchTickers: this.props.fetchTickers
+          fetchTickers: this.props.fetchTickers,
+          colorClass: this.state.colorClass
         })));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_item__WEBPACK_IMPORTED_MODULE_7__["default"], {
-          tickerSymbol: this.props.tickerSymbol
+          tickerSymbol: this.props.tickerSymbol,
+          colorClass: this.state.colorClass
         });
       }
     }
@@ -3254,16 +3252,18 @@ function (_React$Component) {
       var headers = this.props.tabStuff.map(function (el, indx) {
         var title = el.title;
         var toggleActive = indx === idxTab ? 'bsactive' : '';
+        var tabColor = indx === idxTab ? "".concat(_this.props.colorClass, "tab") : "".concat(_this.props.colorClass, "hover");
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: indx,
-          className: toggleActive,
+          key: indx // className = {`${toggleActive}`}
+          ,
+          className: "".concat(tabColor),
           onClick: function onClick() {
             return _this.props.changeTab(indx);
           }
         }, title, ' ');
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "tab-title"
+        className: "tab-title ".concat(this.props.colorClass, "hover")
       }, headers);
     }
   }]);
@@ -3344,7 +3344,8 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
         tabStuff: this.props.tabStuff,
         changeTab: this.changeTab,
-        indexTab: this.state.indexTab
+        indexTab: this.state.indexTab,
+        colorClass: this.props.colorClass
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tab-content"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", null, currentTab.content))));
@@ -3551,6 +3552,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "buy-sell-buttons"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tabs__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        colorClass: this.props.colorClass,
         tabStuff: [{
           title: "Buy ".concat(this.props.tickerSymbol.toUpperCase()),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -3574,7 +3576,7 @@ function (_React$Component) {
           })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "shares"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-            className: "share share-two"
+            className: "share share-two ".concat(this.props.colorClass)
           }, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "share share-two"
           }, "$".concat(parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3586,9 +3588,9 @@ function (_React$Component) {
           }, cost)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
             type: "submit",
             value: "Buy",
-            className: "execute-button nav-bar-logout review-button"
+            className: "execute-button nav-bar-logout review-button ".concat(this.props.backgroundColor, "button")
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-            className: "bp share share-two"
+            className: "bp share share-two ".concat(this.props.colorClass)
           }, "Buying power: $", parseFloat(this.state.currentBuyingPower).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "transaction-message"
           }, this.state.message)))
@@ -3615,7 +3617,7 @@ function (_React$Component) {
           })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "shares"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-            className: "share share-two"
+            className: "share share-two ".concat(this.props.colorClass)
           }, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "share share-two"
           }, "$".concat(parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3627,9 +3629,9 @@ function (_React$Component) {
           }, cost)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
             type: "submit",
             value: "Sell",
-            className: "execute-button nav-bar-logout review-button"
+            className: "execute-button nav-bar-logout review-button ".concat(this.props.backgroundColor, "button")
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-            className: "bp share share-two"
+            className: "bp share share-two ".concat(this.props.colorClass)
           }, "".concat(this.state.currentTickerNumShares, " shares available")), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "transaction-message"
           }, this.state.message)))
@@ -3961,14 +3963,14 @@ function (_React$Component) {
 
       if (this.state.currentButton === 'add') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "watchlist-button addWatchlistButton",
+          className: "watchlist-button addWatchlistButton ".concat(this.props.colorClass),
           onClick: function onClick() {
             return _this4.addToWatchlist();
           }
         }, "Add to watchlist");
       } else if (this.state.currentButton === 'remove') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "watchlist-button removeWatchlistButton",
+          className: "watchlist-button removeWatchlistButton ".concat(this.props.colorClass),
           onClick: function onClick() {
             return _this4.removeFromWatchlist();
           }
@@ -4432,15 +4434,15 @@ __webpack_require__.r(__webpack_exports__);
 var fetchFromAPI = function fetchFromAPI(query) {
   return $.ajax({
     method: "GET",
-    // url: `https://sandbox.iexapis.com/stable/stock/${query}/quote?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-    url: "https://cloud.iexapis.com/stable/stock/".concat(query, "/quote?token=pk_b6f890a95fb24dbfb1a85f362fe5687f")
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(query, "/quote?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${query}/quote?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+
   });
 };
 var fetchAllFromAPI = function fetchAllFromAPI(query) {
   return $.ajax({
     method: "GET",
-    // url: `https://sandbox.iexapis.com/stable/search/${query}?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-    url: "https://cloud.iexapis.com/stable/search/".concat(query, "?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
+    url: "https://sandbox.iexapis.com/stable/search/".concat(query, "?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/search/${query}?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    // url: `https://sandbox.iexapis.com/stable/ref-data/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
     // url: `https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
 
   });
@@ -4530,30 +4532,29 @@ __webpack_require__.r(__webpack_exports__);
 var fetchDailyPrices = function fetchDailyPrices(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchPrices = function fetchPrices(symbol, timeFrame) {
   return $.ajax({
     method: "GET",
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-
+    // url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/${timeFrame}?chartIEXOnly=true&token=pk_b6f890a95fb24dbfb1a85f362fe5687f`,
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/").concat(timeFrame, "?chartIEXOnly=true&token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa")
   });
 };
 var fetchTickerInfo = function fetchTickerInfo(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/company?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/company?token=pk_b6f890a95fb24dbfb1a85f362fe5687f`
+    // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 
   });
 };
 var fetchTickerStats = function fetchTickerStats(symbol) {
   return $.ajax({
     method: "GET",
-    // url: `https://sandbox.iexapis.com/stable/stock/${symbol}/stats?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa`
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f") //{stat?}`
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/stats?token=Tpk_4ca09027bbda4ce1a28d8e1702fafdaa") // url: `https://cloud.iexapis.com/stable/stock/${symbol}/stats?token=pk_b6f890a95fb24dbfb1a85f362fe5687f` //{stat?}`
     // url: `https://api-v2.intrinio.com/companies/${symbol}?api_key=OjRkMWNmYTA3ZWU4MjA0M2MzN2ZjODlkYWM0Yzc3OWNi`
 
   });

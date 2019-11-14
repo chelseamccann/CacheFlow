@@ -93,7 +93,7 @@ class PortfolioChart extends React.Component {
                                         formatter={(value, name, props) => { return [""] }}
                                         // position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
                                         isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
-                        <Line connectNulls type="monotone" dataKey="value" dot={false} stroke="#21ce99" strokeWidth={1}/>
+                        <Line connectNulls type="monotone" dataKey="value" dot={false} stroke={this.props.color} strokeWidth={1}/>
                     </LineChart>
                 </div>
             )
@@ -121,7 +121,7 @@ class PortfolioChart extends React.Component {
                                         formatter={(value, name, props) => { return [""] }}
                                         // position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
                                         isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
-                        <Line connectNulls type="monotone" dataKey="value" dot={false} stroke="#21ce99" strokeWidth={1}/>
+                        <Line connectNulls type="monotone" dataKey="value" dot={false} stroke={this.props.color} strokeWidth={1}/>
                     </LineChart>
                 </div>
             )

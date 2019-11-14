@@ -185,13 +185,7 @@
     margin: 0 auto;
 }
 
-  .activeGreen{
-      color: #21ce99;
-  }
 
-  .activeRed{
-      color: #f45531;
-  }
 
   .ticker-show-loader{
     margin: 0 auto;
@@ -217,3 +211,66 @@
     letter-spacing: 0.25px;
     line-height: 19px;
   }
+
+
+  .activeRedBackground{
+    background-color: #fff5f3;
+  }
+
+
+  .activeGreenBackground{
+    background-color: #e6f9f3;
+}
+
+.activeRedBackgroundbutton{
+    background-color: #f45531;
+    border-color: #f45531;
+  }
+
+.activeRedBackgroundbutton:hover{
+    background-color: #ff6340;
+    cursor: pointer;
+    border-color: #ff6340;
+} 
+
+  .activeGreenBackgroundbutton{
+    background-color: #21ce99;
+    border-color: #21ce99;
+}
+
+
+.activeGreenBackgroundbutton:hover{
+    background-color: #1ae99a;
+    cursor: pointer;
+    border-color: #1ae99a;
+}
+
+.activeGreen{
+    color: #21ce99;
+}
+
+.activeRed{
+    color: #f45531;
+}
+
+
+.activeGreenhover:hover{
+    color: #21ce99;
+}
+
+.activeRedhover:hover{
+    color: #f45531;
+}
+
+
+.activeGreentab{
+    color: #21ce99;
+    text-decoration-color: #21ce99;
+    border-bottom: 2px solid #21ce99;
+}
+
+.activeRedtab{
+    color: #f45531;
+    text-decoration-color: #f45531;
+    border-bottom: 2px solid #f45531;
+}

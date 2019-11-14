@@ -87,7 +87,10 @@ class TickerShow extends React.Component{
             close: lastValidClose, 
             change: parseFloat(lastValidClose - firstValidOpen).toFixed(2),
             changePercent: parseFloat(((lastValidClose - firstValidOpen)/firstValidOpen)*100).toFixed(2),
-            dailyDone: true
+            dailyDone: true,
+            colorClass: firstValidOpen < lastValidClose ? "activeGreen" : "activeRed",
+            color: firstValidOpen < lastValidClose ? "#21ce99" : "#f45531",
+            backgroundColor: firstValidOpen < lastValidClose ? "activeGreenBackground" : "activeRedBackground"
              })
 
     }
@@ -111,7 +114,11 @@ class TickerShow extends React.Component{
             open: response[0].open,
             close: response[response.length-1].close,
             change: response[response.length-1].change,
-            changePercent: response[response.length-1].changePercent
+            changePercent: response[response.length-1].changePercent,
+            colorClass: response[0].open < response[response.length-1].close ? "activeGreen" : "activeRed",
+            color: response[0].open < response[response.length-1].close ? "#21ce99" : "#f45531",
+            backgroundColor: response[0].open < response[response.length-1].close ? "activeGreenBackground" : "activeRedBackground"
+
         })
     }
 
@@ -154,21 +161,22 @@ class TickerShow extends React.Component{
 
     render(){
 
-        let color = this.state.close > this.state.open ? "activeGreen" : "activeRed"
+        // let color = this.state.close > this.state.open ? "activeGreen" : "activeRed"
 
 
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="5Y"){
                 // return <button className={`btns ${this.state.timeFrame === key ? 'active': ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>
-                return <button className={`btns ${this.state.timeFrame === key ? color : ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>   
+                return <button className={`btns ${this.state.timeFrame === key ? this.state.colorClass : ''}`} key={`${key}-id`} onClick={this.updatePrices(key)} >{key.slice(0, 2).toUpperCase()}</button>   
             }
         })
 
 
         if(this.state.dailyDone === false){
-
             return <div className="lds-facebook ticker-show-loader"><div></div><div></div><div></div></div>
+
         } else if(this.props.mini === true){
+            
             return (
                 <TickerChart 
                 mini={this.props.mini}
@@ -181,6 +189,7 @@ class TickerShow extends React.Component{
                 change={this.state.change}
                 changePercent={this.state.changePercent}
                 tF={tF}
+                color={this.state.color}
                 />
             )
         }
@@ -193,11 +202,11 @@ class TickerShow extends React.Component{
                     <div className="chart-info-wrap">
                     <div className="chart-wrap"> 
 
-                        <div className="ticker-info-bubbles">
-                            <div className="bubble">
+                        <div className={`ticker-info-bubbles ${this.state.colorClass}`}>
+                            <div className={`bubble ${this.state.backgroundColor}`}>
                                 {this.state.sector}
                             </div>
-                            <div className="bubble">
+                            <div className={`bubble ${this.state.backgroundColor}`}>
                                 {this.state.industry}
                             </div>
                         </div>
@@ -215,6 +224,7 @@ class TickerShow extends React.Component{
                         change={this.state.change}
                         changePercent={this.state.changePercent}
                         tF={tF}
+                        color={this.state.color}
                         />
                         
                         <div className="time-frame-buttons">{tF}</div>
@@ -246,11 +256,14 @@ class TickerShow extends React.Component{
                     executeBuy={this.props.executeBuy}
                     currentBuyingPower={this.props.currentBuyingPower}
                     fetchTicker={this.props.fetchTicker}
+                    colorClass={this.state.colorClass}
+                    backgroundColor={this.state.backgroundColor}
                     />
 
                     <WatchlistItem
                     tickerSymbol={this.props.tickerSymbol}
                     fetchTickers={this.props.fetchTickers}
+                    colorClass={this.state.colorClass}
                     />
                     </div>
                 </div>
@@ -260,6 +273,7 @@ class TickerShow extends React.Component{
                     
                     <WatchlistItem
                     tickerSymbol={this.props.tickerSymbol}
+                    colorClass={this.state.colorClass}
                     />
                     )
             }

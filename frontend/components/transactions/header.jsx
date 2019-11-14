@@ -7,10 +7,12 @@ class Header extends React.Component {
         const headers = this.props.tabStuff.map((el, indx) => {
             const title = el.title;
             const toggleActive = indx === idxTab ? 'bsactive' : '';
+            const tabColor = indx === idxTab ? `${this.props.colorClass}tab` : `${this.props.colorClass}hover`
             return (
                 <li 
                 key = {indx}
-                className = {toggleActive}
+                // className = {`${toggleActive}`}
+                className = {`${tabColor}`}
                 onClick = {() => this.props.changeTab(indx)}>
                 {title}{' '}
                 </li>
@@ -18,7 +20,7 @@ class Header extends React.Component {
         });
 
         return (
-            <ul className='tab-title'>
+            <ul className={`tab-title ${this.props.colorClass}hover`}>
             {headers}
             </ul>
             );

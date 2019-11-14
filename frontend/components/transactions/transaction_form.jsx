@@ -100,7 +100,7 @@ class TransactionForm extends React.Component{
         return (
         <div className="transaction-form">
             <div className="buy-sell-buttons">
-                <Tabs tabStuff={[
+                <Tabs colorClass={this.props.colorClass} tabStuff={[
                     {title:`Buy ${this.props.tickerSymbol.toUpperCase()}`, content: 
                     
                     <form className="t-form" onSubmit={this.handleBuySubmit}>
@@ -121,7 +121,7 @@ class TransactionForm extends React.Component{
                         </div>
         
                         <div className="shares">
-                            <label className="share share-two">Market Price</label>
+                            <label className={`share share-two ${this.props.colorClass}`}>Market Price</label>
                             <p className="share share-two">{`$${parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</p>
                         </div>
         
@@ -130,9 +130,9 @@ class TransactionForm extends React.Component{
                             <p className="share share-two">{cost}</p>
                         </div>
         
-                        <input type="submit" value="Buy" className="execute-button nav-bar-logout review-button"/>
+                        <input type="submit" value="Buy" className={`execute-button nav-bar-logout review-button ${this.props.backgroundColor}button`}/>
         
-                        <p className="bp share share-two">Buying power: ${parseFloat(this.state.currentBuyingPower).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
+                        <p className={`bp share share-two ${this.props.colorClass}`}>Buying power: ${parseFloat(this.state.currentBuyingPower).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
                         <p className="transaction-message">{this.state.message}</p>
         
                     </div>
@@ -159,7 +159,7 @@ class TransactionForm extends React.Component{
                         </div>
 
                         <div className="shares">
-                            <label className="share share-two">Market Price</label>
+                            <label className={`share share-two ${this.props.colorClass}`}>Market Price</label>
                             <p className="share share-two">{`$${parseFloat(this.props.close).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</p>
                         </div>
 
@@ -168,9 +168,9 @@ class TransactionForm extends React.Component{
                             <p className="share share-two">{cost}</p>
                         </div>
 
-                        <input type="submit" value="Sell" className="execute-button nav-bar-logout review-button"/>
+                        <input type="submit" value="Sell" className={`execute-button nav-bar-logout review-button ${this.props.backgroundColor}button`}/>
 
-                        <p className="bp share share-two">{`${this.state.currentTickerNumShares} shares available`}</p> {/* CHANGE TO SHARES HELD */}
+                        <p className={`bp share share-two ${this.props.colorClass}`}>{`${this.state.currentTickerNumShares} shares available`}</p> {/* CHANGE TO SHARES HELD */}
                         <p className="transaction-message">{this.state.message}</p>
 
                     </div>

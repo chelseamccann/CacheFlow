@@ -108,9 +108,9 @@ class WatchlistItem extends React.Component{
 
     render(){
       if (this.state.currentButton === 'add'){
-        return <button className="watchlist-button addWatchlistButton" onClick={() => this.addToWatchlist()}>Add to watchlist</button>
+        return <button className={`watchlist-button addWatchlistButton ${this.props.colorClass}`} onClick={() => this.addToWatchlist()}>Add to watchlist</button>
       } else if (this.state.currentButton === 'remove'){
-        return <button className="watchlist-button removeWatchlistButton" onClick={() => this.removeFromWatchlist()}>Remove from watchlist</button>
+        return <button className={`watchlist-button removeWatchlistButton ${this.props.colorClass}`} onClick={() => this.removeFromWatchlist()}>Remove from watchlist</button>
       } else {
         return <div></div>
       }

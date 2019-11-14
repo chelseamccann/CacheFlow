@@ -14,7 +14,8 @@ class TickerChart extends React.Component {
             open: this.props.open,
             chartX: null,
             chartY: null,
-            timeFrame: this.props.timeFrame
+            timeFrame: this.props.timeFrame,
+
         }
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
@@ -90,7 +91,7 @@ class TickerChart extends React.Component {
                     >
                     <XAxis hide={true} dataKey="label"/>
                     <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
-                    <Line connectNulls type="monotone" dataKey="price" dot={false} stroke="#21ce99" strokeWidth={1.2}/>
+                    <Line connectNulls type="monotone" dataKey="price" dot={false} stroke={this.props.color} strokeWidth={1.2}/>
                     </LineChart>
                 </div>
 
@@ -104,7 +105,7 @@ class TickerChart extends React.Component {
             )
         }
         else {
-            let color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531"
+            // let color = this.state.closePrice > this.state.open ? "#21ce99" : "#f45531"
 
             return (
                 <div className="ticker-chart block-paddings">
@@ -127,7 +128,7 @@ class TickerChart extends React.Component {
                                         formatter={(value, name, props) => { return [""] }}
                                         // position={{ x: this.state.chartX - 50, y: this.state.chartY -10 }}
                                         isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
-                        <Line connectNulls type="linear" dataKey="price" dot={false} stroke={color} strokeWidth={1}/>
+                        <Line connectNulls type="linear" dataKey="price" dot={false} stroke={this.props.color} strokeWidth={1}/>
                     </LineChart>
                 </div>
                 ) 

@@ -3,7 +3,7 @@
 } */
 
 .watchlist-button{
-    color: #21ce99;
+    /* color: #21ce99; */
     cursor: pointer;
     background: none;
     border: 1px solid currentColor;
@@ -18,7 +18,7 @@
 .watchlist-button:focus {
     outline: none;
 }
-
+/* 
 .watchlist-button:hover{
     color: #1ae9aa;
-}
+} */
