@@ -459,6 +459,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../portfolio/portfolio_container */ "./frontend/components/portfolio/portfolio_container.jsx");
 /* harmony import */ var _news_news__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../news/news */ "./frontend/components/news/news.jsx");
 /* harmony import */ var _util_route_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/route_utils */ "./frontend/util/route_utils.jsx");
+/* harmony import */ var _ipo_ipo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ipo/ipo */ "./frontend/components/ipo/ipo.jsx");
+
 
 
 
@@ -474,6 +476,10 @@ var DashToPortfolio = function DashToPortfolio() {
     exact: true,
     path: "/",
     component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
+    exact: true,
+    path: "/",
+    component: _ipo_ipo__WEBPACK_IMPORTED_MODULE_5__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_utils__WEBPACK_IMPORTED_MODULE_4__["ProtectedRoute"], {
     exact: true,
     path: "/",
@@ -698,6 +704,107 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(_greeting__WEBPACK_IMPORTED_MODULE_2__["Greeting"]));
+
+/***/ }),
+
+/***/ "./frontend/components/ipo/ipo.jsx":
+/*!*****************************************!*\
+  !*** ./frontend/components/ipo/ipo.jsx ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_ipo_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/ipo_api_util */ "./frontend/util/ipo_api_util.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var IPO =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(IPO, _React$Component);
+
+  function IPO(props) {
+    var _this;
+
+    _classCallCheck(this, IPO);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(IPO).call(this, props));
+    _this.state = {
+      isLoading: true
+    };
+    return _this;
+  }
+
+  _createClass(IPO, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      Object(_util_ipo_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchIPOs"])().then(function (ipos) {
+        _this2.setState({
+          ipos: ipos.rawData,
+          isLoading: false
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (!this.state.isLoading) {
+        // const { ipos } = this.state;
+        var ipos = this.state.ipos.slice(0, 4);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "ipos"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "ipo-title"
+        }, "Upcoming IPOs"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "ipo-list"
+        }, ipos.map(function (ipo, idx) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            className: "ipo-info",
+            key: "".concat(ipo.symbol, "-").concat(idx)
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "ipo ipo-name"
+          }, ipo.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "ipo"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "ipo-date"
+          }, ipo.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "ipo-date"
+          }, ipo.expectedDate)));
+        }))));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      }
+    }
+  }]);
+
+  return IPO;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (IPO);
 
 /***/ }),
 
@@ -1098,7 +1205,9 @@ function (_React$Component) {
         var news = this.state.news;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "news-box ".concat(newsClass)
-        }, news.map(function (newsPiece, idx) {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "news-title ipo-title"
+        }, "Recent News"), news.map(function (newsPiece, idx) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
             href: newsPiece.url,
             className: "news-box nws",
@@ -4332,6 +4441,26 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/ipo_api_util.js":
+/*!***************************************!*\
+  !*** ./frontend/util/ipo_api_util.js ***!
+  \***************************************/
+/*! exports provided: fetchIPOs */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchIPOs", function() { return fetchIPOs; });
+var fetchIPOs = function fetchIPOs() {
+  return $.ajax({
+    method: "GET",
+    url: "https://cloud.iexapis.com/stable/stock/market/upcoming-ipos?token=pk_b6f890a95fb24dbfb1a85f362fe5687f" // url: `https://sandbox.iexapis.com/stable/stock/market/upcoming-ipos?token=Tsk_06d36047391b4a858da339d6976a3238`
+
+  });
+};
 
 /***/ }),
 

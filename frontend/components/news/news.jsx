@@ -43,6 +43,7 @@ class News extends React.Component{
             const { news } = this.state;
             return (
                 <ul className={`news-box ${newsClass}`}>
+                    <p className="news-title ipo-title">Recent News</p>
                     {news.map((newsPiece, idx) => (
 
                         <a href={newsPiece.url} className="news-box nws" key={`${newsPiece}-${idx}`} >
