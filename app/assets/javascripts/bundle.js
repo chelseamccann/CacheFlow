@@ -1894,7 +1894,9 @@ function (_React$Component) {
             width: buyPercent
           },
           className: "p p-buy ".concat(this.props.colorClass, "-buy")
-        }, "Buy"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "rb-text"
+        }, "Buy")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "n"
@@ -1905,7 +1907,9 @@ function (_React$Component) {
             width: holdPercent
           },
           className: "p p-hold"
-        }, "Hold"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "rh-text"
+        }, "Hold")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "n"
@@ -1916,7 +1920,9 @@ function (_React$Component) {
             width: sellPercent
           },
           className: "p p-sell"
-        }, "Sell"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "rs-text"
+        }, "Sell")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "line"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "n"

@@ -11,7 +11,7 @@
     border-radius: 100%;
     text-align: center;
     margin-left: 4%;
-    margin-right: 6%;
+    margin-right: 7%;
 }
 
 .rating-bubble-number{
@@ -112,4 +112,15 @@
 
 .a-title{
     padding-left: 0;
+}
+.rb-text{
+    margin-left: -12%;
+}
+
+.rh-text{
+    margin-left: -22%;
+}
+
+.rs-text{
+    margin-left: -40%;
 }

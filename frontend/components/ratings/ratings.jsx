@@ -26,7 +26,7 @@ class Ratings extends React.Component {
                 <div className="lines">
 
                     <div className="buy" >
-                        <p style={{width: buyPercent}} className={`p p-buy ${this.props.colorClass}-buy`}>Buy</p>
+                        <p style={{width: buyPercent}} className={`p p-buy ${this.props.colorClass}-buy`}><p className="rb-text">Buy</p></p>
                         <div>
 
                         <div className="line" ></div>
@@ -36,7 +36,7 @@ class Ratings extends React.Component {
                     </div>
 
                     <div className="hold">
-                        <p style={{width: holdPercent}} className="p p-hold">Hold</p>
+                        <p style={{width: holdPercent}} className="p p-hold"><p className="rh-text">Hold</p></p>
                         <div>
                         <div className="line"></div>
 
@@ -47,7 +47,7 @@ class Ratings extends React.Component {
                     </div>
 
                     <div className="sell">
-                        <p style={{width: sellPercent}} className="p p-sell">Sell</p>
+                        <p style={{width: sellPercent}} className="p p-sell"><p className="rs-text">Sell</p></p>
                         <div className="line"></div>
 
                         <div className="n">{sellPercent}</div>
