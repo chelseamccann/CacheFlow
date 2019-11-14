@@ -17,7 +17,9 @@ class Api::TransactionsController < ApplicationController
         @pv = current_user.total_portfolio_value
         cost = @transaction.purchase_price * @transaction.purchase_shares
 
-        if @transaction.buy === true && @bp >= cost && @transaction.save!
+        if @transaction.purchase_shares < 1
+            render json:["Please enter a valid number of shares."]
+        elsif @transaction.buy === true && @bp >= cost && @transaction.save!
             new_shares = ticker_current_shares + @transaction.purchase_shares
             current_user.update_attribute(:buying_power, @bp - cost)
             ticker.update_attribute(:num_shares, new_shares)

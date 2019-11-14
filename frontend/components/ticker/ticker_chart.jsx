@@ -31,7 +31,7 @@ class TickerChart extends React.Component {
     }
 
     componentDidUpdate(){
-        if(this.state.timeFrame !== this.props.timeFrame){
+        if(this.state.timeFrame !== this.props.timeFrame){ //|| this.state.tickerSymbol !== this.props.tickerSymbol){
             this.setState({
                 timeFrame: this.props.timeFrame,
                 change: parseFloat(this.props.close - this.props.open).toFixed(2),

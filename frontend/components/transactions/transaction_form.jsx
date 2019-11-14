@@ -36,8 +36,10 @@ class TransactionForm extends React.Component{
         e.preventDefault();
         let currentBuyingPower = parseFloat(this.state.currentBuyingPower).toFixed(2)
         let currentCost = this.state.purchase_price * this.state.purchase_shares 
-
-        if (currentBuyingPower >= currentCost){
+        if (this.state.purchase_shares < 0 || this.state.purchase_shares === 0 || this.state.purchase_shares === undefined){
+            this.setState({message: 'Please enter a valid number of shares.'})
+        }
+        else if (currentBuyingPower >= currentCost){
             let tr = { purchase_price: this.state.purchase_price,
                         ticker_symbol: this.state.ticker_symbol,
                         currentBuyingPower: this.state.currentBuyingPower,
@@ -68,7 +70,9 @@ class TransactionForm extends React.Component{
                         buy: false}
             this.setState({buy: false})     
             this.props.executeBuy(tr).then(response => {
-                if (Array.isArray(response.transaction)){
+                if (this.state.purchase_shares < 0 || this.state.purchase_shares === 0 || this.state.purchase_shares === undefined){
+                    this.setState({message: 'Please enter a valid number of shares.'})
+                } else if (Array.isArray(response.transaction)){
                     this.setState({message: response.transaction[0]})
                 } else {
                     this.setState({currentBuyingPower: currentBuyingPower + currentCost, message: 'Successfully sold!', purchase_shares: '', currentTickerNumShares: this.state.currentTickerNumShares - this.state.purchase_shares})
@@ -129,7 +133,7 @@ class TransactionForm extends React.Component{
                         <input type="submit" value="Buy" className="execute-button nav-bar-logout review-button"/>
         
                         <p className="bp share share-two">Buying power: ${parseFloat(this.state.currentBuyingPower).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
-                        <p>{this.state.message}</p>
+                        <p className="transaction-message">{this.state.message}</p>
         
                     </div>
                     </form>
@@ -167,7 +171,7 @@ class TransactionForm extends React.Component{
                         <input type="submit" value="Sell" className="execute-button nav-bar-logout review-button"/>
 
                         <p className="bp share share-two">{`${this.state.currentTickerNumShares} shares available`}</p> {/* CHANGE TO SHARES HELD */}
-                        <p>{this.state.message}</p>
+                        <p className="transaction-message">{this.state.message}</p>
 
                     </div>
                     </form>

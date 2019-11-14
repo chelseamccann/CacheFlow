@@ -37,9 +37,9 @@ class TickerShow extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-
         let prev = prevProps.tickerSymbol || prevProps.match.params.tickerSymbol
-        if (this.props.tickerSymbol !== prev){ 
+        if (this.props.tickerSymbol !== prev){
+            this.setState({dailyDone: false})
             fetchDailyPrices(this.props.tickerSymbol).then(response => this.renderDaily(response));
             this.tickerInfo();
             this.updateStats();
@@ -180,10 +180,10 @@ class TickerShow extends React.Component{
                 />
             )
         }
-         else if(this.state.timeFrame !== "" && this.state.marketcap){
+         else if(this.state.timeFrame !== "" && this.state.marketcap && this.state.dailyDone){
 
             let data = this.state[this.state.timeFrame].slice()
-            console.log(data)
+            
             return (
                 <div className="show-wrap">
                     <div className="chart-info-wrap">

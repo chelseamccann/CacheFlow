@@ -2473,6 +2473,7 @@ function (_React$Component) {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
       if (this.state.timeFrame !== this.props.timeFrame) {
+        //|| this.state.tickerSymbol !== this.props.tickerSymbol){
         this.setState({
           timeFrame: this.props.timeFrame,
           change: parseFloat(this.props.close - this.props.open).toFixed(2),
@@ -2908,6 +2909,9 @@ function (_React$Component) {
       var prev = prevProps.tickerSymbol || prevProps.match.params.tickerSymbol;
 
       if (this.props.tickerSymbol !== prev) {
+        this.setState({
+          dailyDone: false
+        });
         Object(_util_ticker_data_api_util__WEBPACK_IMPORTED_MODULE_4__["fetchDailyPrices"])(this.props.tickerSymbol).then(function (response) {
           return _this3.renderDaily(response);
         });
@@ -3066,9 +3070,8 @@ function (_React$Component) {
           changePercent: this.state.changePercent,
           tF: tF
         });
-      } else if (this.state.timeFrame !== "" && this.state.marketcap) {
+      } else if (this.state.timeFrame !== "" && this.state.marketcap && this.state.dailyDone) {
         var data = this.state[this.state.timeFrame].slice();
-        console.log(data);
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "show-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3441,7 +3444,11 @@ function (_React$Component) {
       var currentBuyingPower = parseFloat(this.state.currentBuyingPower).toFixed(2);
       var currentCost = this.state.purchase_price * this.state.purchase_shares;
 
-      if (currentBuyingPower >= currentCost) {
+      if (this.state.purchase_shares < 0 || this.state.purchase_shares === 0 || this.state.purchase_shares === undefined) {
+        this.setState({
+          message: 'Please enter a valid number of shares.'
+        });
+      } else if (currentBuyingPower >= currentCost) {
         var tr = {
           purchase_price: this.state.purchase_price,
           ticker_symbol: this.state.ticker_symbol,
@@ -3491,7 +3498,11 @@ function (_React$Component) {
         buy: false
       });
       this.props.executeBuy(tr).then(function (response) {
-        if (Array.isArray(response.transaction)) {
+        if (_this5.state.purchase_shares < 0 || _this5.state.purchase_shares === 0 || _this5.state.purchase_shares === undefined) {
+          _this5.setState({
+            message: 'Please enter a valid number of shares.'
+          });
+        } else if (Array.isArray(response.transaction)) {
           _this5.setState({
             message: response.transaction[0]
           });
@@ -3572,7 +3583,9 @@ function (_React$Component) {
             className: "execute-button nav-bar-logout review-button"
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "bp share share-two"
-          }, "Buying power: $", parseFloat(this.state.currentBuyingPower).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
+          }, "Buying power: $", parseFloat(this.state.currentBuyingPower).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "transaction-message"
+          }, this.state.message)))
         }, {
           title: "Sell ".concat(this.props.tickerSymbol.toUpperCase()),
           content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -3611,7 +3624,9 @@ function (_React$Component) {
             className: "execute-button nav-bar-logout review-button"
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "bp share share-two"
-          }, "".concat(this.state.currentTickerNumShares, " shares available")), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.message)))
+          }, "".concat(this.state.currentTickerNumShares, " shares available")), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "transaction-message"
+          }, this.state.message)))
         }]
       })));
     }
