@@ -7,8 +7,8 @@ class PortfolioChart extends React.Component {
         super(props);
         this.state = {
             closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value).toFixed(2),
-            change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value).toFixed(2),
-            percentChange: (parseFloat((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value)/this.props.oldArr[0].value)*100).toFixed(2),
+            change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[1].value).toFixed(2),
+            percentChange: (parseFloat((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[1].value)/this.props.oldArr[1].value)*100).toFixed(2),
             timeFrame: this.props.timeFrame,
             oldArr: this.props.oldArr,
             portfolioValue: this.props.portfolioValue
@@ -18,10 +18,11 @@ class PortfolioChart extends React.Component {
     }
 
     componentDidMount(){
+        debugger
         this.setState({
             closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value).toFixed(2),
-            change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value).toFixed(2),
-            percentChange: parseFloat(((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value)/this.props.oldArr[0].value)*100).toFixed(2),
+            change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[1].value).toFixed(2),
+            percentChange: parseFloat(((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[1].value)/this.props.oldArr[1].value)*100).toFixed(2),
             timeFrame: this.props.timeFrame
         })
     }
@@ -31,8 +32,8 @@ class PortfolioChart extends React.Component {
 
             this.setState({
                 timeFrame: this.props.timeFrame,
-                change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value).toFixed(2),
-                percentChange: parseFloat(((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value)/this.props.oldArr[0].value)*100).toFixed(2),
+                change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[1].value).toFixed(2),
+                percentChange: parseFloat(((this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[1].value)/this.props.oldArr[1].value)*100).toFixed(2),
             })
 
         }
@@ -41,7 +42,7 @@ class PortfolioChart extends React.Component {
     handleMouseOver(e){
         if(e && e.activePayload !== undefined){
             let hoverValue = e.activePayload[0].payload.value;
-            let openValue = this.props.oldArr[0].value;
+            let openValue = this.props.oldArr[1].value;
             let change = hoverValue - openValue;
             let dailyPercentChange = (change/hoverValue)*100
 
@@ -56,7 +57,7 @@ class PortfolioChart extends React.Component {
 
 
     handleMouseOut(e){
-        let currentChange = this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[0].value
+        let currentChange = this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[1].value
         let currentPercentChange = (currentChange/this.props.oldArr[this.props.oldArr.length-1].value)*100
         this.setState({
             closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value).toFixed(2), 
@@ -77,7 +78,6 @@ class PortfolioChart extends React.Component {
                     <p>{`$${this.state.change}`} {`(${this.state.percentChange}%)`}</p>
 
                     <LineChart 
-                        // width={676} 
                         width={646} 
                         height={196} 
                         data={this.props.portfolioValue}
@@ -86,7 +86,6 @@ class PortfolioChart extends React.Component {
                         onMouseLeave={this.handleMouseOut}
                     >
                         <XAxis dataKey={"date"} hide={true} /> 
-                        {/* domain={[0, 400]} allowDataOverflow={false} */}
                         <YAxis hide={true} domain={['dataMin'-200, 'dataMax'+200]}/>
                         <Tooltip className='tooltip'
                                         contentStyle={{ border: '0', backgroundColor: 'transparent', color: 'grey'}}
@@ -105,7 +104,6 @@ class PortfolioChart extends React.Component {
                     <p>{`$${this.state.change}`} {`(${this.state.percentChange}%)`}</p>
 
                     <LineChart 
-                        // width={676} 
                         width={646} 
                         height={196} 
                         data={this.props.portfolioValue}
@@ -114,12 +112,10 @@ class PortfolioChart extends React.Component {
                         onMouseLeave={this.handleMouseOut}
                     >
                         <XAxis dataKey={"date"} hide={true} /> 
-                        {/* domain={[0, 390]} allowDataOverflow={false} */}
                         <YAxis hide={true} domain={['dataMin', 'dataMax']}/>
                         <Tooltip className='tooltip'
                                         contentStyle={{ border: '0', backgroundColor: 'transparent', color: 'grey'}}
                                         formatter={(value, name, props) => { return [""] }}
-                                        // position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
                                         isAnimationActive={false} cursor={{ stroke: "Gainsboro", strokeWidth: 1.5 }}/> 
                         <Line connectNulls type="monotone" dataKey="value" dot={false} stroke={this.props.color} strokeWidth={1}/>
                     </LineChart>

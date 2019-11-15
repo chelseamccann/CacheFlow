@@ -1599,8 +1599,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PortfolioChart).call(this, props));
     _this.state = {
       closeValue: parseFloat(_this.props.oldArr[_this.props.oldArr.length - 1].value).toFixed(2),
-      change: parseFloat(_this.props.oldArr[_this.props.oldArr.length - 1].value - _this.props.oldArr[0].value).toFixed(2),
-      percentChange: (parseFloat((_this.props.oldArr[_this.props.oldArr.length - 1].value - _this.props.oldArr[0].value) / _this.props.oldArr[0].value) * 100).toFixed(2),
+      change: parseFloat(_this.props.oldArr[_this.props.oldArr.length - 1].value - _this.props.oldArr[1].value).toFixed(2),
+      percentChange: (parseFloat((_this.props.oldArr[_this.props.oldArr.length - 1].value - _this.props.oldArr[1].value) / _this.props.oldArr[1].value) * 100).toFixed(2),
       timeFrame: _this.props.timeFrame,
       oldArr: _this.props.oldArr,
       portfolioValue: _this.props.portfolioValue
@@ -1613,10 +1613,11 @@ function (_React$Component) {
   _createClass(PortfolioChart, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      debugger;
       this.setState({
         closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value).toFixed(2),
-        change: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value).toFixed(2),
-        percentChange: parseFloat((this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value) / this.props.oldArr[0].value * 100).toFixed(2),
+        change: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[1].value).toFixed(2),
+        percentChange: parseFloat((this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[1].value) / this.props.oldArr[1].value * 100).toFixed(2),
         timeFrame: this.props.timeFrame
       });
     }
@@ -1626,8 +1627,8 @@ function (_React$Component) {
       if (this.state.timeFrame !== this.props.timeFrame) {
         this.setState({
           timeFrame: this.props.timeFrame,
-          change: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value).toFixed(2),
-          percentChange: parseFloat((this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value) / this.props.oldArr[0].value * 100).toFixed(2)
+          change: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[1].value).toFixed(2),
+          percentChange: parseFloat((this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[1].value) / this.props.oldArr[1].value * 100).toFixed(2)
         });
       }
     }
@@ -1636,7 +1637,7 @@ function (_React$Component) {
     value: function handleMouseOver(e) {
       if (e && e.activePayload !== undefined) {
         var hoverValue = e.activePayload[0].payload.value;
-        var openValue = this.props.oldArr[0].value;
+        var openValue = this.props.oldArr[1].value;
         var change = hoverValue - openValue;
         var dailyPercentChange = change / hoverValue * 100;
         this.setState({
@@ -1651,7 +1652,7 @@ function (_React$Component) {
   }, {
     key: "handleMouseOut",
     value: function handleMouseOut(e) {
-      var currentChange = this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[0].value;
+      var currentChange = this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[1].value;
       var currentPercentChange = currentChange / this.props.oldArr[this.props.oldArr.length - 1].value * 100;
       this.setState({
         closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value).toFixed(2),
@@ -1667,8 +1668,7 @@ function (_React$Component) {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
           value: this.state.closeValue
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
-        , {
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
           width: 646,
           height: 196,
           data: this.props.portfolioValue,
@@ -1715,8 +1715,7 @@ function (_React$Component) {
           className: "ticker-chart block-paddings"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
           value: this.state.closeValue
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"] // width={676} 
-        , {
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$".concat(this.state.change), " ", "(".concat(this.state.percentChange, "%)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
           width: 646,
           height: 196,
           data: this.props.portfolioValue,
@@ -1743,8 +1742,7 @@ function (_React$Component) {
           },
           formatter: function formatter(value, name, props) {
             return [""];
-          } // position={{ x: this.state.chartX - 5000, y: this.state.chartY -1000 }}
-          ,
+          },
           isAnimationActive: false,
           cursor: {
             stroke: "Gainsboro",
