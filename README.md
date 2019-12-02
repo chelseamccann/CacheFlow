@@ -2,7 +2,7 @@
 
 <a href="https://cache-flow.herokuapp.com/#/">CacheFlow</a> is a clone of <a href="https://robinhood.com/">Robinhood</a>; a user-friendly online trading app for the everyday person.
 
-![Alt Text](https://media.giphy.com/media/YnkTiJZ5WUIULC3mP0/giphy.gif){height="50%" width="50%"}
+![Alt Text](https://media.giphy.com/media/YnkTiJZ5WUIULC3mP0/giphy.gif)
 
 
 # Technologies
