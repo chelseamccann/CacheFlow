@@ -11,8 +11,9 @@ class Ratings extends React.Component {
         const buyPercent = `${(Math.round((Math.round(this.props.buyRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100).toFixed(0)}%`
         const holdPercent = `${(Math.round((Math.round(this.props.holdRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100).toFixed(0)}%`
         const sellPercent = `${(Math.round((Math.round(this.props.sellRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100).toFixed(0)}%`
-        if (!this.props.isLoading){
 
+        if (!this.props.isLoading && (buyPercent || holdPercent || sellPercent)){
+            
             return (
                 <>
                 <p className="ipo-title a-title">Analyst Ratings</p>

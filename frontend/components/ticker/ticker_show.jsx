@@ -319,6 +319,7 @@ class TickerShow extends React.Component{
                     tickerSymbol={this.props.tickerSymbol}
                     colorClass={this.state.colorClass}
                     />
+                    
                     )
             }
         }

@@ -1871,7 +1871,7 @@ function (_React$Component) {
       var holdPercent = "".concat((Math.round(Math.round(this.props.holdRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100).toFixed(0), "%");
       var sellPercent = "".concat((Math.round(Math.round(this.props.sellRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100).toFixed(0), "%");
 
-      if (!this.props.isLoading) {
+      if (!this.props.isLoading && (buyPercent || holdPercent || sellPercent)) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "ipo-title a-title"
         }, "Analyst Ratings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
