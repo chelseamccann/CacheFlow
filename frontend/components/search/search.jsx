@@ -66,7 +66,7 @@ class Search extends React.Component{
       }
 
       handleClick(){
-          if(this.node.contains(event.target)){
+        if(this.node.contains(event.target)){
             this.setState({clicked: true, showResults: true})
         } else{
             this.setState({clicked: false, showResults: false})
@@ -83,7 +83,6 @@ class Search extends React.Component{
     }
 
     render(){
-
         length = this.state.searchResults.length
         if(this.state.showResults && (!this.isLoading || this.state.searchResults.length <= 6)){
             return (
