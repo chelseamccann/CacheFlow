@@ -1320,6 +1320,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      debugger;
       this.props.fetchTickers();
       this.props.fetchTransactions().then(function (response) {
         _this2.dailyVal(response); // DAILY PORTFOLIO CALC
@@ -1333,6 +1334,7 @@ function (_React$Component) {
 
       // DAILY PORTFOLIO CALC
       var that = this;
+      debugger;
       var data = response.transactions.forEach(function (asset, idx) {
         if (_this3.props.tickers[asset.ticker_symbol.toUpperCase()]) {
           var createdAt = new Date(Date.parse("".concat(asset.created_at)));
@@ -1508,6 +1510,7 @@ function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
+      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "ALL") {
           // return <button className={`btns ${this.state.timeFrame === key ? 'activeGreen': ''}`} key={`${key}-id`} onClick={() => {this.updatePrices(key)}}>
@@ -64182,7 +64185,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

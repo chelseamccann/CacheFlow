@@ -34,7 +34,7 @@ class Portfolio extends React.Component{
     }
 
     componentDidMount(){
-
+        debugger
         this.props.fetchTickers();
         this.props.fetchTransactions().then(response => {
             this.dailyVal(response) // DAILY PORTFOLIO CALC
@@ -44,7 +44,7 @@ class Portfolio extends React.Component{
 
     dailyVal(response){ // DAILY PORTFOLIO CALC
         let that = this;
-
+        debugger
         const data = response.transactions.forEach((asset, idx) => {
             if (this.props.tickers[asset.ticker_symbol.toUpperCase()]){
                 const createdAt = new Date(Date.parse(`${asset.created_at}`))
@@ -201,7 +201,7 @@ class Portfolio extends React.Component{
 
     render(){
         
-
+        debugger
         const tF = Object.keys(this.state).map(key => {
             if (key==="1D" || key==="5dm" || key==="1mm" || key==="3M" || key==="1Y" || key==="ALL"){
                 // return <button className={`btns ${this.state.timeFrame === key ? 'activeGreen': ''}`} key={`${key}-id`} onClick={() => {this.updatePrices(key)}}>
