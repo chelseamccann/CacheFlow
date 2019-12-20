@@ -18,7 +18,6 @@ class PortfolioChart extends React.Component {
     }
 
     componentDidMount(){
-        debugger
         this.setState({
             closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value).toFixed(2),
             change: parseFloat(this.props.oldArr[this.props.oldArr.length-1].value - this.props.oldArr[1].value).toFixed(2),

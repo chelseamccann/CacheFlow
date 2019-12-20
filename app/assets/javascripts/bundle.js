@@ -1320,7 +1320,6 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      debugger;
       this.props.fetchTickers();
       this.props.fetchTransactions().then(function (response) {
         _this2.dailyVal(response); // DAILY PORTFOLIO CALC
@@ -1334,7 +1333,6 @@ function (_React$Component) {
 
       // DAILY PORTFOLIO CALC
       var that = this;
-      debugger;
       var data = response.transactions.forEach(function (asset, idx) {
         if (_this3.props.tickers[asset.ticker_symbol.toUpperCase()]) {
           var createdAt = new Date(Date.parse("".concat(asset.created_at)));
@@ -1510,7 +1508,6 @@ function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
-      debugger;
       var tF = Object.keys(this.state).map(function (key) {
         if (key === "1D" || key === "5dm" || key === "1mm" || key === "3M" || key === "1Y" || key === "ALL") {
           // return <button className={`btns ${this.state.timeFrame === key ? 'activeGreen': ''}`} key={`${key}-id`} onClick={() => {this.updatePrices(key)}}>
@@ -1616,7 +1613,6 @@ function (_React$Component) {
   _createClass(PortfolioChart, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       this.setState({
         closeValue: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value).toFixed(2),
         change: parseFloat(this.props.oldArr[this.props.oldArr.length - 1].value - this.props.oldArr[1].value).toFixed(2),
@@ -1871,9 +1867,9 @@ function (_React$Component) {
   _createClass(Ratings, [{
     key: "render",
     value: function render() {
-      var buyPercent = "".concat(Math.round(Math.round(this.props.buyRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100, "%");
-      var holdPercent = "".concat(Math.round(Math.round(this.props.holdRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100, "%");
-      var sellPercent = "".concat(Math.round(Math.round(this.props.sellRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100, "%");
+      var buyPercent = "".concat((Math.round(Math.round(this.props.buyRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100).toFixed(0), "%");
+      var holdPercent = "".concat((Math.round(Math.round(this.props.holdRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100).toFixed(0), "%");
+      var sellPercent = "".concat((Math.round(Math.round(this.props.sellRating) / Math.round(this.props.netRatings) * 1e2) / 1e2 * 100).toFixed(0), "%");
 
       if (!this.props.isLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -1884,7 +1880,7 @@ function (_React$Component) {
           className: "rating-bubble ".concat(this.props.colorClass, "-bubble")
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "rating-bubble-number ".concat(this.props.colorClass, "-text")
-        }, "".concat(this.props.ratingNumber, "%")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        }, "".concat(this.props.ratingNumber.toFixed(0), "%")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "rating-text ".concat(this.props.colorClass, "-text")
         }, "of ".concat(this.props.netRatings, " ratings"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "lines"
@@ -3049,6 +3045,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ratings_ratings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../ratings/ratings */ "./frontend/components/ratings/ratings.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["", "%"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3246,13 +3254,13 @@ function (_React$Component) {
 
       if (ratings[0].ratingBuy > ratings[0].ratingSell && ratings[0].ratingBuy > ratings[0].ratingHold) {
         ratingNumber = Math.round(ratings[0].ratingBuy / netRatings * 1e2) / 1e2 * 100;
-        rating = "".concat(ratingNumber, "% Buy");
+        rating = "".concat(Math.round(ratingNumber * 1e2) / 1e2, "% Buy");
       } else if (ratings[0].ratingSell > ratings[0].ratingBuy && ratings[0].ratingSell > ratings[0].ratingHold) {
         ratingNumber = Math.round(ratings[0].ratingSell / netRatings * 1e2) / 1e2 * 100;
         rating = "".concat(ratingNumber, "% Sell");
       } else if (ratings[0].ratingHold > ratings[0].ratingBuy && ratings[0].ratingHold > ratings[0].ratingSell) {
         ratingNumber = Math.round(ratings[0].ratingHold / netRatings * 1e2) / 1e2 * 100;
-        rating = "".concat(ratingNumber, "% Hold");
+        rating = "".concat(ratingNumber, "% Hold")(_templateObject(), Math.round(Math.round(ratingNumber) / Math.round(netRatings) * 1e2) / 1e2 * 100);
       }
 
       this.setState({

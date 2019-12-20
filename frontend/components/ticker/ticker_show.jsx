@@ -143,13 +143,14 @@ class TickerShow extends React.Component{
         let netRatings = ratings[0].ratingBuy + ratings[0].ratingSell + ratings[0].ratingHold;
         if (ratings[0].ratingBuy > ratings[0].ratingSell && ratings[0].ratingBuy > ratings[0].ratingHold){
             ratingNumber = Math.round((ratings[0].ratingBuy / netRatings) *1e2)/1e2 *100
-            rating = `${ratingNumber}% Buy`
+            rating = `${Math.round(ratingNumber * 1e2) /1e2}% Buy`
         } else if (ratings[0].ratingSell > ratings[0].ratingBuy && ratings[0].ratingSell > ratings[0].ratingHold){
             ratingNumber = Math.round((ratings[0].ratingSell / netRatings) *1e2)/1e2 *100
             rating = `${ratingNumber}% Sell`
         } else if (ratings[0].ratingHold > ratings[0].ratingBuy && ratings[0].ratingHold > ratings[0].ratingSell){
             ratingNumber = Math.round((ratings[0].ratingHold / netRatings) *1e2)/1e2 *100
             rating = `${ratingNumber}% Hold`
+            `${Math.round((Math.round(ratingNumber) / Math.round(netRatings)) *1e2)/1e2 *100}%`
         }
         this.setState({ 
             rating: rating, 

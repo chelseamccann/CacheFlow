@@ -8,10 +8,9 @@ class Ratings extends React.Component {
     }
 
     render(){
-
-        const buyPercent = `${Math.round((Math.round(this.props.buyRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100}%`
-        const holdPercent = `${Math.round((Math.round(this.props.holdRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100}%`
-        const sellPercent = `${Math.round((Math.round(this.props.sellRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100}%`
+        const buyPercent = `${(Math.round((Math.round(this.props.buyRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100).toFixed(0)}%`
+        const holdPercent = `${(Math.round((Math.round(this.props.holdRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100).toFixed(0)}%`
+        const sellPercent = `${(Math.round((Math.round(this.props.sellRating) / Math.round(this.props.netRatings)) *1e2)/1e2 *100).toFixed(0)}%`
         if (!this.props.isLoading){
 
             return (
@@ -19,7 +18,7 @@ class Ratings extends React.Component {
                 <p className="ipo-title a-title">Analyst Ratings</p>
                 <div className="ratings">
                     <div className={`rating-bubble ${this.props.colorClass}-bubble`}>
-                        <p className={`rating-bubble-number ${this.props.colorClass}-text`}>{`${this.props.ratingNumber}%`}</p>
+                        <p className={`rating-bubble-number ${this.props.colorClass}-text`}>{`${this.props.ratingNumber.toFixed(0)}%`}</p>
                         <p className={`rating-text ${this.props.colorClass}-text`}>{`of ${this.props.netRatings} ratings`}</p>
                     </div>
 
