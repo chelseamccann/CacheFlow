@@ -772,7 +772,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.state.isLoading) {
+      if (!this.state.isLoading && this.state.ipos.length > 0) {
         var ipos = this.state.ipos.slice(0, 4);
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "ipos"

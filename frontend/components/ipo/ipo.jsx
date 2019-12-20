@@ -17,7 +17,7 @@ class IPO extends React.Component {
 
     render(){
 
-        if (!this.state.isLoading){
+        if (!this.state.isLoading && this.state.ipos.length > 0){
 
             const ipos = this.state.ipos.slice(0,4)
 
