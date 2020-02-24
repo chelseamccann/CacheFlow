@@ -14,6 +14,7 @@
     
     <%= favicon_link_tag asset_path('rh_logo.png') %>
     <script type="text/javascript">
+      window.iexAPIKey = "<%= Rails.application.credentials[:iex][:api_key_prod] %>";
       window.splash = "<%= image_url('splash.png') %>"; 
       window.cash_management = "<%= image_url('cash_management.png') %>"; 
       window.stocks = "<%= image_url('stocks.svg') %>"; 
