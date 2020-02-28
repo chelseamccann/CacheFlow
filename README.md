@@ -13,6 +13,8 @@
 
 # Features
 * User Auth
+* Search Companies in the API Cloud
+* News and Company Blurb
 * Data Visualization Charts
 
 ![Alt Text](https://media.giphy.com/media/KxVsFA7EJnewOh6gUJ/giphy.gif)
@@ -20,16 +22,3 @@
 * Transaction functionality to buy shares
 
 ![Alt Text](https://media.giphy.com/media/Xcw2Gl4aYkYFo20y7S/giphy.gif)
-
-* Search Companies in the API Cloud
-
-![Alt Text](https://media.giphy.com/media/htv9oOuhNjQFmZikjg/giphy.gif)
-
-* News and Company Blurb
-
-![Alt Text](https://imgur.com/Hb0VNer)
-
-
-# Future Features
-* View watchlist items on dashboard
-* Transaction functionality to sell shares
