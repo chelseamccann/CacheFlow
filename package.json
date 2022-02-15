@@ -46,11 +46,11 @@
   },
   "homepage": "https://github.com/chelseamccann/CacheFlow#readme",
   "engines": {
-    "node": "10.13.0",
+    "node": "12.18.3",
     "npm": "6.4.1"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^4.9.2"
   }
 }
